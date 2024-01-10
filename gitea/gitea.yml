@@ -90,7 +90,7 @@
           - 201
       ignore_errors: true
 
-    - name: Clone current network-demos repo
+    - name: Clone current network_demos repo
       ansible.builtin.shell:
         cmd: git clone https://gitlab.com/redhatautomation/network_demos.git /home/student/network_demos
       become: true
@@ -110,9 +110,9 @@
       become_user: student
       ignore_errors: true
     
-    - name: Copy files from network-demos to network-demos-repo/
+    - name: Copy files from network_demos to network-demos-repo/
       ansible.posix.synchronize:
-        src: /home/student/network-demos/
+        src: /home/student/network_demos/
         dest: /home/student/network-demos-repo/
       become: true
       become_user: student
@@ -135,7 +135,7 @@
 
     - name: Delete the original workshop directory
       ansible.builtin.shell:
-        cmd: rm -rf network-demos
+        cmd: rm -rf network_demos
         chdir: /home/student/
       become: true
 
