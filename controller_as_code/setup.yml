@@ -92,3 +92,17 @@
           email: admin@example.com
         name: Gitea Credential
         organization: "Red Hat network organization"
+
+#Network Backups to GIT 
+    - name: Create a job-template - Network-Backups-Git
+      ansible.controller.job_template:
+        name: "Network-Backups-Git"
+        organization: 'Red Hat network organization'
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_backups_git/backups.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitlea Credential"
+        execution_environment: "Validated Network" 
+        state: "present"
