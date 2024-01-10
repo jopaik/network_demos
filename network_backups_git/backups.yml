@@ -27,7 +27,7 @@
     - name: Publish the changes
       ansible.scm.git_publish:
         path: "{{ repository['path'] }}"
-        token: "{{ token }}"
+        token: "{{ password }}"
         user:
           name: "{{ username }}"
           email: "{{ email }}"
