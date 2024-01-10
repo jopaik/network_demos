@@ -103,6 +103,6 @@
         playbook: "network_backups_git/backups.yml"
         credentials:
           - "Workshop Credential"
-          - "Gitlea Credential"
+          - "Gitea Credential"
         execution_environment: "Validated Network" 
         state: "present"
