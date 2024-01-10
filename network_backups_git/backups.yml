@@ -2,9 +2,7 @@
 - name: Backup Cisco Configs to Gitea in Branches
   hosts:
     - localhost
-    - cisco
-    - arista
-    - juniper
+    - routers
   gather_facts: False
  
   tasks:
@@ -23,7 +21,7 @@
         operation: backup
         type: full
         data_store:
-          local: "/tmp/validated-network-ee/network_backup_files/"
+          local: "/tmp/network-backup-repo/network_backup_files/"
       when: inventory_hostname != 'localhost'
 
     - name: Publish the changes

@@ -44,7 +44,7 @@
       ansible.controller.group:
         name: juniper
         variables:
-          ansible_connection: netconf
+          ansible_connection: network_cli
           ansible_network_os: junipernetworks.junos.junos
         inventory: "Workshop Inventory"
         state: present
