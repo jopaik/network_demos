@@ -1,0 +1,20 @@
+---
+- name: Backup Cisco Configs to Gitea in Branches
+  hosts: "{{ _group }}"
+  gather_facts: False
+
+  tasks:
+    - name: push configs to devices
+      cisco.ios.ios_config:
+        src: "network_backup_files/{{ inventory_hostname }}.txt"
+      when: inventory_hostname in groups['cisco']
+
+    - name: push configs to devices
+      arista.eos.eos_config:
+        src: "network_backup_files/{{ inventory_hostname }}.txt"
+      when: inventory_hostname in groups['arista']
+
+    - name: push configs to devices
+      junipernetworks.junos.junos_config:
+        src: "network_backup_files/{{ inventory_hostname }}.txt"
+      when: inventory_hostname in groups['juniper']

@@ -4,7 +4,7 @@
     - localhost
     - routers
   gather_facts: False
- 
+
   tasks:
     - name: Retrieve a repository from a distant location and make it available to the local EE
       ansible.scm.git_retrieve:
@@ -21,7 +21,7 @@
         operation: backup
         type: full
         data_store:
-          local: "/tmp/network-backup-repo/network_backup_files/"
+          local: "/tmp/network-demos-repo/network_backup_files"
       when: inventory_hostname != 'localhost'
 
     - name: Publish the changes
@@ -32,3 +32,73 @@
           name: "{{ username }}"
           email: "{{ email }}"
       when: inventory_hostname == 'localhost'
+
+#Prepare for Restore
+- name: Prepare Branches for Restore
+  hosts:
+    - localhost
+    - routers
+  gather_facts: False
+
+  tasks:
+    - name: Retrieve a repository from a distant location and make it available to the local EE
+      ansible.scm.git_retrieve:
+        origin:
+          url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+        parent_directory: /tmp/
+      register: repository
+      when: inventory_hostname == 'localhost'
+
+    - name: List the Branches
+      ansible.builtin.shell:
+          cmd: "git branch -r"
+          chdir: /tmp/network-demos-repo/
+      when: inventory_hostname == 'localhost'
+      register: branches
+
+    - name: Create a job-template - Network-Git-Restore
+      ansible.controller.job_template:
+        name: "Network-Git-Restore"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_backups_git/restore.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "network workshop execution environment"
+        state: "present"
+        survey_enabled: true
+        survey_spec:
+          name: ""
+          description: ""
+          spec:
+            - question_name: Which Branch would you like to Restore from?
+              type: multiplechoice
+              variable: scm_branch
+              required: true
+              default: ""
+              choices:
+                - "{{ branches.stdout_lines[1] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[2] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[3] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[4] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[5] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[6] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[7] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[8] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[9] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[10] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[11] | replace('origin/','')}}"
+            - question_name: Which Group or Groups to Rollback?
+              type: multiselect
+              variable: _group
+              required: true
+              default: ""
+              choices:
+                - cisco
+                - arista
+                - juniper     
+      when: inventory_hostname == 'localhost'     
+               
+
+    
