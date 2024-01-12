@@ -2,7 +2,9 @@
 - name: Backup Cisco Configs to Gitea in Branches
   hosts:
     - localhost
-    - routers
+    - cisco
+    - arista
+    - juniper
   gather_facts: False
 
   tasks:
@@ -18,6 +20,7 @@
       ansible.builtin.include_role:
         name: network.backup.run
       vars:
+        ansible_connection: network_cli
         operation: backup
         type: full
         data_store:
@@ -33,11 +36,13 @@
           email: "{{ email }}"
       when: inventory_hostname == 'localhost'
 
-#Prepare for Restore
-- name: Prepare Branches for Restore
+#Prepare for Intent and Restore
+- name: Prepare Branches for Intent and Restore
   hosts:
     - localhost
-    - routers
+    - cisco
+    - arista
+    - juniper
   gather_facts: False
 
   tasks:
@@ -56,6 +61,57 @@
       when: inventory_hostname == 'localhost'
       register: branches
 
+    - name: Create a job-template - Network-Git-Intent
+      ansible.controller.job_template:
+        name: "Network-Git-Intent"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_backups_git/intended.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network" 
+        state: "present"
+        diff_mode: true
+        survey_enabled: true
+        survey_spec:
+          name: ""
+          description: ""
+          spec:
+            - question_name: Which Branch would you like to Check Config Drift from?
+              type: multiplechoice
+              variable: scm_branch
+              required: true
+              default: ""
+              choices:
+                - "{{ branches.stdout_lines[1] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[2] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[3] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[4] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[5] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[6] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[7] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[8] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[9] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[10] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[11] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[12] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[13] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[14] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[15] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[16] | default('') | replace('origin/','') }}"
+            - question_name: Which Group or Groups to Check Config Drift?
+              type: multiselect
+              variable: _group
+              required: true
+              default: ""
+              choices:
+                - cisco
+                - arista
+                - juniper     
+      when: inventory_hostname == 'localhost'     
+      ignore_errors: true
+    
     - name: Create a job-template - Network-Git-Restore
       ansible.controller.job_template:
         name: "Network-Git-Restore"
@@ -65,7 +121,7 @@
         playbook: "network_backups_git/restore.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment"
+        execution_environment: "Validated Network" 
         state: "present"
         survey_enabled: true
         survey_spec:
@@ -78,17 +134,22 @@
               required: true
               default: ""
               choices:
-                - "{{ branches.stdout_lines[1] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[2] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[3] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[4] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[5] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[6] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[7] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[8] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[9] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[10] | replace('origin/','')}}"
-                - "{{ branches.stdout_lines[11] | replace('origin/','')}}"
+                - "{{ branches.stdout_lines[1] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[2] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[3] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[4] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[5] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[6] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[7] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[8] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[9] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[10] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[11] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[12] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[13] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[14] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[15] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[16] | default('') | replace('origin/','') }}"
             - question_name: Which Group or Groups to Rollback?
               type: multiselect
               variable: _group
@@ -99,6 +160,6 @@
                 - arista
                 - juniper     
       when: inventory_hostname == 'localhost'     
-               
+      ignore_errors: true
 
     
