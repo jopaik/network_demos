@@ -11,20 +11,20 @@
       delegate_to: "localhost"
       run_once: true
 
-    - name: push configs to devices
-      cisco.ios.ios_config:
-        src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
-        save_when: changed
+    - name: Diff against cisco ios configuration
+      cisco.ios.config:
+        intended_config: "{{ lookup('file', '/tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt') }}"
+        diff_against: intended
       when: inventory_hostname in groups['cisco']
 
-    - name: push configs to devices
+    - name: Diff against arista eos configuration
       arista.eos.eos_config:
-        src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
-        save_when: changed
+        intended_config: "{{ lookup('file', '/tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt') }}"
+        diff_against: intended
       when: inventory_hostname in groups['arista']
 
-    - name: push configs to devices
+    - name: Diff against juniper junos configuration
       junipernetworks.junos.junos_config:
         src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
-        confirm_commit: true
+        check_commit: true
       when: inventory_hostname in groups['juniper']

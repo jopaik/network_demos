@@ -56,8 +56,8 @@
 
     - name: List the Branches
       ansible.builtin.shell:
-          cmd: "git branch -r"
-          chdir: /tmp/network-demos-repo/
+        cmd: "git branch -r"
+        chdir: /tmp/network-demos-repo/
       when: inventory_hostname == 'localhost'
       register: branches
 
@@ -70,7 +70,7 @@
         playbook: "network_backups_git/intended.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "Validated Network" 
+        execution_environment: "Validated Network"
         state: "present"
         diff_mode: true
         survey_enabled: true
@@ -108,10 +108,10 @@
               choices:
                 - cisco
                 - arista
-                - juniper     
-      when: inventory_hostname == 'localhost'     
+                - juniper
+      when: inventory_hostname == 'localhost'
       ignore_errors: true
-    
+
     - name: Create a job-template - Network-Git-Restore
       ansible.controller.job_template:
         name: "Network-Git-Restore"
@@ -121,7 +121,7 @@
         playbook: "network_backups_git/restore.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "Validated Network" 
+        execution_environment: "Validated Network"
         state: "present"
         survey_enabled: true
         survey_spec:
@@ -158,8 +158,6 @@
               choices:
                 - cisco
                 - arista
-                - juniper     
-      when: inventory_hostname == 'localhost'     
+                - juniper
+      when: inventory_hostname == 'localhost'
       ignore_errors: true
-
-    
