@@ -21,53 +21,73 @@ This demo uses the ansible.scm collection and the network.backup role from Valid
 ### Step 1 - Collect Backup Configurations
 Access your AAP Controller from your RHDP POD and run the 'Network-Backups-Git' job template 
 
-Output - Network-Backups-Git
+Output - Network-Backups-Git `backups.yml` with explanations
 ```
-Identity added: /runner/artifacts/4/ssh_key_data (/runner/artifacts/4/ssh_key_data)
+Identity added: /runner/artifacts/404/ssh_key_data (/runner/artifacts/404/ssh_key_data)
 
-PLAY [Backup Cisco Configs to gitlab] ******************************************
+PLAY [Backup Cisco Configs to Gitea in Branches] *******************************
 
-TASK [Retrieve a repository from a distant location and make it available tothe local EE] ***
-skipping: [rtr2]
-skipping: [rtr4] 
-skipping: [rtr1]
-skipping: [rtr3]
-changed: [localhost]
+TASK [Retrieve a repository from a distant location and make it available to the local EE] ***
+changed: [localhost] `This task clones the network-demos-rep from the gitea repository`
 
-TASK [Backup ios configurations for selected devices] **************************
-skipping: [localhost]
-skipping: [rtr2]
-skipping: [rtr4]
-skipping: [rtr3]
+TASK [Network Backup and Resource Manager] *************************************
+
+TASK [network.backup.run : Include tasks] **************************************
+included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/validation.yaml for rtr1, rtr2, rtr4, rtr3
+
+TASK [network.backup.run : Set supported platform list] ************************
+ok: [rtr1]
+ok: [rtr3]
+ok: [rtr4]
+ok: [rtr2]
+
+TASK [network.backup.run : Run the platform specific tasks] ********************
+included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/backup.yaml for rtr1, rtr2, rtr4, rtr3 => (item=/usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/backup.yaml)
+
+TASK [network.backup.run : Build Local Backup Dir Path] ************************
+included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/path.yaml for rtr2, rtr1, rtr4, rtr3
+
+TASK [network.backup.run : Set local backup path] ******************************
+ok: [rtr4]
+ok: [rtr1]
+ok: [rtr2]
+ok: [rtr3]
+
+TASK [network.backup.run : Include tasks] **************************************
+included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/network.yaml for rtr1, rtr2, rtr4, rtr3
+
+TASK [network.backup.run : Invoke backup task] *********************************
+included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/cli_backup.yaml for rtr1, rtr2, rtr4, rtr3
+
+TASK [network.backup.run : configurable backup path] ***************************
 changed: [rtr1]
-
-TASK [Backup eos configurations for selected devices] **************************
-skipping: [localhost]
-skipping: [rtr1]
-skipping: [rtr3]
+changed: [rtr3]
 changed: [rtr2]
 changed: [rtr4]
 
-TASK [Backup junos configurations for selected devices] ************************
-skipping: [localhost]
-skipping: [rtr2]
-skipping: [rtr4]
-skipping: [rtr1]
-changed: [rtr3]
-
 TASK [Publish the changes] *****************************************************
-skipping: [rtr2]
-skipping: [rtr4]
-skipping: [rtr1]
-skipping: [rtr3]
+changed: [localhost]
+
+PLAY [Prepare Branches for Intent and Restore] *********************************
+
+TASK [Retrieve a repository from a distant location and make it available to the local EE] ***
+changed: [localhost]
+
+TASK [List the Branches] *******************************************************
+changed: [localhost]
+
+TASK [Create a job-template - Network-Git-Intent] ******************************
+changed: [localhost]
+
+TASK [Create a job-template - Network-Git-Restore] *****************************
 changed: [localhost]
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=2    changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
-rtr1                       : ok=1    changed=1    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
-rtr2                       : ok=1    changed=1    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
-rtr3                       : ok=1    changed=1    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
-rtr4                       : ok=1    changed=1    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+localhost                  : ok=6    changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+rtr1                       : ok=8    changed=1    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0   
+rtr2                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
+rtr3                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
+rtr4                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
 ```
 ### Step 2 - Review 
 

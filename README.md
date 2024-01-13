@@ -170,14 +170,14 @@ In this exercise you will use the ansible.controller collection to configure the
 
 - Connect to Visual Studio Code from the Workshop launch page (provided by your instructor).  The password is provided below the WebUI link.
 
-  ![launch page](../../images/launch_page.png)
+  ![launch page](images/launch_page.png)
 
 - Type in the provided password to connect.
 
-  ![login vs code](../../images/vscode_login.png)
+  ![login vs code](images/vscode_login.png)
 
 1. Open the `network-demos-repo` directory in the browser tab for Visual Studio Code and navigate to open setup.yml:
-2. File Explorer - Open folder -> /student-repo/
+2. File Explorer - Open folder -> /network-demos-repo/
 3. Locate and review the /controller-as-code/setup.yml
 4. Examine the playbook tasks
 
@@ -224,9 +224,9 @@ ok: [localhost]
 ### Step 4 Access the AAP Controller
 
 Access your AAP from the https://xxxxx.example.opentlc.com/ link. 
-- Your link is shared by the instructor and will be slightly different each workshop.
+- Your link is int RHDP pod information.
 
-Your AAP Controller should now show the job-templates etc for the menu of demos.
+Your AAP Controller should now include the job-templates etc for the menu of demos. You can now select a demo from the Menu of Demos and follow the specific directions in the README.md.
 
 ## Return to Demo Menu
  - [Menu of Demos](#menu-of-demos)
