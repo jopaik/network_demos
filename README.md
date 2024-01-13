@@ -1,9 +1,9 @@
 # network_demos
-This repository includes several "ready to go" Ansible automation demos for multi-vendor networking. Please note, these demos are intended for Red Hat employees and require a reservation of the RHDP aap2-workshop-networking-automation POD https://demo.redhat.com/catalog?search=network&item=babylon-catalog-prod%2Fansiblebu.aap2-workshop-networking-automation.prod
+This repository includes several "ready to go" Ansible automation demos for multi-vendor networking. Please note, these demos are intended for Red Hat employees and require a RHDP reservation for an aap2-workshop-networking-automation POD https://demo.redhat.com/catalog?search=network&item=babylon-catalog-prod%2Fansiblebu.aap2-workshop-networking-automation.prod
 
-For inteterested customers, please contact your Red Hat account team for a live demo walk through. Alternatively, I'm working to add youtube video links to each demo READme file for viewing each demo.
+For inteterested customers, please contact your Red Hat account team for a live demo. Alternatively, youtube video links of the demos are included in each demo README file.
 
-Upon receiving a POD environment, please scroll down below the `Menu of Demos` section to the `Getting Started` steps or click below.
+Upon receiving a POD environment, please scroll down directly to the `Getting Started` steps or click below.
 - [Getting Started](#getting-started)
 
 ## Menu of Demos
@@ -38,6 +38,12 @@ Upon receiving a POD environment, please scroll down below the `Menu of Demos` s
    * TBD
    
 # Getting Started
+
+## Summary of steps
+1. wget https://gitlab.com/redhatautomation/network_demos/-/raw/main/gitea/gitea.yml
+2. ansible-navigator run -m stdout gitea.yml
+3. setup VSCode for git
+4. ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
 
 ## Exercise 1 - Setting up the Gitea Repo and VSCode
 
