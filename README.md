@@ -1,93 +1,227 @@
 # network_demos
+This repository includes several "ready to go" Ansible automation demos for multi-vendor networking. Please note, these demos are intended for Red Hat employees and require a reservation of the RHDP aap2-workshop-networking-automation POD https://demo.redhat.com/catalog?search=network&item=babylon-catalog-prod%2Fansiblebu.aap2-workshop-networking-automation.prod
+
+For inteterested customers, please contact your Red Hat account team for a live demo walk through. Alternatively, I'm working to add youtube video links to each demo READme file for viewing each demo.
+
+Upon receiving a POD environment, please scroll down below the `Menu of Demos` section to the `Getting Started` steps or click below.
+- [Getting Started](#getting-started)
+
+## Menu of Demos
+- [Network Backups GIT](network_backups_git/README.md)
+   * Validated Content: network.backup 
+   * Self Service Survey
+   * Intended config "configuration drift"
+   * Restore Configs
+- [Network Compliance Dashboard](network_compliance_dashboard/README.md)
+   * Network Facts
+   * JINJA2 HTML template
+- [Network Compliance Checks Remediations](network_compliance_checks_remediations/README.md)
+   * Network Resource Modules
+   * Workflows
+   * Self Service Survey
+   * Check Mode/Run Mode (ntp,snmp,logging,and acls)
+   * Handlers
+   * Cisco STIG
+- [Scoped Configuration Management](scoped_configuration_management/README.md)
+   * Validated Content: network.base 
+   * Operations: Persist, Deploy, Detect, Remediate
+   * BGP
+- [Completed Ansible Network Automation Workshop 101 Demo ](completed_ansible_network_automation_workshop_101_demo/README.md)
+   * Network Backups and Restore to a server
+   * Network User
+   * Network Banner
+   * Workflow
+   * Self Service Survey
+- [Cisco ACI](cisco_aci)
+- [Cisco DNAC](cisco_dnac)
+- [Network Access List](network_access_list/README.md)
+   * TBD
+   
+# Getting Started
+
+## Exercise 1 - Setting up the Gitea Repo and VSCode
+
+## Table of Contents
+
+- [Exercise 1 - Setting up the Gitea Repo and VSCode](#exercise-1---seting-up-the-gitea-repo-and-vscode)
+  - [Table of Contents](#table-of-contents)
+  - [Objective](#objective)
+  - [Diagram](#diagram)
+  - [Guide](#guide)
+    - [Step 1 - Connecting via VS Code](#step-1---connecting-via-vs-code)
+    - [Step 2 - Using the Terminal](#step-2---using-the-terminal)
+    - [Step 3 - Deploy Gitea on the Control Node](#step-3---deploy-gitea-on-the-control-node)
+    - [Step 4 - Open the project directory in Visual Studio Code](#step-4---open-the-project-directory-in-visual-studio-code)
+    - [Step 5 - Create and check in to your repo](#step-5---create-and-check-in-to-your-repo)
+  - [Complete](#complete)
+
+## Objective
+
+This exercise will set up your environment for the remaining demos included in this repository. This exercise includes steps to set up a version control system, which is used to track and provide control over changes made to the automation code. Version control (sometimes called source control) plays an important role in any development project, including automation development. This repository will be used with both the command line utilities and when we use the Ansible Automation Platform.
+
+## Diagram
+
+![Red Hat Ansible Automation](https://github.com/ansible/workshops/raw/devel/images/ansible_network_diagram.png)
+
+## Guide
+
+### Step 1 - Connecting via VS Code
+
+<table>
+<thead>
+  <tr>
+    <th>You must use Visual Studio Code to setup the demos. Visual Studio Code provides:
+    <ul>
+    <li>A file browser</li>
+    <li>A text editor with syntax highlighting</li>
+    <li>A in-browser terminal</li>
+    </ul>
+    Direct SSH access is available as a backup, or if Visual Studio Code is not sufficient to the student.  There is a short YouTube video provided if you need additional clarity: <a href="https://youtu.be/Y_Gx4ZBfcuk">Ansible Workshops - Accessing your workbench environment</a>.
+</th>
+</tr>
+</thead>
+</table>
+
+- Connect to Visual Studio Code from the Workshop launch page (provided by Red Hat RHDP).  The password is provided below the WebUI link.
+
+  ![launch page](images/launch_page.png)
+
+- Type in the provided password to connect.
+
+  ![login vs code](images/vscode_login.png)
 
 
+### Step 2 - Using the Terminal
 
-## Getting started
+- Open a terminal in Visual Studio Code (VSC):
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+  ![picture of new terminal](images/vscode-new-terminal.png)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Step 3 - Deploy Gitea on the Control Node
 
-## Add your files
+We are going to run our first playbook here, which will deploy a Gitea server in a container on the control node (ansible-1).
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+In the VSC terminal, use wget to download the gitea.yml file, and then use `ansible-navigator` to run the playbook.
+```
+wget https://gitlab.com/redhatautomation/network_demos/-/raw/main/gitea/gitea.yml
+```
+You can run the ansible-navigator command with low verbosity, or if you want to see more of what Ansible is doing, you can add `-v` (up to 4 v's) to the ansible-navigator command.
+```bash
+ansible-navigator run -m stdout gitea.yml
+or 
+ansible-navigator run -m stdout gitea.yml -v
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/redhatautomation/network_demos.git
-git branch -M main
-git push -uf origin main
+Running the gitea.yml playbook will output to the terminal all of the tasks that are done to deploy the Gitea container, configure it for use in the environment, and setup the network-demos-repo that we will be working out of.  When the playbook has finished running, you should be able to change into the network-demos-repo directory and run git status to see that we are up today.
+```
+cd network-demos-repo
+git status
 ```
 
-## Integrate with your tools
+### Step 4 - Open the project directory in Visual Studio Code
 
-- [ ] [Set up project integrations](https://gitlab.com/redhatautomation/network_demos/-/settings/integrations)
+Click on the files icon in the upper right corner of your Visual Studio Code window, and click `Open Folder`.
 
-## Collaborate with your team
+![picture of open folder](images/open_folder.png)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+In the pop-up window, choose the `/home/student/netowrk-demos-repo` folder, and select `OK`.
 
-## Test and Deploy
+### Step 5 - Create and check in to your repo (optional)
 
-Use the built-in continuous integration in GitLab.
+After you have set your remote, you will be able to easily commit code in the Visual Studio Code development environment.  To validate this, create a new file in the network-demos-repo directory. 
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+You can right-click on the network-demos-repo directory in your visual studio environment, and name the file `test_file.txt`
 
-***
+![create a new file](images/create_new_file.png)
 
-# Editing this README
+![write in the file](images/testfile.png)
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Save the file by going to `File > Save`, or just using the `ctrl-s` key combination.  After you have done this, you can click on the Git button on the left side of the window (third down - see picture).  You will see in the Git window that there is a change to be committed.
 
-## Suggestions for a good README
+![git](images/file_git.png)
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Add in a message such as "this is just a test" and click `Commit`.  The button will change to `Sync Changes`.  Click this, and if you have set up your remote settings correctly, it will sync your change to your remote (Gitea).  If this didn't work, review the earlier steps, or ask your instructor for help.
 
-## Name
-Choose a self-explaining name for your project.
+**Optional**
+You can also verify your Git Push by accessing the Gitea 'Git' repository running in your student lab pod.
+Simply change the url to your student number and open the following link in a new browser tab ```https://student1.pqcfw.example.opentlc.com/gitea/
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+sign-in with user=gitea and password=gitea
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Exercise 2: Controller as Code
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Table of Contents
+- [Step 1 - Variables](#step-1-variables)
+- [Step 2 - Using the Terminal](#step-2-using-the-terminal)
+- [Step 3 - Run Playbook](#step-3-run-playbook)
+- [Step 4 - Examine the Ansible Controller configuration](#step-4-examine-the-ansible-controller-configuration)
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Objective
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+In this exercise you will use the ansible.controller collection to configure the AAP Controller. You will utilize the VSCode as part of your student workshop environment. By modifify and running a playbook from the ansible-navigtor CLI, we can avoid the AAP Controller GUI to configure additional elements needed for the subsequent demos. 
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Step 1 - Variables
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+- Connect to Visual Studio Code from the Workshop launch page (provided by your instructor).  The password is provided below the WebUI link.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+  ![launch page](../../images/launch_page.png)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- Type in the provided password to connect.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+  ![login vs code](../../images/vscode_login.png)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+1. Open the `network-demos-repo` directory in the browser tab for Visual Studio Code and navigate to open setup.yml:
+2. File Explorer - Open folder -> /student-repo/
+3. Locate and review the /controller-as-code/setup.yml
+4. Examine the playbook tasks
 
-## License
-For open source projects, say how it is licensed.
+### Step 2 - Run Playbook 
+The setup.yml playbook will require extra variables when running in ansible-navigator.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- The CONTROLLER_PASSWORD in setup.yml is the same password assigned to your RHDP student POD for the Ansible Controller
+
+Run the `ansible-navigator` command with the `run` argument and -m stdout as well as  -e for the `--extra-vars`
+
+  ~~~
+  $ ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
+  ~~~
+
+#### Output "truncated"
+The first run will show 'changed'
+```bash
+PLAY [Playbook to configure ansible controller] ********************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Create projects] *********************************************************
+ok: [localhost]
+
+TASK [Add group] ***************************************************************
+ok: [localhost]
+
+TASK [Add group] ***************************************************************
+ok: [localhost]
+
+TASK [Add group] ***************************************************************
+ok: [localhost]
+
+TASK [Create Execution Environments] *******************************************
+ok: [localhost]
+
+TASK [Gitea Credential Type] *******************************************************
+ok: [localhost]
+
+ TASK [Gitea Credential] *******************************************************
+ok: [localhost]
+```
+### Step 4 Access the AAP Controller
+
+Access your AAP from the https://xxxxx.example.opentlc.com/ link. 
+- Your link is shared by the instructor and will be slightly different each workshop.
+
+Your AAP Controller should now show the job-templates etc for the menu of demos.
+
+## Return to Demo Menu
+ - [Menu of Demos](#menu-of-demos)
+
