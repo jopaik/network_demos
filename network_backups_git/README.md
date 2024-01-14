@@ -5,10 +5,7 @@
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Collect Backup Configurations](#step-1---credential)
-- [Step 2 - Job-template](#step-2---job-template)
-- [Step 3 - Review](#step-3---review)
-- [Step 4 - Backups and Restore Job-Templates](#step-4---backups-and-restore-job-templates)
-- [Step 5 - Network - Backup and Restore Workflow](#step-5---network---backup-and-restore-workflow)
+- [Step 2 - Review](#step-2---job-template)
 
 ## Objective
 
@@ -28,10 +25,14 @@ Identity added: /runner/artifacts/404/ssh_key_data (/runner/artifacts/404/ssh_ke
 PLAY [Backup Cisco Configs to Gitea in Branches] *******************************
 
 TASK [Retrieve a repository from a distant location and make it available to the local EE] ***
-changed: [localhost] `This task clones the network-demos-rep from the gitea repository`
-
+changed: [localhost] 
+```
+`This above task is used tp clone the network-demos-rep from the gitea repository to the execution environment`
+```
 TASK [Network Backup and Resource Manager] *************************************
-
+```
+`The following tasks are run using the network.backup.run role. Note that the tasks are accessed from the path (/usr/share/ansible/collections/ansible_collections/network/backup/roles/). This path refers to the validated collection that was installed into the execuion environment.`
+```
 TASK [network.backup.run : Include tasks] **************************************
 included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/validation.yaml for rtr1, rtr2, rtr4, rtr3
 
@@ -42,7 +43,7 @@ ok: [rtr4]
 ok: [rtr2]
 
 TASK [network.backup.run : Run the platform specific tasks] ********************
-included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/backup.yaml for rtr1, rtr2, rtr4, rtr3 => (item=/usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/backup.yaml)
+included: run/includes/backup.yaml for rtr1, rtr2, rtr4, rtr3 => (item=/usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/backup.yaml)
 
 TASK [network.backup.run : Build Local Backup Dir Path] ************************
 included: /usr/share/ansible/collections/ansible_collections/network/backup/roles/run/includes/path.yaml for rtr2, rtr1, rtr4, rtr3
@@ -64,12 +65,18 @@ changed: [rtr1]
 changed: [rtr3]
 changed: [rtr2]
 changed: [rtr4]
-
+```
+`The above backup path is defined in the backup.yml playbook`
+```
 TASK [Publish the changes] *****************************************************
 changed: [localhost]
-
+```
+`The above task will push the backup files from the EE to the Gitea repository`
+```
 PLAY [Prepare Branches for Intent and Restore] *********************************
-
+```
+`The above play will create/edit two job-templates (intended,restore) in the AAP controller`
+```
 TASK [Retrieve a repository from a distant location and make it available to the local EE] ***
 changed: [localhost]
 
@@ -102,18 +109,152 @@ https://student1.hr96x.example.opentlc.com/gitea/gitea/network-demos-repo
 
 2. Click branches under "network-demos-repo", and locate the branch with the latest timestamp from Network-Backups-git job-template. As you run the job-temaplate a new branch with the backups and timestamp is committed and pushed to gitea. These branches will be used later for config-drift and restore actions.
 
-![Branch](../../images/branch.png)
+![Branch](../images/branch.png)
 
 - Navigate to the network_backup_files folder and review the router config files.
 **day2/1-opportunistic/2-backup-and-restore/backups/**
 
-![Branch](../../images/backups.png)
+![Branch](../images/backups.png)
 
-* Additionally the new branch could be merged into master/main branch, but we will not do that for this demo. We will only save our router configs to a non master/main branch so we can toggle between timestamps etc. Thus we can go back in time across many backups to rebuild our infrastructure. 
+* Additionally the new branch could have been merged into master/main branch. However, in this demo we save our router configs to a non master/main branch so we can toggle between branches and timestamps etc. Thus we can go back in time across many backups to rebuild our infrastructure. The backups.yml playbook creates a selfservice survey in the AAP controller that provides access to the backup branches/files.
+
+# Network Intended GIT
+
+[Table of Contents](#table-of-contents)
+- [Step 1 - Collect Backup Configurations](#step-1---credential)
+- [Step 2 - Review](#step-2---job-template)
+
+## Overview
+In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now make a change to some of the same routers using out of band OOB management and the CLI to demonstrate configuration drift. By using the saved router configurations from a particular branch we can detect that the router configuraion has drifted away from our single source of truth as understood by Ansible.
+
+### Step 1 - Modify the Routers
+1. Modify rtr1's hostname. 
+rt1 is a Cisco router. Access the router from the VSCode terminal window
+~~~
+ssh rtr1
+config t
+hostname mistake
+exit
+exit
+~~~
+Output:
+~~~
+[student@ansible-1 test]$ ssh rtr1
+rtr1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+mistake(config)#hostname mistake
+mistake(config)#exit
+mistake#exit
+~~~
+2. Modify rtr3's hostname. 
+rt3 is a Juniper router. Access the router from the VSCode terminal window
+~~~
+ssh rtr3
+configure 
+set system host-name oooops 
+commit 
+exit 
+exit
+~~~
+Output:
+~~~
+[student@ansible-1 test]$ ssh rtr3
+Last login: Sun Jan 14 01:00:42 2024 from 3.147.126.29
+--- JUNOS 22.3R2.12 Kernel 64-bit XEN JNPR-12.1-20221212.98a33a0_buil
+ec2-user@rtr3> configure 
+Entering configuration mode
+[edit]
+ec2-user@rtr3# set system host-name oooops 
+[edit]
+ec2-user@rtr3# commit 
+commit complete
+[edit]
+ec2-user@oooops# exit 
+Exiting configuration mode
+~~~
+
+### Step 2 - Verify the new Job-templates
+Access the AAP Controller.
+![Template](../images/intended.png)
+
+### Step 3 - Launch the Network-Intended Job-template
+Upon lauching the job-template the self service survey will prompt for information.
+
+![survey](../images/survey1.png)
+1. Select the branch from the dropdown. There will be multipl choices, if you have ran the Network Backups Job Template more than once.Do not select the master branch because it contains no backup files. Normally the latest backup branch is the selection just above the master branch. This can be verified with the Gitea webpage. You must also slect the groups of devices to run the config drift check against. Go ahead and select all three eventhough we didn't modify the arista devices.
+
+ ![survey](../images/survey2.png)
+
+ 2. Review the output to understand the Diff entries for the hostname changes in rtr1 and rtr3.
+ ~~~
+
+TASK [Diff against cisco ios configuration] ************************************
+--- before
++++ after
+@@ -6,7 +6,7 @@
+ platform qfp utilization monitor load 80
+ platform punt-keepalive disable-kernel-core
+ platform console virtual
+-hostname mistake 
++hostname rtr1
+ boot-start-marker
+ boot-end-marker
+ vrf definition GS
+changed: [rtr1]
+TASK [Diff against arista eos configuration] ***********************************
+ok: [rtr2]
+ok: [rtr4]
+TASK [Diff against juniper junos configuration] ********************************
+[edit system]
+-  host-name oooops;
++  host-name rtr3;
+changed: [rtr3]
+PLAY RECAP *********************************************************************
+rtr1                       : ok=2    changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+rtr2                       : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+rtr3                       : ok=1    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+rtr4                       : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+ ~~~
+
+ 3. Verify that the intended.yml simply displays the Diff but does not actually modify the router configurations.
+
+ ~~~
+ [student@ansible-1 test]$ ssh rtr1
+mistake#
+mistake#exit
+[student@ansible-1 test]$ ssh rtr3
+Last login: Sun Jan 14 01:45:54 2024 from 3.147.126.29
+--- JUNOS 22.3R2.12 Kernel 64-bit XEN JNPR-12.1-20221212.98a33a0_buil
+ec2-user@oooops> 
+~~~
+
+# Network Intended GIT
+
+[Table of Contents](#table-of-contents)
+- [Step 1 - Collect Backup Configurations](#step-1---credential)
+- [Step 2 - Review](#step-2---job-template)
+
+## Overview
 
 
+~~~
 
-## Next Exercise
-* [Dynamic Documentation ](../3-dynamic-documentation/README.md)
+TASK [Clone a Repo to EE] ******************************************************
+changed: [rtr1 -> localhost]
+TASK [push configs to devices] *************************************************
+changed: [rtr1]
+TASK [push configs to devices] *************************************************
+ok: [rtr2]
+ok: [rtr4]
+TASK [push configs to devices] *************************************************
+changed: [rtr3]
+PLAY RECAP *********************************************************************
+rtr1                       : ok=2    changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+rtr2                       : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+rtr3                       : ok=1    changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+rtr4                       : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+~~~
+
+This time the restore.yml playbook is configured to push the config backup files and actually change `merge` the configurations with the remote devices. As mentioned previosly no changes are needed for the arista routers (rtr2, rtr4)
 
 [Click Here to return to the Ansible Network Automation Workshop](../README.md)
