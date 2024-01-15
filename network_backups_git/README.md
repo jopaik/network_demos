@@ -268,11 +268,11 @@ This time the restore.yml playbook is configured to push the config backup files
 Optional: SSH to rtr1 and rtr3 to validate the hostname chaned back to the original.
 
 # Key Take Aways
-* The network.backup.run validated role can backup router configs to Git using branches
-* You can use remote SCM from the role or adjust git parameters dirrectly though the ansible.scm collection (we did the latter)
+* The network.backup.run validated role backups router configs to Git using branches.
+* The role uses remote SCM parameters, if more flexibility is needded than adjust git parameters dirrectly from the ansible.scm collection (we did the latter)
 * Each branch of backups can be used as an inteded config or for restoral purposes.
-* The intended config compares diffs between the chosen backup and the devices running configuration.
-* If there is a detected configuration drift (diff), then a backup configuration can be pushed back to the device for a configuration merge.
+* The intended config compares diffs between the chosen backup and the device's running configuration.
+* When configuration drift (diff) is detected, then a backup configuration can be pushed back to the device for a configuration merge.
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
