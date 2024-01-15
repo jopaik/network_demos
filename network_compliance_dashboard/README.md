@@ -47,7 +47,7 @@ ok: [ansible-1] => {
 ### Step 3 - Display the Dashboard
 Open a tab from your own browser and paste the url from the previous step. You will see the dashboard highlighted in red for elements that are out of compliance.Take a few minutes to explore the dashboard and associated dropdown menus to locate any compliance issues.
 
-![Dash](../../images/dash1.png)
+![Dash](../images/dash1.png)
 
 ### Step 4 - Review the files for the Dashboard
 
@@ -120,7 +120,7 @@ Run the `Network-Compliance-Dashboard` job-template and reload the dashboard tab
 * Note, at this point no red highlights are displayed because all configurations are compliant.
 - note the url-ip address for the dashboard in the job output.
 
-![Dash](../../images/dash2.png)
+![Dash](../images/dash2.png)
 
 ### Step 8 - Optional Challenge
 Create a schedule in the AAP controller to run the Network-Compliance-Dashboard job-template periodically. No hints available.

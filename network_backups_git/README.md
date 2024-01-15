@@ -120,7 +120,7 @@ https://student1.hr96x.example.opentlc.com/gitea/gitea/network-demos-repo
 ![Branch](../images/branch.png)
 
 - Navigate to the network_backup_files folder and review the router config files.
-**day2/1-opportunistic/2-backup-and-restore/backups/**
+
 
 ![Branch](../images/backups.png)
 
