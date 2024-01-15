@@ -228,14 +228,14 @@ Last login: Sun Jan 14 01:45:54 2024 from 3.147.126.29
 ec2-user@oooops> 
 ~~~
 
-# Network Intended GIT
+# Network Restore GIT
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Collect Backup Configurations](#step-1---credential)
 - [Step 2 - Review](#step-2---job-template)
 
 ## Overview
-
+In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now run the Network Restore job-template and select the same backup branch from the previous "Network Intended" job. This will render a buckup restore by merging the backup file to the group/device(s) that were detected to have confgiuration drift (DIFF). 
 
 ~~~
 
