@@ -123,10 +123,10 @@ Run the `Network-Compliance-Dashboard` job-template and reload the dashboard tab
 ![Dash](../images/dash2.png)
 
 ### Step 8 - Optional Challenge
-Create a schedule in the AAP controller to run the Network-Compliance-Dashboard job-template periodically. No hints available.
+Create a schedule in the AAP controller to run the Network-Compliance-Dashboard job-template periodically. No screen shots available.
 
 ## Key Takaways
-* Network Factsare an easy method to discover and collect the network device configurations
+* Network Facts are an easy method to discover and collect the network device configurations
 * Dashboards and Reports are easy to populate with Network Facts
 
 ## Return to Demo Menu
