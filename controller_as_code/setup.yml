@@ -107,3 +107,32 @@
           - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present"
+
+    # Network Compliance Dashboard   
+    - name: Create a job-template - Network-Config
+      ansible.controller.job_template:
+        name: "Network-Config"
+        organization: 'Red Hat network organization'
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_compliance_dashboard/config.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network" 
+        state: "present" 
+    
+    - name: Create a job-template - Network-Compliance-Dashboard
+      ansible.controller.job_template:
+        name: "Network-Compliance-Dashboard"
+        organization: 'Red Hat network organization'
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_compliance_dashboard/network_report.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "network workshop execution environment" 
+        state: "present"
+    
+
+
+  
