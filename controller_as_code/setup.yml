@@ -104,5 +104,6 @@
         credentials:
           - "Workshop Credential"
           - "Gitea Credential"
+          - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present"
