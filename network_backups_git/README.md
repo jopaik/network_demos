@@ -1,5 +1,5 @@
-## Return to Day 2 Exercises
-* [Day 2 ](../../README.md)
+## Return to Demo Menu
+ - [Menu of Demos](../README.md)
 
 # Network Backups GIT
 
@@ -8,11 +8,9 @@
 - [Step 2 - Review](#step-2---job-template)
 
 ## Objective
-
 To enable multi-vendor router configuration backups to Gitea and subsequently restoral of them if needed. We will also explore managing configuration drift in this demo.
 
 ## Overview
-
 This demo uses the ansible.scm collection and the network.backup role from Validated Content to backup router configurations to git branches in Gitea. Additionally we will check for configuration drift and restore configurations when appropriate.
 
 ### Step 1 - Collect Backup Configurations
