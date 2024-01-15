@@ -9,7 +9,7 @@
 5. Launch the Network-Intended Job-Template
 6. Review the Diff between the backup up configs and the running configs on the routers
 7. Launch the Network Restore Job Template
-8. Verify how the restore rolled the merged the running configuration back to the original
+8. Verify how the retore will merge the running configuration back to the original
 
 # Network Backups GIT
 
