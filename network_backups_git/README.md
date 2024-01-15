@@ -121,8 +121,9 @@ https://student1.hr96x.example.opentlc.com/gitea/gitea/network-demos-repo
 # Network Intended GIT
 
 [Table of Contents](#table-of-contents)
-- [Step 1 - Collect Backup Configurations](#step-1---credential)
-- [Step 2 - Review](#step-2---job-template)
+- [Step 1 - Modify the Routers](#modify-the-routers)
+- [Step 2 - Verify the new Job-templates](#verify-the-new-job-templates)
+- [Step 3 -  Launch the Network-Intended Job-template](#launch-the-network-intended-job-template)
 
 ## Overview
 In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now make a change to some of the same routers using out of band OOB management and the CLI to demonstrate configuration drift. By using the saved router configurations from a particular branch we can detect that the router configuraion has drifted away from our single source of truth as understood by Ansible.
@@ -232,11 +233,15 @@ ec2-user@oooops>
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Collect Backup Configurations](#step-1---credential)
-- [Step 2 - Review](#step-2---job-template)
+- [Step 2 - Inspect the rtr1 stdout/json output](#inspect-the-rtr1-stdout/json-output)
 
 ## Overview
-In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now run the Network Restore job-template and select the same backup branch from the previous "Network Intended" job. This will render a buckup restore by merging the backup file to the group/device(s) that were detected to have confgiuration drift (DIFF). 
+In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now run the Network Restore job-template and select the same backup branch from the previous "Network Intended" job. This will render a buckup restore by merging the backup file to the group/device(s) that were detected to have confgiuration drift (DIFF).
 
+### Step 1 - Launch the Network-Intended Job-template
+Ensure that you select the same backup branch as used inthe "Network Intended" steps.
+
+Output
 ~~~
 
 TASK [Clone a Repo to EE] ******************************************************
@@ -255,9 +260,19 @@ rtr3                       : ok=1    changed=1    unreachable=0    failed=0    s
 rtr4                       : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
 ~~~
 
-This time the restore.yml playbook is configured to push the config backup files and actually change `merge` the configurations with the remote devices. As mentioned previosly no changes are needed for the arista routers (rtr2, rtr4)
+This time the restore.yml playbook is configured to push the config backup files to change `merge` the configurations with the remote devices. As mentioned previosly no changes are needed for the arista routers (rtr2, rtr4)
 
+### Step 1 - Inspect the rtr1 stdout/json output
 ![changed](../images/changed.png)
+
+Optional: SSH to rtr1 and rtr3 to validate the hostname chaned back to the original.
+
+# Key Take Aways
+* The network.backup.run validated role can backup router configs to Git using branches
+* You can use remote SCM from the role or adjust git parameters dirrectly though the ansible.scm collection (we did the latter)
+* Each branch of backups can be used as an inteded config or for restoral purposes.
+* The intended config compares diffs between the chosen backup and the devices running configuration.
+* If there is a detected configuration drift (diff), then a backup configuration can be pushed back to the device for a configuration merge.
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)

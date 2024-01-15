@@ -23,6 +23,7 @@
     volumes:
       - "{{ file_path }}:/usr/share/nginx/html:Z"
     recreate: true
+    restart_policy: always
 
 - name: Create HTML report
   ansible.builtin.template:
