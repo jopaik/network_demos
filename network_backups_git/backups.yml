@@ -70,6 +70,7 @@
         playbook: "network_backups_git/intended.yml"
         credentials:
           - "Workshop Credential"
+          - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present"
         diff_mode: true
@@ -121,6 +122,7 @@
         playbook: "network_backups_git/restore.yml"
         credentials:
           - "Workshop Credential"
+          - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present"
         survey_enabled: true

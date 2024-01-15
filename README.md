@@ -40,6 +40,7 @@ Upon receiving a POD environment, please scroll down directly to the `Getting St
 # Getting Started
 
 ## Summary of steps
+The following steps only take a few minutes to prep all the demos.
 1. wget https://gitlab.com/redhatautomation/network_demos/-/raw/main/gitea/gitea.yml
 2. ansible-navigator run -m stdout gitea.yml
 3. setup VSCode for git
