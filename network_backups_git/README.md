@@ -27,7 +27,7 @@ PLAY [Backup Cisco Configs to Gitea in Branches] *******************************
 TASK [Retrieve a repository from a distant location and make it available to the local EE] ***
 changed: [localhost] 
 ```
-`This above task is used tp clone the network-demos-rep from the gitea repository to the execution environment`
+`The above task is used tp clone the network-demos-rep from the gitea repository to the execution environment`
 ```
 TASK [Network Backup and Resource Manager] *************************************
 ```
