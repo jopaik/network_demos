@@ -257,4 +257,7 @@ rtr4                       : ok=1    changed=0    unreachable=0    failed=0    s
 
 This time the restore.yml playbook is configured to push the config backup files and actually change `merge` the configurations with the remote devices. As mentioned previosly no changes are needed for the arista routers (rtr2, rtr4)
 
-[Click Here to return to the Ansible Network Automation Workshop](../README.md)
+![changed](../images/changed.png)
+
+## Return to Demo Menu
+ - [Menu of Demos](../README.md)
