@@ -273,7 +273,7 @@ This time the restore.yml playbook is configured to push the config backup files
 ### Step 1 - Inspect the rtr1 stdout/json output
 ![changed](../images/changed.png)
 
-Optional: SSH to rtr1 and rtr3 to validate the hostname chaned back to the original.
+Optional: SSH to rtr1 and rtr3 to validate the hostname changed back to the original.
 
 # Key Take Aways
 * The network.backup.run validated role backups router configs to Git using branches.
