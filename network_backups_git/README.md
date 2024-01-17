@@ -136,6 +136,8 @@ https://student1.hr96x.example.opentlc.com/gitea/gitea/network-demos-repo
 ## Overview
 In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now make a change to some of the same routers using out of band OOB management and the CLI to demonstrate configuration drift. By using the saved router configurations from a particular branch we can detect that the router configuraion has drifted away from our single source of truth as understood by Ansible.
 
+## The playbook in this demo  will change when network.restore is released 
+
 ### Step 1 - Modify the Routers
 1. Modify rtr1's hostname. 
 rt1 is a Cisco router. Access the router from the VSCode terminal window
@@ -245,6 +247,8 @@ ec2-user@oooops>
 
 ## Overview
 In this portion of the demo we have a backup file(s) saved for each router in the Gitea repository. We will now run the Network Restore job-template and select the same backup branch from the previous "Network Intended" job. This will render a buckup restore by merging the backup file to the group/device(s) that were detected to have confgiuration drift (DIFF).
+
+## The playbook in this demo will change when network.restore is released 
 
 ### Step 1 - Launch the Network-Intended Job-template
 Ensure that you select the same backup branch as used inthe "Network Intended" steps.
