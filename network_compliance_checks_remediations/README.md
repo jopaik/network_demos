@@ -2,16 +2,14 @@
  - [Menu of Demos](../README.md)
 
 # Summary of steps
-1. Collect Backup configurations from routers and save them to Gitea branches
-2. Verify Branches in Gitea
-3. Modify the Routers from the CLI
-4. Verify Job-template(s) exist
-5. Launch the Network-Intended Job-Template
-6. Review the Diff between the backup up configs and the running configs on the routers
-7. Launch the Network Restore Job Template
-8. Verify how the retore will merge the running configuration back to the original
+1. Run the Network-Compliance-Workflow
+2. Review the check-mode output 
+3. Use SSH to validate no change in routers 
+3. Accept the approval node in the workflow
+4. Review the run-mode output
+5. Use SSH to Validate the changes were made in routers 
 
-# Exercise 3 - Network Compliance
+# Network Compliance Checks ans Remediations
 
 [Table of Contents](#table-of-contents)
   - [Step 1 - Run the Workflow](#step-1---run-the-workflow)
@@ -32,10 +30,12 @@ Check mode will run the playbook to list the before state and the necessary reme
 Run mode will replace the needed configurations.
 
 ### Step 1 - Run the Workflow
-Locate and Launch the Network-Compliance-Workflow. In the survey, select all groups and all compliane roles except for `stig`. Stig will be run afterwards using only the Cisco group.
+Locate and Launch the . In the survey, select all groups and all compliane roles except for `stig`. Stig will be run afterwards using only the Cisco group.
 
 The initial workflow should run the Network-Compliance-Check node but pause at the approval node. 
-1. Review the Network-Compliance-Check job and then approve the approval node.
+1. Review the changed tasks in the output as well as the `before`, `after`, `commands` info from from the json panels.
+
+2. Review the Network-Compliance-Check job and then approve the approval node.
 
 ![approval](../images/approval_stop.png)
 * click on the change approval node "step"
