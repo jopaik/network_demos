@@ -67,6 +67,12 @@ Please note this option can only succeed, if selecting only with the Cisco group
 
 Congratulations your stig chaeck completed and your devices are compliant!!!! or at least for now ;-)
 
+# Key Takeaways
+* Compliance checks are easy to create with network resource modules
+* Check mode allows you to run a playbook with output but not apply the changes to the device
+* Run mode applies the changes to remote devices
+* Approval Nodes pause a workflow to allow for changs or troubleshooting
+
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
 

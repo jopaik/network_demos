@@ -279,7 +279,7 @@ This time the restore.yml playbook is configured to push the config backup files
 
 Optional: SSH to rtr1 and rtr3 to validate the hostname changed back to the original.
 
-# Key Take Aways
+# Key Takeaways
 * The network.backup.run validated role backups router configs to Git using branches.
 * The role uses remote SCM parameters, if more flexibility is needded than adjust git parameters dirrectly from the ansible.scm collection (we did the latter)
 * Each branch of backups can be used as an inteded config or for restoral purposes.

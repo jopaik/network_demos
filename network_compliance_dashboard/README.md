@@ -125,7 +125,7 @@ Run the `Network-Compliance-Dashboard` job-template and reload the dashboard tab
 ### Step 8 - Optional Challenge
 Create a schedule in the AAP controller to run the Network-Compliance-Dashboard job-template periodically. No screen shots available.
 
-## Key Takaways
+## Key Takeaways
 * Network Facts are an easy method to discover and collect the network device configurations
 * Dashboards and Reports are easy to populate with Network Facts
 
