@@ -226,6 +226,60 @@
         organization: 'Red Hat network organization'
         success_nodes: 'Change Approval'
         state: present
+
+# This section includes Scoped-config-management
+
+    - name: Create a job-template - Network-Validated-Persist
+      ansible.controller.job_template:
+        name: "Network-Validated-Persist"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "scoped_configuration_management/persist.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Validated-Deploy
+      ansible.controller.job_template:
+        name: "Network-Validated-Deploy"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "scoped_configuration_management/deploy.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Validated-Detect
+      ansible.controller.job_template:
+        name: "Network-Validated-Detect"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "scoped_configuration_management/detect.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Validated-Remediate
+      ansible.controller.job_template:
+        name: "Network-Validated-Remediate"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "scoped_configuration_management/remediate.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+        execution_environment: "Validated Network"
+        state: "present"
     
 
 
