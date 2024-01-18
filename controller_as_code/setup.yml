@@ -132,6 +132,100 @@
           - "Workshop Credential"
         execution_environment: "network workshop execution environment" 
         state: "present"
+
+    # This section includes Network-Check-Complisnce Demo
+    - name: Create a job-template - Network-Check-Compliance
+      ansible.controller.job_template:
+        name: "Network-Check-Compliance"
+        organization: 'Red Hat network organization'
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_compliance_checks_remediations/compliance.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "network workshop execution environment" 
+        job_type: check
+        state: "present" 
+    
+    - name: Create a job-template - Network-Run-Compliance
+      ansible.controller.job_template:
+        name: "Network-Run-Compliance"
+        organization: 'Red Hat network organization'
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_compliance_checks_remediations/compliance.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "network workshop execution environment" 
+        job_type: check
+        state: "present" 
+
+    - name: Create a workflow job template 
+      ansible.controller.workflow_job_template:
+        name: Network-Compliance-Workflow
+        inventory: 'Workshop Inventory'
+        organization: "Red Hat network organization"
+        state: present
+        survey_enabled: true
+        survey:
+            name: ''
+            description: ''
+            spec:
+              - question_name: Which groups/devices to run checks against?
+                type: multiselect
+                variable: _group
+                required: true
+                default:  ''
+                choices:
+                  - cisco
+                  - arista
+                  - juniper
+              - question_name: Please select the desired compliance roles?
+                type: multiselect
+                variable: tag
+                required: true
+                default: ''
+                choices:
+                  - logging
+                  - snmp 
+                  - ntp
+                  - stig
+
+    - name: Node Network-Run-Compliance
+      ansible.controller.workflow_job_template_node:    
+        identifier: Network-Run-Compliance
+        workflow: 'Network-Compliance-Workflow'
+        unified_job_template: Network-Run-Compliance
+        organization: 'Red Hat network organization'
+        state: present
+        
+    - name: Node Change Approval
+      ansible.controller.workflow_job_template_node:    
+        identifier: 'Change Approval'
+        workflow_job_template: 'Network-Compliance-Workflow'
+        organization: 'Red Hat network organization'
+        approval_node: 
+          name: 'Change Approval'
+          timeout: 0
+        state: present    
+
+    - name: Node Change Approval
+      ansible.controller.workflow_job_template_node:    
+        identifier: 'Change Approval'
+        workflow_job_template: 'Network-Compliance-Workflow'
+        organization: 'Red Hat network organization'
+        success_nodes: 
+        - Network-Run-Compliance
+        state: present    
+
+    - name: Node Network-Check-Compliance
+      ansible.controller.workflow_job_template_node:    
+        identifier: Network-Check-Compliance
+        workflow: 'Network-Compliance-Workflow'
+        unified_job_template: Network-Check-Compliance
+        organization: 'Red Hat network organization'
+        success_nodes: 'Change Approval'
+        state: present
     
 
 
