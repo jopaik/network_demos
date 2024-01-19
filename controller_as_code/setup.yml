@@ -280,7 +280,47 @@
           - "Gitea Credential"
         execution_environment: "Validated Network"
         state: "present"
+
+# This section is for the completed network automation workshop 101 AAP Demo
+    - name: Create a job-template - Backup network configurations
+      ansible.controller.job_template:
+        name: "Backup network configurations"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Workshop Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/network_backup.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Controller Credential"
+        execution_environment: "Default execution environment"
+        state: "present"
+
+    - name: Create a job-template - Network Automation - Restore
+      ansible.controller.job_template:
+        name: "Network Automation - Restore"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Workshop Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/network_restore.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Default execution environment"
+        state: "present"
+
+    - name: Create a job-template - Network-Banner
+      ansible.controller.job_template:
+        name: "Network-Banner"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Workshop Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/network_banner.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Default execution environment"
+        state: "present"
+
+
+      
+
+
     
-
-
-  
