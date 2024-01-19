@@ -287,8 +287,8 @@
         name: "Backup network configurations"
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
-        project: "Workshop Project"
-        playbook: "playbooks/network_backup.yml"
+        project: "Student Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_backup.yml"
         credentials:
           - "Workshop Credential"
           - "Controller Credential"
@@ -300,8 +300,8 @@
         name: "Network Automation - Restore"
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
-        project: "Workshop Project"
-        playbook: "playbooks/network_restore.yml"
+        project: "Student Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_restore.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Default execution environment"
@@ -312,8 +312,8 @@
         name: "Network-Banner"
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
-        project: "Workshop Project"
-        playbook: "playbooks/network_banner.yml"
+        project: "Student Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_banner.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Default execution environment"
