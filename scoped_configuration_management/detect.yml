@@ -1,40 +1,13 @@
 ---
-- name: Detect [configuration-drift] from the resource modules 
-  hosts: network,localhost
+- name: Detect [configuration-drift] from the resource modules
+  hosts: network
   gather_facts: false
-  vars_files:
-    - vars/git.yml
   tasks:
-    - name: Clone a Repo to EE 
-      ansible.builtin.shell:
-        cmd: "{{ git_clone }}"
-        chdir: /tmp/
-      when: inventory_hostname == 'localhost'
-    - name: Network Resource Manager
+    - name: Network BGP
       ansible.builtin.include_role:
-        name: resource_manager
+        name: network.bgp.run
       vars:
-        operation: detect
-        resources:
-          - 'bgp_address_family'
+        operations:
+          - name: detect
         data_store:
-         local: "/tmp/student-repo/part2/2-systematic/4-scoped-config-management/solution/"
-      when: inventory_hostname != 'localhost'   
-    
-    - name: Prepare GIT on EE for Credentials(vars/vault.yml)
-      ansible.builtin.shell:
-          cmd: "{{ item }}"
-          chdir: /tmp/student-repo/
-      when: inventory_hostname == 'localhost'
-      loop:
-          - "{{ git_username }}"
-          - "{{ git_email }}"
-          - "{{ git_add }}"
-          - "{{ git_commit }}"
-
-    - name: Push and Hide Token
-      ansible.builtin.shell:
-          cmd: "{{ git_push }}"
-          chdir: /tmp/student-repo/
-      when: inventory_hostname == 'localhost'
-      no_log: true
+          local: "{{ playbook_dir }}"

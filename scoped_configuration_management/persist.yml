@@ -1,13 +1,11 @@
 ---
-- name: Create configuration files from the resource modules 
-  hosts: network,localhost
+- name: Create configuration files from the resource modules
+  hosts: network, localhost
   gather_facts: false
-  vars_files:
-    - vars/git.yml
   tasks:
-    - name: Clone a Repo to EE 
+    - name: Clone a Repo to EE
       shell:
-        cmd: "{{ git_clone }}"
+        cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
         chdir: /tmp/
       when: inventory_hostname == 'localhost'
 
@@ -17,51 +15,38 @@
       vars:
         operation: persist
         resources:
-          - 'acl_interfaces'
-          - 'acls'
-          - 'bgp_address_family'
-          - 'bgp_global'
-          - 'hostname'
-          - 'interfaces'
-          - 'l2_interfaces'
-          - 'l3_interfaces'
-          - 'lacp'
-          - 'lacp_interfaces'
-          - 'lag_interfaces'
-          - 'lldp_global'
-          - 'lldp_interfaces'
-          - 'logging_global'
-          - 'ntp_global'
-          - 'ospf_interfaces'
-          - 'ospfv2'
-          - 'ospfv3'
-          - 'prefix_lists'
-          - 'route_maps'
-          - 'service'
-          - 'snmp_server'
-          - 'static_routes'
+          - "acl_interfaces"
+          - "acls"
+          - "bgp_address_family"
+          - "bgp_global"
+          - "hostname"
+          - "interfaces"
+          - "l2_interfaces"
+          - "l3_interfaces"
+          - "lacp"
+          - "lacp_interfaces"
+          - "lag_interfaces"
+          - "lldp_global"
+          - "lldp_interfaces"
+          - "logging_global"
+          - "ntp_global"
+          - "ospf_interfaces"
+          - "ospfv2"
+          - "ospfv3"
+          - "prefix_lists"
+          - "route_maps"
+          - "service"
+          - "snmp_server"
+          - "static_routes"
         data_store:
-         local: "/tmp/student-repo/part2/2-systematic/4-scoped-config-management/solution/"
+          local: "/tmp/network-demos-repo/scoped_configuration_management"
       when: inventory_hostname != 'localhost'
 
-    - name: Prepare GIT on EE for Credentials(vars/vault.yml)
-      ansible.builtin.shell:
-          cmd: "{{ item }}"
-          chdir: /tmp/student-repo/
+    - name: Publish the changes
+      ansible.scm.git_publish:
+        path: "/tmp/network-demos-repo"
+        token: "{{ password }}"
+        user:
+          name: "{{ username }}"
+          email: "{{ email }}"
       when: inventory_hostname == 'localhost'
-      loop:
-          - "{{ git_username }}"
-          - "{{ git_email }}"
-          - "{{ git_add }}"
-          - "{{ git_commit }}"
-
-    - name: Push and Hide Token
-      ansible.builtin.shell:
-          cmd: "{{ git_push }}"
-          chdir: /tmp/student-repo/
-      when: inventory_hostname == 'localhost'
-      no_log: true
-
-          
-
-       

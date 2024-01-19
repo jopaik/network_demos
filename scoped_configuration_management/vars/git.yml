@@ -1,9 +1,0 @@
----
-git_email: git config --global user.email admin@example.com
-git_add: 'git add --all' 
-git_commit: git commit --allow-empty -m "Changed by AAP2.4" 
-git_username: git config --global user.name gitea
-git_push: git push http://gitea:{{password}}@ansible-1:3000/gitea/student-repo.git/   
-git_clone: git clone http://gitea:{{password}}@ansible-1:3000/gitea/student-repo.git/ 
-url: http://ansible-1:3000/gitea/student-repo.git/ 
-
