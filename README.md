@@ -23,7 +23,7 @@ Upon receiving a POD environment, please scroll down directly to the `Getting St
    * Handlers
    * Cisco STIG
 - [Scoped Configuration Management](scoped_configuration_management/README.md)
-   * Validated Content: network.base 
+   * Validated Content: `network.base` 
    * Operations: Persist, Deploy, Detect, Remediate
    * BGP
 - [Completed Ansible Network Automation Workshop 101 Demo ](completed_ansible_network_automation_workshop_101_demo/README.md)
