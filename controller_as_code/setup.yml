@@ -319,6 +319,13 @@
         execution_environment: "Default execution environment"
         state: "present"
 
+    - name: Enable host
+      ansible.controller.host:
+        name: backup-server
+        state: present
+        inventory: "Workshop Inventory" 
+        enabled: true
+
 
       
 
