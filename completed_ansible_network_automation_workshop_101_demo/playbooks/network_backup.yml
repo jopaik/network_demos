@@ -67,7 +67,7 @@
         job_type: "run"
         inventory: "{{ restore_inventory | default('Network Inventory') }}"
         project: "{{ restore_project | default('Student Project') }}"
-        playbook: "{{ restores_playbook | default('playbooks/network_restore.yml') }}"
+        playbook: "{{ restores_playbook | default('completed_ansible_network_automation_workshop_101_demo/playbooks/network_restore.yml') }}"
         credential: "{{ restore_credential | default('Network Credential') }}"
         survey_enabled: true
         survey_spec: "{{ lookup('template', '{{ playbook_dir }}/templates/backup.j2') }}"
