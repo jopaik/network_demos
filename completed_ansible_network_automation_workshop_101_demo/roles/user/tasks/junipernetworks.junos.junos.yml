@@ -4,7 +4,7 @@
     sshkey: "{{ network_key | default(omit, True) }}"
   when: network_key is defined and network_key
 
-- name: Change passwrod for Juniper JUNOS
+- name: Change password for Juniper JUNOS
   vars:
     ansible_connection: network_cli
   ansible.netcommon.cli_command:
@@ -22,4 +22,5 @@
     - "set system login user {{ network_name }} authentication plain-text-password"
     - "set system login user {{ network_name }} class {{ network_juniper_class }}"
     - "commit"
+  ignore_errors: true
   when: network_configured_password is defined and network_configured_password
