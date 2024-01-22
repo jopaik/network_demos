@@ -1,0 +1,4 @@
+policy_group,pg_descr,lag_type,link_level_policy,cdp_policy,cdp_enabled,mcp_policy,mcp_enabled,lldp_policy,lldp_enabled,port_channel_policy,aep
+Ansible_FI-1A,Created with AAP2.2,node,Ansible_linkLevel,Ansible_cdp,TRUE,Ansible_mcp,FALSE,Ansible_lldp,FALSE,lacp_active,Ansible_aep
+Ansible_FI-1B,Created with AAP2.2,node,Ansible_linkLevel,Ansible_cdp,TRUE,Ansible_mcp,FALSE,Ansible_lldp,FALSE,lacp_active,Ansible_aep
+Ansible_external_corporate,Created with AAP2.2,node,Ansible_linkLevel,Ansible_cdp,TRUE,Ansible_mcp,FALSE,Ansible_lldp,FALSE,lacp_active,Ansible_aep

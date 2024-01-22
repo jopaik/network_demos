@@ -1,0 +1,4 @@
+sw_policy_profile,interface_selector_profile
+leafs_1-2,Ansible_FI-1A
+leafs_1-2,Ansible_FI-1B
+leafs_1-2,Ansible_corporate_external

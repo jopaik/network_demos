@@ -1,0 +1,4 @@
+name,nodeid,serial
+leaf_1,101,TEP-1-101
+leaf_2,102,TEP-1-102
+spine_1,201,TEP-1-103

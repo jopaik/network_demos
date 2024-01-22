@@ -1,0 +1,7 @@
+---
+ansible-navigator:
+  execution-environment:
+    container-engine: auto
+    image: registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8
+  playbook-artifact:
+    enable: false

@@ -1,0 +1,145 @@
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files: vars/controller_vars.yml
+  
+  environment:
+    CONTROLLER_HOST: https://controller #change
+    CONTROLLER_USERNAME: admin
+    CONTROLLER_PASSWORD: C1sco12345
+    CONTROLLER_VERIFY_SSL: false
+  
+
+  tasks:
+    - name: Add inventory
+      ansible.controller.inventory:
+        name: aci_csv
+        organization: "{{ organization }}"
+        
+    - name: Create Project
+      ansible.controller.project:
+        name: aci-read-csv
+        scm_url: https://gitlab.com/tdubiel1/read_csv.git #Change
+        scm_type: git
+        scm_update_on_launch: yes
+        organization: "{{ organization }}"
+        
+
+    - name: Update Project
+      ansible.controller.project_update:
+        project: aci-read-csv
+
+    - name: Add an Inventory Source
+      ansible.controller.inventory_source:
+        name: aci_csv
+        inventory: aci_csv
+        source: scm
+        source_project: aci-read-csv
+        execution_environment: "cisco-ee" #Need EE with ACI collection
+
+    - name: Add Job-Templates
+      ansible.controller.job_template:
+        name: "{{item.name}}"
+        project: "{{item.project}}"
+        inventory: "{{item.inventory}}"
+        playbook: "{{item.playbook}}"
+        survey_enabled: "{{ item.survey_enabled | default(omit, True) }}"
+        survey_spec: "{{ item.survey_spec | default(omit, True) }}" 
+      loop: "{{templates}}"
+
+    - name: 0-ACI-as-Code-Workflow
+      ansible.controller.workflow_job_template:
+        name: 0-ACI-as-Code-Workflow
+        survey_enabled: yes
+        survey_spec: {
+                          "description": "",
+                          "name": "",
+                          "spec": [
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": true,
+                                  "question_description": "",
+                                  "question_name": "Enter your Username",
+                                  "required": true,
+                                  "type": "text",
+                                  "variable": "apic_username"
+                              },
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "formattedChoices": [
+                                      {
+                                          "choice": "",
+                                          "id": 0,
+                                          "isDefault": false
+                                      }
+                                  ],
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": false,
+                                  "question_description": "",
+                                  "question_name": "Enter your Password",
+                                  "required": true,
+                                  "type": "password",
+                                  "variable": "apic_password"
+                              },
+                              {
+                                  "choices": "False\nTrue",
+                                  "default": "False",
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": true,
+                                  "question_description": "",
+                                  "question_name": "Validate APIC Certificate",
+                                  "required": true,
+                                  "type": "multiplechoice",
+                                  "variable": "apic_validate_certs"
+                              },
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "formattedChoices": [
+                                      {
+                                          "choice": "",
+                                          "id": 0,
+                                          "isDefault": false
+                                      }
+                                  ],
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": false,
+                                  "question_description": "",
+                                  "question_name": "Please enter your Change-ID",
+                                  "required": true,
+                                  "type": "text",
+                                  "variable": "snapshot"
+                              }
+                              ]}
+        
+
+    - name: ACI-Day2-Health-Check
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Day2-Health-Check
+        workflow: 0-ACI-as-Code-Workflow
+        unified_job_template: ACI-Day2-Health-Check
+
+    - name: ACI-Rollback
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Rollback
+        workflow: 0-ACI-as-Code-Workflow
+        unified_job_template: ACI-Rollback 
+
+    - name: ACI-Day0-1-Config-Staging
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Day0-1-Config-Staging
+        workflow: 0-ACI-as-Code-Workflow
+        unified_job_template: ACI-Day0-1-Config-Staging
+        success_nodes: ACI-Day2-Health-Check
+        failure_nodes: ACI-Rollback
+   
+   

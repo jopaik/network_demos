@@ -1,0 +1,2 @@
+tenant,description,ap,epg,l3out_name,extepg_name,node_profile,encap_id,deploy_immediacy,interface_mode,interface_type,interface,pod_id,leafs,vrf,contract_name,contract_type
+Ansible,Created with AAP2.2,Ansible_AP,web,Ansible_l3out,Ansible_external_corporate,Ansible_external_corporate,311,immediate,trunk,vpc,Ansible_FI-1A,1,101-102,Ansible_vrf,web,provider
