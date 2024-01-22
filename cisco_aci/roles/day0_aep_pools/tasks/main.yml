@@ -21,6 +21,8 @@
         <<: *aci_login
         pool: "{{ vlan_pool_item.vlan_pool | default(omit, True)   }}"
         pool_allocation_mode: "{{ vlan_pool_item.alloc | default(omit, True)  }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_aci_vlan_pool.list }}"
       loop_control:
         loop_var: vlan_pool_item
@@ -35,6 +37,8 @@
         block_start: "{{ vl_pool_item.encap_from  | default(omit, True) }}"
         block_end: "{{ vl_pool_item.encap_to  | default(omit, True) }}"
         block_name: "{{ vl_pool_item.block_name | default(omit, True)  }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_aci_vlan_pool.list }}"
       loop_control:
         loop_var: vl_pool_item
@@ -50,6 +54,8 @@
         <<: *aci_login
         aep: "{{ aep_item.aep | default(omit, True) }}"
         infra_vlan: true
+      retries: 2
+      delay: 5
       loop: "{{ aci_aep.list | default(omit, True)  }}"
       loop_control:
         loop_var: aep_item
@@ -65,6 +71,8 @@
         <<: *aci_login
         domain: "{{ physical_item.domain | default(omit, True) }}"
         domain_type: phys
+      retries: 2
+      delay: 5
       loop: "{{ aci_phys.list }}"
       loop_control:
         loop_var: physical_item
@@ -77,6 +85,8 @@
         domain_type: "{{ vlan_item.domain_type | default(omit, True) }}"
         pool: "{{ vlan_item.vlan_pool | default(omit, True)  }}"
         pool_allocation_mode: static
+      retries: 2
+      delay: 5
       loop: "{{ aci_phys.list }}"
       loop_control:
         loop_var: vlan_item

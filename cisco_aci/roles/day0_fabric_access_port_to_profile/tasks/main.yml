@@ -22,6 +22,8 @@
         interface_profile: "{{ profile_item.interface_profile | default(omit, True) }}"
         description: "{{ profile_item.description | default(omit, True) }}"
         type: "{{ profile_item.type | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: profile_item
@@ -43,6 +45,8 @@
         to_card: "{{ access_item.to_card  | default(omit, True) }}"
         to_port: "{{ access_item.to_port | default(omit, True)  }}"
         port_blk: "{{ access_item.port_blk  | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: access_item

@@ -20,6 +20,8 @@
       cisco.aci.aci_switch_policy_leaf_profile:
         <<: *aci_login
         leaf_profile: "{{sw_pol_item.sw_policy_profile | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ sw_profile_selector.list }}"
       loop_control:
         loop_var: sw_pol_item
@@ -30,6 +32,8 @@
         <<: *aci_login
         leaf_profile: "{{ sw_pol_selector_item.sw_policy_profile | default(omit, True) }}"
         interface_selector: "{{ sw_pol_selector_item.interface_selector_profile | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ sw_profile_selector.list }}"
       loop_control:
         loop_var: sw_pol_selector_item
@@ -45,6 +49,8 @@
         <<: *aci_login
         name: "{{  cdp_item.cdp_policy | default(omit, True) }}"
         admin_state: "{{ cdp_item.cdp_enabled | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: cdp_item
@@ -55,6 +61,8 @@
         <<: *aci_login
         mcp: "{{  mcp_item.mcp_policy | default(omit, True) }}"
         admin_state: "{{ mcp_item.mcp_enabled | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: mcp_item
@@ -65,6 +73,8 @@
       cisco.aci.aci_interface_policy_lldp:
         <<: *aci_login
         name: "{{  lldp_item.lldp_policy | default(omit, True) }}"
+      retries: 2
+      delay: 5
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: lldp_item
@@ -79,6 +89,8 @@
         speed: 10G
         link_debounce_interval: 100
         forwarding_error_correction: cl91-rs-fec
+      retries: 2
+      delay: 5
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: level_item
@@ -106,6 +118,8 @@
         # l2_interface_policy: "{{  add_ifselector_item.l2_interface_policy }}"
         # port_security_policy: "{{  add_ifselector_item.port_security_policy }}"
         aep: "{{  add_ifselector_item.aep | default(omit, True)  }}"
+      retries: 2
+      delay: 5
       ignore_errors: true
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
