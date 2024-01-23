@@ -27,7 +27,7 @@
 
     - name: SNMP compliance violation
       ansible.builtin.debug:
-      msg:
-        - "SNMP compliance violation on {{ inventory_hostname }}"
+        msg:
+          - "SNMP compliance violation on {{ inventory_hostname }}"
   
 
