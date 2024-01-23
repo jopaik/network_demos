@@ -1,0 +1,346 @@
+[student@ansible-1 network-workshop]$ ssh rtr1
+
+rrrrrr
+
+
+rtr1#sh run
+Building configuration...
+
+Current configuration : 5325 bytes
+!
+! Last configuration change at 16:10:15 UTC Mon Apr 10 2023 by ec2-user
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname rtr1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition GS
+ rd 100:100
+ !
+ address-family ipv4
+ exit-address-family
+!
+logging persistent size 1000000 filesize 8192 immediate
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!         
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3073114035
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3073114035
+ revocation-check none
+ rsakeypair TP-self-signed-3073114035
+!
+!
+crypto pki certificate chain TP-self-signed-3073114035
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33303733 31313430 3335301E 170D3233 30343130 31323331 
+  31305A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 30373331 
+  31343033 35308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+  0A028201 0100C761 55C95902 D278EF72 04E9BE22 59DA05B4 B514706E 512601DA 
+  56240586 3FA070E8 AC63F3A3 A4E213BC 70AD37BE 7CAFDE7F 104AC2CA ADEFF797 
+  A8FCA67D 216509F3 224D3DB5 61DCE494 BF9982EF C79AD6C7 51F65AD6 1CA5C85A 
+  E20B7A63 83F6FCE0 C3643ED5 93FA1304 18E14C10 DEAF4A0B 90EED0DC 7DE2FAC6 
+  717C9D36 18A835F6 6EE0F80C F335EFC4 8BFD2F14 E6E0C948 C6EAA689 3ABB0B26 
+  C540CC48 C9965C0A 00E1437A 98D5A90E C842D771 12D0EC20 8D41F953 65F3BBE1 
+  5DD8E2A7 3617BA64 CC963210 40496876 A35409CA D5B71A6F 1D22C8A0 45427903 
+  6173B312 376F24E6 875A6793 D8225698 FCF720A2 AED854EC 320F7E36 6D096C02 
+  3B23E39E DB030203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+  301F0603 551D2304 18301680 149402FF 69FEDA61 AC5A1995 F3848B3A 00D78113 
+  7C301D06 03551D0E 04160414 9402FF69 FEDA61AC 5A1995F3 848B3A00 D781137C 
+  300D0609 2A864886 F70D0101 05050003 82010100 A643F470 CBF9A00E F68E57C3 
+  67DB5B37 22E0B455 5182AD38 AF0F2182 7F96754B DD366469 995E4A65 E7C5985A 
+  04BAA463 FBF2CAFE 1B409739 3006F4D1 E8361D59 BCE0BE46 9A2DD4CC EC6D96F6 
+  70734BC5 FB749DBC 534CD243 B1901481 96BF0DA0 9D90F7F2 1A1A19D4 1E4E0322 
+  17B807A1 946FC17A 178C7622 7DAA5F4A 0ADF52D4 C28D819D 376D02EA D94408C1 
+  C2A6D66F CBEA3E53 10E55665 0C37AFB6 7D9D6935 4C4A27D5 E6BD2D02 C280314F 
+  D82601EB 90012529 35A208F4 336BDA18 D433AAEF C538E278 DA73ABFA CFAC90E8 
+  3002772D 2FBB71BC 6B6F7330 68C4D631 FF47E625 FDC054A9 BBFB00CC 7E4B2E1A 
+  E1C827D8 435E61FF CA18E7DD AAC93A12 A4791608
+        quit
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9E9UTH9YVFJ
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username ec2-user privilege 15
+username ansible secret 5 $1$Bcxe$SK/skwt5GvP8V7SSgOvxI0
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 192.168.1.1 255.255.255.255
+!
+interface Tunnel0
+ ip address 10.100.100.1 255.255.255.0
+ ip mtu 1476
+ ip tcp adjust-mss 1360
+ ip ospf 1 area 0
+ tunnel source GigabitEthernet1
+ tunnel destination 172.16.184.179
+!
+interface Tunnel1
+ ip address 10.200.200.1 255.255.255.0
+ tunnel source GigabitEthernet1
+ tunnel destination 18.118.2.129
+!
+interface VirtualPortGroup0
+ vrf forwarding GS
+ ip address 192.168.35.101 255.255.255.0
+ ip nat inside
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet1
+ ip address dhcp
+ ip nat outside
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 192.168.1.1
+ redistribute bgp 65000 subnets
+!
+router bgp 65000
+ bgp router-id 192.168.1.1
+ bgp log-neighbor-changes
+ neighbor 10.200.200.2 remote-as 65001
+ neighbor 10.200.200.2 ebgp-multihop 255
+ !        
+ address-family ipv4
+  network 10.100.100.0 mask 255.255.255.0
+  network 10.200.200.0 mask 255.255.255.0
+  network 172.16.0.0
+  network 192.168.1.1 mask 255.255.255.255
+  redistribute ospf 1
+  neighbor 10.200.200.2 activate
+ exit-address-family
+!
+iox
+ip forward-protocol nd
+ip tcp window-size 8192
+ip http server
+ip http authentication local
+ip http secure-server
+ip nat inside source list GS_NAT_ACL interface GigabitEthernet1 vrf GS overload
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet1 172.16.0.1
+ip route vrf GS 0.0.0.0 0.0.0.0 GigabitEthernet1 172.16.0.1 global
+!
+ip ssh rsa keypair-name ssh-key
+ip ssh version 2
+ip ssh pubkey-chain
+  username ec2-user
+   key-hash ssh-rsa 1005F1FE3A46CF56D1B59E0D6BA07D2C ec2-user
+ip scp server enable
+!
+!
+ip access-list standard GS_NAT_ACL
+ permit 192.168.35.0 0.0.0.255
+!
+!
+snmp-server community ansible-public RO
+snmp-server community ansible-private RW
+snmp-server community ansible-test RO
+!
+!
+control-plane
+!
+!
+!
+!
+!
+banner motd ^C
+rrrrrr    
+^C
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 20
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+app-hosting appid guestshell
+ app-vnic gateway1 virtualportgroup 0 guest-interface 0
+  guest-ipaddress 192.168.35.102 netmask 255.255.255.0
+ app-default-gateway 192.168.35.101 guest-interface 0
+ name-server0 8.8.8.8
+end       
+
+rtr1#  
+
+
+Extended IP access list meetup
+    10 permit tcp 172.16.0.0 0.0.255.255 eq www host 192.168.1.1 log
+    20 permit tcp 172.16.0.0 0.0.255.255 eq 443 host 192.168.1.1 log
+    30 permit tcp 172.16.0.0 0.0.255.255 eq 22 host 192.168.1.1 log
+    40 permit tcp 172.16.0.0 0.0.255.255 eq 830 host 192.168.1.1 log
+
+Extended IP access list:
+
+access-list accessListName { permit | deny } ip { srcIP srcWildIp |
+host srcIPHost | any } { dstIP dstWildIp | host dstIPHost | any } [ log ]
+
+set firewall family inet filter meetup interface-specific
+set firewall family inet filter meetup term web from source-address 172.16.0.0/16
+set firewall family inet filter meetup term web from destination-address 192.168.1.1/32
+set firewall family inet filter meetup term web from protocol tcp
+set firewall family inet filter meetup term web from destination-port 80
+
+delete interfaces gr-0/0/0.0 family inet filter input meetup
+set interfaces gr-0/0/0.0 family inet filter input meetup
+
+interface gr-0/0/0.0
+
+
+
+no ip access-list extended meetup
+ip access-list extended meetup
+  5 permit ospf any any log
+ 10 permit tcp host 192.168.3.3 host 192.168.1.1 eq www log
+ 20 permit tcp host 192.168.3.3 host 192.168.1.1 eq 443 log
+ 30 permit tcp host 192.168.3.3 host 192.168.1.1 eq 22 log
+ 40 permit tcp host 192.168.3.3 host 192.168.1.1 eq 830 log
+ 50 permit ospf any any log
+ 60 permit icmp any any log
+
+ no ip access-list extended meetup
+ ip access-list extended meetup
+ 10 permit tcp host 192.168.3.3 host 192.168.1.1 eq www log
+ 20 permit tcp host 192.168.3.3 host 192.168.1.1 eq 443 log
+ 30 permit tcp host 192.168.3.3 host 192.168.1.1 eq 22 log
+ 40 permit tcp host 192.168.3.3 host 192.168.1.1 eq 830 log
+ 50 permit ospf any any log
+ 60 permit icmp any any log
+ 70 permit tcp any any gt 32766 log
+
+delete interfaces gr-0/0/0.0 family inet filter input meetup
+delete firewall family inet filter meetup
+
+set interfaces gr-0/0/0.0 family inet filter input meetup
+ 
+ 
+set firewall family inet filter meetup interface-specific
+set firewall family inet filter meetup term web from source-address 192.168.1.1/32
+set firewall family inet filter meetup term web from destination-address 192.168.3.3/32
+set firewall family inet filter meetup term web from protocol tcp
+set firewall family inet filter meetup term web from destination-port 80
+set firewall family inet filter meetup term web then accept
+set firewall family inet filter meetup term https from source-address 192.168.1.1/32
+set firewall family inet filter meetup term https from destination-address 192.168.3.3/32
+set firewall family inet filter meetup term https from protocol tcp
+set firewall family inet filter meetup term https from destination-port 443
+set firewall family inet filter meetup term https then accept
+set firewall family inet filter meetup term ssh from source-address 192.168.1.1/32
+set firewall family inet filter meetup term ssh from destination-address 192.168.3.3/32
+set firewall family inet filter meetup term ssh from protocol tcp
+set firewall family inet filter meetup term ssh from destination-port 22
+set firewall family inet filter meetup term ssh then accept
+set firewall family inet filter meetup term ephem from source-address 192.168.1.1/32
+set firewall family inet filter meetup term ephem from destination-address 192.168.3.3/32
+set firewall family inet filter meetup term ephem from protocol tcp
+set firewall family inet filter meetup term ephem from destination-port 32766-65535
+set firewall family inet filter meetup term ephem then accept
+set firewall family inet filter meetup term ospf from protocol ospf
+set firewall family inet filter meetup term ospf then accept
+set firewall family inet filter meetup term icmp from protocol icmp
+set firewall family inet filter meetup term icmp then accept
+
+
+no ip access-list extended meetup
+ip access-list extended meetup
+ 10 permit tcp host 192.168.3.3 host 192.168.1.1 eq 80 log
+ 20 permit tcp host 192.168.3.3 host 192.168.1.1 eq 443 log
+ 30 permit tcp host 192.168.3.3 host 192.168.1.1 eq 22 log
+ 40 permit ospf any any log
+ 50 permit icmp any any log
+ 60 permit tcp any any gt 32766 log
+
+
+
+
+
+
+ 

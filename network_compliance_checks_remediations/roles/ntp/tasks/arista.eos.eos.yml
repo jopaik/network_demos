@@ -3,6 +3,7 @@
   arista.eos.eos_ntp_global:
     config: "{{ ntp_eos }}"
     state: replaced
+  notify: NTP compliance violation
   register: diff
 
 - ansible.builtin.debug:

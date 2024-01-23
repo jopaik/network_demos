@@ -1,0 +1,87 @@
+changed: false
+failed: false
+gathered:
+-   acls:
+    -   aces:
+        -   grant: permit
+            sequence: 10
+            source:
+                address: 192.168.35.0
+                wildcard_bits: 0.0.0.255
+        acl_type: standard
+        name: GS_NAT_ACL
+    -   aces:
+        -   destination:
+                host: 192.168.1.1
+                port_protocol:
+                    eq: www
+            grant: permit
+            log:
+                set: true
+            protocol: tcp
+            sequence: 10
+            source:
+                host: 192.168.3.3
+        -   destination:
+                host: 192.168.1.1
+                port_protocol:
+                    eq: '443'
+            grant: permit
+            log:
+                set: true
+            protocol: tcp
+            sequence: 20
+            source:
+                host: 192.168.3.3
+        -   destination:
+                host: 192.168.1.1
+                port_protocol:
+                    eq: '22'
+            grant: permit
+            log:
+                set: true
+            protocol: tcp
+            sequence: 30
+            source:
+                host: 192.168.3.3
+        -   destination:
+                host: 192.168.1.1
+                port_protocol:
+                    eq: '830'
+            grant: permit
+            log:
+                set: true
+            protocol: tcp
+            sequence: 40
+            source:
+                host: 192.168.3.3
+        -   destination:
+                any: true
+            grant: permit
+            log:
+                set: true
+            protocol: ospf
+            sequence: 50
+            source:
+                any: true
+        -   destination:
+                any: true
+            grant: permit
+            log:
+                set: true
+            protocol: icmp
+            sequence: 60
+            source:
+                any: true
+        -   destination:
+                any: true
+            grant: permit
+            protocol: tcp
+            sequence: 70
+            source:
+                any: true
+        acl_type: extended
+        name: meetup
+    -   acl_type: extended
+        name: meraki-fqdn-dns
+    afi: ipv4

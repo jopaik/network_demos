@@ -3,6 +3,7 @@
   junipernetworks.junos.junos_snmp_server:
       config: "{{ snmp_junos }}"
       state: replaced
+      notify: SNMP compliance violation
   register: snmp_diff
 
 - ansible.builtin.debug:

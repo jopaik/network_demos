@@ -3,6 +3,7 @@
   cisco.ios.ios_ntp_global:
     config: "{{ ntp_ios }}"
     state: replaced
+  notify: NTP compliance violation
   register: ntp_diff
 
 - ansible.builtin.debug:

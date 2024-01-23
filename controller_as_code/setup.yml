@@ -153,7 +153,7 @@
         organization: 'Red Hat network organization'
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "network_compliance_checks_remediations/compliance.yml"
+        playbook: "network_compliance_checks_remediations/compliance_run.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "network workshop execution environment" 
@@ -401,6 +401,152 @@
         success_nodes:
           - Network-Banner
           - Network-User
+
+# This section includes the Cisco ACI
+
+    - name: Add group
+      ansible.controller.group:
+        name: apic
+        hosts:
+         - apic1
+        inventory: "Workshop Inventory"
+        state: present
+        
+    - name: Add Host
+      ansible.controller.host:
+        name: apic1
+        inventory: "Workshop Inventory"
+        state: present
+        enabled: true
+        variables:
+          #apic_host: 10.10.20.14 # change for devnet reservered sandbox
+          apic_host: sandboxapicdc.cisco.com #change for always on sandbox
+          #apic_host: 192.168.0.180
+
+    - name: Create a job-template - ACI-Day0-1-Config-Staging
+      ansible.controller.job_template:
+        name: "ACI-Day0-1-Config-Staging"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_aci/playbooks/aci_day0-1.yml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - ACI-Rollback
+      ansible.controller.job_template:
+        name: "ACI-Rollback"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_aci/playbooks/aci_rollback.yml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - ACI-Day2-Health-Check
+      ansible.controller.job_template:
+        name: "ACI-Day2-Health-Check"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_aci/playbooks/aci_health_day2.yml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+
+    - name: 0-ACI-as-Code-Workflow
+      ansible.controller.workflow_job_template:
+        name: 0-ACI-as-Code-Workflow
+        survey_enabled: yes
+        survey_spec: {
+                          "description": "",
+                          "name": "",
+                          "spec": [
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": true,
+                                  "question_description": "",
+                                  "question_name": "Enter your Username",
+                                  "required": true,
+                                  "type": "text",
+                                  "variable": "apic_username"
+                              },
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "formattedChoices": [
+                                      {
+                                          "choice": "",
+                                          "id": 0,
+                                          "isDefault": false
+                                      }
+                                  ],
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": false,
+                                  "question_description": "",
+                                  "question_name": "Enter your Password",
+                                  "required": true,
+                                  "type": "password",
+                                  "variable": "apic_password"
+                              },
+                              {
+                                  "choices": "False\nTrue",
+                                  "default": "False",
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": true,
+                                  "question_description": "",
+                                  "question_name": "Validate APIC Certificate",
+                                  "required": true,
+                                  "type": "multiplechoice",
+                                  "variable": "apic_validate_certs"
+                              },
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "formattedChoices": [
+                                      {
+                                          "choice": "",
+                                          "id": 0,
+                                          "isDefault": false
+                                      }
+                                  ],
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": false,
+                                  "question_description": "",
+                                  "question_name": "Please enter your Change-ID",
+                                  "required": true,
+                                  "type": "text",
+                                  "variable": "snapshot"
+                              }
+                              ]}
+        
+
+    - name: ACI-Day2-Health-Check
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Day2-Health-Check
+        workflow: 0-ACI-as-Code-Workflow
+        unified_job_template: ACI-Day2-Health-Check
+
+    - name: ACI-Rollback
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Rollback
+        workflow: 0-ACI-as-Code-Workflow
+        unified_job_template: ACI-Rollback 
+
+    - name: ACI-Day0-1-Config-Staging
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Day0-1-Config-Staging
+        workflow: 0-ACI-as-Code-Workflow
+        unified_job_template: ACI-Day0-1-Config-Staging
+        success_nodes: ACI-Day2-Health-Check
+        failure_nodes: ACI-Rollback
+
 
 
       

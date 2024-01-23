@@ -7,6 +7,7 @@ Upon receiving a POD environment, please scroll down directly to the `Getting St
 - [Getting Started](#getting-started)
 
 ## Menu of Demos
+For the below demos insure you are always using files from /home/student/network-demos-repo/
 - [Network Backups GIT](network_backups_git/README.md)
    * Validated Content: network.backup 
    * Self Service Survey

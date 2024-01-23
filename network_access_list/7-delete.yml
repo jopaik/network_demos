@@ -1,0 +1,37 @@
+---
+- name: Delete ACL Config
+  hosts: cisco, juniper
+  gather_facts: false
+  tasks:
+    - name: Remove interface acl Cisco
+      cisco.ios.ios_acl_interfaces:
+        config:
+          - name: tu0
+            access_groups:
+              - afi: ipv4
+                acls:
+                  - name: "{{ acl_name }}"
+                    direction: in
+        state: deleted
+      when: inventory_hostname in groups['cisco']
+
+    - name: Remove interface acl Juniper
+      junipernetworks.junos.junos_config:
+        lines:
+          - "delete interfaces gr-0/0/0 unit 0 family inet filter input meetup"
+        confirm_commit: yes
+      when: inventory_hostname in groups['juniper']
+
+    - name: Delete Configuration Cisco
+      cisco.ios.ios_acls:
+        state: deleted
+        config: "{{ cisco_acls }}"
+      when: inventory_hostname in groups['cisco']
+
+    - name: Delete Configuration Juniper
+      junipernetworks.junos.junos_acls:
+        state: deleted
+        config: "{{ juniper_acls }}"
+      when: inventory_hostname in groups['juniper']
+
+    

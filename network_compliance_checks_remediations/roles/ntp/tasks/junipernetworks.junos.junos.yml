@@ -3,6 +3,7 @@
   junipernetworks.junos.junos_ntp_global:
     config: "{{ ntp_junos }}"
     state: replaced
+  notify: NTP compliance violation
   register: diff
 
 - ansible.builtin.debug:

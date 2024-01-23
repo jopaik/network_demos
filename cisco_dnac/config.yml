@@ -1,0 +1,43 @@
+- hosts: dnac_servers
+  vars_files:
+    - vars/credentials.yml
+  gather_facts: no
+  connection: local
+  tasks:
+       
+    - name: Get Network Device Config by id
+      cisco.dnac.network_device_config_info:
+        dnac_host: "{{dnac_host}}"
+        dnac_username: "{{dnac_username}}"
+        dnac_password: "{{dnac_password}}"
+        dnac_verify: "{{dnac_verify}}"
+        dnac_port: "{{dnac_port}}"
+        dnac_version: "{{dnac_version}}"
+        dnac_debug: "{{dnac_debug}}"
+        networkDeviceId: "{{ device_id }}"
+      register: results
+    
+
+    - name: Current Device Running Config
+      debug:
+        msg: "{{ results.dnac_response.response | split('\n') }}"
+
+
+    - name: Get all Network Device Chassis Details
+      cisco.dnac.network_device_chassis_details_info:
+        dnac_host: "{{dnac_host}}"
+        dnac_username: "{{dnac_username}}"
+        dnac_password: "{{dnac_password}}"
+        dnac_verify: "{{dnac_verify}}"
+        dnac_port: "{{dnac_port}}"
+        dnac_version: "{{dnac_version}}"
+        dnac_debug: "{{dnac_debug}}"
+        deviceId: "{{ device_id }}"
+      register: result
+
+    - name: Current Device Info
+      debug:
+        msg: "{{ result }}"
+
+
+    

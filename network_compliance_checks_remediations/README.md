@@ -65,7 +65,7 @@ Please note this option can only succeed, if selecting only with the Cisco group
 
 ![stig](../images/stig2.png)
 
-Congratulations your stig chaeck completed and your devices are compliant!!!! or at least for now ;-)
+Congratulations your stig check completed and your devices are compliant!!!! or at least for now ;-)
 
 # Key Takeaways
 * Compliance checks are easy to create with network resource modules

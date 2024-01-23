@@ -1,0 +1,14 @@
+---
+- name: >
+    play for junos devices 
+    that uses junos_facts
+  hosts: juniper
+  tasks:
+    - name: look at some facts
+      junipernetworks.junos.junos_facts:
+        gather_subset: all
+        gather_network_resources: all
+
+    - name: show results
+      debug:
+        var: ansible_facts

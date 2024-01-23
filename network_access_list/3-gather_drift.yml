@@ -1,0 +1,45 @@
+---
+- name: Check to locate ACL
+  hosts: cisco, juniper
+  gather_facts: false
+  tasks:
+    - name: Gather Intended Configuration Cisco
+      cisco.ios.ios_acls:
+        state: gathered
+      register: cisco_gathered
+      when: inventory_hostname in groups['cisco']
+
+    - name: Gather Intended Configuration Juniper
+      junipernetworks.junos.junos_acls:
+        state: gathered
+      register: juniper_gathered
+      when: inventory_hostname in groups['juniper']
+
+    - name: Create Diff file for Cisco
+      copy:
+        content: "{{ cisco_gathered | to_nice_yaml }}"
+        dest: host_vars/cisco_acl/diff.yaml
+      when: inventory_hostname in groups['cisco']
+      
+    - name: Create Diff file for Juniper
+      copy:
+        content: "{{ juniper_gathered | to_nice_yaml }}"
+        dest: host_vars/juniper_acl/diff.yaml
+      when: inventory_hostname in groups['juniper']
+
+    - name: Compare Diff file for Cisco
+      copy:
+        src: host_vars/cisco_acl/diff.yaml
+        dest: host_vars/cisco_acl/acls.yaml
+      check_mode: yes
+      diff: true
+      when: inventory_hostname in groups['cisco']
+    
+    - name: Compare Diff file for Juniper
+      copy:
+        src: host_vars/juniper_acl/diff.yaml
+        dest: host_vars/juniper_acl/acls.yaml
+      check_mode: yes
+      diff: true
+      when: inventory_hostname in groups['juniper']
+

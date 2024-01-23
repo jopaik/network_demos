@@ -3,6 +3,7 @@
   arista.eos.eos_logging_global:
     config: "{{ logging_eos }}"   
     state: replaced
+  notify: Logging compliance violation
   register: logging_diff
 
 - ansible.builtin.debug:

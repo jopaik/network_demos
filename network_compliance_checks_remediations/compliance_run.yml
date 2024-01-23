@@ -18,16 +18,15 @@
     - name: NTP compliance violation
       ansible.builtin.debug:
         msg:
-          - "NTP config compliance violation on {{ inventory_hostname }}"
+          - "NTP config compliance remediated for {{ inventory_hostname }}"
 
     - name: Logging compliance violation
       ansible.builtin.debug:
         msg:
-          - "Logging compliance violation on {{ inventory_hostname }}"
+          - "Logging compliance remediated for {{ inventory_hostname }}"
 
     - name: SNMP compliance violation
       ansible.builtin.debug:
-      msg:
-        - "SNMP compliance violation on {{ inventory_hostname }}"
-  
+        msg:
+          - "SNMP compliance remediated for {{ inventory_hostname }}"
 

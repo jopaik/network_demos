@@ -1,0 +1,51 @@
+---
+- name: Check to locate ACL 
+  hosts: cisco, juniper
+  gather_facts: false
+  tasks:
+    - name: Use the ACLs resource module to gather the current config
+      cisco.ios.ios_acls:
+        state: gathered
+      register: cisco_acls
+      when: inventory_hostname in groups['cisco']
+
+    - name: Use the ACLs resource module to gather the current config
+      junipernetworks.junos.junos_acls:
+        state: gathered
+      register: juniper_acls
+      when: inventory_hostname in groups['juniper']  
+   
+    - name: querry "{{ acl_name }}" ACL
+      when: inventory_hostname in groups['cisco']
+      set_fact:
+        cisco_acl: "{{ cisco_acls['gathered'][0]['acls'] | to_json | from_json | json_query(server_name_query) }}"
+      vars:
+        server_name_query: "[?contains(name,'{{acl_name}}')]"
+
+    - name: querry "{{ acl_name }}" ACL
+      when: inventory_hostname in groups['juniper']
+      set_fact:
+        juniper_acl: "{{ juniper_acls['gathered'][0]['acls'] | to_json | from_json | json_query(server_name_query) }}"
+      vars:
+        server_name_query: "[?contains(name,'{{acl_name}}')]"
+
+
+    - name: Assert that the acl named {{ acl_name }} exists
+      when: inventory_hostname in groups['cisco']
+      assert:
+        that: "'{{ acl_name }}' in cisco_acl[0].name"
+        fail_msg: " {{ acl_name }} is not present.  You must add the ACL:{{ acl_name }}"
+        success_msg: " ACL:{{ acl_name }} is present!"
+
+    - name: Assert that the acl named {{ acl_name }} exists
+      when: inventory_hostname in groups['juniper']
+      assert:
+        that: "'{{ acl_name }}' in juniper_acl[0].name"
+        fail_msg: " {{ acl_name }} is not present.  You must add the ACL:{{ acl_name }}"
+        success_msg: " ACL:{{ acl_name }} is present!"
+      
+
+
+
+
+

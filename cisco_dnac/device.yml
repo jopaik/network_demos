@@ -1,0 +1,121 @@
+---
+- name: PreFlight Device Query
+  hosts: dnac_servers
+  vars_files:
+    - vars/credentials.yml
+  vars:
+    get_devices_url: "https://{{dnac_host}}:{{dnac_port}}/dna/intent/api/v1/network-device"
+    auth_url: "https://{{dnac_host}}:{{dnac_port}}/dna/system/api/v1/auth/token"
+    deviceID_lookup: "{{playbook_dir}}/DEVICE_ID_LOOKUP.yaml"
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: Get all Network Device Config Count
+      cisco.dnac.network_device_config_count_info:
+        dnac_host: "{{dnac_host}}"
+        dnac_username: "{{dnac_username}}"
+        dnac_password: "{{dnac_password}}"
+        dnac_verify: "{{dnac_verify}}"
+        dnac_port: "{{dnac_port}}"
+        dnac_version: "{{dnac_version}}"
+        dnac_debug: "{{dnac_debug}}"
+      register: result 
+   
+    - name: Current Device Count
+      debug:
+        var: result
+
+
+    - name: Authenticate to DNAC 
+      uri:
+        url: "{{auth_url}}"
+        method: POST
+        user: "{{dnac_username}}"
+        password: "{{dnac_password}}"
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json"
+        status_code: 200
+        force_basic_auth: yes
+        validate_certs: "{{dnac_verify}}"
+      register: auth_response
+
+    - name: Get list of devices
+      uri:
+        url: "{{get_devices_url}}"
+        method: GET
+        validate_certs: "{{dnac_verify}}"
+        headers:
+          x-auth-token: "{{auth_response.json.Token}}"
+          Content-Type: "application/json"
+          Accept: "application/json"
+        status_code: 200
+      register: dev_list
+   
+    - name: Current DNAC Device List
+      debug:
+        msg: 
+        - "{{ dev_list.json.response | json_query(jmesquery) }}" 
+
+      vars:
+        jmesquery: "[*].{Hostname: hostname, DeviceID: id}"
+       
+    - name: Update Dnac-Automation Job Template Survey
+      awx.awx.job_template:
+          name: "Dnac-Configs"
+          execution_environment: 'ise-ee'
+          project: "dnac"
+          inventory: "demo_routers"
+          playbook: "config.yml"
+          validate_certs: no
+          state: present
+          survey_enabled: yes
+          survey_spec: {
+                        "description": "",
+                        "name": "",
+                        "spec": [
+                              {
+                                "question_name": "Select Device ID to Print a Running Config and Chassis Info",
+                                "question_description": "",
+                                "required": true,
+                                "type": "multiplechoice",
+                                "variable": "device_id",
+                                "min": 0,
+                                "max": 1024,
+                                "formattedChoices": [
+                                  {
+                                    "choice": "{{ dev_list.json.response.0.id | default('') }}",
+                                    "isDefault": false,
+                                    "id": 0
+                                  },
+                                  {
+                                    "choice": "{{ dev_list.json.response.1.id | default('')}}",
+                                    "isDefault": false,
+                                    "id": 1
+                                  },
+                                  {
+                                    "choice": "{{ dev_list.json.response.2.id | default('')}}",
+                                    "isDefault": false,
+                                    "id": 2
+                                  },
+                                  {
+                                    "choice": "{{dev_list.json.response.3.id | default('')}}",
+                                    "isDefault": false,
+                                    "id": 3
+                                  },
+                                  {
+                                    "choice": "{{ dev_list.json.response.4.id | default('') }}",
+                                    "isDefault": false,
+                                    "id": 4
+                                  },
+                                  {
+                                    "choice": "{{ dev_list.json.response.5.id | default('') }}",
+                                    "isDefault": false,
+                                    "id": 5
+                                  }
+                                ],
+                                "new_question": false,
+                                "default": "",
+                                "choices": "{{dev_list.json.response.0.id | default('') }}\n{{dev_list.json.response.1.id| default('') }}\n{{dev_list.json.response.2.id| default('') }}\n{{dev_list.json.response.3.id| default('') }}\n{{dev_list.json.response.4.id | default('') }}\n{{dev_list.json.response.5.id | default('') }}"
+                              }
+                            ]}    
