@@ -250,7 +250,7 @@ In this portion of the demo we have a backup file(s) saved for each router in th
 
 ## The playbook in this demo will change when network.restore is released 
 
-### Step 1 - Launch the Network-Intended Job-template
+### Step 1 - Launch the Network-Restore Job-template
 Ensure that you select the same backup branch as used inthe "Network Intended" steps.
 
 Output

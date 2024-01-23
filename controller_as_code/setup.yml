@@ -108,6 +108,34 @@
         execution_environment: "Validated Network"
         state: "present"
 
+    - name: Create a job-template - Network-Intended-Git
+      ansible.controller.job_template:
+        name: "Network-Intended-Git"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_backups_git/intended.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+          - "Controller Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Restore-Git
+      ansible.controller.job_template:
+        name: "Network-Restore-Git"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_backups_git/restore.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+          - "Controller Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
     # Network Compliance Dashboard   
     - name: Create a job-template - Network-Config
       ansible.controller.job_template:
