@@ -403,15 +403,6 @@
           - Network-User
 
 # This section includes the Cisco ACI
-
-    - name: Add group
-      ansible.controller.group:
-        name: apic
-        hosts:
-         - apic1
-        inventory: "Workshop Inventory"
-        state: present
-        
     - name: Add Host
       ansible.controller.host:
         name: apic1
@@ -423,6 +414,14 @@
           apic_host: sandboxapicdc.cisco.com #change for always on sandbox
           #apic_host: 192.168.0.180
 
+    - name: Add group
+      ansible.controller.group:
+        name: apic
+        hosts:
+         - apic1
+        inventory: "Workshop Inventory"
+        state: present
+        
     - name: Create a job-template - ACI-Day0-1-Config-Staging
       ansible.controller.job_template:
         name: "ACI-Day0-1-Config-Staging"
