@@ -1,0 +1,3 @@
+vlan_pool,alloc,encap_from,encap_to,block_name,domain,domain_type
+Ansible_general_pool,static,300,399,Ansible_general_pool,Ansible_phys,phys
+Ansible_general_pool,static,300,399,Ansible_general_pool,Ansible_corporate_external,l3dom

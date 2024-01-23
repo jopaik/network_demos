@@ -1,40 +1,24 @@
-## Return to Demo Menu
- - [Menu of Demos](#menu-of-demos)
 
-# Summary of steps
-1. Access https://sandboxapicdc.cisco.com `user=admin pass=!v3G@!4@Y`
-2. Review the fabric access policies and tenant info
-1. Run the 0-ACI-as-Code-Workflow workflow-template 
-2. When prompted for APIC login `user=admin pass=!v3G@!4@Y`
-3. Enter abitrary value for Change-id "snapshot"
-4. Review the AAP Controller output
-5. Review the fabric access policies and tenant info
+# ACI Network as Code Demo
+Fork this repo to provide the necessary files to run this demo.
+The Demo is meant to run from the main and staging branches. 
 
-# Cisco ACI
+## Install AAP 2.x (Free Trial)
+https://www.ansible.com/products/automation-platform
 
-[Table of Contents](#table-of-contents)
-- [Step 1 - Persist](#step-1-persist)
-- [Step 2 - Deploy](#step-2-deploy)
-- [Step 3 - Detect](#step-3-detect)
-- [Step 4 - Remediate](#step-4-remediate)
+## controller.yml
+This playbook can be modified to configure your Ansible Automation Platform Controller "Tower" for the demo
 
-## Objective
-TO understand how to deploy changes to ACI with Ansible as code.
+## Devnet ACI Sandbox
+The hosts.yml file in this demo can be modified to run in the Cisco Devnet ACI always on or reserved sandboxes. The latter requires a vpn connection.
 
-## Overview
-The Ansible ACI collection is used to abstract the rest API from the Cisco APIC and make it easy to configure an ACI fabric as code without the need to use the APIC GUI.
+### Always On:
+apic_host: sandboxapicdc.cisco.com
+apic_password: '!v3G@!4@Y'
+https://sandboxapicdc.cisco.com
 
-### Step 1 - 0-ACI-as-Code-Workflow
 
-Launch the 0-ACI-Code-Workflow and observe the day 0 -2 configurations. 
+### Prepare
+Run the prepare_env.yml first to setup the reservered or always on sandbox with pre ports and tenants. 
 
-### Step 2 - The Devnet Sandbox
-1. connect to the Devnet Sandbox and validate the ACI configurations.
-2. https://sandboxapicdc.cisco.com `user=admin pass=!v3G@!4@Y`
 
-## Return to Demo Menu
- - [Menu of Demos](#menu-of-demos)      
-
-   
-
-   

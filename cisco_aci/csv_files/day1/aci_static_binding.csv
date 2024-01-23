@@ -1,0 +1,5 @@
+tenant,description,ap,epg,encap_id,deploy_immediacy,interface_mode,interface_type,interface,pod_id,leafs,vrf,bd,subnet,mask,scope
+Ansible,Created with AAP2.4,Ansible_AP,web,300,immediate,trunk,vpc,Ansible_FI-1A,1,101-102,Ansible_vrf,Ansible_bd,10.10.10.1,23,private
+Ansible,Created with AAP2.4,Ansible_AP,web,300,immediate,trunk,vpc,Ansible_FI-1B,1,101-102,Ansible_vrf,Ansible_bd,10.10.10.1,23,private
+Ansible,Created with AAP2.4,Ansible_AP,db,301,immediate,trunk,vpc,Ansible_FI-1A,1,101-102,Ansible_vrf,Ansible_bd,10.10.10.1,23,private
+Ansible,Created with AAP2.4,Ansible_AP,db,301,immediate,trunk,vpc,Ansible_FI-1B,1,101-102,Ansible_vrf,Ansible_bd,10.10.10.1,23,private

@@ -1,0 +1,15 @@
+interface_profile,policy_group,access_port_selector,port_blk,description,interface_type,type,from_card,from_port,to_card,to_port,interface,node_id,pod_id
+Ansible_FI-1A,Ansible_FI-1A,ethernet1_22-24,ethernet1_22-24,CSV,vpc,leaf,1,22,1,24,1/22,101,1
+Ansible_FI-1A,Ansible_FI-1A,ethernet1_22-24,ethernet1_22-24,CSV,vpc,leaf,1,22,1,24,1/23,101,1
+Ansible_FI-1A,Ansible_FI-1A,ethernet1_22-24,ethernet1_22-24,CSV,vpc,leaf,1,22,1,24,1/24,101,1
+Ansible_FI-1B,Ansible_FI-1B,ethernet1_28-30,ethernet1_28-30,CSV,vpc,leaf,1,26,1,30,1/28,101,1
+Ansible_FI-1B,Ansible_FI-1B,ethernet1_28-30,ethernet1_28-30,CSV,vpc,leaf,1,26,1,30,1/29,101,1
+Ansible_FI-1B,Ansible_FI-1B,ethernet1_28-30,ethernet1_28-30,CSV,vpc,leaf,1,26,1,30,1/30,101,1
+Ansible_corporate_external,Ansible_corporate_external,ethernet1_50,ethernet1_50,CSV,vpc,leaf,1,50,1,50,1/50,101,1
+Ansible_FI-1A,Ansible_FI-1A,ethernet1_22-24,ethernet1_22-24,CSV,vpc,leaf,1,22,1,24,1/22,102,1
+Ansible_FI-1A,Ansible_FI-1A,ethernet1_22-24,ethernet1_22-24,CSV,vpc,leaf,1,22,1,24,1/23,102,1
+Ansible_FI-1A,Ansible_FI-1A,ethernet1_22-24,ethernet1_22-24,CSV,vpc,leaf,1,22,1,24,1/24,102,1
+Ansible_FI-1B,Ansible_FI-1B,ethernet1_28-30,ethernet1_28-30,CSV,vpc,leaf,1,26,1,30,1/28,102,1
+Ansible_FI-1B,Ansible_FI-1B,ethernet1_28-30,ethernet1_28-30,CSV,vpc,leaf,1,26,1,30,1/29,102,1
+Ansible_FI-1B,Ansible_FI-1B,ethernet1_28-30,ethernet1_28-30,CSV,vpc,leaf,1,26,1,30,1/30,102,1
+Ansible_corporate_external,Ansible_corporate_external,ethernet1_50,ethernet1_50,CSV,vpc,leaf,1,50,1,50,1/50,102,1
