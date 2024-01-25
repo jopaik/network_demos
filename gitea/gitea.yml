@@ -148,7 +148,7 @@
         ports:
           - "8089:80"
         volumes:
-          - "/data/gitea:/usr/share/nginx/html:Z"
+          - "/home/student/network-demos-repo/gitea:/usr/share/nginx/html:Z"
         recreate: true
         restart_policy: always
   
