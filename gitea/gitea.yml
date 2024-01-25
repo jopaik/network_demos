@@ -141,11 +141,6 @@
       become: true
 
     #### Install NGINX
-    - name: remove
-      ansible.builtin.yum:
-        name: nginx
-        state: "absent"
-      become: true
     - name: ensure nginx is at the latest version
       ansible.builtin.yum:
         name: nginx
