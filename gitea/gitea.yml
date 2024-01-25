@@ -145,10 +145,12 @@
       ansible.builtin.yum:
         name: nginx
         state: "absent"
+      become: true
     - name: ensure nginx is at the latest version
       ansible.builtin.yum:
         name: nginx
-        state: "installed"   
+        state: "installed" 
+      become: true  
       ignore_errors: true
       become: true
     - name: start nginx
