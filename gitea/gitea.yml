@@ -30,7 +30,7 @@
           - /home/student/gitea_data:/data:z
         state: started
         ports:
-          - "3001:3000"
+          - "3000:3000"
       timeout: 10
       ignore_errors: true
       become: true
