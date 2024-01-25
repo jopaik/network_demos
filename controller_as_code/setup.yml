@@ -588,7 +588,7 @@
         state: present
 
     - name: Add an inventory source
-      inventory_source:
+      ansible.controller.inventory_source:
         name: "source-dnac"
         description: Source for inventory
         inventory: "Workshop Inventory"
