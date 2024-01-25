@@ -30,7 +30,7 @@
           - /home/student/gitea_data:/data:z
         state: started
         ports:
-          - "3000:3000"
+          - "3001:3000"
       timeout: 10
       ignore_errors: true
       become: true
@@ -140,17 +140,4 @@
         chdir: /home/student/
       become: true
 
-    - name: Ensure Nginx container is running
-      containers.podman.podman_container:
-        name: nginx_container
-        image: docker.io/nginx:stable-alpine3.17-slim
-        state: started
-        ports:
-          - "8089:80"
-        volumes:
-          - "/home/student/:/usr/share/nginx/html:Z"
-        recreate: true
-        restart_policy: always
-      become: true
-  
-   
+    
