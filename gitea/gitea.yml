@@ -41,6 +41,7 @@
         cmd: podman exec --user git gitea touch /data/gitea/gitea.db
       become: true
       become_user: student
+      ignore_errors: true
   
     - name: Set the ROOT_URL
       ansible.builtin.shell:
