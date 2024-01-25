@@ -146,12 +146,14 @@
         name: nginx
         state: latest
       ignore_errors: true
+      become: true
     - name: start nginx
       ansible.builtin.service: 
         name: nginx
         state: started
         enabled: yes 
       ignore_errors: true
+      become: true
       
     #### Update NGINX configuration to support Gitea
     - name: Update NGINX and Restart Service
