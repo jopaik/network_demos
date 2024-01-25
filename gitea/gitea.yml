@@ -147,8 +147,6 @@
         state: started
         ports:
           - "8089:80"
-        volumes:
-          - "/home/student/:/usr/share/nginx/html:Z"
         recreate: true
         restart_policy: always
       become: true
