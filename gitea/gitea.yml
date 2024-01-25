@@ -139,6 +139,19 @@
         chdir: /home/student/
       become: true
 
+    #### Install NGINX
+    - name: ensure nginx is at the latest version
+      ansible.builtin.yum:
+        name: nginx
+        state: latest
+      ignore_errors: true
+    - name: start nginx
+      ansible.builtin.service: 
+        name: nginx
+        state: started
+        enabled: yes 
+      ignore_errors: true
+      
     #### Update NGINX configuration to support Gitea
     - name: Update NGINX and Restart Service
       block:   
