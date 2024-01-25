@@ -317,7 +317,20 @@
         credentials:
           - "Workshop Credential"
         execution_environment: "Default execution environment"
+        state: present
+
+    - name: Create a job-template - Network-User
+      ansible.controller.job_template:
+        name: "Network-User"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_user.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Default execution environment"
         state: "present"
+      
 
     - name: Enable host
       ansible.controller.host:
@@ -546,9 +559,53 @@
         success_nodes: ACI-Day2-Health-Check
         failure_nodes: ACI-Rollback
 
+#This section includes Cisco DNAC
+
+    - name: Create Execution Environments
+      ansible.controller.execution_environment:
+        name: "ise-ee"
+        image: registry.gitlab.com/redhatautomation/ise-ee:latest
+        pull: missing
+
+    - name: Add Host
+      ansible.controller.host:
+        name: dnac_server
+        inventory: "Workshop Inventory"
+        state: present
+        enabled: true
+        variables:
+          dnac_host: https://sandboxdnac.cisco.com
+          dnac_port: 443
+          dnac_username: devnetuser
+          dnac_password: Cisco123!
+
+    - name: Add group
+      ansible.controller.group:
+        name: dnac_servers
+        hosts:
+         - dnac_server
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Add an inventory source
+      inventory_source:
+        name: "source-dnac"
+        description: Source for inventory
+        inventory: "Workshop Inventory"
+        update_on_launch: False
+        organization: "Red Hat network organization"
+        source: scm
+        source_path: cisco_dnac/dynamic_inventory/
+        source_project: "Student Project"
+        execution_environment: "ise-ee"
 
 
-      
 
 
-    
+        
+
+
+          
+
+
+        

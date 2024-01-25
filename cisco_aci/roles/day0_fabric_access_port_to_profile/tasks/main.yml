@@ -7,6 +7,7 @@
       username: "{{ apic_username }}"
       password: "{{ apic_password }}"
       validate_certs: "{{ apic_validate_certs }}"
+      ignore: true
 
   delegate_to: localhost
 
@@ -28,7 +29,7 @@
       loop_control:
         loop_var: profile_item
         label: "{{ profile_item.interface_profile }}"
-      ignore_errors: true
+      ignore_errors: "{{ ignore }}"
         
 
     - name: Add Access Ports to Interface Policy Leaf Profile
@@ -50,4 +51,4 @@
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: access_item
-      ignore_errors: true
+      ignore_errors: "{{ ignore }}"
