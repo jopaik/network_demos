@@ -593,7 +593,6 @@
         description: Source for inventory
         inventory: "Workshop Inventory"
         update_on_launch: False
-        organization: "Red Hat network organization"
         source: scm
         source_path: cisco_dnac/dynamic_inventory/
         source_project: "Student Project"
