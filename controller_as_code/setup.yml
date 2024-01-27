@@ -592,7 +592,7 @@
         name: "source-dnac"
         description: Source for inventory
         inventory: "Workshop Inventory"
-        update_on_launch: False
+        update_on_launch: True
         source: scm
         source_path: dynamic_inventory/
         source_project: "Student Project"
