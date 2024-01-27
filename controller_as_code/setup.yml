@@ -594,7 +594,7 @@
         inventory: "Workshop Inventory"
         update_on_launch: False
         source: scm
-        source_path: cisco_dnac/dynamic_inventory/
+        source_path: dynamic_inventory/
         source_project: "Student Project"
         execution_environment: "ise-ee"
 
