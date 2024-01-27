@@ -608,7 +608,7 @@
         execution_environment: "ise-ee"
         state: "present"
         survey_enabled: true
-        survey:
+        survey_spec:
             name: ''
             description: ''
             spec:
