@@ -598,6 +598,32 @@
         source_project: "Student Project"
         execution_environment: "ise-ee"
 
+    - name: Create a job-template - DNAC-Config-Retrieve
+      ansible.controller.job_template:
+        name: "DNAC-Config-Retrieve"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_dnac/config_collect.yml"
+        execution_environment: "ise-ee"
+        state: "present"
+        survey_enabled: true
+        survey:
+            name: ''
+            description: ''
+            spec:
+              - question_name: Which groups/devices to retrieve Configs from DNAC
+                type: multiselect
+                variable: device_id
+                required: true
+                default:  ''
+                choices:
+                  - sw1
+                  - sw2
+                  - sw3
+                  - sw4
+
+
 
 
 

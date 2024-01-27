@@ -1,0 +1,17 @@
+- name: Prepare to Collect Configs from DNAC
+  hosts: 
+    - dnac_servers
+    - sw1
+    - sw2
+    - sw3 
+    - sw4
+  gather_facts: false
+  vars_files:
+    - vars/credentials.yml
+  connection: local
+  tasks:
+    - name: Get Devices
+      include_tasks: 'copy_files.yml'
+      loop: "{{ device_id }}"
+      
+

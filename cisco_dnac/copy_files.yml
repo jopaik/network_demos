@@ -1,0 +1,55 @@
+---
+- name: Clone a Repo to EE
+  shell:
+    cmd: "git clone https://gitlab.com/tdubiel1/ansible_dnac.git"
+    chdir: /tmp/
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
+
+- name: Gather facts
+  ansible.builtin.setup:
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
+
+- name: Get Network Device Config by id
+  cisco.dnac.network_device_config_info:
+    dnac_host: "{{dnac_host}}"
+    dnac_username: "{{dnac_username}}"
+    dnac_password: "{{dnac_password}}"
+    dnac_verify: "{{dnac_verify}}"
+    dnac_port: "{{dnac_port}}"
+    dnac_version: "{{dnac_version}}"
+    dnac_debug: "{{dnac_debug}}"
+    networkDeviceId: "{{hostvars[item]['id']}}"
+  register: results
+  when: inventory_hostname in groups['dnac_servers']
+
+- name: "Display Ansible date_time fact and register"
+  debug:
+    msg: "{{ ansible_date_time.date }}{{ ansible_date_time.time }}"
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
+  register: currenttime
+
+- debug:
+    msg: "{{ results.dnac_response.response | split('\n') }}"
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
+  register: config
+
+- name: Copy Backup to File
+  ansible.builtin.copy:
+    content: "{{ config.msg | to_nice_yaml | regex_replace('[,]', '')  | replace(\"'\",'') | replace(\"-\",'') }}"
+    dest: "/tmp/ansible_dnac/backups/{{item}}_{{ currenttime.msg }}.cfg"
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
+
+- name: Publish the changes
+  ansible.scm.git_publish:
+    path: "/tmp/ansible_dnac/"
+    token: "{{ token }}"
+    user:
+      name: "{{ username }}"
+      email: "{{ email }}"
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
