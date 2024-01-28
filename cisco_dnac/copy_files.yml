@@ -3,7 +3,8 @@
   shell:
     cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
     chdir: /tmp/
-  when: inventory_hostname == 'localhost'
+  when: inventory_hostname in groups['dnac_servers']
+  delegate_to: localhost
 
 - name: Gather facts
   ansible.builtin.setup:
