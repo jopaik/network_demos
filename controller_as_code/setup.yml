@@ -607,6 +607,8 @@
         playbook: "cisco_dnac/config_collect.yml"
         execution_environment: "ise-ee"
         state: "present"
+        credentials:
+          - "Gitea Credential"
         survey_enabled: true
         survey_spec:
             name: ''
