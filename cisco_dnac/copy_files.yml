@@ -39,7 +39,7 @@
 - name: Copy Backup to File
   ansible.builtin.copy:
     content: "{{ config.msg | to_nice_yaml | regex_replace('[,]', '')  | replace(\"'\",'') | replace(\"-\",'') }}"
-    dest: "/tmp/ansible_dnac/backups/{{item}}_{{ currenttime.msg }}.cfg"
+    dest: "/tmp/network-demos-repo/backups/{{item}}_{{ currenttime.msg }}.cfg"
   when: inventory_hostname in groups['dnac_servers']
   delegate_to: localhost
 
