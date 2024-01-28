@@ -1,10 +1,9 @@
 ---
 - name: Clone a Repo to EE
   shell:
-    cmd: "git clone https://gitlab.com/tdubiel1/ansible_dnac.git"
+    cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
     chdir: /tmp/
-  when: inventory_hostname in groups['dnac_servers']
-  delegate_to: localhost
+  when: inventory_hostname == 'localhost'
 
 - name: Gather facts
   ansible.builtin.setup:
