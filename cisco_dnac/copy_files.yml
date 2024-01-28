@@ -47,7 +47,7 @@
 - name: Publish the changes
   ansible.scm.git_publish:
     path: "/tmp/ansible_dnac/"
-    token: "{{ token }}"
+    token: "{{ password }}"
     user:
       name: "{{ username }}"
       email: "{{ email }}"
