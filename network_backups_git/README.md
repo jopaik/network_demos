@@ -3,7 +3,7 @@
 
 # Summary of steps
 1. Collect Backup configurations from routers and save them to Gitea branches
-2. Verify Branches in GIT
+2. Verify Branches in GIT `git checkout`
 3. Modify the Routers from the CLI
 4. Verify Job-template(s) exist
 5. Launch the Network-Intended Job-Template
