@@ -629,10 +629,10 @@
         cmd: "{{ item }}"
       loop:
         - git config --global user.name gitea
-        - got config --global user.email gitea@example.com
+        - git config --global user.email gitea@example.com
         - git add --all
         - git commit -m 'changed for aap'
-        - "git push http://gitea:gitea@anaible-1/gitea/network-demos-repo.git"
+        - "git push http://gitea:gitea@ansible-1/gitea/network-demos-repo.git"
 
 
 
