@@ -46,7 +46,10 @@ The following steps only take a few minutes to prep all the demos.
 1. wget https://gitlab.com/redhatautomation/network_demos/-/raw/main/gitea/gitea.yml
 2. ansible-navigator run -m stdout gitea.yml
 3. setup VSCode for git
-4. ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
+4. Add you student pod password and run command from `network-demos-repo/`
+~~~
+ ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
+~~~
 
 ## Exercise 1 - Setting up the Gitea Repo and VSCode
 
