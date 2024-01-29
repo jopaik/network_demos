@@ -50,6 +50,7 @@ The following steps only take a few minutes to prep all the demos.
 ~~~
  ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
 ~~~
+5. update your git by commiting the changes to the local directory.
 
 ## Exercise 1 - Setting up the Gitea Repo and VSCode
 
@@ -138,35 +139,15 @@ Click on the files icon in the upper right corner of your Visual Studio Code win
 
 In the pop-up window, choose the `/home/student/netowrk-demos-repo` folder, and select `OK`.
 
-### Step 5 - Create and check in to your repo (optional)
-
-After you have set your remote, you will be able to easily commit code in the Visual Studio Code development environment.  To validate this, create a new file in the network-demos-repo directory. 
-
-You can right-click on the network-demos-repo directory in your visual studio environment, and name the file `test_file.txt`
-
-![create a new file](images/create_new_file.png)
-
-![write in the file](images/testfile.png)
-
-Save the file by going to `File > Save`, or just using the `ctrl-s` key combination.  After you have done this, you can click on the Git button on the left side of the window (third down - see picture).  You will see in the Git window that there is a change to be committed.
-
-![git](images/file_git.png)
-
-Add in a message such as "this is just a test" and click `Commit`.  The button will change to `Sync Changes`.  Click this, and if you have set up your remote settings correctly, it will sync your change to your remote (Gitea).  If this didn't work, review the earlier steps, or ask your instructor for help.
-
-**Optional**
-You can also verify your Git Push by accessing the Gitea 'Git' repository running in your student lab pod.
-Simply change the url to your student number and open the following link in a new browser tab ```https://student1.pqcfw.example.opentlc.com/gitea/
-
-sign-in with user=gitea and password=gitea
-
+ 
 ## Exercise 2: Controller as Code
 
 ## Table of Contents
 - [Step 1 - Variables](#step-1-variables)
 - [Step 2 - Using the Terminal](#step-2-using-the-terminal)
 - [Step 3 - Run Playbook](#step-3-run-playbook)
-- [Step 4 - Examine the Ansible Controller configuration](#step-4-examine-the-ansible-controller-configuration)
+- [Step 4 - Commit to git](#step4-commit-to-git)
+- [Step 5 - Examine the Ansible Controller configuration](#step-5-examine-the-ansible-controller-configuration)
 
 ## Objective
 
@@ -227,7 +208,14 @@ ok: [localhost]
  TASK [Gitea Credential] *******************************************************
 ok: [localhost]
 ```
-### Step 4 Access the AAP Controller
+### Step 4 Commit to git
+click on the Git button on the left side of the window (third down - see picture).  You will see in the Git window that there is a change to be committed.
+
+![git](images/file_git.png)
+
+Add in a message such as "this is just a test" and click `Commit`.  The button will change to `Sync Changes`.  Click this, and if you have set up your remote settings correctly, it will sync your change to your remote (Gitea).  If this didn't work, review the earlier steps, or ask your instructor for help.
+
+### Step 5 Access the AAP Controller
 
 Access your AAP from the https://xxxxx.example.opentlc.com/ link. 
 - Your link is int RHDP pod information.
