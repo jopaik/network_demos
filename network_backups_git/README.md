@@ -111,14 +111,43 @@ rtr4                       : ok=8    changed=1    unreachable=0    failed=0    s
 $ git branch -r
 ~~~
 
-![Branch](../images/branch.png)
+example output:
+~~~
+[student@ansible-1 network-demos-repo]$ git branch -r
+  origin/ansible-backup_cisco_configs_to_gitea_in_branches-2024-01-29T173838.717897+0000
+  origin/master
+~~~
 
 - Navigate to the network_backup_files folder and review the router config files.
 
+### Checkout branch in vscode terminal
+~~~
+[student@ansible-1 network-demos-repo]$ git checkout ansible-backup_cisco_configs_to_gitea_in_branches-2024-01-29T173838.717897+0000
+branch 'ansible-backup_cisco_configs_to_gitea_in_branches-2024-01-29T173838.717897+0000' set up to track 'origin/ansible-backup_cisco_configs_to_gitea_in_branches-2024-01-29T173838.717897+0000'.
+Switched to a new branch 'ansible-backup_cisco_configs_to_gitea_in_branches-2024-01-29T173838.717897+0000'
+~~~
+### List the network_backup_files to the branch
+~~~
+[student@ansible-1 network-demos-repo]$ ls network_backup_files/
+rtr1.txt  rtr2.txt  rtr3.txt  rtr4.txt
+~~~
+### Cat a config file to review
+~~~
+[student@ansible-1 network-demos-repo]$ cat network_backup_files/rtr1.txt 
+Building configuration...
 
-![Branch](../images/backups.png)
+Current configuration : 7798 bytes
+!
+! Last configuration change at 15:57:02 UTC Mon Jan 29 2024 by ec2-user
+!
+version 17.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+~~~
+Truncated
 
-* Additionally the new branch could have been merged into master/main branch. However, in this demo we save our router configs to a non master/main branch so we can toggle between branches and timestamps etc. Thus we can go back in time across many backups to rebuild our infrastructure. The backups.yml playbook creates a selfservice survey in the AAP controller that provides access to the backup branches/files.
+### Checkout main branch
+Return to the main branch 
 
 # Network Intended GIT
 
