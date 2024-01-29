@@ -631,7 +631,7 @@
         - git config --global user.name gitea
         - git config --global user.email gitea@example.com
         - git add --all
-        - git commit -m 'changed for aap'
+        - git commit --allow-empty -m 'changed for aap'
         - "git push http://gitea:gitea@ansible-1/gitea/network-demos-repo.git"
 
 
