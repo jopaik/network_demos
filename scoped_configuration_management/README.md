@@ -60,12 +60,6 @@ git pull
 rtr1  rtr2  rtr3  rtr4
 ~~~
 
-7. If you check from the gitea gui it will look something like the following:
-* scoped_config_mangement/host_vars/
-
- ![hostvars](../images/hostvars_persist.png)  
-
-
 ### Step 2 - Deploy
 The network.bgp.run role uses the Deploy operations to apply changes to the listed resources. The `deploy` works well for additions to the device's configuration because it uses the state of merged. The state of merged will not overwrite any existing configurations.
 
@@ -230,7 +224,7 @@ network 192.168.1.3
 end
 ~~~
 
-5. Launch the `Network-Validated-Detect` and note the configuraiton drift for rtr1.
+5. Launch the `Network-Validated-Detect` and note the configuration drift for rtr1.
 
 The rtr1's running config is the before diff in red. The 192.168.1.3 entry is drift from our host_vars (SSOT) becuase it was configured OOB and isn't present in the host_vars.
 
