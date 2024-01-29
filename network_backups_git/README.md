@@ -147,7 +147,10 @@ service timestamps log datetime msec
 Truncated
 
 ### Checkout main branch
-Return to the main branch 
+It's important to return to the main branch !!!!!!!
+~~~
+$ git checkout main
+~~~
 
 # Network Intended GIT
 
