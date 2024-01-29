@@ -3,7 +3,7 @@
 
 # Summary of steps
 1. Collect Backup configurations from routers and save them to Gitea branches
-2. Verify Branches in Gitea
+2. Verify Branches in GIT
 3. Modify the Routers from the CLI
 4. Verify Job-template(s) exist
 5. Launch the Network-Intended Job-Template
@@ -104,18 +104,12 @@ rtr2                       : ok=8    changed=1    unreachable=0    failed=0    s
 rtr3                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
 rtr4                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
 ```
-### Step 2 - Review 
+### Step 2 - Review Branches
 
-1. Open your 'network-demos-repo' url on gitea in new browser tab and review the repository and files.
-
-https://<student_number>.<pod_number.example.opentlc.com>/gitea/gitea/network-demos-repo  `<--change to your pod_id and student number` This will be the same url used to access the Ansible Controller in your POD with the Gitea Repo information appended.
-
-*For example:
+1. In VSCode terminal `network_backups_git/`
 ~~~
-https://student1.hr96x.example.opentlc.com/gitea/gitea/network-demos-repo
+$ git branch -r
 ~~~
-
-2. Click branches under "network-demos-repo", and locate the branch with the latest timestamp from Network-Backups-git job-template. As you run the job-temaplate a new branch with the backups and timestamp is committed and pushed to gitea. These branches will be used later for config-drift and restore actions.
 
 ![Branch](../images/branch.png)
 
