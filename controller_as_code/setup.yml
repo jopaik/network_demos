@@ -619,6 +619,12 @@
                   - sw3
                   - sw4
 
+#Add to end of playbook
+    - name: copy ansible.cfg
+      ansible.builtin.copy:
+        src: ../ansible.dynamic.cfg
+        dest: ../ansible.cfg
+
 
 
 
