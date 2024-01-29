@@ -50,7 +50,6 @@ The following steps only take a few minutes to prep all the demos.
 ~~~
  ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
 ~~~
-5. update your git by commiting the changes to the local directory.
 
 ## Exercise 1 - Setting up the Gitea Repo and VSCode
 
@@ -66,7 +65,6 @@ The following steps only take a few minutes to prep all the demos.
     - [Step 3 - Deploy Gitea on the Control Node](#step-3---deploy-gitea-on-the-control-node)
     - [Step 4 - Open the project directory in Visual Studio Code](#step-4---open-the-project-directory-in-visual-studio-code)
     - [Step 5 - Create and check in to your repo](#step-5---create-and-check-in-to-your-repo)
-  - [Complete](#complete)
 
 ## Objective
 
@@ -147,7 +145,6 @@ In the pop-up window, choose the `/home/student/netowrk-demos-repo` folder, and 
 - [Step 2 - Using the Terminal](#step-2-using-the-terminal)
 - [Step 3 - Run Playbook](#step-3-run-playbook)
 - [Step 4 - Commit to git](#step4-commit-to-git)
-- [Step 5 - Examine the Ansible Controller configuration](#step-5-examine-the-ansible-controller-configuration)
 
 ## Objective
 
@@ -208,14 +205,7 @@ ok: [localhost]
  TASK [Gitea Credential] *******************************************************
 ok: [localhost]
 ```
-### Step 4 Commit to git
-click on the Git button on the left side of the window (third down - see picture).  You will see in the Git window that there is a change to be committed.
-
-![git](images/file_git.png)
-
-Add in a message such as "this is just a test" and click `Commit`.  The button will change to `Sync Changes`.  Click this, and if you have set up your remote settings correctly, it will sync your change to your remote (Gitea).  If this didn't work, review the earlier steps, or ask your instructor for help.
-
-### Step 5 Access the AAP Controller
+### Step 4 Access the AAP Controller
 
 Access your AAP from the https://xxxxx.example.opentlc.com/ link. 
 - Your link is int RHDP pod information.

@@ -624,15 +624,18 @@
       ansible.builtin.copy:
         src: ../ansible.dynamic.cfg
         dest: ../ansible.cfg
+
     - name: push to gitea
       ansible.builtin.shell:
         cmd: "{{ item }}"
+        chdir: "{{ playbook_dir }}"
       loop:
         - git config --global user.name gitea
         - git config --global user.email gitea@example.com
         - git add --all
         - git commit --allow-empty -m 'changed for aap'
-        - "git push http://gitea:gitea@ansible-1/gitea/network-demos-repo.git"
+        - "git push http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+
 
 
 
