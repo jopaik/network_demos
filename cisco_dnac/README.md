@@ -22,7 +22,7 @@ Demonstrate Ansible working `Better Together` with Cisco DNAC by saving the DNAC
 ## Overview
 In this demo we will check configurations from DNAC `Catalyst Center` as a Single Source of truth for Ansible. In turn we can reconcile any confiuration drift before making changes originated in AAP or DNAC. In the second part of the demo we use DNAC device information for compliance checks or optionally pass DNAC config datato other CMDB systems etc.
 
-## Devnet ACI Sandbox
+## Devnet DNAC Sandbox
 The hosts.yml file in this demo can be modified to run in the Cisco Devnet always on or reserved sandboxes. The latter requires a vpn connection.
 
 ### Always On:
