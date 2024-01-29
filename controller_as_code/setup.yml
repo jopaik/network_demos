@@ -561,12 +561,6 @@
 
 #This section includes Cisco DNAC
 
-    - name: Create Execution Environments
-      ansible.controller.execution_environment:
-        name: "ise-ee"
-        image: registry.gitlab.com/redhatautomation/ise-ee:latest
-        pull: missing
-
     - name: Add Host
       ansible.controller.host:
         name: dnac_server
@@ -596,7 +590,7 @@
         source: scm
         source_path: dynamic_inventory/
         source_project: "Student Project"
-        execution_environment: "ise-ee"
+        execution_environment: "Validated Network"
 
     - name: Create a job-template - DNAC-Config-Retrieve
       ansible.controller.job_template:
@@ -605,7 +599,7 @@
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "cisco_dnac/config_collect.yml"
-        execution_environment: "ise-ee"
+        execution_environment: "Validated Network"
         state: "present"
         credentials:
           - "Gitea Credential"
