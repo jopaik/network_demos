@@ -1,19 +1,18 @@
 ---
-- name: Get all Network Device Chassis Details
-  cisco.dnac.network_device_chassis_details_info:
-    dnac_host: "{{dnac_host}}"
-    dnac_username: "{{dnac_username}}"
-    dnac_password: "{{dnac_password}}"
-    dnac_verify: "{{dnac_verify}}"
-    dnac_port: "{{dnac_port}}"
-    dnac_version: "{{dnac_version}}"
-    dnac_debug: "{{dnac_debug}}"
-    deviceId: "{{ device_id }}"
-  register: result
-
-- name: Current Device Info
+- name: Current Device Info from the Dynamic Inventory
   debug:
-    msg: "{{ result }}"
+    msg: 
+     - "Hostname: {{hostvars[item]['inventory_hostname']}}"
+     - "DeviceID: {{hostvars[item]['id']}}"
+     - "SerialNumber: {{hostvars[item]['serial_number']}}"
+     - "HardwareType: {{hostvars[item]['hw_type']}}"
+     - "Software version: {{hostvars[item]['version']}}"
+  when: inventory_hostname in groups['dnac_servers']
 
-
-    
+- name: Compliance Check "assertion"
+  ansible.builtin.assert:
+    that:
+      - hostvars[item]['version'] == '17.9.20220318:182713'
+    fail_msg: "{{ hostvars[item]['inventory_hostname']}} Software version is not compliant"
+    success_msg: "{{hostvars[item]['inventory_hostname']}} Software version is compliant"
+  when: inventory_hostname in groups['dnac_servers']
