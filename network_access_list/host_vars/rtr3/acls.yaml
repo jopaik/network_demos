@@ -9,43 +9,43 @@ acls:
             name: web
             protocol: tcp
             source:
-                address: 192.168.1.1/32
-        -   destination:
                 address: 192.168.3.3/32
+        -   destination:
+                address: 192.168.1.1/32
                 port_protocol:
                     eq: '443'
             grant: permit
             name: https
             protocol: tcp
             source:
-                address: 192.168.1.1/32
-        -   destination:
                 address: 192.168.3.3/32
+        -   destination:
+                address: 192.168.1.1/32
                 port_protocol:
                     eq: '22'
             grant: permit
             name: ssh
             protocol: tcp
             source:
-                address: 192.168.1.1/32
-        -   destination:
                 address: 192.168.3.3/32
+        -   destination:
+                address: 192.168.1.1/32
                 port_protocol:
                     eq: '830'
             grant: permit
             name: netconf
             protocol: tcp
             source:
-                address: 192.168.1.1/32
-        -   destination:
                 address: 192.168.3.3/32
+        -   destination:
+                address: 192.168.1.1/32
                 port_protocol:
                     eq: 32766-65535
             grant: permit
             name: ephem
             protocol: tcp
             source:
-                address: 192.168.1.1/32
+                address: 192.168.3.3/32
         -   grant: permit
             name: ospf
             protocol: ospf

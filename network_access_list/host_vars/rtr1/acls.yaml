@@ -12,7 +12,7 @@ acls:
         name: meraki-fqdn-dns
     -   aces:
         -   destination:
-                host: 192.168.1.1
+                host: 192.168.3.3
                 port_protocol:
                     eq: 80
             grant: permit
@@ -21,9 +21,9 @@ acls:
             protocol: tcp
             sequence: 10
             source:
-                host: 192.168.3.3
-        -   destination:
                 host: 192.168.1.1
+        -   destination:
+                host: 192.168.3.3
                 port_protocol:
                     eq: '443'
             grant: permit
@@ -32,9 +32,9 @@ acls:
             protocol: tcp
             sequence: 20
             source:
-                host: 192.168.3.3
-        -   destination:
                 host: 192.168.1.1
+        -   destination:
+                host: 192.168.3.3
                 port_protocol:
                     eq: '22'
             grant: permit
@@ -43,9 +43,9 @@ acls:
             protocol: tcp
             sequence: 30
             source:
-                host: 192.168.3.3
-        -   destination:
                 host: 192.168.1.1
+        -   destination:
+                host: 192.168.3.3
                 port_protocol:
                     eq: '830'
             grant: permit
@@ -54,9 +54,9 @@ acls:
             protocol: tcp
             sequence: 40
             source:
-                host: 192.168.3.3
-        -   destination:
                 host: 192.168.1.1
+        -   destination:
+                host: 192.168.3.3
                 port_protocol:
                     range: 
                      end: 65535
@@ -67,7 +67,7 @@ acls:
             protocol: tcp
             sequence: 50
             source:
-                host: 192.168.3.3
+                host: 192.168.1.1
         -   destination:
                 any: true
             grant: permit

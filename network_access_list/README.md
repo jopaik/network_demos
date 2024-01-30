@@ -220,11 +220,11 @@ rtr1
 ~~~
 rtr1#sh ip access-lists ansible
 Extended IP access list ansible
-    10 permit tcp host 192.168.3.3 host 192.168.1.1 eq www log
-    20 permit tcp host 192.168.3.3 host 192.168.1.1 eq 443 log
-    30 permit tcp host 192.168.3.3 host 192.168.1.1 eq 22 log
-    40 permit tcp host 192.168.3.3 host 192.168.1.1 eq 830 log
-    50 permit tcp host 192.168.3.3 host 192.168.1.1 range 32766 65535 log
+    10 permit tcp host 192.168.1.1 host 192.168.3.3 eq www log
+    20 permit tcp host 192.168.1.1 host 192.168.3.3 eq 443 log
+    30 permit tcp host 192.168.1.1 host 192.168.3.3 eq 22 log
+    40 permit tcp host 192.168.1.1 host 192.168.3.3 eq 830 log
+    50 permit tcp host 192.168.1.1 host 192.168.3.3 range 32766 65535 log
     60 permit ospf any any log
     70 permit icmp any any log
 ~~~
@@ -232,28 +232,28 @@ Extended IP access list ansible
 rtr3
 ~~~
 ec2-user@rtr3> show configuration firewall family inet filter ansible | display set 
-set firewall family inet filter ansible term web from source-address 192.168.1.1/32
-set firewall family inet filter ansible term web from destination-address 192.168.3.3/32
+set firewall family inet filter ansible term web from source-address 192.168.3.3/32
+set firewall family inet filter ansible term web from destination-address 192.168.1.1/32
 set firewall family inet filter ansible term web from protocol tcp
 set firewall family inet filter ansible term web from destination-port 80
 set firewall family inet filter ansible term web then accept
-set firewall family inet filter ansible term https from source-address 192.168.1.1/32
-set firewall family inet filter ansible term https from destination-address 192.168.3.3/32
+set firewall family inet filter ansible term https from source-address 192.168.3.3/32
+set firewall family inet filter ansible term https from destination-address 192.168.1.1/32
 set firewall family inet filter ansible term https from protocol tcp
 set firewall family inet filter ansible term https from destination-port 443
 set firewall family inet filter ansible term https then accept
-set firewall family inet filter ansible term ssh from source-address 192.168.1.1/32
-set firewall family inet filter ansible term ssh from destination-address 192.168.3.3/32
+set firewall family inet filter ansible term ssh from source-address 192.168.3.3/32
+set firewall family inet filter ansible term ssh from destination-address 192.168.1.1/32
 set firewall family inet filter ansible term ssh from protocol tcp
 set firewall family inet filter ansible term ssh from destination-port 22
 set firewall family inet filter ansible term ssh then accept
-set firewall family inet filter ansible term netconf from source-address 192.168.1.1/32
-set firewall family inet filter ansible term netconf from destination-address 192.168.3.3/32
+set firewall family inet filter ansible term netconf from source-address 192.168.3.3/32
+set firewall family inet filter ansible term netconf from destination-address 192.168.1.1/32
 set firewall family inet filter ansible term netconf from protocol tcp
 set firewall family inet filter ansible term netconf from destination-port 830
 set firewall family inet filter ansible term netconf then accept
-set firewall family inet filter ansible term ephem from source-address 192.168.1.1/32
-set firewall family inet filter ansible term ephem from destination-address 192.168.3.3/32
+set firewall family inet filter ansible term ephem from source-address 192.168.3.3/32
+set firewall family inet filter ansible term ephem from destination-address 192.168.1.1/32
 set firewall family inet filter ansible term ephem from protocol tcp
 set firewall family inet filter ansible term ephem from destination-port 32766-65535
 set firewall family inet filter ansible term ephem then accept
@@ -263,7 +263,10 @@ set firewall family inet filter ansible term icmp from protocol icmp
 set firewall family inet filter ansible term icmp then accept
 ~~~
 
+## Step 3 - Modify an ACL 
+1. Modify rtr1's ansible acl from hte CLI
 
+~~~
 
 
 * 1-check_acl.yml: This playbook provides a check to identify the "meetup" ACL is present on both the Cisco and Jumiper routers. It uses Gather and Assertions.
