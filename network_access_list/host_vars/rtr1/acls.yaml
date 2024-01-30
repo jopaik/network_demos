@@ -56,24 +56,6 @@ acls:
             source:
                 host: 192.168.3.3
         -   destination:
-                any: true
-            grant: permit
-            log:
-                set: true
-            protocol: ospf
-            sequence: 50
-            source:
-                any: true
-        -   destination:
-                any: true
-            grant: permit
-            log:
-                set: true
-            protocol: icmp
-            sequence: 60
-            source:
-                any: true
-        -   destination:
                 host: 192.168.1.1
                 port_protocol:
                     range: 
@@ -83,9 +65,28 @@ acls:
             log:
                 set: true
             protocol: tcp
-            sequence: 70
+            sequence: 50
             source:
                 host: 192.168.3.3
+        -   destination:
+                any: true
+            grant: permit
+            log:
+                set: true
+            protocol: ospf
+            sequence: 60
+            source:
+                any: true
+        -   destination:
+                any: true
+            grant: permit
+            log:
+                set: true
+            protocol: icmp
+            sequence: 70
+            source:
+                any: true
+        
         acl_type: extended
         name: ansible
     afi: ipv4
