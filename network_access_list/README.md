@@ -36,9 +36,10 @@ Review the `changed` tasks from the AAP output
     "20 permit tcp host 192.168.3.3 host 192.168.1.1 eq 443 log",
     "30 permit tcp host 192.168.3.3 host 192.168.1.1 eq 22 log",
     "40 permit tcp host 192.168.3.3 host 192.168.1.1 eq 830 log",
-    "50 permit ospf any any log",
-    "60 permit icmp any any log",
-    "70 permit tcp host 192.168.3.3 host 192.168.1.1 range 32766 65535 log"
+    "50 permit tcp host 192.168.3.3 host 192.168.1.1 range 32766 65535 log",
+    "60 permit ospf any any log",
+    "70 permit icmp any any log"
+    
   ],
   "before": [
     {
