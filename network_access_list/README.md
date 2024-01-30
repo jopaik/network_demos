@@ -32,11 +32,11 @@ Review the `changed` tasks from the AAP output
 {
   "commands": [
     "ip access-list extended ansible",
-    "10 permit tcp host 192.168.3.3 host 192.168.1.1 eq www log",
-    "20 permit tcp host 192.168.3.3 host 192.168.1.1 eq 443 log",
-    "30 permit tcp host 192.168.3.3 host 192.168.1.1 eq 22 log",
-    "40 permit tcp host 192.168.3.3 host 192.168.1.1 eq 830 log",
-    "50 permit tcp host 192.168.3.3 host 192.168.1.1 range 32766 65535 log",
+    "10 permit tcp host 192.168.1.1 host 192.168.3.3 eq www log",
+    "20 permit tcp host 192.168.1.1 host 192.168.3.3 eq 443 log",
+    "30 permit tcp host 192.168.1.1 host 192.168.3.3 eq 22 log",
+    "40 permit tcp host 192.168.1.1 host 192.168.3.3 eq 830 log",
+    "50 permit tcp host 192.168.1.1 host 192.168.3.3 range 32766 65535 log",
     "60 permit ospf any any log",
     "70 permit icmp any any log"
     
@@ -93,10 +93,10 @@ Review the `changed` tasks from the AAP output
               "grant": "permit",
               "protocol": "tcp",
               "source": {
-                "host": "192.168.3.3"
+                "host": "192.168.1.1"
               },
               "destination": {
-                "host": "192.168.1.1",
+                "host": "192.168.3.3",
                 "port_protocol": {
                   "eq": "www"
                 }
@@ -110,10 +110,10 @@ Review the `changed` tasks from the AAP output
               "grant": "permit",
               "protocol": "tcp",
               "source": {
-                "host": "192.168.3.3"
+                "host": "192.168.1.1"
               },
               "destination": {
-                "host": "192.168.1.1",
+                "host": "192.168.3.3",
                 "port_protocol": {
                   "eq": "443"
                 }
@@ -127,10 +127,10 @@ Review the `changed` tasks from the AAP output
               "grant": "permit",
               "protocol": "tcp",
               "source": {
-                "host": "192.168.3.3"
+                "host": "192.168.1.1"
               },
               "destination": {
-                "host": "192.168.1.1",
+                "host": "192.168.3.3",
                 "port_protocol": {
                   "eq": "22"
                 }
@@ -144,10 +144,10 @@ Review the `changed` tasks from the AAP output
               "grant": "permit",
               "protocol": "tcp",
               "source": {
-                "host": "192.168.3.3"
+                "host": "192.168.1.1"
               },
               "destination": {
-                "host": "192.168.1.1",
+                "host": "192.168.3.3",
                 "port_protocol": {
                   "eq": "830"
                 }
@@ -161,10 +161,10 @@ Review the `changed` tasks from the AAP output
               "grant": "permit",
               "protocol": "tcp",
               "source": {
-                "host": "192.168.3.3"
+                "host": "192.168.1.1"
               },
               "destination": {
-                "host": "192.168.1.1",
+                "host": "192.168.3.3",
                 "port_protocol": {
                   "range": {
                     "start": 32766,
