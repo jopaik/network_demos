@@ -1,0 +1,8 @@
+---
+acl_interfaces:
+    - name: ge-1/0/0
+      access_groups:
+        - afi: ipv4
+          acls:
+            - name: ansible
+              direction: out

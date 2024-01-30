@@ -1,0 +1,13 @@
+---
+- name: Detect [configuration-drift] from the resource modules
+  hosts: rtr1,rtr3
+  gather_facts: false
+  tasks:
+    - name: Network ACLS
+      ansible.builtin.include_role:
+        name: network.acls.run
+      vars:
+        operations:
+          - name: detect
+        data_store:
+          local: "{{ playbook_dir }}"

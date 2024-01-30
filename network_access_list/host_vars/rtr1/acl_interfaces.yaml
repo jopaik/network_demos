@@ -1,0 +1,7 @@
+acl_interfaces:
+-   access_groups:
+    -   acls:
+        -   direction: out
+            name: ansible
+        afi: ipv4
+    name: tu0

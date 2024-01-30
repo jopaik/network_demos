@@ -1,6 +1,4 @@
-changed: false
-failed: false
-gathered:
+acls:
 -   acls:
     -   aces:
         -   grant: permit
@@ -10,11 +8,13 @@ gathered:
                 wildcard_bits: 0.0.0.255
         acl_type: standard
         name: GS_NAT_ACL
+    -   acl_type: extended
+        name: meraki-fqdn-dns
     -   aces:
         -   destination:
                 host: 192.168.1.1
                 port_protocol:
-                    eq: www
+                    eq: 80
             grant: permit
             log:
                 set: true
@@ -74,14 +74,21 @@ gathered:
             source:
                 any: true
         -   destination:
-                any: true
+                host: 192.168.1.1
+                port_protocol:
+                    range: 
+                     end: 65535
+                     start: 32766
             grant: permit
+            log:
+                set: true
             protocol: tcp
             sequence: 70
             source:
-                any: true
+                host: 192.168.3.3
         acl_type: extended
-        name: meetup
-    -   acl_type: extended
-        name: meraki-fqdn-dns
+        name: ansible
     afi: ipv4
+
+
+

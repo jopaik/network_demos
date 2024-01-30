@@ -1,4 +1,4 @@
-juniper_acls:
+acls:
 -   acls:
     -   aces:
         -   destination:
@@ -52,5 +52,5 @@ juniper_acls:
         -   grant: permit
             name: icmp
             protocol: icmp
-        name: meetup
+        name: ansible
     afi: ipv4
