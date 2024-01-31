@@ -8,7 +8,7 @@
 4. Launch the Network ACLs Detect job-template
 5. Review AAP output to determine the Configuration drift
 6. Launch the Network ACLs Remediate Template
-8. Verify the ACL entry is `replaced` to it's original configuration
+8. Verify that the ACL entry is returned to it's original configuration
 
 # Network Backups GIT
 
@@ -285,18 +285,323 @@ fatal: [rtr1]: FAILED! => {"changed": false, "msg": "configuration drift is foun
 ~~~
 
 ## Step 5 -  Launch the Network ACLs Remediate Template
-This playbook will push the ACL configurations from the host_vars to the device. Remediate uses the state `replaced`
+This playbook will push the ACL configurations from the host_vars to the device. Remediate uses the state `overridden` for network.acls.run.
 
+Output:
+~~~
+{
+  "commands": [
+    "ip access-list extended ansible",
+    "no 10 permit tcp host 192.168.10.1 host 192.168.30.3 eq 8080 log",
+    "10 permit tcp host 192.168.1.1 host 192.168.3.3 eq www log"
+  ],
+  "before": [
+    {
+      "afi": "ipv4",
+      "acls": [
+        {
+          "name": "GS_NAT_ACL",
+          "acl_type": "standard",
+          "aces": [
+            {
+              "sequence": 10,
+              "grant": "permit",
+              "source": {
+                "address": "192.168.35.0",
+                "wildcard_bits": "0.0.0.255"
+              }
+            }
+          ]
+        },
+        {
+          "name": "ansible",
+          "acl_type": "extended",
+          "aces": [
+            {
+              "sequence": 10,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.10.1"
+              },
+              "destination": {
+                "host": "192.168.30.3",
+                "port_protocol": {
+                  "eq": "8080"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 20,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "443"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 30,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "22"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 40,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "830"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 50,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "range": {
+                    "start": 32766,
+                    "end": 65535
+                  }
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 60,
+              "grant": "permit",
+              "protocol": "ospf",
+              "source": {
+                "any": true
+              },
+              "destination": {
+                "any": true
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 70,
+              "grant": "permit",
+              "protocol": "icmp",
+              "source": {
+                "any": true
+              },
+              "destination": {
+                "any": true
+              },
+              "log": {
+                "set": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "meraki-fqdn-dns",
+          "acl_type": "extended"
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "afi": "ipv4",
+      "acls": [
+        {
+          "name": "GS_NAT_ACL",
+          "acl_type": "standard",
+          "aces": [
+            {
+              "sequence": 10,
+              "grant": "permit",
+              "source": {
+                "address": "192.168.35.0",
+                "wildcard_bits": "0.0.0.255"
+              }
+            }
+          ]
+        },
+        {
+          "name": "ansible",
+          "acl_type": "extended",
+          "aces": [
+            {
+              "sequence": 10,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "www"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 20,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "443"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 30,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "22"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 40,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "eq": "830"
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 50,
+              "grant": "permit",
+              "protocol": "tcp",
+              "source": {
+                "host": "192.168.1.1"
+              },
+              "destination": {
+                "host": "192.168.3.3",
+                "port_protocol": {
+                  "range": {
+                    "start": 32766,
+                    "end": 65535
+                  }
+                }
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 60,
+              "grant": "permit",
+              "protocol": "ospf",
+              "source": {
+                "any": true
+              },
+              "destination": {
+                "any": true
+              },
+              "log": {
+                "set": true
+              }
+            },
+            {
+              "sequence": 70,
+              "grant": "permit",
+              "protocol": "icmp",
+              "source": {
+                "any": true
+              },
+              "destination": {
+                "any": true
+              },
+              "log": {
+                "set": true
+              }
+            }
+          ]
+        }
+~~~
 
+## Step 6 - Verify the ACL change
+1. Access rtr1 to verfify the new ACL `ansible`
 
+rtr1
+~~~
+rtr1#sh ip access-lists ansible
+Extended IP access list ansible
+    10 permit tcp host 192.168.1.1 host 192.168.3.3 eq www log
+    20 permit tcp host 192.168.1.1 host 192.168.3.3 eq 443 log
+    30 permit tcp host 192.168.1.1 host 192.168.3.3 eq 22 log
+    40 permit tcp host 192.168.1.1 host 192.168.3.3 eq 830 log
+    50 permit tcp host 192.168.1.1 host 192.168.3.3 range 32766 65535 log
+    60 permit ospf any any log
+    70 permit icmp any any log
+~~~
 
+# Key Takeaways
+* 
 
-
-* 1-check_acl.yml: This playbook provides a check to identify the "meetup" ACL is present on both the Cisco and Jumiper routers. It uses Gather and Assertions.
-* 2-gather_acls: This playbook gathers the existing ACLs and ACE entries and saves them as a YAML host variable file to run playbooks against
-* 3-gather_drift.yml: This playbook creates a diff file to identify deltas between the intended ACL configuration in the host_vars versus the actual running configuration
-* 4-merge.yml: This playbook pushes ACL configuration additions to the routers
-* 5-replace.yml: This playbook changes existing ACL/ACE entries on the router.
-* 6-overwrite.yml: This playbook adds or removes "overwrites" sections of the ACLs
-* 7-delete.yml: This plabook removes the entire ACLs
-* 8-rendered: This playbook converts the structure data in vars files to the native configs that are sent the router. (ie., CLI or netconf etc.). This is read only.
+## Return to Demo Menu
+ - [Menu of Demos](../README.md)
