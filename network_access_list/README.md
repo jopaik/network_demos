@@ -634,6 +634,14 @@ Since we are modifing an existing entry we would use remediate. `override`. If i
 
 1. Review the changed tasks in hte output.
 
+~~~
+{
+  "commands": [
+    "ip access-list extended ansible",
+    "no 10 permit tcp host 192.168.1.1 host 192.168.3.3 eq www log",
+    "10 permit tcp host 192.168.1.1 host 192.168.3.3 eq 8080 log"
+~~~
+
 # Key Takeaways
 * 
 
