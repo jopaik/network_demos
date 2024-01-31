@@ -599,6 +599,40 @@ Extended IP access list ansible
     60 permit ospf any any log
     70 permit icmp any any log
 ~~~
+## Step 7 - Change an existing entry
+1. Make a change to host_vars/rtr1/acls.yaml
+
+Modify sequence 10 to use tcp port 8080
+~~~
+ -   aces:
+        -   destination:
+                host: 192.168.3.3
+                port_protocol:
+                    eq: 8080
+            grant: permit
+            log:
+                set: true
+            protocol: tcp
+            sequence: 10
+            source:
+                host: 192.168.1.1
+~~~
+Make sure you save the file and push to gitea.
+
+2. Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
+![Save](../../images/save_commit.png)
+
+or update from the terminal
+~~~
+git add --all
+git commit -m "deploy"
+git push
+~~~
+
+## Step 8 - Launch the Network ACLs Remediate Template
+Since we are modifing an existing entry we would use remediate. `override`. If it were a new entry we could use deploy `merge`
+
+1. Review the changed tasks in hte output.
 
 # Key Takeaways
 * 
