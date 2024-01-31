@@ -13,8 +13,16 @@
 # Network Backups GIT
 
 [Table of Contents](#table-of-contents)
-- [Step 1 - Collect Backup Configurations](#step-1---credential)
-- [Step 2 - Review](#step-2---job-template)
+- [Step 1 - Launch the Network ACLS Deploy job-template](#step-1---credential)
+- [Step 2 - Verify the new ACL](#step-2---job-template)
+- [Step 3 - Modify an ACL](#step-3---modify-an-acl)
+- [Step 4 - Launch the Network ACLs Detect job-template](#step-4-launch-the-network-acls-detect-job-template)
+- [Step 5 -  Launch the Network ACLs Remediate Template](#step-5-launch-the-network-acls-remediate-job-template)
+- [Step 6 - Verify the ACL change](#step-6-verify-the-acl-change)
+- [Step 7 - Change an existing entry](#step-7-change-an-existing-entry)
+- [Step 8 - Launch the Network ACLs Remediate Template](#step-8-launch-the-network-acls-remediate-template)
+
+
 
 ## Objective
 To deploy and change ACLs and ACL entries using valadated collection content.
