@@ -1,0 +1,37 @@
+- name: Create SNOW incident if configuration not compliant
+  block:
+    - name: Resolve ticket
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ SN_INSTANCE }}"
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+        number: "{{ incident_num }}"
+        state: resolved
+        close_code: "Solved (Permanently)"
+        close_notes: "Problem is fixed"
+        short_description: "{{inventory_hostname.split('1')[0] | capitalize }} CSR 1000v is now compliant, closing ticket"
+
+    - name: Close ticket
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ SN_INSTANCE }}"
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+        close_code: "Solved (Permanently)"
+        close_notes: "Now you are close"
+        state: closed
+        number: "{{ incident_num }}"
+        short_description: "Banner on {{inventory_hostname.split('1')[0] | capitalize }} CSR 1000v has been updated, marking resolved"
+
+    - name: Send Slack confirmation
+      ansible.builtin.uri:
+        url: "{{response_url}}"
+        body: "{{lookup('template', 'snow_fix.j2')}}"
+        body_format: json
+        method: POST
+        validate_certs: no
+      delegate_to: localhost
+      run_once: yes
+  when: incident_num is defined
+

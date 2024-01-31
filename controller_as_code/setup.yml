@@ -644,6 +644,48 @@
                   - sw2
                   - sw3
                   - sw4
+  
+    #This section starts the Network - SNOW demo
+
+    - name: Create a SNOW credential type
+      ansible.controller.credential_type:
+        injectors:
+          env:
+            SN_INSTANCE: '{{instance}}'
+            SN_PASSWORD: '{{password}}'
+            SN_USERNAME: '{{username}}'
+          extra_vars:
+            SN_INSTANCE: '{{instance}}'
+            SN_PASSWORD: '{{password}}'
+            SN_USERNAME: '{{username}}'
+        fields:
+        - id: username
+          type: string
+          label: SN_USERNAME
+        - id: password
+          type: string
+          label: SN_PASSWORD
+          secret: true
+        - id: instance
+          type: string
+          label: SN_INSTANCE
+          required:
+            - username
+            - password
+            - instance
+        kind: cloud
+        name: SNOW
+
+    - name: SNOW Credential
+      ansible.controller.credential:
+        credential_type: SNOW
+        description: ""
+        inputs:
+          SN_USERNAME: "admin"
+          SN_PASSWORD: ""
+          SN_INSTANCE: "https://ven05430.service-now.com" 
+        name: SNOW Credential
+        organization: "Red Hat network organization"
 
 
 #Add to end of playbook
