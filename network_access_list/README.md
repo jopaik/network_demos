@@ -264,9 +264,32 @@ set firewall family inet filter ansible term icmp then accept
 ~~~
 
 ## Step 3 - Modify an ACL 
-1. Modify rtr1's ansible acl from hte CLI
+1. Modify rtr1's ansible acl from the VSCode CLI
+This will simulate a mistake made outside of automation.
 
 ~~~
+$ ssh rtr1
+conf t
+ip access-list extended ansible
+no 10
+10 permit tcp host 192.168.10.1 host 192.168.30.3 eq 8080 log
+~~~
+
+## Step 4 - Launch the Network ACLs Detect job-template
+This playbook will identify if the ACL entry drifts away from the Single Source of Truth (SSOT) `host_vars`
+
+Ouptut
+~~~
+TASK [network.base.resource_manager : Retrieve a repository from a distant location and make it available locally] ***
+fatal: [rtr1]: FAILED! => {"changed": false, "msg": "configuration drift is found in cisco.ios.ios_acl_interfaces Resource"}
+~~~
+
+## Step 5 -  Launch the Network ACLs Remediate Template
+This playbook will push the ACL configurations from the host_vars to the device. Remediate uses the state `replaced`
+
+
+
+
 
 
 * 1-check_acl.yml: This playbook provides a check to identify the "meetup" ACL is present on both the Cisco and Jumiper routers. It uses Gather and Assertions.
