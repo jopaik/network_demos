@@ -15,6 +15,7 @@
       ansible.controller.project:
         name: Student Project
         organization: "Red Hat network organization"
+        execution_environment: "Validated Network"
         scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
         scm_type: git
         allow_override: true
