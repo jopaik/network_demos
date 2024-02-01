@@ -651,7 +651,7 @@
       ansible.controller.credential_type:
         injectors:
           env:
-            SN_HOST: '{{instance}}'
+            SN_HOST: '{{host}'
             SN_PASSWORD: '{{password}}'
             SN_USERNAME: '{{username}}'
           extra_vars:
