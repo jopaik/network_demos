@@ -647,52 +647,6 @@
   
     #This section starts the Network - SNOW demo
 
-    - name: Create a SNOW credential type
-      ansible.controller.credential_type:
-        injectors:
-          env:
-            SN_HOST: '{{host}'
-            SN_PASSWORD: '{{password}}'
-            SN_USERNAME: '{{username}}'
-          extra_vars:
-            SN_HOST: '{{host}}'
-            SN_PASSWORD: '{{password}}'
-            SN_USERNAME: '{{username}}'
-        fields:
-        - id: username
-          type: string
-          label: SN_USERNAME
-        - id: password
-          type: string
-          label: SN_PASSWORD
-          secret: true
-        - id: host
-          type: string
-          label: SN_HOST
-          required:
-            - username
-            - password
-            - host
-        kind: cloud
-        name: SNOW
-
-    - name: SNOW Credential
-      ansible.controller.credential:
-        credential_type: SNOW
-        description: ""
-        inputs:
-          SN_USERNAME: ""
-          SN_PASSWORD: ""
-          SN_HOST: "https://ansible.service-now.com/" 
-        name: SNOW Credential
-        organization: "Red Hat network organization"
-
-    - name: Create Execution Environments
-      ansible.controller.execution_environment:
-        name: "ServiceNow EE"
-        image: quay.io/acme_corp/servicenow-ee:latest
-        pull: missing
-
     - name: Create a job-template - Network-Banner-Incident
       ansible.controller.job_template:
         name: "Network-Banner-Incident"
@@ -700,7 +654,7 @@
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "network_snow/banner_incident.yml"
-        execution_environment: "ServiceNow EE"
+        execution_environment: "Validated Network"
         state: "present"
 
     
