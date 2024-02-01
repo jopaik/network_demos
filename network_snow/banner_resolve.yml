@@ -1,9 +1,9 @@
 ---
-- name: Check for Banner Configuration
+- name: Resolve for Banner Configuration
   hosts: rtr1
   gather_facts: false
 
   tasks:
     - name: Load banner onto network device(s)
       include_role:
-        name: roles/incident
+        name: roles/resolve

@@ -1,0 +1,21 @@
+---
+- name: Fix router banners
+  hosts: rtr1,localhost
+  gather_facts: false
+
+  tasks:
+    - name: Load banner onto network device
+      vars:
+        - network_banner: "{{ net_banner | default(None) }}"
+        - banner_type: "{{ net_type | default('login') }}"
+      cisco.ios.ios_banner:
+        text: "{{ network_banner }}"
+        banner: "{{ banner_type }}"
+      when: inventory_hostname == 'rtr1'
+
+    - name: Fix banner to activate and approve
+      ansible.controller.workflow_approval:
+        name: Troubleshoot-Approval
+        workflow_job_id: "{{ workflow_job_id }}"
+        action: approve
+      when: inventory_hostname == 'localhost'

@@ -3,7 +3,7 @@
     - name: Resolve ticket
       servicenow.itsm.incident:
         instance:
-          host: "{{ SN_INSTANCE }}"
+          host: "{{ SN_HOST }}"
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
         number: "{{ incident_num }}"
@@ -15,7 +15,7 @@
     - name: Close ticket
       servicenow.itsm.incident:
         instance:
-          host: "{{ SN_INSTANCE }}"
+          host: "{{ SN_HOST }}"
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
         close_code: "Solved (Permanently)"
