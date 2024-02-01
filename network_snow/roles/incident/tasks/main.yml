@@ -19,7 +19,7 @@
     - name: Create SNOW ticket
       servicenow.itsm.incident:
         instance:
-          host: "{{ SN_INSTANCE }}"
+          host: "{{ SN_HOST }}"
           username: "{{ SN_USERNAME }}"
           password: "{{ SN_PASSWORD }}"
         state: new

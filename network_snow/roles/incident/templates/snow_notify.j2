@@ -1,0 +1,23 @@
+{
+"text": "Status Update",
+"blocks": [
+    {
+        "type": "section",
+        "text": {
+            "type": "mrkdwn",
+            "text": "@{{slack_user}}, {{inventory_hostname | capitalize}} is out of compliance. Incident number {{snow_var.record.number }} created."
+        }
+    },
+    {
+        "type": "section",
+        "text": {
+            "type": "mrkdwn",
+            "text":
+"
+:ticket: <{{ SN_INSTANCE }}/nav_to.do?uri=%2Fhome.do|ServiceNow>
+"
+        }
+    }
+]
+}
+
