@@ -647,9 +647,9 @@
   
     #This section starts the Network - SNOW demo
 
-    - name: Create a job-template - Network-Banner-Incident
+    - name: Create a job-template - Network-Banner-Check
       ansible.controller.job_template:
-        name: "Network-Banner-Incident"
+        name: "Network-Banner-Check"
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
