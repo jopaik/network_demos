@@ -292,7 +292,7 @@
         credentials:
           - "Workshop Credential"
           - "Controller Credential"
-        execution_environment: "Default execution environment"
+        execution_environment: "Validated Network"
         state: "present"
 
     - name: Create a job-template - Network Automation - Restore
@@ -304,7 +304,7 @@
         playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_restore.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "Default execution environment"
+        execution_environment: "Validated Network"
         state: "present"
 
     - name: Create a job-template - Network-Banner
@@ -316,7 +316,7 @@
         playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_banner.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "Default execution environment"
+        execution_environment: "Validated Network"
         state: present
 
     - name: Create a job-template - Network-User
@@ -328,7 +328,7 @@
         playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_user.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "Default execution environment"
+        execution_environment: "Validated Network"
         state: "present"
       
 
