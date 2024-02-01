@@ -654,6 +654,8 @@
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "network_snow/banner_incident.yml"
+        credentials:
+          - "Workshop Credential"
         execution_environment: "Validated Network"
         state: "present"
 
