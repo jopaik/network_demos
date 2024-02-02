@@ -734,13 +734,13 @@
 
     - name: Create a workflow approval node
       ansible.controller.workflow_job_template_node:
-        identifier: approval_test
+        identifier: Troubleshoot-Approval
         approval_node:
           name: Troubleshoot-Approval
         workflow: "Network-ServiceNow-Workflow"
         state: present
         success_nodes:
-          - Network-Banner-Resolve
+        - Network-Banner-Resolve 
         
     - name: Network-Banner-Check
       ansible.controller.workflow_job_template_node:
@@ -750,7 +750,7 @@
         organization: "Red Hat network organization"
         state: present
         failure_nodes:
-          - Troubleshoot-Approval
+        - Troubleshoot-Approval
 
    
 
