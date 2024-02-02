@@ -683,6 +683,10 @@
           - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present" 
+        extra_vars:
+          SN_HOST: https://ansible.service-now.com
+          SN_USERNAME: changeme
+          SN_PASSWORD: changeme
         survey_enabled: yes
         survey_spec: {
                         "description": "",
@@ -723,53 +727,32 @@
     - name: Network-Banner-Resolve
       ansible.controller.workflow_job_template_node:
         identifier: Network-Banner-Resolve
-        workflow: "Workshop Workflow"
+        workflow: "Network-ServiceNow-Workflow"
         unified_job_template: Network-Banner-Resolve
         organization: "Red Hat network organization"
         state: present
-        
-    - name: Network-User
-      ansible.controller.workflow_job_template_node:
-        identifier: Network-User
-        workflow: "Workshop Workflow"
-        unified_job_template: Network-User
-        organization: "Red Hat network organization"
-        state: present
-        failure_nodes:
-          - Network Automation - Restore
-
-    - name: Network-Banner
-      ansible.controller.workflow_job_template_node:
-        identifier: Network-Banner
-        workflow: "Workshop Workflow"
-        unified_job_template: Network-Banner
-        organization: "Red Hat network organization"
-        state: present
-        failure_nodes:
-          - Network Automation - Restore
-
-    - name: Backup network configuration
-      ansible.controller.workflow_job_template_node:
-        identifier: Backup network configuration
-        workflow: "Workshop Workflow"
-        unified_job_template: Backup network configurations
-        organization: "Red Hat network organization"
-        state: present
-        success_nodes:
-          - Network-Banner
-          - Network-User
 
     - name: Create a workflow approval node
-  workflow_job_template_node:
-    identifier: approval_test
-    approval_node:
-      name: approval_jt_name
-      timeout: 900
-    workflow: "Test Workflow"
-       
+      workflow_job_template_node:
+        identifier: approval_test
+        approval_node:
+          name: Troubleshoot-Approval
+        workflow: "Network-ServiceNow-Workflow"
+        state: present
+        success_nodes:
+          - Network-Banner-Resolve
+        
+    - name: Network-Banner-Check
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Banner-Check
+        workflow: "Network-ServiceNow-Workflow"
+        unified_job_template: Network-Banner-Check
+        organization: "Red Hat network organization"
+        state: present
+        failure_nodes:
+          - Troubleshoot-Approval
 
-    
-
+   
 
 #Add to end of playbook
     - name: copy ansible.cfg
