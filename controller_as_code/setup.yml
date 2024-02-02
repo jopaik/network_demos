@@ -645,7 +645,7 @@
                   - sw3
                   - sw4
   
-    #This section starts the Network - SNOW demo
+  #This section starts the Network - SNOW demo
 
     - name: Create a job-template - Network-Banner-Check
       ansible.controller.job_template:
@@ -683,10 +683,6 @@
           - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present" 
-        extra_vars:
-          SN_HOST: https://ansible.service-now.com
-          SN_USERNAME: changeme
-          SN_PASSWORD: changeme
         survey_enabled: yes
         survey_spec: {
                         "description": "",
@@ -722,6 +718,11 @@
       ansible.controller.workflow_job_template:
         name: "Network-ServiceNow-Workflow"
         organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        extra_vars:
+          SN_HOST: https://ansible.service-now.com
+          SN_USERNAME: changeme
+          SN_PASSWORD: changeme
         state: present
         
     - name: Network-Banner-Resolve
@@ -730,17 +731,27 @@
         workflow: "Network-ServiceNow-Workflow"
         unified_job_template: Network-Banner-Resolve
         organization: "Red Hat network organization"
-        state: present
+        state: present  
 
-    - name: Create a workflow approval node
+    - name: Troubleshoot-Approval
       ansible.controller.workflow_job_template_node:
         identifier: Troubleshoot-Approval
-        approval_node:
-          name: Troubleshoot-Approval
-        workflow: "Network-ServiceNow-Workflow"
-        state: present
+        workflow_job_template: "Network-ServiceNow-Workflow"
+        organization: 'Red Hat network organization'
+        approval_node: 
+          name: 'Troubleshoot-Approval'
+          timeout: 0
+        state: present    
+
+    - name: Troubleshoot-Approval
+      ansible.controller.workflow_job_template_node:
+        identifier: Troubleshoot-Approval
+        workflow_job_template: "Network-ServiceNow-Workflow"
+        organization: 'Red Hat network organization'
+        state: present    
         success_nodes:
-        - Network-Banner-Resolve 
+          - 'Network-Banner-Resolve'
+      ignore_errors: true
         
     - name: Network-Banner-Check
       ansible.controller.workflow_job_template_node:
@@ -750,36 +761,10 @@
         organization: "Red Hat network organization"
         state: present
         failure_nodes:
-        - Troubleshoot-Approval
+          - Troubleshoot-Approval
+
 
    
-
-#Add to end of playbook
-    - name: copy ansible.cfg
-      ansible.builtin.copy:
-        src: ../ansible.dynamic.cfg
-        dest: ../ansible.cfg
-
-    - name: push to gitea
-      ansible.builtin.shell:
-        cmd: "{{ item }}"
-        chdir: "{{ playbook_dir }}"
-      loop:
-        - git config --global user.name gitea
-        - git config --global user.email gitea@example.com
-        - git add --all
-        - git commit --allow-empty -m 'changed for aap'
-        - "git push http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
-
-
-
-
-
-
-        
-
-
-          
 
 
         
