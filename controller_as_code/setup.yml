@@ -645,7 +645,8 @@
                   - sw3
                   - sw4
   
-  #This section starts the Network - SNOW demo
+  
+    #This section starts the Network - SNOW demo
 
     - name: Create a job-template - Network-Banner-Check
       ansible.controller.job_template:
@@ -721,10 +722,45 @@
         inventory: "Workshop Inventory"
         extra_vars:
           SN_HOST: https://ansible.service-now.com
-          SN_USERNAME: changeme
-          SN_PASSWORD: changeme
         state: present
-        
+        survey_enabled: yes
+        survey_spec: {
+                          "description": "",
+                          "name": "",
+                          "spec": [
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": true,
+                                  "question_description": "",
+                                  "question_name": "Enter your SNOW Username",
+                                  "required": true,
+                                  "type": "text",
+                                  "variable": "SN_USERNAME"
+                              },
+                              {
+                                  "choices": "",
+                                  "default": "",
+                                  "formattedChoices": [
+                                      {
+                                          "choice": "",
+                                          "id": 0,
+                                          "isDefault": false
+                                      }
+                                  ],
+                                  "max": 1024,
+                                  "min": 0,
+                                  "new_question": false,
+                                  "question_description": "",
+                                  "question_name": "Enter your SNOW Password",
+                                  "required": true,
+                                  "type": "password",
+                                  "variable": "SN_PASSWORD"
+                              }
+                               ]}
+
     - name: Network-Banner-Resolve
       ansible.controller.workflow_job_template_node:
         identifier: Network-Banner-Resolve
@@ -762,9 +798,3 @@
         state: present
         failure_nodes:
           - Troubleshoot-Approval
-
-
-   
-
-
-        
