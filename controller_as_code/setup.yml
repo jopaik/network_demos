@@ -733,7 +733,7 @@
         state: present
 
     - name: Create a workflow approval node
-      workflow_job_template_node:
+      ansible.controller.workflow_job_template_node:
         identifier: approval_test
         approval_node:
           name: Troubleshoot-Approval
