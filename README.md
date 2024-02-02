@@ -63,7 +63,7 @@ The following steps only take a few minutes to prep all the demos.
 3. setup VSCode for git
 4. Add your student pod password and run the following command from `network-demos-repo/`
 ~~~
- ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
+ ansible-navigator run controller_as_code/setup.yml --eei registry.gitlab.com/redhatautomation/validated-network-ee:latest -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
 ~~~
 
 ## Exercise 1 - Setting up the Gitea Repo and VSCode
@@ -188,7 +188,7 @@ The setup.yml playbook will require extra variables when running in ansible-navi
 Run the `ansible-navigator` command with the `run` argument and -m stdout as well as  -e for the `--extra-vars`
 
   ~~~
-  $ ansible-navigator run controller_as_code/setup.yml -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
+  $ ansible-navigator run controller_as_code/setup.yml --eei registry.gitlab.com/redhatautomation/validated-network-ee:latest -m stdout -e "username=gitea git_password=gitea password=<replace-with-lab-student-password>"
   ~~~
 
 #### Output "truncated"
