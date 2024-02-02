@@ -659,7 +659,114 @@
         execution_environment: "Validated Network"
         state: "present"
 
-    
+    - name: Create a job-template - Network-Banner-Resolve
+      ansible.controller.job_template:
+        name: "Network-Banner-Resolve"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/banner_resolve.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"    
+
+    - name: Create a job-template - Network-Banner-Fix
+      ansible.controller.job_template:
+        name: "Network-Banner-Fix"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/banner_fix.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Controller Credential"
+        execution_environment: "Validated Network"
+        state: "present" 
+        survey_enabled: yes
+        survey_spec: {
+                        "description": "",
+                        "name": "",
+                        "spec": [
+                            {
+                                "choices": "",
+                                "default": "",
+                                "max": 1024,
+                                "min": 0,
+                                "new_question": true,
+                                "question_description": "Please type into the text field the desired banner",
+                                "question_name": "Please enter the banner text",
+                                "required": true,
+                                "type": "textarea",
+                                "variable": "net_banner"
+                            },
+                            {
+                                "choices": "",
+                                "default": "",
+                                "max": 1024,
+                                "min": 1,
+                                "new_question": true,
+                                "question_description": "",
+                                "question_name": "workflow_job_id",
+                                "required": true,
+                                "type": "text",
+                                "variable": "workflow_job_id"
+                            }
+                        ]}
+
+    - name: Workshop Workflow
+      ansible.controller.workflow_job_template:
+        name: "Network-ServiceNow-Workflow"
+        organization: "Red Hat network organization"
+        state: present
+        
+    - name: Network-Banner-Resolve
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Banner-Resolve
+        workflow: "Workshop Workflow"
+        unified_job_template: Network-Banner-Resolve
+        organization: "Red Hat network organization"
+        state: present
+        
+    - name: Network-User
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-User
+        workflow: "Workshop Workflow"
+        unified_job_template: Network-User
+        organization: "Red Hat network organization"
+        state: present
+        failure_nodes:
+          - Network Automation - Restore
+
+    - name: Network-Banner
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Banner
+        workflow: "Workshop Workflow"
+        unified_job_template: Network-Banner
+        organization: "Red Hat network organization"
+        state: present
+        failure_nodes:
+          - Network Automation - Restore
+
+    - name: Backup network configuration
+      ansible.controller.workflow_job_template_node:
+        identifier: Backup network configuration
+        workflow: "Workshop Workflow"
+        unified_job_template: Backup network configurations
+        organization: "Red Hat network organization"
+        state: present
+        success_nodes:
+          - Network-Banner
+          - Network-User
+
+    - name: Create a workflow approval node
+  workflow_job_template_node:
+    identifier: approval_test
+    approval_node:
+      name: approval_jt_name
+      timeout: 900
+    workflow: "Test Workflow"
+       
 
     
 
