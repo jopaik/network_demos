@@ -34,10 +34,25 @@ For the below demos insure you are always using files from /home/student/network
    * Workflow
    * Self Service Survey
 - [Network Access List](network_access_list/README.md)
+   * Deploy ACLS with Validated Content
+   * Detect incorrect ACL Entries
+   * Remdiate ACL entries
+   * Make changes to existing ACLs and Entries
 - [Network SNOW](network_snow)
+   * Compliance Checks 
+   * Automatically Open SNOW Inicidents (tickets)
+   * Resolve Issues
+   * Close Tickets 
 - [Cisco ACI](cisco_aci)
+   * Deploy ACI fabrics as Code
+   * Make Health Checks from Ansible to Validate ACI State
 - [Cisco DNAC](cisco_dnac)
-   * TBD
+   * Dnamic Ansible Inventory
+   * Backup DNAC configs to Git Repo
+   * Use Ansible collection to make compliance checks against DNAC device configs
+- [NetBox](netbox)
+   * Asible + Netbox SSOT (WIP)
+   
    
 # Getting Started
 
