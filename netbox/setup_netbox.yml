@@ -1,0 +1,18 @@
+---
+- name: Setup Netbox
+  hosts: localhost
+
+  vars: 
+   netbox_api_key: e8dc291980df440441dcf1f71c20b6712e870d17
+
+  environment:
+    NETBOX_URL: "https://netbox-demo.netboxlabs.com/api/"
+    NETBOX_API_KEY: "{{ netbox_api_key }}"
+   
+  tasks:
+    - name: "TASK 10: SETUP SITES"
+      netbox.netbox.netbox_site:
+        netbox_url: "{{ lookup('ENV', 'NETBOX_URL') }}"
+        netbox_token: "{{ lookup('ENV', 'NETBOX_API_KEY') }}"
+        data: "{{ item }}"
+      loop: "{{ site_list }}"

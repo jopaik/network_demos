@@ -1,0 +1,10 @@
+---
+plugin: netbox.netbox.nb_inventory
+api_endpoint: "https://netbox-demo.netboxlabs.com/api/"
+validate_certs: false
+config_context: false
+group_by:
+ - device_roles
+ - platforms
+compose:
+ ansible_network_os: platform.slug
