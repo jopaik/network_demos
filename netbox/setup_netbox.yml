@@ -1,9 +1,6 @@
 ---
 - name: Setup Netbox
   hosts: localhost
-
-  vars: 
-   netbox_api_key: 15dbe9840de04c7623e52c359394f34feeadde59
    
   tasks:
     - name: "SETUP SITES"

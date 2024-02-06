@@ -798,3 +798,37 @@
         state: present
         failure_nodes:
           - Troubleshoot-Approval
+
+# This Starts the NetBox Section
+
+    - name: Create a job-template - Network-Netbox-Setup
+      ansible.controller.job_template:
+        name: "Network-Netbox-Setup"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "netbox/setup_netbox.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present" 
+        survey_enabled: yes
+        survey_spec: {
+                        "description": "",
+                        "name": "",
+                        "spec": [
+                            {
+                                "choices": "",
+                                "default": "",
+                                "max": 1024,
+                                "min": 0,
+                                "new_question": true,
+                                "question_description": "Please provide the API Key Token ",
+                                "question_name": "Please provide the API Key Token",
+                                "required": true,
+                                "type": "textarea",
+                                "variable": "netbox_api_key"
+                            }
+                        ]}
+    
+
