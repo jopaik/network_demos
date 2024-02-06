@@ -239,7 +239,10 @@ Ensure that the playbook removes the "errored" 192.168.1.3 network prefix mistak
 2. Review the changed entry for rtr1 to validate the 192.168.1.3 entry was successfully removed.
 
 
-Congratulations the Validated network.base collection has sucessfully reconciled your routers with the `host_vars` source of truth!  
+Congratulations the Validated network.base collection has sucessfully reconciled your routers with the `host_vars` source of truth! 
+
+# Key Takeaways
+* 
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)

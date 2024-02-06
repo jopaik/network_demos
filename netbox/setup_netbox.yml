@@ -3,16 +3,49 @@
   hosts: localhost
 
   vars: 
-   netbox_api_key: e8dc291980df440441dcf1f71c20b6712e870d17
-
-  environment:
-    NETBOX_URL: "https://netbox-demo.netboxlabs.com/api/"
-    NETBOX_API_KEY: "{{ netbox_api_key }}"
+   netbox_api_key: 15dbe9840de04c7623e52c359394f34feeadde59
    
   tasks:
-    - name: "TASK 10: SETUP SITES"
+    - name: "SETUP SITES"
       netbox.netbox.netbox_site:
-        netbox_url: "{{ lookup('ENV', 'NETBOX_URL') }}"
-        netbox_token: "{{ lookup('ENV', 'NETBOX_API_KEY') }}"
+        netbox_url: "https://netbox-demo.netboxlabs.com/"
+        netbox_token: "{{ netbox_api_key }}"
         data: "{{ item }}"
       loop: "{{ site_list }}"
+
+    - name: "SETUP MANUFACTURERS"
+      netbox.netbox.netbox_manufacturer:
+        netbox_url: "https://netbox-demo.netboxlabs.com/"
+        netbox_token: "{{ netbox_api_key }}"
+        data:
+          name: "{{ manufacturer }}"
+      loop: "{{ manufacturers }}"
+      loop_control:
+        loop_var: manufacturer
+
+    - name: "SETUP DEVICE TYPES"
+      netbox.netbox.netbox_device_type:
+        netbox_url: "https://netbox-demo.netboxlabs.com/"
+        netbox_token: "{{ netbox_api_key }}"
+        data:
+          model: "{{ device_type.model }}"
+          manufacturer: "{{ device_type.manufacturer }}"
+          slug: "{{ device_type.slug }}"
+          part_number: "{{ device_type.part_number }}"
+          is_full_depth: "{{ device_type.Full_depth }}"
+      loop: "{{ device_types }}"
+      loop_control:
+        loop_var: device_type
+        label: "{{ device_type['model'] }}"
+
+    - name: "SETUP PLATFORMS"
+      netbox.netbox.netbox_platform:
+        netbox_url: "https://netbox-demo.netboxlabs.com/"
+        netbox_token: "{{ netbox_api_key }}"
+        data:
+          name: "{{ platform.name }}"
+          slug: "{{ platform.slug }}"
+      loop: "{{ platforms }}"
+      loop_control:
+        loop_var: platform
+        label: "{{ platform['name'] }}"

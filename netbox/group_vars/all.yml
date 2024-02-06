@@ -14,32 +14,25 @@ manufacturers:  # In alphabetical order
   - Cisco
   - Juniper
 device_types:
-  - model: “ASAv”
-    manufacturer: “Cisco”
-    slug: “asav”
-    part_number: “asav”
+  - model: CSR1000v
+    manufacturer: Cisco
+    slug: csr1000v
+    part_number: csr1000v
     Full_depth: False
-  - model: “CSR1000v”
-    manufacturer: “Cisco”
-    slug: “csr1000v”
-    part_number: “csr1000v”
+  - model: vEOS
+    manufacturer: Arista
+    slug: veos
+    part_number: veos
     Full_depth: False
-  - model: “vEOS”
-    manufacturer: “Arista”
-    slug: “veos”
-    part_number: “veos”
-    Full_depth: False
-  - model: “vSRX”
-    manufacturer: “Juniper”
-    slug: “vsrx”
-    part_number: “vsrx”
+  - model: vMX
+    manufacturer: Juniper
+    slug: vmx
+    part_number: vmx
     Full_depth: False
 platforms:
-  - name: “ASA”
-    slug: “asa”
-  - name: “EOS”
-    slug: “eos”
-  - name: “IOS”
-    slug: “ios”
-  - name: “JUNOS”
-    slug: “junos”
+  - name: EOS
+    slug: eos
+  - name: IOS
+    slug: ios
+  - name: JUNOS
+    slug: junos
