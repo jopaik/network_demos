@@ -108,126 +108,126 @@
         execution_environment: "Validated Network"
         state: "present"
 
-    # Network Compliance Dashboard   
+    # Network Compliance Dashboard
     - name: Create a job-template - Network-Config
       ansible.controller.job_template:
         name: "Network-Config"
-        organization: 'Red Hat network organization'
+        organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "network_compliance_dashboard/config.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "Validated Network" 
-        state: "present" 
-    
+        execution_environment: "Validated Network"
+        state: "present"
+
     - name: Create a job-template - Network-Compliance-Dashboard
       ansible.controller.job_template:
         name: "Network-Compliance-Dashboard"
-        organization: 'Red Hat network organization'
+        organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "network_compliance_dashboard/network_report.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment" 
+        execution_environment: "network workshop execution environment"
         state: "present"
 
     # This section includes Network-Check-Complisnce Demo
     - name: Create a job-template - Network-Check-Compliance
       ansible.controller.job_template:
         name: "Network-Check-Compliance"
-        organization: 'Red Hat network organization'
+        organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "network_compliance_checks_remediations/compliance.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment" 
+        execution_environment: "network workshop execution environment"
         job_type: check
-        state: "present" 
-    
+        state: "present"
+
     - name: Create a job-template - Network-Run-Compliance
       ansible.controller.job_template:
         name: "Network-Run-Compliance"
-        organization: 'Red Hat network organization'
+        organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
         playbook: "network_compliance_checks_remediations/compliance_run.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment" 
+        execution_environment: "network workshop execution environment"
         job_type: check
-        state: "present" 
+        state: "present"
 
-    - name: Create a workflow job template 
+    - name: Create a workflow job template
       ansible.controller.workflow_job_template:
         name: Network-Compliance-Workflow
-        inventory: 'Workshop Inventory'
+        inventory: "Workshop Inventory"
         organization: "Red Hat network organization"
         state: present
         survey_enabled: true
         survey:
-            name: ''
-            description: ''
-            spec:
-              - question_name: Which groups/devices to run checks against?
-                type: multiselect
-                variable: _group
-                required: true
-                default:  ''
-                choices:
-                  - cisco
-                  - arista
-                  - juniper
-              - question_name: Please select the desired compliance roles?
-                type: multiselect
-                variable: tag
-                required: true
-                default: ''
-                choices:
-                  - logging
-                  - snmp 
-                  - ntp
-                  - stig
+          name: ""
+          description: ""
+          spec:
+            - question_name: Which groups/devices to run checks against?
+              type: multiselect
+              variable: _group
+              required: true
+              default: ""
+              choices:
+                - cisco
+                - arista
+                - juniper
+            - question_name: Please select the desired compliance roles?
+              type: multiselect
+              variable: tag
+              required: true
+              default: ""
+              choices:
+                - logging
+                - snmp
+                - ntp
+                - stig
 
     - name: Node Network-Run-Compliance
-      ansible.controller.workflow_job_template_node:    
+      ansible.controller.workflow_job_template_node:
         identifier: Network-Run-Compliance
-        workflow: 'Network-Compliance-Workflow'
+        workflow: "Network-Compliance-Workflow"
         unified_job_template: Network-Run-Compliance
-        organization: 'Red Hat network organization'
+        organization: "Red Hat network organization"
         state: present
-        
-    - name: Node Change Approval
-      ansible.controller.workflow_job_template_node:    
-        identifier: 'Change Approval'
-        workflow_job_template: 'Network-Compliance-Workflow'
-        organization: 'Red Hat network organization'
-        approval_node: 
-          name: 'Change Approval'
-          timeout: 0
-        state: present    
 
     - name: Node Change Approval
-      ansible.controller.workflow_job_template_node:    
-        identifier: 'Change Approval'
-        workflow_job_template: 'Network-Compliance-Workflow'
-        organization: 'Red Hat network organization'
-        success_nodes: 
-        - Network-Run-Compliance
-        state: present    
+      ansible.controller.workflow_job_template_node:
+        identifier: "Change Approval"
+        workflow_job_template: "Network-Compliance-Workflow"
+        organization: "Red Hat network organization"
+        approval_node:
+          name: "Change Approval"
+          timeout: 0
+        state: present
+
+    - name: Node Change Approval
+      ansible.controller.workflow_job_template_node:
+        identifier: "Change Approval"
+        workflow_job_template: "Network-Compliance-Workflow"
+        organization: "Red Hat network organization"
+        success_nodes:
+          - Network-Run-Compliance
+        state: present
 
     - name: Node Network-Check-Compliance
-      ansible.controller.workflow_job_template_node:    
+      ansible.controller.workflow_job_template_node:
         identifier: Network-Check-Compliance
-        workflow: 'Network-Compliance-Workflow'
+        workflow: "Network-Compliance-Workflow"
         unified_job_template: Network-Check-Compliance
-        organization: 'Red Hat network organization'
-        success_nodes: 'Change Approval'
+        organization: "Red Hat network organization"
+        success_nodes: "Change Approval"
         state: present
 
-# This section includes Scoped-config-management
+    # This section includes Scoped-config-management
 
     - name: Create a job-template - Network-Validated-Persist
       ansible.controller.job_template:
@@ -281,7 +281,7 @@
         execution_environment: "Validated Network"
         state: "present"
 
-# This section is for the completed network automation workshop 101 AAP Demo
+    # This section is for the completed network automation workshop 101 AAP Demo
     - name: Create a job-template - Backup network configurations
       ansible.controller.job_template:
         name: "Backup network configurations"
@@ -330,13 +330,12 @@
           - "Workshop Credential"
         execution_environment: "Validated Network"
         state: "present"
-      
 
     - name: Enable host
       ansible.controller.host:
         name: backup-server
         state: present
-        inventory: "Workshop Inventory" 
+        inventory: "Workshop Inventory"
         enabled: true
 
     - name: Workshop Workflow
@@ -345,36 +344,38 @@
         organization: "Red Hat network organization"
         state: present
         survey_enabled: yes
-        survey_spec: {
-                        "description": "",
-                        "name": "",
-                        "spec": [
-                            {
-                                "choices": "",
-                                "default": "",
-                                "max": 1024,
-                                "min": 0,
-                                "new_question": true,
-                                "question_description": "Please type into the text field the desired banner",
-                                "question_name": "Please enter the banner text",
-                                "required": true,
-                                "type": "textarea",
-                                "variable": "net_banner"
-                            },
-                            {
-                                "choices": "login\nmotd",
-                                "default": "login",
-                                "max": 1024,
-                                "min": 0,
-                                "new_question": true,
-                                "question_description": "Please choose an option",
-                                "question_name": "Please enter the banner type",
-                                "required": true,
-                                "type": "multiplechoice",
-                                "variable": "net_type"
-                            }
-                        ]}
-  
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please type into the text field the desired banner",
+                  "question_name": "Please enter the banner text",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "net_banner",
+                },
+                {
+                  "choices": "login\nmotd",
+                  "default": "login",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please choose an option",
+                  "question_name": "Please enter the banner type",
+                  "required": true,
+                  "type": "multiplechoice",
+                  "variable": "net_type",
+                },
+              ],
+          }
 
     - name: Network Automation - Restore
       ansible.controller.workflow_job_template_node:
@@ -383,7 +384,7 @@
         unified_job_template: Network Automation - Restore
         organization: "Red Hat network organization"
         state: present
-        
+
     - name: Network-User
       ansible.controller.workflow_job_template_node:
         identifier: Network-User
@@ -415,7 +416,7 @@
           - Network-Banner
           - Network-User
 
-# This section includes the Cisco ACI
+    # This section includes the Cisco ACI
     - name: Add Host
       ansible.controller.host:
         name: apic1
@@ -431,10 +432,10 @@
       ansible.controller.group:
         name: apic
         hosts:
-         - apic1
+          - apic1
         inventory: "Workshop Inventory"
         state: present
-        
+
     - name: Create a job-template - ACI-Day0-1-Config-Staging
       ansible.controller.job_template:
         name: "ACI-Day0-1-Config-Staging"
@@ -465,79 +466,70 @@
         execution_environment: "Validated Network"
         state: "present"
 
-
     - name: 0-ACI-as-Code-Workflow
       ansible.controller.workflow_job_template:
         name: 0-ACI-as-Code-Workflow
         survey_enabled: yes
-        survey_spec: {
-                          "description": "",
-                          "name": "",
-                          "spec": [
-                              {
-                                  "choices": "",
-                                  "default": "",
-                                  "max": 1024,
-                                  "min": 0,
-                                  "new_question": true,
-                                  "question_description": "",
-                                  "question_name": "Enter your Username",
-                                  "required": true,
-                                  "type": "text",
-                                  "variable": "apic_username"
-                              },
-                              {
-                                  "choices": "",
-                                  "default": "",
-                                  "formattedChoices": [
-                                      {
-                                          "choice": "",
-                                          "id": 0,
-                                          "isDefault": false
-                                      }
-                                  ],
-                                  "max": 1024,
-                                  "min": 0,
-                                  "new_question": false,
-                                  "question_description": "",
-                                  "question_name": "Enter your Password",
-                                  "required": true,
-                                  "type": "password",
-                                  "variable": "apic_password"
-                              },
-                              {
-                                  "choices": "False\nTrue",
-                                  "default": "False",
-                                  "max": 1024,
-                                  "min": 0,
-                                  "new_question": true,
-                                  "question_description": "",
-                                  "question_name": "Validate APIC Certificate",
-                                  "required": true,
-                                  "type": "multiplechoice",
-                                  "variable": "apic_validate_certs"
-                              },
-                              {
-                                  "choices": "",
-                                  "default": "",
-                                  "formattedChoices": [
-                                      {
-                                          "choice": "",
-                                          "id": 0,
-                                          "isDefault": false
-                                      }
-                                  ],
-                                  "max": 1024,
-                                  "min": 0,
-                                  "new_question": false,
-                                  "question_description": "",
-                                  "question_name": "Please enter your Change-ID",
-                                  "required": true,
-                                  "type": "text",
-                                  "variable": "snapshot"
-                              }
-                              ]}
-        
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "Enter your Username",
+                  "required": true,
+                  "type": "text",
+                  "variable": "apic_username",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "formattedChoices":
+                    [{ "choice": "", "id": 0, "isDefault": false }],
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": false,
+                  "question_description": "",
+                  "question_name": "Enter your Password",
+                  "required": true,
+                  "type": "password",
+                  "variable": "apic_password",
+                },
+                {
+                  "choices": "False\nTrue",
+                  "default": "False",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "Validate APIC Certificate",
+                  "required": true,
+                  "type": "multiplechoice",
+                  "variable": "apic_validate_certs",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "formattedChoices":
+                    [{ "choice": "", "id": 0, "isDefault": false }],
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": false,
+                  "question_description": "",
+                  "question_name": "Please enter your Change-ID",
+                  "required": true,
+                  "type": "text",
+                  "variable": "snapshot",
+                },
+              ],
+          }
 
     - name: ACI-Day2-Health-Check
       ansible.controller.workflow_job_template_node:
@@ -549,7 +541,7 @@
       ansible.controller.workflow_job_template_node:
         identifier: ACI-Rollback
         workflow: 0-ACI-as-Code-Workflow
-        unified_job_template: ACI-Rollback 
+        unified_job_template: ACI-Rollback
 
     - name: ACI-Day0-1-Config-Staging
       ansible.controller.workflow_job_template_node:
@@ -559,7 +551,7 @@
         success_nodes: ACI-Day2-Health-Check
         failure_nodes: ACI-Rollback
 
-#This section includes Cisco DNAC
+    #This section includes Cisco DNAC
 
     - name: Add Host
       ansible.controller.host:
@@ -577,7 +569,7 @@
       ansible.controller.group:
         name: dnac_servers
         hosts:
-         - dnac_server
+          - dnac_server
         inventory: "Workshop Inventory"
         state: present
 
@@ -605,19 +597,19 @@
           - "Gitea Credential"
         survey_enabled: true
         survey_spec:
-            name: ''
-            description: ''
-            spec:
-              - question_name: Which groups/devices to retrieve Configs from DNAC
-                type: multiselect
-                variable: device_id
-                required: true
-                default:  ''
-                choices:
-                  - sw1
-                  - sw2
-                  - sw3
-                  - sw4
+          name: ""
+          description: ""
+          spec:
+            - question_name: Which groups/devices to retrieve Configs from DNAC
+              type: multiselect
+              variable: device_id
+              required: true
+              default: ""
+              choices:
+                - sw1
+                - sw2
+                - sw3
+                - sw4
     - name: Create a job-template - DNAC-Config-Compliance
       ansible.controller.job_template:
         name: "DNAC-Config-Compliance"
@@ -631,21 +623,20 @@
           - "Gitea Credential"
         survey_enabled: true
         survey_spec:
-            name: ''
-            description: ''
-            spec:
-              - question_name: Which groups/devices to retrieve Compliance info from DNAC
-                type: multiselect
-                variable: device_id
-                required: true
-                default:  ''
-                choices:
-                  - sw1
-                  - sw2
-                  - sw3
-                  - sw4
-  
-  
+          name: ""
+          description: ""
+          spec:
+            - question_name: Which groups/devices to retrieve Compliance info from DNAC
+              type: multiselect
+              variable: device_id
+              required: true
+              default: ""
+              choices:
+                - sw1
+                - sw2
+                - sw3
+                - sw4
+
     #This section starts the Network - SNOW demo
 
     - name: Create a job-template - Network-Banner-Check
@@ -670,7 +661,7 @@
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
-        state: "present"    
+        state: "present"
 
     - name: Create a job-template - Network-Banner-Fix
       ansible.controller.job_template:
@@ -683,37 +674,40 @@
           - "Workshop Credential"
           - "Controller Credential"
         execution_environment: "Validated Network"
-        state: "present" 
+        state: "present"
         survey_enabled: yes
-        survey_spec: {
-                        "description": "",
-                        "name": "",
-                        "spec": [
-                            {
-                                "choices": "",
-                                "default": "",
-                                "max": 1024,
-                                "min": 0,
-                                "new_question": true,
-                                "question_description": "Please type into the text field the desired banner",
-                                "question_name": "Please enter the banner text",
-                                "required": true,
-                                "type": "textarea",
-                                "variable": "net_banner"
-                            },
-                            {
-                                "choices": "",
-                                "default": "",
-                                "max": 1024,
-                                "min": 1,
-                                "new_question": true,
-                                "question_description": "",
-                                "question_name": "workflow_job_id",
-                                "required": true,
-                                "type": "text",
-                                "variable": "workflow_job_id"
-                            }
-                        ]}
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please type into the text field the desired banner",
+                  "question_name": "Please enter the banner text",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "net_banner",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 1,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "workflow_job_id",
+                  "required": true,
+                  "type": "text",
+                  "variable": "workflow_job_id",
+                },
+              ],
+          }
 
     - name: Workshop Workflow
       ansible.controller.workflow_job_template:
@@ -724,42 +718,40 @@
           SN_HOST: https://ansible.service-now.com
         state: present
         survey_enabled: yes
-        survey_spec: {
-                          "description": "",
-                          "name": "",
-                          "spec": [
-                              {
-                                  "choices": "",
-                                  "default": "",
-                                  "max": 1024,
-                                  "min": 0,
-                                  "new_question": true,
-                                  "question_description": "",
-                                  "question_name": "Enter your SNOW Username",
-                                  "required": true,
-                                  "type": "text",
-                                  "variable": "SN_USERNAME"
-                              },
-                              {
-                                  "choices": "",
-                                  "default": "",
-                                  "formattedChoices": [
-                                      {
-                                          "choice": "",
-                                          "id": 0,
-                                          "isDefault": false
-                                      }
-                                  ],
-                                  "max": 1024,
-                                  "min": 0,
-                                  "new_question": false,
-                                  "question_description": "",
-                                  "question_name": "Enter your SNOW Password",
-                                  "required": true,
-                                  "type": "password",
-                                  "variable": "SN_PASSWORD"
-                              }
-                               ]}
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Username",
+                  "required": true,
+                  "type": "text",
+                  "variable": "SN_USERNAME",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "formattedChoices":
+                    [{ "choice": "", "id": 0, "isDefault": false }],
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": false,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Password",
+                  "required": true,
+                  "type": "password",
+                  "variable": "SN_PASSWORD",
+                },
+              ],
+          }
 
     - name: Network-Banner-Resolve
       ansible.controller.workflow_job_template_node:
@@ -767,28 +759,28 @@
         workflow: "Network-ServiceNow-Workflow"
         unified_job_template: Network-Banner-Resolve
         organization: "Red Hat network organization"
-        state: present  
+        state: present
 
     - name: Troubleshoot-Approval
       ansible.controller.workflow_job_template_node:
         identifier: Troubleshoot-Approval
         workflow_job_template: "Network-ServiceNow-Workflow"
-        organization: 'Red Hat network organization'
-        approval_node: 
-          name: 'Troubleshoot-Approval'
+        organization: "Red Hat network organization"
+        approval_node:
+          name: "Troubleshoot-Approval"
           timeout: 0
-        state: present    
+        state: present
 
     - name: Troubleshoot-Approval
       ansible.controller.workflow_job_template_node:
         identifier: Troubleshoot-Approval
         workflow_job_template: "Network-ServiceNow-Workflow"
-        organization: 'Red Hat network organization'
-        state: present    
+        organization: "Red Hat network organization"
+        state: present
         success_nodes:
-          - 'Network-Banner-Resolve'
+          - "Network-Banner-Resolve"
       ignore_errors: true
-        
+
     - name: Network-Banner-Check
       ansible.controller.workflow_job_template_node:
         identifier: Network-Banner-Check
@@ -799,7 +791,7 @@
         failure_nodes:
           - Troubleshoot-Approval
 
-# This Starts the NetBox Section
+    # This Starts the NetBox Section
 
     - name: Create a job-template - Network-Netbox-Setup
       ansible.controller.job_template:
@@ -811,24 +803,25 @@
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
-        state: "present" 
+        state: "present"
         survey_enabled: yes
-        survey_spec: {
-                        "description": "",
-                        "name": "",
-                        "spec": [
-                            {
-                                "choices": "",
-                                "default": "",
-                                "max": 1024,
-                                "min": 0,
-                                "new_question": true,
-                                "question_description": "Please provide the API Key Token ",
-                                "question_name": "Please provide the API Key Token",
-                                "required": true,
-                                "type": "textarea",
-                                "variable": "netbox_api_key"
-                            }
-                        ]}
-    
-
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please provide the API Key Token ",
+                  "question_name": "Please provide the API Key Token",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "netbox_api_key",
+                },
+              ],
+          }
