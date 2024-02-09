@@ -1,6 +1,6 @@
 ---
 - name: Gather Cisco IOS Facts
-  hosts: RTP
+  hosts: sites_rtp
   gather_facts: no
 
   tasks:
