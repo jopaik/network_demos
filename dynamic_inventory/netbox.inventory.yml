@@ -1,10 +1,9 @@
 ---
 plugin: netbox.netbox.nb_inventory
-api_endpoint: "https://netbox-demo.netboxlabs.com/api/"
+api_endpoint: "https://netbox-demo.netboxlabs.com/"
 validate_certs: false
 config_context: false
 group_by:
- - platforms
  - sites
 compose:
  ansible_network_os: platform.slug
