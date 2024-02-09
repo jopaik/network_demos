@@ -855,7 +855,7 @@
       ansible.controller.job_template:
         name: "Network-Netbox-Facts"
         organization: "Red Hat network organization"
-        inventory: "Workshop Inventory"
+        inventory: "Netbox Inventory"
         project: "Netbox Project"
         playbook: "netbox/facts.yml"
         credentials:
