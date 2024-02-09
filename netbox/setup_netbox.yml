@@ -53,10 +53,13 @@
         netbox_token: "{{ netbox_api_key }}"
         data:
           name: rtr1
-          device_type: CSR1000v
+          device_type: C8000V
           device_role: Router
           site: RTP
           platform: IOS
           local_context_data:
-            ansible_ip: "{{ hostvars['rtr1']['ansible_host'] }}"
+            ansible_host: "{{ hostvars['rtr1']['ansible_host'] }}"
         state: present
+
+    - debug:
+        msg: "{{ hostvars['rtr1']['ansible_host'] }}"

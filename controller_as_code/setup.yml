@@ -862,3 +862,15 @@
           - "Workshop Credential"
         execution_environment: "Validated Network"
         state: "present"
+
+    - name: Create a job-template - Network-Netbox-Compare-Configs
+      ansible.controller.job_template:
+        name: "Network-Netbox-Compare-Configs"
+        organization: "Red Hat network organization"
+        inventory: "Netbox Inventory"
+        project: "Netbox Project"
+        playbook: "netbox/compare_intended_vs_actual.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"

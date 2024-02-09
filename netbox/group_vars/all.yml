@@ -8,10 +8,10 @@ manufacturers:  # In alphabetical order
   - Cisco
   - Juniper
 device_types:
-  - model: CSR1000v
+  - model: C8000V
     manufacturer: Cisco
-    slug: csr1000v
-    part_number: csr1000v
+    slug: c8000v
+    part_number: c8000v
     Full_depth: False
   - model: vEOS
     manufacturer: Arista
