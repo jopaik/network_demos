@@ -791,7 +791,7 @@
         failure_nodes:
           - Troubleshoot-Approval
 
-    # This Starts the NetBox Section
+      # This Starts the NetBox Section
 
     - name: Create a job-template - Network-Netbox-Setup
       ansible.controller.job_template:
@@ -828,6 +828,17 @@
     - name: Create Inventory
       ansible.controller.inventory:
         name: Netbox Inventory
+        organization: "Red Hat network organization"
+
+    - name: Create projects
+      ansible.controller.project:
+        name: Netbox Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
 
     - name: Add an inventory source
       ansible.controller.inventory_source:
@@ -838,17 +849,7 @@
         source: scm
         source_path: dynamic_inventory/netbox.inventory.yml
         source_project: "Netbox Project"
-        execution_environment: "Validated Network" 
-        
-    - name: Create projects
-      ansible.controller.project:
-        name: Netbox Project
-        organization: "Red Hat network organization"
-        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
-        scm_type: git
-        allow_override: true
-        state: present
-        scm_update_on_launch: yes
+        execution_environment: "Validated Network"
 
     - name: Create a job-template - Network-Netbox-Facts
       ansible.controller.job_template:
@@ -861,8 +862,3 @@
           - "Workshop Credential"
         execution_environment: "Validated Network"
         state: "present"
-
-    
-
-
-    
