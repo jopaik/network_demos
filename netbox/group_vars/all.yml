@@ -1,12 +1,6 @@
 ---
 site_list:
-  - name: “NYC”
-    time_zone: America/New_York
-    status: Active
-  - name: “CHI”
-    time_zone: America/Chicago
-    status: Active
-  - name: “RTP”
+  - name: RTP
     time_zone: America/New_York
     status: Active
 manufacturers:  # In alphabetical order

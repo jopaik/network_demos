@@ -578,9 +578,9 @@
         name: "source-dnac"
         description: Source for inventory
         inventory: "Workshop Inventory"
-        update_on_launch: True
+        update_on_launch: False
         source: scm
-        source_path: dynamic_inventory/
+        source_path: dynamic_inventory/dna_center.yml
         source_project: "Student Project"
         execution_environment: "Validated Network"
 
@@ -825,3 +825,44 @@
                 },
               ],
           }
+    - name: Create Inventory
+      ansible.controller.inventory:
+        name: Netbox Inventory
+
+    - name: Add an inventory source
+      ansible.controller.inventory_source:
+        name: "source-nbox"
+        description: Source for inventory
+        inventory: "Netbox Inventory"
+        update_on_launch: True
+        source: scm
+        source_path: dynamic_inventory/netbox.inventory.yml
+        source_project: "Netbox Project"
+        execution_environment: "Validated Network" 
+        
+    - name: Create projects
+      ansible.controller.project:
+        name: Netbox Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Create a job-template - Network-Netbox-Facts
+      ansible.controller.job_template:
+        name: "Network-Netbox-Facts"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Netbox Project"
+        playbook: "netbox/facts.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    
+
+
+    

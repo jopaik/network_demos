@@ -46,3 +46,17 @@
       loop_control:
         loop_var: platform
         label: "{{ platform['name'] }}"
+
+    - name: Create device within NetBox 
+      netbox.netbox.netbox_device:
+        netbox_url: "https://netbox-demo.netboxlabs.com/"
+        netbox_token: "{{ netbox_api_key }}"
+        data:
+          name: rtr1
+          device_type: CSR1000v
+          device_role: Router
+          site: RTP
+          platform: IOS
+          local_context_data:
+            ansible_ip: "{{ hostvars['rtr1']['ansible_host'] }}"
+        state: present

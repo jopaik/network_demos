@@ -1,0 +1,9 @@
+---
+- name: Gather Cisco IOS Facts
+  hosts: RTP
+  gather_facts: no
+
+  tasks:
+    - name: Gather all facts
+      cisco.ios.ios_facts:
+        gather_subset: all
