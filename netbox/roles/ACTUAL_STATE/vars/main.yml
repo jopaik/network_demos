@@ -1,2 +1,3 @@
 ---
-backup_root: ./backups
+backup_root: /tmp/network-demos-repo/netbox/backups
+exclusion_pattern: "(^! Command:)|(^! device:)"

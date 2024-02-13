@@ -1,36 +1,74 @@
 ---
-- name: 1 - Get device details from NetBox
+- name: Clone a Repo to EE
+  shell:
+    cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+    chdir: /tmp/
+  delegate_to: localhost
+
+- name: Get device details from NetBox
   uri:
-      url: "{{ netbox_url }}api/dcim/devices/?name={{ inventory_hostname }}"
+      url: "https://netbox-demo.netboxlabs.com/api/dcim/devices/?name={{ inventory_hostname }}"
       method: GET
       return_content: yes
       headers:
           accept: "application/json"
-          Authorization: "Token {{ netbox_token }}"
+          Authorization: "Token {{ netbox_api_key }}"
   register: device
+  delegate_to: localhost
 
-- name: 2- Get intended state from NetBox based on device ID from play 1
+- name: Put config Template
   uri:
-      url: "{{ netbox_url }}api/dcim/devices/{{ device.json.results.0['id'] }}/render-config/"
+      url: "https://netbox-demo.netboxlabs.com/api/dcim/devices/{{ device.json.results.0['id'] }}/"
+      method: PUT
+      body:
+        { 
+        device_type: "{{ device.json.results.0['device_type']['id'] }}",
+        site: "{{ device.json.results.0['site']['id'] }}",
+        role: "{{ device.json.results.0['device_role']['id'] }}",
+        config_template: 1
+        }
+      body_format: json 
+      return_content: yes
+      headers:
+          accept: "application/json"
+          Authorization: "Token {{ netbox_api_key }}"
+  delegate_to: localhost
+
+- name: Get intended state from NetBox based on device ID from play 1
+  uri:
+      url: "https://netbox-demo.netboxlabs.com/api/dcim/devices/{{ device.json.results.0['id'] }}/render-config/"
       method: POST
       return_content: yes
       headers:
           accept: "application/json"
-          Authorization: "Token {{ netbox_token }}"
+          Authorization: "Token {{ netbox_api_key }}"
   register: intended_config
-
-- name: 3 - Ensure folder for intended configs exists
+  delegate_to: localhost
+  
+- name: Ensure folder for intended configs exists
   file:
     path: "{{ intended_configs_root }}"
     state: directory
   run_once: yes
+  delegate_to: localhost
 
-- name: 4 - Ensure folder for each device's intended config exists
+- name: Ensure folder for each device's intended config exists
   file:
     path: "{{ intended_configs_root }}/{{ inventory_hostname }}"
     state: directory
+  delegate_to: localhost
 
-- name: 5 - Copy intened config for each device to folder
+- name: Copy intened config for each device to folder
   copy:
     content: "{{ intended_config.json.content }}"
     dest: "{{ intended_configs_root }}/{{ inventory_hostname }}/{{ inventory_hostname }}_intended.conf"
+  delegate_to: localhost
+
+- name: Publish the changes
+  ansible.scm.git_publish:
+    path: "/tmp/network-demos-repo"
+    token: "{{ password }}"
+    user:
+      name: "{{ username }}"
+      email: "{{ email }}"
+  delegate_to: localhost

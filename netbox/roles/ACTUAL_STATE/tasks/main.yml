@@ -1,21 +1,31 @@
 ---
-- name: 1 - Run 'show running-config' on remote devices
-  eos_command:
-    commands: "show running-config"
-  register: running_config
+- name: Clone a Repo to EE
+  shell:
+    cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+    chdir: /tmp/
+  delegate_to: localhost
 
-- name: 2 - Ensure backup folder is created
-  file:
-    path: "{{ backup_root }}"
-    state: directory
-  run_once: yes
+- name: Backup cisco ios configuration
+  cisco.ios.ios_config:
+    backup: true
+    backup_options:
+      dir_path: "{{ backup_root }}/{{ inventory_hostname }}"
+      filename: "{{ inventory_hostname }}_running.conf"
+  register: config_output
 
-- name: 3 - Ensure device folder is created
-  file:
-    path: "{{ backup_root }}/{{ inventory_hostname }}"
-    state: directory
+# This task removes the Current configuration... from the top of IOS routers show run
+- name: Remove non config lines - regexp
+  ansible.builtin.lineinfile:
+    path: "{{ config_output.backup_path }}"
+    line: "Building configuration..."
+    state: absent
+  delegate_to: localhost
 
-- name: 4 - Write the device configuration to file
-  copy:
-    content: "{{ running_config.stdout[0] }}"
-    dest: "{{ backup_root }}/{{ inventory_hostname }}/{{ inventory_hostname }}_running.conf"
+- name: Publish the changes
+  ansible.scm.git_publish:
+    path: "/tmp/network-demos-repo"
+    token: "{{ password }}"
+    user:
+      name: "{{ username }}"
+      email: "{{ email }}"
+  delegate_to: localhost

@@ -1,4 +1,4 @@
 ---
-actual_conf_dir: "./backups/{{ inventory_hostname }}"
-intended_conf_dir: "./intended_configs/{{ inventory_hostname }}"
+backup_root: "/tmp/network-demos-repo/netbox/backups/{{ inventory_hostname }}"
+intended_conf_dir: "/tmp/network-demos-repo/netbox/intended_configs/{{ inventory_hostname }}"
 exclusion_pattern: "(^! Command:)|(^! device:)"

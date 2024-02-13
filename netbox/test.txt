@@ -1,61 +1,4 @@
----
-- name: Setup Netbox
-  hosts: localhost
-   
-  tasks:
-    - name: "SETUP SITES"
-      netbox.netbox.netbox_site:
-        netbox_url: "https://netbox-demo.netboxlabs.com/"
-        netbox_token: "{{ netbox_api_key }}"
-        data: "{{ item }}"
-      loop: "{{ site_list }}"
 
-    - name: "SETUP MANUFACTURERS"
-      netbox.netbox.netbox_manufacturer:
-        netbox_url: "https://netbox-demo.netboxlabs.com/"
-        netbox_token: "{{ netbox_api_key }}"
-        data:
-          name: "{{ manufacturer }}"
-      loop: "{{ manufacturers }}"
-      loop_control:
-        loop_var: manufacturer
-
-    - name: "SETUP DEVICE TYPES"
-      netbox.netbox.netbox_device_type:
-        netbox_url: "https://netbox-demo.netboxlabs.com/"
-        netbox_token: "{{ netbox_api_key }}"
-        data:
-          model: "{{ device_type.model }}"
-          manufacturer: "{{ device_type.manufacturer }}"
-          slug: "{{ device_type.slug }}"
-          part_number: "{{ device_type.part_number }}"
-          is_full_depth: "{{ device_type.Full_depth }}"
-      loop: "{{ device_types }}"
-      loop_control:
-        loop_var: device_type
-        label: "{{ device_type['model'] }}"
-
-    - name: "SETUP PLATFORMS"
-      netbox.netbox.netbox_platform:
-        netbox_url: "https://netbox-demo.netboxlabs.com/"
-        netbox_token: "{{ netbox_api_key }}"
-        data:
-          name: "{{ platform.name }}"
-          slug: "{{ platform.slug }}"
-      loop: "{{ platforms }}"
-      loop_control:
-        loop_var: platform
-        label: "{{ platform['name'] }}"
-
-    - name: Create config template
-      netbox.netbox.netbox_config_template:
-        netbox_url: "https://netbox-demo.netboxlabs.com/"
-        netbox_token: "{{ netbox_api_key }}"
-        data:
-          name: "rtr1"
-          template_code: |
-            
-            
             Current configuration : 7777 bytes
             !
             ! Last configuration change at 00:59:43 UTC Fri Feb 9 2024 by ec2-user
@@ -70,7 +13,7 @@
             platform punt-keepalive disable-kernel-core
             platform console virtual
             !
-            hostname {{ device.name | default ('{{ device.name }}') }}
+            hostname rtr1
             !         
             boot-start-marker
             boot-end-marker
@@ -313,20 +256,3 @@
              app-default-gateway 192.168.35.101 guest-interface 0
              name-server0 8.8.8.8
             end
-                     
-    - name: Create device within NetBox 
-      netbox.netbox.netbox_device:
-        netbox_url: "https://netbox-demo.netboxlabs.com/"
-        netbox_token: "{{ netbox_api_key }}"
-        data:
-          name: rtr1
-          device_type: C8000V
-          device_role: Router
-          site: RTP
-          platform: IOS
-          local_context_data:
-            ansible_host: "{{ hostvars['rtr1']['ansible_host'] }}"
-        state: present
-
-    - debug:
-        msg: "{{ hostvars['rtr1']['ansible_host'] }}"
