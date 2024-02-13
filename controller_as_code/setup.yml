@@ -553,10 +553,36 @@
 
     #This section includes Cisco DNAC
 
+    - name: Create Inventory
+      ansible.controller.inventory:
+        name: DNAC Inventory
+        organization: "Red Hat network organization"
+
+    - name: Create projects
+      ansible.controller.project:
+        name: DNAC Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Add an inventory source
+      ansible.controller.inventory_source:
+        name: "source-dnac"
+        description: Source for inventory
+        inventory: "DNAC Inventory"
+        update_on_launch: True
+        source: scm
+        source_path: dynamic_inventory/dna_center.yml
+        source_project: "DNAC Project"
+        execution_environment: "Validated Network"
+
     - name: Add Host
       ansible.controller.host:
         name: dnac_server
-        inventory: "Workshop Inventory"
+        inventory: "DNAC Inventory"
         state: present
         enabled: true
         variables:
@@ -570,26 +596,17 @@
         name: dnac_servers
         hosts:
           - dnac_server
-        inventory: "Workshop Inventory"
+        inventory: "DNAC Inventory"
         state: present
 
-    - name: Add an inventory source
-      ansible.controller.inventory_source:
-        name: "source-dnac"
-        description: Source for inventory
-        inventory: "Workshop Inventory"
-        update_on_launch: False
-        source: scm
-        source_path: dynamic_inventory/dna_center.yml
-        source_project: "Student Project"
-        execution_environment: "Validated Network"
+    
 
     - name: Create a job-template - DNAC-Config-Retrieve
       ansible.controller.job_template:
         name: "DNAC-Config-Retrieve"
         organization: "Red Hat network organization"
-        inventory: "Workshop Inventory"
-        project: "Student Project"
+        inventory: "DNAC Inventory"
+        project: "DNAC Project"
         playbook: "cisco_dnac/config_collect.yml"
         execution_environment: "Validated Network"
         state: "present"
@@ -614,8 +631,8 @@
       ansible.controller.job_template:
         name: "DNAC-Config-Compliance"
         organization: "Red Hat network organization"
-        inventory: "Workshop Inventory"
-        project: "Student Project"
+        inventory: "DNAC Inventory"
+        project: "DNAC Project"
         playbook: "cisco_dnac/config_compliance.yml"
         execution_environment: "Validated Network"
         state: "present"
@@ -791,7 +808,7 @@
         failure_nodes:
           - Troubleshoot-Approval
 
-      # This Starts the NetBox Section
+    # This Starts the NetBox Section
 
     - name: Create a job-template - Network-Netbox-Setup
       ansible.controller.job_template:
@@ -849,8 +866,8 @@
         source: scm
         source_path: dynamic_inventory/netbox.inventory.yml
         source_project: "Netbox Project"
-        execution_environment: "Validated Network"
-
+        execution_environment: "Validated Network" 
+        
     - name: Create a job-template - Network-Netbox-Facts
       ansible.controller.job_template:
         name: "Network-Netbox-Facts"
@@ -872,5 +889,29 @@
         playbook: "netbox/compare_intended_vs_actual.yml"
         credentials:
           - "Workshop Credential"
+          - "Gitea Credential"
         execution_environment: "Validated Network"
         state: "present"
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please provide the API Key Token ",
+                  "question_name": "Please provide the API Key Token",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "netbox_api_key",
+                },
+              ],
+          }
+
+    
