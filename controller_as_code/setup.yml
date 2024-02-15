@@ -599,8 +599,6 @@
         inventory: "DNAC Inventory"
         state: present
 
-    
-
     - name: Create a job-template - DNAC-Config-Retrieve
       ansible.controller.job_template:
         name: "DNAC-Config-Retrieve"
@@ -655,6 +653,35 @@
                 - sw4
 
     #This section starts the Network - SNOW demo
+
+    - name: Create Inventory
+      ansible.controller.inventory:
+        name: SNOW Inventory
+        organization: "Red Hat network organization"
+
+    - name: Create projects
+      ansible.controller.project:
+        name: SNOW Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Add an inventory source
+      ansible.controller.inventory_source:
+        name: "source-snow"
+        description: Source for inventory
+        inventory: "SNOW Inventory"
+        update_on_launch: True
+        source: scm
+        source_path: dynamic_inventory/now.yml
+        source_project: SNOW Project
+        execution_environment: "Validated Network"
+        source_vars:
+          SN_USERNAME: ""
+          SN_PASSWORD: ""
 
     - name: Create a job-template - Network-Banner-Check
       ansible.controller.job_template:
@@ -808,6 +835,53 @@
         failure_nodes:
           - Troubleshoot-Approval
 
+    - name: Create a job-template - Network-CMDP-Udate
+      ansible.controller.job_template:
+        name: "Network-CMDB-Update"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/update_cmdb.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Username",
+                  "required": true,
+                  "type": "text",
+                  "variable": "SN_USERNAME",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "formattedChoices":
+                    [{ "choice": "", "id": 0, "isDefault": false }],
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": false,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Password",
+                  "required": true,
+                  "type": "password",
+                  "variable": "SN_PASSWORD",
+                },
+              ],
+          }
+
     # This Starts the NetBox Section
 
     - name: Create a job-template - Network-Netbox-Setup
@@ -866,8 +940,10 @@
         source: scm
         source_path: dynamic_inventory/netbox.inventory.yml
         source_project: "Netbox Project"
-        execution_environment: "Validated Network" 
-        
+        execution_environment: "Validated Network"
+        source_vars:
+          NETBOX_TOKEN: ""
+
     - name: Create a job-template - Network-Netbox-Facts
       ansible.controller.job_template:
         name: "Network-Netbox-Facts"
@@ -913,5 +989,3 @@
                 },
               ],
           }
-
-    

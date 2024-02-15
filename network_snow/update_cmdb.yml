@@ -1,0 +1,31 @@
+---
+- name: SNOW CMDB
+  hosts: localhost
+  connection: local
+  collections:
+    - servicenow.itsm
+  vars:
+    demo_username: "{{ lookup('env', 'SN_USERNAME') }}"
+
+  tasks:
+    - name: Create/update configuration item
+      servicenow.itsm.configuration_item:
+        name: rtr1
+        assigned_to: "{{ demo_username }}"
+        ip_address: "{{ hostvars['rtr1']['ansible_host'] }}"
+        environment: test
+        other:
+          sys_class_name: cmdb_ci_ip_router
+          manufacturer: Cisco
+          device_type: Router
+          firmware_manufacturer: Cisco
+        instance:
+          host: https://ansible.service-now.com
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+        sys_class_name: cmdb_ci_ip_router
+      register: configuration_item
+
+    - name: debug
+      debug:
+        msg: "{{ configuration_item }}"

@@ -1,0 +1,11 @@
+---
+plugin: servicenow.itsm.now
+enhanced: false
+strict: true
+table: cmdb_ci_ip_router
+columns:
+  - ip_address
+compose:
+  ansible_host: ip_address
+instance:
+  host: https://ansible.service-now.com 
