@@ -881,6 +881,17 @@
                 },
               ],
           }
+    - name: Create a job-template - Network-SNOW-Facts
+      ansible.controller.job_template:
+        name: "Network-SNOW-Facts"
+        organization: "Red Hat network organization"
+        inventory: "SNOW Inventory"
+        project: "SNOW Project"
+        playbook: "network_snow/facts.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
 
     # This Starts the NetBox Section
 
