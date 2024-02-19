@@ -1110,7 +1110,7 @@
              meraki_key: "{{ MERAKI_KEY | default ('MERAKI_KEY') }}"
         inputs:
           fields:
-          - id: MERAKI_KEY
+          - id: meraki_key
             type: string
             label: Meraki Dashboard API key
             secret: true
@@ -1124,7 +1124,7 @@
         credential_type: Meraki_API
         description: ""
         inputs:
-          MERAKI_KEY: ''
+          meraki_key: ""
         name: 'Meraki API'
         organization: "Red Hat network organization"
 
@@ -1139,11 +1139,3 @@
         credentials: 
          - 'Meraki API'
         state: "present"
-
-   
-
-
-
-    
-
-        
