@@ -1107,7 +1107,7 @@
       ansible.controller.credential_type:
         injectors:
           extra_vars:
-             meraki_key: '{{ MERAKI_KEY }}'
+             meraki_key: "{{ MERAKI_KEY | default ('MERAKI_KEY') }}"
         inputs:
           fields:
           - id: MERAKI_KEY
