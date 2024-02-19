@@ -62,6 +62,8 @@ For the below demos insure you are always using files from /home/student/network
    * Asible + Netbox SSOT 
    * Dynamic Inventory
    * Config Drift Checks
+- [Network Troubleshooting](network_troubleshooting)
+   * wip
     
 # Getting Started
 
