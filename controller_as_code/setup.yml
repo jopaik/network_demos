@@ -1136,6 +1136,8 @@
         project: "Student Project"
         playbook: "cisco_meraki/get_orgID.yml"
         execution_environment: "Validated Network"
+        credentials: 
+         - 'Meraki API'
         state: "present"
 
    
