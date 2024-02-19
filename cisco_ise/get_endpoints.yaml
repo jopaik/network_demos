@@ -22,7 +22,8 @@
         msg: 
         - "End Point Groups:"
         - "Group: [Blocked List]{{ group.ise_response | selectattr('name', 'match', 'Blocked List') | map(attribute='id') }}" 
-        - "Group: [Blocked List]{{ group.ise_response | selectattr('name', 'match', 'Blocked List') | map(attribute='id') }}" 
+        - "Group: [Profiled]{{ group.ise_response | selectattr('name', 'match', 'Profiled') | map(attribute='id') }}"  
+        - "Group: [Profiled]{{ group.ise_response | selectattr('name', 'match', 'GuestEndpoints') | map(attribute='id') }}"  
 
     - name: Read in endpoint ids
       cisco.ise.endpoint_info:
