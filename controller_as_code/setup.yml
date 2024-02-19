@@ -1058,7 +1058,7 @@
 
     - name: Network-Cisco-ISE-Network-Devices
       ansible.controller.workflow_job_template_node:
-        identifier: 
+        identifier: Network-Cisco-ISE-Network-Devices
         workflow: "Network-Cisco-ISE-Workflow"
         unified_job_template: "Network-Cisco-ISE-Network-Devices"
         organization: "Red Hat network organization"
@@ -1068,7 +1068,7 @@
 
     - name: Network-Cisco-ISE-Get-Users
       ansible.controller.workflow_job_template_node:
-        identifier: 
+        identifier: Network-Cisco-ISE-Get-Users
         workflow: "Network-Cisco-ISE-Workflow"
         unified_job_template: "Network-Cisco-ISE-Get-Users"
         organization: "Red Hat network organization"
@@ -1078,7 +1078,7 @@
 
     - name: Network-Cisco-ISE-Get-Groups
       ansible.controller.workflow_job_template_node:
-        identifier: 
+        identifier: Network-Cisco-ISE-Get-Groups 
         workflow: "Network-Cisco-ISE-Workflow"
         unified_job_template: "Network-Cisco-ISE-Get-Groups"
         organization: "Red Hat network organization"
