@@ -1119,6 +1119,25 @@
         kind: cloud
         name: Meraki_API
 
+    - name: Meraki API
+      ansible.controller.credential:
+        credential_type: Meraki_API
+        description: ""
+        inputs:
+          MERAKI_KEY: ''
+        name: 'Meraki API'
+        organization: "Red Hat network organization"
+
+    - name: Create a job-template - Network-Meraki-Get-Org-ID
+      ansible.controller.job_template:
+        name: "Network-Meraki-Get-Org-ID"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_meraki/get_orgID.yml"
+        execution_environment: "Validated Network"
+        state: "present"
+
    
 
 
