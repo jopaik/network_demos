@@ -1008,7 +1008,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "cisco_ise/get_groups.yml"
+        playbook: "cisco_ise/get_groups.yaml"
         execution_environment: "Validated Network"
         state: "present"
 
@@ -1018,7 +1018,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "cisco_ise/get_groups.yml"
+        playbook: "cisco_ise/get_users.yaml"
         execution_environment: "Validated Network"
         state: "present"
 
@@ -1028,7 +1028,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "cisco_ise/get_groups.yml"
+        playbook: "cisco_ise/get_network_devicess.yaml"
         execution_environment: "Validated Network"
         state: "present"
 
@@ -1038,7 +1038,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "cisco_ise/get_groups.yml"
+        playbook: "cisco_ise/get_endpoints.yaml"
         execution_environment: "Validated Network"
         state: "present"
 
