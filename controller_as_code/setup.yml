@@ -1002,6 +1002,21 @@
           }
 
     # This Starts the Cisco ISE Section
+    - name: Add Host
+      ansible.controller.host:
+        name: ISE
+        inventory: "Workshop Inventory"
+        state: present
+        enabled: true
+
+    - name: Add group
+      ansible.controller.group:
+        name: ise_servers
+        hosts:
+          - ISE
+        inventory: "Workshop Inventory"
+        state: present
+        
     - name: Create a job-template - Network-Cisco-ISE-Get-Groups
       ansible.controller.job_template:
         name: "Network-Cisco-ISE-Get-Groups"
