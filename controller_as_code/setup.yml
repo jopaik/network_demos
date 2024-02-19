@@ -1016,7 +1016,7 @@
           - ISE
         inventory: "Workshop Inventory"
         state: present
-        
+
     - name: Create a job-template - Network-Cisco-ISE-Get-Groups
       ansible.controller.job_template:
         name: "Network-Cisco-ISE-Get-Groups"
@@ -1101,7 +1101,27 @@
         success_nodes:
           - Network-Cisco-ISE-Get-Users
 
-    
+  # This Starts the Cisco Meraki Section
+
+    - name: Meraki Credential Type
+      ansible.controller.credential_type:
+        injectors:
+          extra_vars:
+             meraki_key: '{{ MERAKI_KEY }}'
+        inputs:
+          fields:
+          - id: MERAKI_KEY
+            type: string
+            label: Meraki Dashboard API key
+            secret: true
+        required:
+            - MERAKI_KEY
+        kind: cloud
+        name: Meraki_API
+
+   
+
+
 
     
 
