@@ -1,0 +1,21 @@
+- name: Get Groups
+  hosts: ise_servers
+# Read in some variables
+  vars_files:
+    - credentials.yaml  # read the ISE host and admin credentials
+    
+  gather_facts: false
+
+  tasks:
+    - name: Get group info for our custom groups  # run through our list of groups and obtain the group information
+      cisco.ise.identity_group_info:
+        ise_hostname: "{{ ise_hostname }}"
+        ise_username: "{{ ise_username }}"
+        ise_password: "{{ ise_password }}"
+        ise_verify: "{{ ise_verify }}"
+      register: result
+      
+    - name: Print the result
+      ansible.builtin.debug:
+        var: result
+    

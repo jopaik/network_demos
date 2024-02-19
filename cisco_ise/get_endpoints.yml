@@ -1,0 +1,49 @@
+- name: Get Endpoint Info
+  hosts: ise_servers
+# Read in some variables
+  vars_files:
+    - credentials.yaml  # read the ISE host and admin credentials
+    - endpoints.yaml # check these endpoints
+    
+  gather_facts: false
+
+  tasks:
+
+    - name: Get endpoint group info  
+      cisco.ise.endpoint_group_info:
+        ise_hostname: "{{ ise_hostname }}"
+        ise_username: "{{ ise_username }}"
+        ise_password: "{{ ise_password }}"
+        ise_verify: "{{ ise_verify }}"  
+      register: group
+
+    - name: Print the result for each device ID
+      ansible.builtin.debug:
+        msg: 
+        - "End Point Groups:"
+        - "Group: [Blocked List]{{ group.ise_response | selectattr('name', 'match', 'Blocked List') | map(attribute='id') }}" 
+        - "Group: [Blocked List]{{ group.ise_response | selectattr('name', 'match', 'Blocked List') | map(attribute='id') }}" 
+
+    - name: Read in endpoint ids
+      cisco.ise.endpoint_info:
+        ise_hostname: "{{ ise_hostname }}"
+        ise_username: "{{ ise_username }}"
+        ise_password: "{{ ise_password }}"
+        ise_verify: "{{ ise_verify }}"  
+        id: "{{ item }}"
+      register: result_id
+      loop: "{{ endpoints }}"
+    
+    - name: Print the result for each Endpoint ID
+      ansible.builtin.debug:
+          msg: 
+            - "name: {{ item.ise_response.name }}" 
+            - "mac: {{ item.ise_response.mac }}" 
+            - "description: {{ item.ise_response.description | default (omit) }}" 
+            - "id: {{ item.ise_response.id }}" 
+            - "group_id: {{ item.ise_response.groupId }}" 
+      loop: "{{ result_id.results }}"
+      loop_control:
+       label: '{{item.ise_response.name}}'
+          
+          
