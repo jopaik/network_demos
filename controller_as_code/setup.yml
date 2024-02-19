@@ -1028,7 +1028,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "cisco_ise/get_network_devicess.yaml"
+        playbook: "cisco_ise/get_network_devices.yaml"
         execution_environment: "Validated Network"
         state: "present"
 
