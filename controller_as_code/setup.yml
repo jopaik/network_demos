@@ -1114,7 +1114,7 @@
             type: string
             label: Meraki Dashboard API key
             secret: true
-        required:
+          required:
             - MERAKI_KEY
         kind: cloud
         name: Meraki_API
