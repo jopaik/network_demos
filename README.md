@@ -43,17 +43,26 @@ For the below demos insure you are always using files from /home/student/network
    * Automatically Open SNOW Inicidents (tickets)
    * Resolve Issues
    * Close Tickets 
+   * Dynamic Inventory from CMDB
+   * Get Facts
 - [Cisco ACI](cisco_aci)
    * Deploy ACI fabrics as Code
    * Make Health Checks from Ansible to Validate ACI State
 - [Cisco DNAC](cisco_dnac)
-   * Dnamic Ansible Inventory
+   * Dynamic Ansible Inventory
    * Backup DNAC configs to Git Repo
    * Use Ansible collection to make compliance checks against DNAC device configs
+- [Cisco ISE](cisco_ise)
+   * Get Config Info
+   * Get Device Info
+   * Get Endpoint Info
+- [Cisco Meraki](cisco_meraki)
+   * WIP
 - [NetBox](netbox)
-   * Asible + Netbox SSOT (WIP)
-   
-   
+   * Asible + Netbox SSOT 
+   * Dynamic Inventory
+   * Config Drift Checks
+    
 # Getting Started
 
 ## Summary of steps
