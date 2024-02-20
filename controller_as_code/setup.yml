@@ -1102,15 +1102,14 @@
           - Network-Cisco-ISE-Get-Users
 
   # This Starts the Cisco Meraki Section
-
     - name: Meraki Credential Type
       ansible.controller.credential_type:
         injectors:
           extra_vars:
-             meraki_key: "{{ MERAKI_KEY | default ('MERAKI_KEY') }}"
+             meraki_key: "{{ MERAKI_KEY | default ('{{MERAKI_KEY}}') }}"
         inputs:
           fields:
-          - id: meraki_key
+          - id: MERAKI_KEY
             type: string
             label: Meraki Dashboard API key
             secret: true
@@ -1124,7 +1123,7 @@
         credential_type: Meraki_API
         description: ""
         inputs:
-          meraki_key: ""
+          MERAKI_KEY: "1234567890"
         name: 'Meraki API'
         organization: "Red Hat network organization"
 
@@ -1139,3 +1138,112 @@
         credentials: 
          - 'Meraki API'
         state: "present"
+
+    - name: Create a job-template - Network-Meraki-Create-Network
+      ansible.controller.job_template:
+        name: "Network-Meraki-Create-Network"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_meraki/create_network.yml"
+        execution_environment: "Validated Network"
+        credentials: 
+         - 'Meraki API'
+        state: "present"
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please provide your Organization ID",
+                  "question_name": "Please provide your Organization ID",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "org_id",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please provide your Network name",
+                  "question_name": "Please provide your Network name",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "network_name",
+                },
+              ],
+          }
+
+    - name: Create a job-template - Network-Meraki-Remove-Network
+      ansible.controller.job_template:
+        name: "Network-Meraki-Remove-Network"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_meraki/remove_network.yml"
+        execution_environment: "Validated Network"
+        credentials: 
+         - 'Meraki API'
+        state: "present"
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please provide your Organization ID",
+                  "question_name": "Please provide your Organization ID",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "org_id",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please provide your Network name",
+                  "question_name": "Please provide your Network name",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "network_name",
+                },
+              ],
+          }
+
+
+    - name: Create a job-template - Network-Meraki-Network-Meraki-Multi-SSID
+      ansible.controller.job_template:
+        name: "Network-Meraki-Multi-SSID"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_meraki/multiple_ssid.yml"
+        execution_environment: "Validated Network"
+        credentials: 
+         - 'Meraki API'
+        state: "present"
+        extra_vars:
+         org_id: ''
+        ask_variables_on_launch: true
+
+
+   
