@@ -1,0 +1,21 @@
+---
+- name: Create Network
+  hosts: localhost
+  connection: local
+  vars:
+    meraki_api_key: "{{ meraki_key }}"
+    org_id: "{{ org_id }}"
+    network_name: "{{ network_name }}"
+
+  tasks:
+
+    - name: Default Network
+      cisco.meraki.networks:
+        meraki_api_key: "{{ meraki_key }}"
+        organizationId: "{{ org_id }}"
+        name: "{{ network_name }}"
+        state: present
+        productTypes:
+          - switch
+          - wireless
+          - appliance

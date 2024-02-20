@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars_files:
+    - ssid_vars.yml
+
+  tasks:
+    - name: Get Organization Networks
+      cisco.meraki.networks_info:
+        meraki_api_key: "{{ meraki_key }}"
+        organizationId: "{{ org_id }}"
+
+      register: result
+      
+    - name: Filter networks with "wireless" productTypes
+      set_fact:
+        filtered_networks: "{{ result.meraki_response | selectattr('productTypes', 'contains', 'wireless') | list }}"
+      register: network_id_get
+     
+    - name: Edit SSID Settings
+      cisco.meraki.networks_wireless_ssids: 
+        meraki_api_key: "{{ meraki_key }}"
+        networkId: "{{ filtered_networks.0.id }}"
+        enabled: "{{ item.enabled }}"
+        state: "{{ item.state | default('present') }}"
+        name: "{{ item.name }}"
+        number: "{{ item.number }}"
+        encryptionMode: "{{ item.authentication.encryption_mode }}"
+        authMode: "{{ item.authentication.auth_mode }}"
+        psk: "{{ item.authentication.psk }}"
+        wpaEncryptionMode: "{{ item.authentication.wpa_encryption_mode }}"
+        visible: "{{ item.visible | default('true')  }}"
+        availableOnAllAps: "{{ item.availableOnAllAps | default('false')  }}"
+      loop: "{{ SSID }}"

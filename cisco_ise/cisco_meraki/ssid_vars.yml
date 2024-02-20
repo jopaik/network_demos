@@ -1,0 +1,51 @@
+---
+meraki_api_key: "{{ meraki_key }}"
+org_id: "{{ org_id }}"
+
+SSID:
+  - name: SSID_1
+    number: 1
+    enabled: true
+    authentication:
+      auth_mode: psk
+      encryption_mode: wpa
+      psk: pass11111
+      wpa_encryption_mode: WPA2 only
+    visible: true
+    availableOnAllAps: true
+    
+  - name: SSID_2
+    number: 2
+    enabled: true
+    authentication:
+      auth_mode: psk
+      encryption_mode: wpa
+      psk: pass22222
+      wpa_encryption_mode: WPA2 only
+    state: present
+    visible: true
+    availableOnAllAps: true
+  
+  - name: SSID_3
+    number: 3
+    enabled: true
+    authentication:
+      auth_mode: psk
+      encryption_mode: wpa
+      psk: pass33333
+      wpa_encryption_mode: WPA2 only
+    state: present
+    visible: true
+    availableOnAllAps: true
+    
+  - name: SSID_$
+    number: 4
+    enabled: true
+    authentication:
+      auth_mode: psk
+      encryption_mode: wpa
+      psk: pass44444
+      wpa_encryption_mode: WPA2 only
+    state: present
+    visible: true
+    availableOnAllAps: true
