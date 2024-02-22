@@ -130,7 +130,7 @@
         playbook: "network_compliance_dashboard/network_report.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment"
+        execution_environment: "Validated Network"
         state: "present"
 
     # This section includes Network-Check-Compliance Demo
@@ -143,7 +143,7 @@
         playbook: "network_compliance_checks_remediations/compliance.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment"
+        execution_environment: "Validated Network"
         job_type: check
         state: "present"
 
@@ -156,7 +156,7 @@
         playbook: "network_compliance_checks_remediations/compliance_run.yml"
         credentials:
           - "Workshop Credential"
-        execution_environment: "network workshop execution environment"
+        execution_environment: "Validated Network"
         job_type: check
         state: "present"
 
