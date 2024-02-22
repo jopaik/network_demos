@@ -427,7 +427,7 @@
 - name: stigrule_215837_host
   ignore_errors: "{{ ignore_all_errors }}"
   notify: "save configuration"
-  cisco.ios.ios_logging:
+  cisco.ios.ios_logging_global:
     dest: host
     name: "{{ iosxeSTIG_stigrule_215837_host_Name }}"
   when: iosxeSTIG_stigrule_215837_Manage
