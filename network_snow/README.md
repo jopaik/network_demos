@@ -264,6 +264,26 @@ rtr1#
 ~~~
 ## CMDB and Dynamic Inventory Source with SNOW
 
+
+{
+  "ansible_facts": {
+    "ansible_network_resources": {},
+    "ansible_net_gather_network_resources": [],
+    "ansible_net_gather_subset": [
+      "default"
+    ],
+    "ansible_net_system": "ios",
+    "ansible_net_model": "C8000V",
+    "ansible_net_image": "bootflash:packages.conf",
+    "ansible_net_version": "17.06.06a",
+    "ansible_net_hostname": "rtr1",
+    "ansible_net_api": "cliconf",
+    "ansible_net_python_version": "3.9.18",
+    "ansible_net_iostype": "IOS-XE",
+    "ansible_net_operatingmode": "autonomous",
+    "ansible_net_serialnum": "9KPPVBQ822V"
+  },
+
 # Key Takeaways
 * 
 ## Return to Demo Menu
