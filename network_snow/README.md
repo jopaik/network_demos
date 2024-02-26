@@ -19,7 +19,7 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 1. launch the Network-CMDB-Update launch template
 2. update snow inventory source and sync
 3. validate rtr1 host in inventory
-4. luanch Network-SNOW-Facts template that uses the SNOW dynamic inventory
+4. launch Network-SNOW-Facts template that uses the SNOW dynamic inventory
 
 # Network SNOW
 
