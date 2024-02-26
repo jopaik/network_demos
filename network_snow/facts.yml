@@ -1,0 +1,9 @@
+---
+- name: gather router facts
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+  - name: Get router facts
+    cisco.ios.ios_facts:
