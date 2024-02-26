@@ -20,15 +20,16 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 2. update snow inventory source and sync
 3. validate rtr1 host in inventory
 4. launch Network-SNOW-Facts template that uses the SNOW dynamic inventory
+5. Verify the details and fact output.
 
 # Network SNOW
-
+## Incidents
 [Table of Contents](#table-of-contents)
 - [Step 1 - Persist](#step-1-persist)
 - [Step 2 - Deploy](#step-2-deploy)
 - [Step 3 - Detect](#step-3-detect)
 - [Step 4 - Remediate](#step-4-remediate)
-[]
+## CMDB and Dynamic Inventory
 
 ## Objective
 To integrate Ansible workflows with SNOW incident tickets.
