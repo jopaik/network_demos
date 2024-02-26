@@ -2,6 +2,7 @@
  - [Menu of Demos](../README.md)
 
 # Summary of steps
+## Incidents
 1. Connect to SNOW instuqt lab and launch a new instance 
 https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automation?token=em_5ktpLJWtzpbqcDyM
 2. Collect the SNOW user/pass for a session
@@ -14,6 +15,11 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 9. Verify the closed incident in the Workflow
 10. Verify SNOW and search for the closed incident "ticket"
 11. Verify the login banner on rtr1
+## CMDB and Dynamic Inventory Source with SNOW
+1. launch the Network-CMDB-Update launch template
+2. update snow inventory source and sync
+3. validate rtr1 host in inventory
+4. luanch Network-SNOW-Facts template that uses the SNOW dynamic inventory
 
 # Network SNOW
 
@@ -22,6 +28,7 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 - [Step 2 - Deploy](#step-2-deploy)
 - [Step 3 - Detect](#step-3-detect)
 - [Step 4 - Remediate](#step-4-remediate)
+[]
 
 ## Objective
 To integrate Ansible workflows with SNOW incident tickets.
@@ -254,6 +261,7 @@ Warning: Permanently added 'rtr1' (RSA) to the list of known hosts.
 Some new Banner Text
 rtr1#
 ~~~
+## CMDB and Dynamic Inventory Source with SNOW
 
 # Key Takeaways
 * 
