@@ -157,7 +157,6 @@
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
-        job_type: check
         state: "present"
 
     - name: Create a workflow job template
