@@ -101,7 +101,6 @@ Review the Workflow Job and note the job-ID to be used for appoval.
 1. When prompted, provide the Workflow Job-ID and Banner Entry.
 
 ### Step 7 - Review the Snow fix job-template 
-
 2. Reviewed the changed task
 ~~~
 {
