@@ -16,26 +16,40 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 10. Verify SNOW and search for the closed incident "ticket"
 11. Verify the login banner on rtr1
 ## CMDB and Dynamic Inventory Source with SNOW
-1. launch the Network-CMDB-Update launch template
-2. update snow inventory source and sync
-3. validate rtr1 host in inventory
+1. launch the Network-CMDB-Update job template
+2. update the  the snow inventory source and sync
+3. validate rtr1 host in the snow inventory
 4. launch Network-SNOW-Facts template that uses the SNOW dynamic inventory
-5. Verify the details and fact output.
+5. Verify the details and fact.yml output.
 
-# Network SNOW
+# Network SNOW 
 ## Incidents
 [Table of Contents](#table-of-contents)
-- [Step 1 - Persist](#step-1-persist)
-- [Step 2 - Deploy](#step-2-deploy)
-- [Step 3 - Detect](#step-3-detect)
-- [Step 4 - Remediate](#step-4-remediate)
+- [Step 1 - SNOW user/pass](#step-1-snow-user/pass)
+- [Step 2 - Collect user/pass](#step-2-collect-user/pass)
+- [Step 3 - Launch the Workflow Template ](#step-3-launch-the-workflow-template)
+- [Step 4 - Note the Workflow job-ID](#step-4-note-the-workflow-job-ID)
+- [Step 5 - SNOW incident](#step-5-snow-incident)
+- [Step 6 - Launch the Snow fix job-template](#step-6-launch-the-snow-fix-job-template)
+- [Step 7 - Review the Snow fix job-template](#step-7-review-the-Snow-fix-job-template)
+- [Step 8 - Verify the completed Snow Workflow template](#step-8-verify-the-completed-snow-workflow-template)
+- [Step 9 - Verify the SNOW Closed Incident in the Task](#step-9-verify-the-snow-closed-incident-in-the-task)
+- [Step 10 - Verify the SNOW Closed Incident in the SNOW GUI](#step-10-verify-the-snow-closed-incident-in-the-snow-gui)
+- [Step 11 - Verify the login banner on rtr1](step-11-verify-the-login-banner-on-rtr1)
+
 ## CMDB and Dynamic Inventory
+[Table of Contents](#table-of-contents)
+- [Step 1 - Launch the Network-CMDB-Update job template](#step-1-launch-the-network-cmdb-update-job-template)
+- [Step 2 - Update the Snow inventory source and sync](#step-2-update-the-snow-inventory-source-and-sync)
+- [Step 3 - Validate rtr1 host in the SNOW inventory](#step-3-validate-rtr1-host-in-the-snow-inventory)
+- [Step 4 - Launch the Network-SNOW-Facts template](#step-4-launch-the-network-snow-facts-template)
+- [Step 5 - Verify the details and fact output](#step-5-verify-the-details-and-fact-output)
 
 ## Objective
-To integrate Ansible workflows with SNOW incident tickets.
+To integrate Ansible workflows with SNOW incident tickets. Also to update the SNOW CMDB with Ansible and use SNOW ITSM as a dynamic inventory source.
 
 ## Overview
-The SNOW.ITSM collection allows Ansible to open/close incidents, change requsts and pass CMDB data to/from SNOW. In this demo we use a Workflow to check for banner compliance on a Cisco router. If the router is out of compliance a SNOW incident (ticket) is opened. The workflow includes an approval step that requires a banner entry to exist in the router before completing the workflow. THe approval can be accessed directly from the AAP controller or programmatically from an Ansible controller collection. Once completed the workflow closes the incident ticket in SNOW.
+The SNOW.ITSM collection allows Ansible to open/close incidents, change requsts and pass CMDB data to/from SNOW. In this demo we use a Workflow to check for banner compliance on a Cisco router. If the router is out of compliance a SNOW incident (ticket) is opened. The workflow includes an approval step that requires a banner entry to exist in the router before completing the workflow. THe approval can be accessed directly from the AAP controller or programmatically from an Ansible controller collection. Once completed the workflow closes the incident ticket in SNOW. 
 
 ### Step 1 - SNOW user/pass
 Launch a new instruqt lab instance instance.
@@ -83,10 +97,10 @@ Review the Workflow Job and note the job-ID to be used for appoval.
 2. Open incident
 ![open_incident](../images/snow_incident2.png)
 
-### Step 6 - Launch the ""fix job-template 
+### Step 6 - Launch the Snow fix job-template 
 1. When prompted, provide the Workflow Job-ID and Banner Entry.
 
-### Step 7 - Review the ""fix job-template 
+### Step 7 - Review the Snow fix job-template 
 
 2. Reviewed the changed task
 ~~~
@@ -104,7 +118,7 @@ Review the Workflow Job and note the job-ID to be used for appoval.
     }
 ~~~
 
-### Step 8 - Verify the completed "" Workflow template
+### Step 8 - Verify the completed Snow Workflow template
 1. The ""fix job-template should programmtically accept the approval step from the Workflow-Template.
 
 2. Review the changed task for the Troubleshoot-Approval node
@@ -264,7 +278,28 @@ rtr1#
 ~~~
 ## CMDB and Dynamic Inventory Source with SNOW
 
+### Step 1 - Launch the Network-CMDB-Update job template
+This template will add rtr1 to the routed devices cmdb group in SNOW.
 
+### Step 2 - Update the Snow inventory source and sync
+
+Sync the Snow Inventory Source to read in from the dynamic inventory. This will require the SNOW credentials which were collected earlier from the Instruqt lab. 
+![sync](../images/snowinventorysource.png)
+
+### Step 3 - Validate rtr1 host in the SNOW inventory
+
+![rtr1](../images/snow_rtr1.png)
+
+### Step 4 - Launch  the Network-SNOW-Facts template 
+This job template uses the SNOW dynamic inventory
+
+### Step 5 - Verify the details and fact output
+
+Details:
+![detals](../images/snow_inv_details.png)
+
+The output from facts.yml
+~~~
 {
   "ansible_facts": {
     "ansible_network_resources": {},
@@ -283,8 +318,13 @@ rtr1#
     "ansible_net_operatingmode": "autonomous",
     "ansible_net_serialnum": "9KPPVBQ822V"
   },
+~~~
 
 # Key Takeaways
-* 
+* AAP can open anc close tickets in SNOW
+* AAP can update the CMDB info in SNOW
+* SNOW can launch Job Teplates and Workflows in AAP
+* SNOW can provide a dynamic inventory source for AAP
+
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
