@@ -1,5 +1,25 @@
 
+## Return to Demo Menu
+ - [Menu of Demos](../README.md)
 
+# Summary of steps
+## Cisco ISE
+
+[Table of Contents](#table-of-contents)
+- [Step 1 - SNOW user/pass](#step-1-snow-user/pass)
+- [Step 2 - Collect user/pass](#step-2-collect-user/pass)
+- [Step 3 - Launch the Workflow Template ](#step-3-launch-the-workflow-template)
+- [Step 4 - Note the Workflow job-ID](#step-4-note-the-workflow-job-ID)
+- [Step 5 - SNOW incident](#step-5-snow-incident)
+
+## Objective
+To integrate Ansible workflows with the ISE to glean endpoint and device configuration state info.
+
+## Overview
+Cisco ISE contains configuration, posture, and policy state info. This information can be accessed by AAPand used for instucture as code. AAP is also an alternative to the GUI to configure ISE.
+
+## Step 1 - Launch the Network-Cisco-ISE- Workflow 
+This workflow includes the following job templates
 
 users:
 ~~~

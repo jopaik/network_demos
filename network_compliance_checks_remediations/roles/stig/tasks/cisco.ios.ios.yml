@@ -2,7 +2,7 @@
 - name: stigrule_215807_ip_http_max_connections_2
   ignore_errors: "{{ ignore_all_errors }}"
   notify: "save configuration"
-  cisco.ios.ios_config:
+  ios_config:
     defaults: yes
     lines: "{{ iosxeSTIG_stigrule_215807_ip_http_max_connections_2_Lines }}"
   when:
@@ -10,14 +10,13 @@
 
 # R-215807 CISC-ND-000010
 - name: get line vty sections
-  ios_command:
-  cisco.ios.commands: show running-config all | include ^line vty
+  ios_commands: show running-config all | include ^line vty
   register: cmd_result
 
 - name: stigrule_215807_session_limit_for_all_line_vty_sections
   ignore_errors: "{{ ignore_all_errors }}"
   notify: "save configuration"
-  cisco.ios.ios_config:
+  ios_config:
     defaults: yes
     lines: "{{ iosxeSTIG_stigrule_215807_session_limit_for_all_line_vty_sections_Lines }}"
     parents: "{{ item_215807 }}"
@@ -31,7 +30,7 @@
 - name: stigrule_215813_login_block_for_900_attempts_3_within_120
   ignore_errors: "{{ ignore_all_errors }}"
   notify: "save configuration"
-  cisco.ios.ios_config:
+  ios_config:
     defaults: yes
     lines: "{{ iosxeSTIG_stigrule_215813_login_block_for_900_attempts_3_within_120_Lines }}"
   when:
