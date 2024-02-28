@@ -18,10 +18,18 @@ To integrate Ansible workflows with the ISE to glean endpoint and device configu
 ## Overview
 Cisco ISE contains configuration, posture, and policy state info. This information can be accessed by AAPand used for instucture as code. AAP is also an alternative to the GUI to configure ISE.
 
-## Step 1 - Launch the Network-Cisco-ISE- Workflow 
+## Step 1 - Launch the Network-Cisco-ISE-Workflow 
+The following depicts the workflow visualization:
+
+![visialization](../images/ise_workflow.png)
+
 This workflow includes the following job templates
 
-users:
+![templates](../images/Ise_templates.png)
+
+
+## Step 2 - Review the Network-Cisco-Ise-Users job-template output
+The Network-Cisco-Ise-Users job-template returns the following output: 
 ~~~
 {
   "result": {
@@ -108,7 +116,8 @@ users:
         }
       }
 ~~~
-
+## Step 3 - Review the Network-Cisco-Ise-Groups job-template output
+The Network-Cisco-Ise-Groups job-template returns the following output: 
 Groups:
 ~~~
 {
@@ -195,8 +204,9 @@ Groups:
           "type": "application/json"
         }
 ~~~
-
-Network Devices
+## Step 4 - Review the Network-Cisco-Ise-Network-Devices job-template output
+The Network-Cisco-Ise-Network-Devices job-template returns the following output: 
+#### Note, the network devices are a great source for a dynamic inventory scipt.
 ~~~
 {
   "result_id": {
@@ -278,7 +288,8 @@ Network Devices
         "ansible_loop_var": "item"
       }
 ~~~
-Endpoint Groups:
+## Step 5 - Review the Network-Cisco-Ise-Endpoints job-template output
+The Network-Cisco-Ise-Endpoints job-template returns the following output: 
 ~~~
 {
   "msg": [
@@ -323,3 +334,9 @@ Endpoints:
       "link": {
         "rel": "self",
 ~~~
+
+# Key Takeaways
+* 
+
+## Return to Demo Menu
+ - [Menu of Demos](../README.md)
