@@ -27,7 +27,7 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 [Table of Contents](#table-of-contents)
 - [Step 1 - SNOW user/pass](#step-1-snow-user/pass)
 - [Step 2 - Collect user/pass](#step-2-collect-user/pass)
-- [Step 3 - Launch the Workflow Template ](#step-3-launch-the-workflow-template)
+- [Step 3 - Launch the Network-ServiceNow-Workflow Template ](#step-3-launch-the-network-servicenow-workflow-template)
 - [Step 4 - Note the Workflow job-ID](#step-4-note-the-workflow-job-ID)
 - [Step 5 - SNOW incident](#step-5-snow-incident)
 - [Step 6 - Launch the Snow fix job-template](#step-6-launch-the-snow-fix-job-template)
@@ -66,7 +66,7 @@ https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automat
 
 ![copy_snow](../images/snowuser.png)
 
-### Step 3 - Launch the "" Workflow Template 
+### Step 3 - Launch the Network-ServiceNow-Workflow Template 
 After launching the Workflow template it will fail. 
 
 1. Click on the failed "" job-template and review the output.
@@ -97,10 +97,10 @@ Review the Workflow Job and note the job-ID to be used for appoval.
 2. Open incident
 ![open_incident](../images/snow_incident2.png)
 
-### Step 6 - Launch the Snow fix job-template 
+### Step 6 - Launch the Network-Snow-fix job-template 
 1. When prompted, provide the Workflow Job-ID and Banner Entry.
 
-### Step 7 - Review the Snow fix job-template 
+### Step 7 - Review the Network-Snow-fix job-template 
 2. Reviewed the changed task
 ~~~
 {
@@ -320,7 +320,7 @@ The output from facts.yml
 ~~~
 
 # Key Takeaways
-* AAP can open anc close tickets in SNOW
+* AAP can open and close tickets in SNOW
 * AAP can update the CMDB info in SNOW
 * SNOW can launch Job Teplates and Workflows in AAP
 * SNOW can provide a dynamic inventory source for AAP
