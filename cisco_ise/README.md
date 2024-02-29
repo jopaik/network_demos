@@ -3,6 +3,13 @@
  - [Menu of Demos](../README.md)
 
 # Summary of steps
+1. Launch the Network-Cisco-ISE-Workflow 
+2. Review the json output from each job-template
+ * Users
+ * Groups
+ * Devices 
+ * Endpoints
+
 ## Cisco ISE
 
 [Table of Contents](#table-of-contents)
@@ -16,14 +23,14 @@
 To integrate Ansible workflows with the ISE to glean endpoint and device configuration state info.
 
 ## Overview
-Cisco ISE contains configuration, posture, and policy state info. This information can be accessed by AAPand used for instucture as code. AAP is also an alternative to the GUI to configure ISE.
+Cisco ISE contains configuration, posture, and policy state information. This information is directly accessable to AAP for instucture as code. Secondly, AAP is a configuration alteernative to the ISE GUI.
 
 ## Step 1 - Launch the Network-Cisco-ISE-Workflow 
 The following depicts the workflow visualization:
 
 ![visialization](../images/ise_workflow.png)
 
-This workflow includes the following job templates
+This workflow includes the following job templates:
 
 ![templates](../images/Ise_templates.png)
 
@@ -118,7 +125,6 @@ The Network-Cisco-Ise-Users job-template returns the following output:
 ~~~
 ## Step 3 - Review the Network-Cisco-Ise-Groups job-template output
 The Network-Cisco-Ise-Groups job-template returns the following output: 
-Groups:
 ~~~
 {
   "result": {
@@ -206,7 +212,7 @@ Groups:
 ~~~
 ## Step 4 - Review the Network-Cisco-Ise-Network-Devices job-template output
 The Network-Cisco-Ise-Network-Devices job-template returns the following output: 
-#### Note, the network devices are a great source for a dynamic inventory scipt.
+#### Note, the network devices are another potential source for a dynamic inventory script.
 ~~~
 {
   "result_id": {
@@ -336,7 +342,12 @@ Endpoints:
 ~~~
 
 # Key Takeaways
-* 
+* ISE and AAP are better together!!!
+* APP can configure ISE as an alternative to the GUI
+* AAP has access to device and endpoint configuration, policy and posture state in ISE
+* AAP can pass ISE configuration data to ITSM CMDB
+* ISE devices can be used a a dynamic inventory source
+* AAP is an alternative to pxgrid for provisioning non-Cisco devices 
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)

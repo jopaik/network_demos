@@ -1,7 +1,7 @@
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
 
-# Cisco DNAC 
+# Cisco DNAC "Catalyst Center"
 
 ## Table of Contents
 - [Step 1 - Review DNAC GUI](#step-1-review-dnac-gui)
@@ -13,14 +13,14 @@
 1. Review the Current Cisco Devnet Always On DNAC Network Device Inventory 
 `https://sandboxdnac.cisco.com user=devnetuser password=Cisco123!`
 2. Launch the DNAC-Config-Retrieve job-template and select the devices Sw1-4 that were gleaned from the dnac_dynamic inventory source
-3. Review the config backups that are saved to the gitea main branch with timestamps.
+3. Review the config backups that are saved to the gitea main branch with timestamps
 `cisco_dnac/backups`
-4. Launch the Dnac-Compliance job-template to check if hte current Device Software Versions are in compliance.
+4. Launch the Dnac-Compliance job-template to check if the current Network Device software versions are in compliance
 
 ## Objective
 Demonstrate Ansible working `Better Together` with Cisco DNAC by saving the DNAC device configuration backups to a git repository. The Git repo is foundational for infrastucture as code and offers a method for managing single source of truth and configuration drift "diff" checks. The second part of the demo highlights AAP's ability to glean device information from DNAC to use for easy to impliment compliance checks.
 ## Overview
-In this demo we will check configurations from DNAC `Catalyst Center` as a Single Source of truth for Ansible. In turn we can reconcile any confiuration drift before making changes originated in AAP or DNAC. In the second part of the demo we use DNAC device information for compliance checks or optionally pass DNAC config datato other CMDB systems etc.
+In this demo we will check configurations from DNAC `Catalyst Center` as a Single Source of truth for Ansible. In turn we can reconcile any confiuration drift before pushing changes via automation. In the second part of the demo we use DNAC device information for compliance checks or optionally pass DNAC config data to other external CMDB systems etc.
 
 ## Devnet DNAC Sandbox
 The hosts.yml file in this demo can be modified to run in the Cisco Devnet always on or reserved sandboxes. The latter requires a vpn connection.
@@ -73,7 +73,7 @@ Truncated
 Launch the Dnac-Compliance job-template to check if the current Device Software Versions are in compliance.
 
 ### Note, if compliance fails
-Please be aware that the version of the dnac switch devices may change over time. If needed you can edit the compliance_assert.yml if needed.
+Please be aware that the version of the dnac switch devices may change over time. If needed you can edit the compliance_assert.yml.
 
 Example output:
 ~~~
@@ -95,7 +95,11 @@ ok: [dnac_server] => {
 ~~~
 
 # Key Takeaways
-* Cisco DNAC and Ansible are better togehter!
+* Cisco DNAC "Catalyst Center" and Ansible are better togehter!
+* AAP is an alternative to the GUI for configuring DNAC
+* AAP can access device configs, telemetry and other data directly from DNAC
+* Easy AAP workflows to extend DNAC capabilites to other applications. (SNOW, IPAM, Compliance)
+* Automate devices directly in AAP using the Ansible Dynamic inventory source plugin from DNAC for devices. 
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)

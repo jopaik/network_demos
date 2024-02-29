@@ -320,7 +320,7 @@ The output from facts.yml
 ~~~
 
 # Key Takeaways
-* AAP can open and close tickets in SNOW
+* AAP can automatically open and close tickets in SNOW
 * AAP can update the CMDB info in SNOW
 * SNOW can launch Job Teplates and Workflows in AAP
 * SNOW can provide a dynamic inventory source for AAP

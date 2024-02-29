@@ -651,7 +651,10 @@ Since we are modifing an existing entry we would use remediate. `override`. If i
 ~~~
 
 # Key Takeaways
-* 
+* Noramlize ACL managment across vendors
+* Easy ACL additions and modifications
+* Check if ACLs are in compliance
+* Clean stale ACL entries that are no longer needed
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
