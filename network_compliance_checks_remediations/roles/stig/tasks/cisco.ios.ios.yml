@@ -10,7 +10,9 @@
 
 # R-215807 CISC-ND-000010
 - name: get line vty sections
-  ios_commands: show running-config all | include ^line vty
+  ios_command: 
+    commands: 
+    - show running-config all | include ^line vty
   register: cmd_result
 
 - name: stigrule_215807_session_limit_for_all_line_vty_sections
