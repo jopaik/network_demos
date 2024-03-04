@@ -17,6 +17,7 @@ For the below demos insure you are always using files from /home/student/network
    * Network Facts
    * JINJA2 HTML template
 - [Network Compliance Checks Remediations](network_compliance_checks_remediations/README.md)
+   * [ Demo Video](https://youtu.be/S1k41RMfieo?feature=shared)
    * Network Resource Modules
    * Workflows
    * Self Service Survey
@@ -38,7 +39,7 @@ For the below demos insure you are always using files from /home/student/network
    * Detect incorrect ACL Entries
    * Remdiate ACL entries
    * Make changes to existing ACLs and Entries
-- [Network SNOW](network_snow)
+- [Network SNOW](network_snow/README.md)
    * Compliance Checks 
    * Automatically Open SNOW Inicidents (tickets)
    * Resolve Issues
