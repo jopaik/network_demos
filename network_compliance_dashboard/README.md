@@ -3,7 +3,7 @@
 
 # Summary of steps
 1. Deploy a Podman container with nginx for a dashboard
-2. Creat some configurations for devices 
+2. Create some configurations for devices 
 3. Use Network facts to create dynamic documentation
 4. Compare desired configurations in a jinja2 html template
 5. Mark in red compliance violations on the dashboard
