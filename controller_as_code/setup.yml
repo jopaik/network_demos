@@ -287,7 +287,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_backup.yml"
+        playbook: "network_basic_workflow/playbooks/network_backup.yml"
         credentials:
           - "Workshop Credential"
           - "Controller Credential"
@@ -300,7 +300,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_restore.yml"
+        playbook: "network_basic_workflow/playbooks/network_restore.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
@@ -312,7 +312,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_banner.yml"
+        playbook: "network_basic_workflow/playbooks/network_banner.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
@@ -324,7 +324,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_user.yml"
+        playbook: "network_basic_workflow/playbooks/network_user.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
