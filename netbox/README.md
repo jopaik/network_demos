@@ -10,7 +10,7 @@ https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 5. Review the Netbox Inventory on AAP
 6. Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
 7. Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
-8. Verify Config drift checks by changing the config on rtr1
+8. Verify Config drift checks by changing the config on rtr1. Also not the serial number, IPs, and cert informaiton will be different in every demo POD.
 
 # Netbox
 
@@ -20,7 +20,7 @@ https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 - [Step 3 - Review the Netbox GUI](#step-3-review-the-netbox-gui)
 - [Step 4 - Add the API Token](#step-4-add-the-api-token)
 - [Step 5 - Review the Netbox Inventory on AAP](#step-5-review-the-netbox-inventory-on-aap)
-- [Step 6 -  ](#step-6-)
+- [Step 6 - Launch the Network-Netbox-Facts job-template](#step-6-launch-the-network-netbox-facts-job-template)
 - [Step 7 - Launch the Network-Netbox-Compare-Configs job-template](#step-7-)
 - [Step 8 - Verify Config drift checks by changing the config on rtr1](#step-8-)
 
@@ -52,7 +52,7 @@ Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory 
 Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
 
 ### Step 8 - Verify Config drift checks 
-Verify Config drift checks by changing the config on rtr1
+Verify Config drift checks by changing the config on rtr1 and relaunching the Network-Netbox-Compare-Configs job-template
 
 
 # Key Takeaways
