@@ -11,7 +11,7 @@
 
   # We define the delegate_to at the block-level
   delegate_to: localhost
-  ignore_errors: "{{ ignore }}"
+  ignore_errors: true
 
   block:
     - name: Read Contract Info csv_files/day1/aci_contracts.csv

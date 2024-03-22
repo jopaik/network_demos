@@ -9,7 +9,7 @@
       validate_certs: "{{ apic_validate_certs }}"
 
   delegate_to: localhost
-  ignore_errors: "{{ ignore }}"
+  ignore_errors: true
 
   block:
     - name: Read CSV File
