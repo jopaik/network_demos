@@ -978,6 +978,7 @@
           - "Gitea Credential"
         execution_environment: "Validated Network"
         state: "present"
+        diff_mode: true
         survey_enabled: yes
         survey_spec:
           {
