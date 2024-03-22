@@ -10,6 +10,7 @@
       ignore: true
 
   delegate_to: localhost
+  ignore_errors: "{{ ignore }}"
 
   block:
     - name: Read CSV File csv_files/aci_fabric_access_sw_profile_selector.csv
@@ -27,7 +28,6 @@
       loop_control:
         loop_var: sw_pol_item
         label: "{{sw_pol_item.sw_policy_profile}}"
-      ignore_errors: "{{ ignore }}"
 
     - name: ASSOCIATING AN INTERFACE SELECTOR PROFILE TO A SWITCH POLICY LEAF PROFILE
       cisco.aci.aci_interface_selector_to_switch_policy_leaf_profile:
@@ -40,7 +40,6 @@
       loop_control:
         loop_var: sw_pol_selector_item
         label: "{{ sw_pol_selector_item.interface_selector_profile }}"
-      ignore_errors: "{{ ignore }}"
 
     - name: Read CSV File csv_files/aci_fabric_access_policies.csv
       community.general.read_csv:
@@ -58,7 +57,6 @@
       loop_control:
         loop_var: cdp_item
         label: "{{  cdp_item.cdp_policy }}"
-      ignore_errors: "{{ ignore }}"
 
     - name: Create MCP Interface Policy to enable/disable MCP
       cisco.aci.aci_interface_policy_mcp:
@@ -71,9 +69,7 @@
       loop_control:
         loop_var: mcp_item
         label: "{{  mcp_item.mcp_policy }}"
-      ignore_errors: "{{ ignore }}"
          
-
     - name: Create LLDP Interface Policy to enable/disable LLDP
       cisco.aci.aci_interface_policy_lldp:
         <<: *aci_login
@@ -84,7 +80,6 @@
       loop_control:
         loop_var: lldp_item
         label: "{{  lldp_item.lldp_policy }}"
-      ignore_errors: "{{ ignore }}"
 
     - name: Create a Link Level Policy
       cisco.aci.aci_interface_policy_link_level:
@@ -101,7 +96,6 @@
       loop_control:
         loop_var: level_item
         label: "{{  level_item.link_level_policy }}"
-      ignore_errors: "{{ ignore }}"
 
     - name: Add Interface Polices to leaf policy group
       cisco.aci.aci_interface_policy_leaf_policy_group:

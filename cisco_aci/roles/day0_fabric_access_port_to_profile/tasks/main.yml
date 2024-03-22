@@ -10,6 +10,7 @@
       ignore: true
 
   delegate_to: localhost
+  ignore_errors: "{{ ignore }}"
 
   block:
     - name: Read CSV File csv_files/day0/aci_fabric_access_port_to_profile.csv
@@ -29,9 +30,7 @@
       loop_control:
         loop_var: profile_item
         label: "{{ profile_item.interface_profile }}"
-      ignore_errors: "{{ ignore }}"
         
-
     - name: Add Access Ports to Interface Policy Leaf Profile
       cisco.aci.aci_access_port_to_interface_policy_leaf_profile:
         <<: *aci_login
@@ -51,4 +50,3 @@
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: access_item
-      ignore_errors: "{{ ignore }}"
