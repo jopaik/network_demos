@@ -7,7 +7,6 @@
       username: "{{ apic_username }}"
       password: "{{ apic_password }}"
       validate_certs: "{{ apic_validate_certs }}"
-      ignore: true
 
   delegate_to: localhost
   ignore_errors: true
