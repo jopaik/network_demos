@@ -134,10 +134,12 @@
       become: true
       become_user: student
 
-    # - name: Delete the original workshop directory
-    #   ansible.builtin.file:
-    #     path: /home/student/network_demos
-    #     state: absent
+    - name: Delete the original workshop directory
+      ansible.builtin.file:
+        path: /home/student/network_demos
+        state: absent
+      become: true
+      become_user: student
 
     #### Update NGINX configuration to support Gitea
     - name: Update NGINX and Restart Service
@@ -174,14 +176,3 @@
           restart: true
         become: true
         become_user: ec2-user
-
-      # - name: Restart NGINX service
-      #   ansible.builtin.service:
-      #     name: nginx
-      #     state: restarted
-      #   become: true
-      #   when: result.changed
-      #   ignore_errors: true
-
-
-    
