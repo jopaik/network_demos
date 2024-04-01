@@ -5,7 +5,6 @@
 
   vars:
     domain_name: ansible.local
-    # ca_cert: "{{ lookup('file', './certificates/cacert.cer').splitlines() }}"
 
   tasks:
     - name: Backup Config
@@ -112,15 +111,17 @@
             verbosity: 3
 
         - name: Write CSR to file
+          vars:
+            ansible_user: "{{ CA_USERNAME }}"
+            ansible_password: "{{ CA_PASSWORD }}"
           ansible.builtin.copy:
             content: "{{ csr }}"
             dest: "/tmp/{{ inventory_hostname }}_{{ trustpoint }}.csr"
-            owner: student
-            group: student
+            owner: juniper
+            group: juniper
             mode: '0644'
             backup: true
-          delegate_to: ansible-1
-          become: true
+          delegate_to: ca-host
 
     - name: Add the CA Cert to the Trustpoint
       tags:
@@ -128,6 +129,8 @@
         - never
       block:
         - name: Create the template variable
+          vars:
+            ca_cert: "{{ lookup('file', './certificates/cacert.cer').splitlines() }}"
           ansible.builtin.set_fact:
             cacert_var: "{{ lookup('ansible.builtin.template', './templates/rtr_authenticate_CA.j2') | split('\n') }}"
 
@@ -146,10 +149,13 @@
         - never
       block:
         - name: Slurp hosts file
+          vars:
+            ansible_user: "{{ CA_USERNAME }}"
+            ansible_password: "{{ CA_PASSWORD }}"
           ansible.builtin.slurp:
             src: "/tmp/{{ inventory_hostname }}_{{ trustpoint }}.cer"
           register: slurpfile
-          delegate_to: ansible-1
+          delegate_to: ca-host
 
         - name: Copy the host cert to EE
           ansible.builtin.set_fact:
