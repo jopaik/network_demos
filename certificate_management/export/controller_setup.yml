@@ -1,0 +1,42 @@
+---
+- name: Setup Certificate Management Workflow
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  environment:
+    CONTROLLER_HOST: ""
+    CONTROLLER_USERNAME: admin
+    CONTROLLER_PASSWORD: ''
+    # CONTROLLER_OAUTH_TOKEN:
+    # CONTROLLER_HOST: "{{ controller }}"
+    # CONTROLLER_PASSWORD: "{{ pass }}"
+    # CONTROLLER_USERNAME: "{{ user }}"
+    CONTROLLER_VERIFY_SSL: false
+
+  tasks:
+
+    - name: Import Execution Environments
+      ansible.controller.import:
+        assets: "{{ lookup('file', './execution_environments.yml') | from_yaml() }}"
+
+    - name: Import Credential Types
+      ansible.controller.import:
+        assets: "{{ lookup('file', './credential_types.yml') | from_yaml() }}"
+
+    - name: Import Credentials
+      ansible.controller.import:
+        assets: "{{ lookup('file', './credentials.yml') | from_yaml() }}"
+
+    - name: Import Projects
+      ansible.controller.import:
+        assets: "{{ lookup('file', './projects.yml') | from_yaml() }}"
+
+    - name: Import Job Templates
+      ansible.controller.import:
+        assets: "{{ lookup('file', './job_templates.yml') | from_yaml() }}"
+
+    - name: Import Workflow Job Templates
+      ansible.controller.import:
+        assets: "{{ lookup('file', './workflow_cert_mgmt.yml') | from_yaml() }}"
+
+...
