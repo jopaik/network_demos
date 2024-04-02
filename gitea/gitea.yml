@@ -169,16 +169,7 @@
         become: true
         ignore_errors: true
 
-      # - name: Re-create the web container
-      #   vars:
-      #     ansible_user: ec2-user
-      #   ansible.builtin.command: podman restart automation-controller-web
-
-
       - name: Re-create the web container
         vars:
           ansible_user: ec2-user
-        containers.podman.podman_container:
-          name: automation-controller-web
-          state: started
-          restart: true
+        ansible.builtin.command: podman restart automation-controller-web
