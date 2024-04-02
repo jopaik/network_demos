@@ -167,12 +167,8 @@
               }
         register: result
         become: true
-        ignore_errors: true
 
       - name: Re-create the web container
-        containers.podman.podman_container:
-          name: automation-controller-web
-          state: started
-          restart: true
-        become: true
-        become_user: ec2-user
+        vars:
+          ansible_user: ec2-user
+        ansible.builtin.command: podman restart automation-controller-web
