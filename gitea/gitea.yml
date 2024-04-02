@@ -167,7 +167,6 @@
               }
         register: result
         become: true
-        ignore_errors: true
 
       - name: Re-create the web container
         vars:
