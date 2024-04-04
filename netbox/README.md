@@ -4,7 +4,7 @@
 # Summary of steps
 1. Connect to Netbox Demo server to create and copy an API token
 https://netbox-demo.netboxlabs.com/ user=admin pass=admin
-2. Launch the Network-Netbox-Setup Workflow Template to configure a device and settings on Netbox
+2. Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox
 3. Review the Netbox GUI (devices, templates etc)
 4. Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
 5. Review the Netbox Inventory on AAP
