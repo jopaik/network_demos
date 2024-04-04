@@ -28,7 +28,8 @@ For the below demos insure you are always using files from /home/student/network
    * Validated Content: `network.base` 
    * Operations: Persist, Deploy, Detect, Remediate
    * BGP
-- [Completed Ansible Network Automation Workshop 101 Demo ](completed_ansible_network_automation_workshop_101_demo/README.md)
+- [Network Basic Workflow ](network_basic_workflow/README.md)
+   * Is similar to Network Workshop 101 AAP Exercises
    * Network Backups and Restore to a server
    * Network User
    * Network Banner
