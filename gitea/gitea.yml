@@ -135,28 +135,23 @@
       become_user: student
 
     - name: Delete the original workshop directory
-      ansible.builtin.shell:
-        cmd: rm -rf network_demos
-        chdir: /home/student/
+      ansible.builtin.file:
+        path: /home/student/network_demos
+        state: absent
       become: true
+      become_user: student
 
     #### Update NGINX configuration to support Gitea
     - name: Update NGINX and Restart Service
       block:   
       - name: Update NGINX to allow for Gitea url
         ansible.builtin.blockinfile:
-          dest: /etc/nginx/nginx.conf
-          insertafter: '# BEGIN ANSIBLE MANAGED BLOCK'
+          # dest: /etc/nginx/nginx.conf
+          dest: /home/ec2-user/aap/controller/nginx/etc/controller.conf
+          insertafter: '        location /static { alias /var/lib/awx/public/static; }'
           backup: true
           block: |
-              location /editor/ {
-                  proxy_pass http://127.0.0.1:8080/;
-                  proxy_set_header Host $host;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection upgrade;
-                  proxy_set_header Accept-Encoding gzip;
-                  proxy_redirect off;
-              }
+
               location /gitea/ {
                   client_max_body_size 512M;
                   # make nginx use unescaped URI, keep "%2F" as is
@@ -172,15 +167,8 @@
               }
         register: result
         become: true
-        ignore_errors: true
 
-      - name: Restart NGINX service
-        ansible.builtin.service:
-          name: nginx
-          state: restarted
-        become: true
-        when: result.changed
-        ignore_errors: true
-
-
-    
+      - name: Re-create the web container
+        vars:
+          ansible_user: ec2-user
+        ansible.builtin.command: podman restart automation-controller-web
