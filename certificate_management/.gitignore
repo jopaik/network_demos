@@ -1,0 +1,8 @@
+*.log
+*artifact*.json
+*.swp
+backup
+tokens
+collections/ansible_collections
+X509CA
+X509CA_orig
