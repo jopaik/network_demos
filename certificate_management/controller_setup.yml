@@ -47,14 +47,15 @@
       ansible.controller.credential_type:
           description: 'CA Host Credential Type'
           injectors:
-              env:
-                  CA_PASSWORD: "{% raw %}{{ password }}{% endraw %}"
-                  CA_USERNAME: "{% raw %}{{ username }}{% endraw %}"
               extra_vars:
+                  CA_HOST: "{% raw %}{{ host }}{% endraw %}"
                   CA_PASSWORD: "{% raw %}{{ password }}{% endraw %}"
                   CA_USERNAME: "{% raw %}{{ username }}{% endraw %}"
           inputs:
               fields:
+              -   id: host
+                  label: Host
+                  type: string
               -   id: username
                   label: Username
                   type: string
@@ -63,6 +64,7 @@
                   secret: true
                   type: string
               required:
+              - host
               - username
               - password
           kind: cloud
@@ -97,15 +99,15 @@
           credential_type: CA Credential Type
           description: ''
           inputs:
-              username: juniper
+              username: ca-admin
               password: CHANGE_ME
           organization: Default
 
     - name: Import Execution Environments
       ansible.controller.execution_environment:
-          credential: Gitlab Ansible_EE Token
-          description: ''
-          image: registry.gitlab.com/redhatautomation/ansible_ee/ruch-network-ee:latest
+          credential: ''
+          description: 'Network Examples EE'
+          image: quay.io/truch/network-examples:latest
           name: ruch-network-ee
           pull: missing
 
@@ -142,7 +144,7 @@
           signature_validation_credential: null
           timeout: 0
 
-    - name: Create 'CA / Generate Certificate' job template
+    - name: Create 'Cisco / CA / Generate Certificate' job template
       ansible.controller.job_template:
           allow_simultaneous: false
           ask_credential_on_launch: false
@@ -172,8 +174,55 @@
           job_slice_count: 1
           job_tags: ''
           job_type: run
-          limit: ''
-          name: CA / Generate Certificate
+          limit: 'cisco'
+          name: Cisco / CA / Generate Certificate
+          playbook: generate_certificate.yml
+          prevent_instance_group_fallback: false
+          project: Ansible Network Examples
+          credentials:
+          - CA Host Credential 
+          scm_branch: ''
+          skip_tags: ''
+          start_at_task: ''
+          survey_enabled: false
+          timeout: 0
+          use_fact_cache: false
+          verbosity: 0
+          webhook_credential: null
+          webhook_service: ''
+
+    - name: Create 'Juniper / CA / Generate Certificate' job template
+      ansible.controller.job_template:
+          allow_simultaneous: false
+          ask_credential_on_launch: false
+          ask_diff_mode_on_launch: false
+          ask_execution_environment_on_launch: false
+          ask_forks_on_launch: false
+          ask_instance_groups_on_launch: false
+          ask_inventory_on_launch: false
+          ask_job_slice_count_on_launch: false
+          ask_job_type_on_launch: false
+          ask_labels_on_launch: false
+          ask_limit_on_launch: false
+          ask_scm_branch_on_launch: false
+          ask_skip_tags_on_launch: false
+          ask_tags_on_launch: false
+          ask_timeout_on_launch: false
+          ask_variables_on_launch: false
+          ask_verbosity_on_launch: false
+          become_enabled: false
+          description: ''
+          diff_mode: false
+          execution_environment: null
+          force_handlers: false
+          forks: 0
+          host_config_key: ''
+          inventory: Workshop Inventory
+          job_slice_count: 1
+          job_tags: ''
+          job_type: run
+          limit: 'juniper'
+          name: Juniper / CA / Generate Certificate
           playbook: generate_certificate.yml
           prevent_instance_group_fallback: false
           project: Ansible Network Examples
@@ -843,7 +892,8 @@
           prevent_instance_group_fallback: false
           project: Ansible Network Examples
           credentials:
-          -   Workshop Credential
+          - Workshop Credential
+          - CA Host Credential 
           labels: []
           notification_templates_error: []
           notification_templates_started: []
@@ -908,7 +958,8 @@
           prevent_instance_group_fallback: false
           project: Ansible Network Examples
           credentials:
-          -   Workshop Credential
+          - Workshop Credential
+          - CA Host Credential          
           labels: []
           notification_templates_error: []
           notification_templates_started: []
@@ -1040,6 +1091,7 @@
           project: Ansible Network Examples
           credentials:
           - Workshop Credential
+          - CA Host Credential
           labels: []
           notification_templates_error: []
           notification_templates_started: []
@@ -1058,6 +1110,57 @@
                   required: true
                   type: text
                   variable: trustpoint
+          scm_branch: ''
+          skip_tags: ''
+          start_at_task: ''
+          survey_enabled: false
+          timeout: 0
+          use_fact_cache: false
+          verbosity: 0
+          webhook_credential: null
+          webhook_service: ''
+
+    - name: Create 'Juniper / View Certificates' job template
+      ansible.controller.job_template:
+          allow_simultaneous: false
+          ask_credential_on_launch: false
+          ask_diff_mode_on_launch: false
+          ask_execution_environment_on_launch: false
+          ask_forks_on_launch: false
+          ask_instance_groups_on_launch: false
+          ask_inventory_on_launch: false
+          ask_job_slice_count_on_launch: false
+          ask_job_type_on_launch: false
+          ask_labels_on_launch: false
+          ask_limit_on_launch: false
+          ask_scm_branch_on_launch: false
+          ask_skip_tags_on_launch: false
+          ask_tags_on_launch: false
+          ask_timeout_on_launch: false
+          ask_variables_on_launch: false
+          ask_verbosity_on_launch: false
+          become_enabled: false
+          description: ''
+          diff_mode: false
+          execution_environment: ruch-network-ee
+          force_handlers: false
+          forks: 0
+          host_config_key: ''
+          inventory: Workshop Inventory
+          job_slice_count: 1
+          job_tags: test_certificates
+          job_type: run
+          limit: ''
+          name: Juniper / View Certificates
+          playbook: certificate_conf_junos.yml
+          prevent_instance_group_fallback: false
+          project: Ansible Network Examples
+          credentials:
+          - Workshop Credential
+          labels: []
+          notification_templates_error: []
+          notification_templates_started: []
+          notification_templates_success: []
           scm_branch: ''
           skip_tags: ''
           start_at_task: ''
@@ -1184,8 +1287,6 @@
               spec:
               -   choices: ''
                   default: ''
-                  max: 24
-                  min: 1
                   new_question: true
                   question_description: ''
                   question_name: What is the name of the Trustpoint?
@@ -1194,14 +1295,24 @@
                   variable: trustpoint
               -   choices: ''
                   default: ''
-                  max: 4
+                  max: 1024
+                  min: 1
+                  new_question: true
+                  question_description: ''
+                  question_name: How long should the certificate renew for?
+                  required: false
+                  type: integer
+                  variable: renewal_days
+              -   choices: ''
+                  default: ''
+                  max: 1024
                   min: 1
                   new_question: true
                   question_description: ''
                   question_name: Minimum Days Before Certificate Renewal?
                   required: true
-                  type: text
-                  variable: days
+                  type: integer
+                  variable: minimum_days
           workflow_nodes:
           -   identifier: Check for Trustpoint
               unified_job_template:
@@ -1258,7 +1369,7 @@
 
           -   identifier: Generate Certificate
               unified_job_template:
-                  name: 'CA / Generate Certificate'
+                  name: 'Cisco / CA / Generate Certificate'
                   organization: 
                       name: Default
                   type: job_template 
@@ -1344,17 +1455,17 @@
                   variable: trustpoint
               -   choices: ''
                   default: ''
-                  max: 4
-                  min: 1
+                #   max: 100
+                #   min: 1
                   new_question: true
                   question_description: ''
                   question_name: Minimum Days Before Certificate Renewal?
                   required: true
-                  type: text
+                  type: integer
                   variable: min_days
               -   choices: ''
                   default: ''
-                  max: 4
+                  max: 100
                   min: 1
                   new_question: true
                   question_description: ''
@@ -1362,8 +1473,8 @@
                   required: true
                   type: integer
                   variable: renewal_days
-
-
+                  max: 1024
+                  min: 1
           workflow_nodes:
           -   identifier: Check for Trustpoint
               unified_job_template:
@@ -1420,7 +1531,7 @@
 
           -   identifier: Generate Certificate
               unified_job_template:
-                  name: 'CA / Generate Certificate'
+                  name: 'Juniper / CA / Generate Certificate'
                   organization: 
                       name: Default
                   type: job_template 
