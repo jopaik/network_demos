@@ -68,7 +68,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "completed_ansible_network_automation_workshop_101_demo/playbooks/network_restore.yml"
+        playbook: "network_basic_workflow/playbooks/network_restore.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Default execution environment"
