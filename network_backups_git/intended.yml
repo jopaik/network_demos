@@ -1,10 +1,6 @@
 ---
-- name: Check Diif from Intended Config in  Gitea in Branches
-  hosts:
-    - localhost
-    - cisco
-    - arista
-    - juniper
+- name: Backup Cisco Configs to Gitea in Branches
+  hosts: "{{ _group }}"
   gather_facts: False
 
   tasks:
@@ -15,15 +11,20 @@
       delegate_to: "localhost"
       run_once: true
 
-    - name: Network Backup and Resource Manager
-      ansible.builtin.include_role:
-        name: network.backup.run
-      vars:
-        ansible_connection: network_cli
-        operation: diff
-        type: full
-        data_store:
-          local: "/tmp/network-demos-repo/network_backup_files"
-      when: inventory_hostname != 'localhost'
+    - name: Diff against cisco ios configuration
+      cisco.ios.config:
+        intended_config: "{{ lookup('file', '/tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt') }}"
+        diff_against: intended
+      when: inventory_hostname in groups['cisco']
 
-    
+    - name: Diff against arista eos configuration
+      arista.eos.eos_config:
+        intended_config: "{{ lookup('file', '/tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt') }}"
+        diff_against: intended
+      when: inventory_hostname in groups['arista']
+
+    - name: Diff against juniper junos configuration
+      junipernetworks.junos.junos_config:
+        src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
+        check_commit: true
+      when: inventory_hostname in groups['juniper']
