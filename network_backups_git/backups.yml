@@ -5,7 +5,7 @@
     - cisco
     - arista
     - juniper
-  gather_facts: False
+  gather_facts: True
 
   tasks:
     - name: Retrieve a repository from a distant location and make it available to the local EE
