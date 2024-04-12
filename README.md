@@ -14,10 +14,11 @@ For the below demos insure you are always using files from /home/student/network
    * Intended config "configuration drift"
    * Restore Configs
 - [Network Compliance Dashboard](network_compliance_dashboard/README.md)
+   * [Demo Video](https://youtu.be/QQeu1Gki0sI?si=n5CvWdYrbH3sBO-P)
    * Network Facts
    * JINJA2 HTML template
 - [Network Compliance Checks Remediations](network_compliance_checks_remediations/README.md)
-   * [ Demo Video](https://youtu.be/S1k41RMfieo?feature=shared)
+   * [Demo Video](https://youtu.be/S1k41RMfieo?feature=shared)
    * Network Resource Modules
    * Workflows
    * Self Service Survey
@@ -29,6 +30,7 @@ For the below demos insure you are always using files from /home/student/network
    * Operations: Persist, Deploy, Detect, Remediate
    * BGP
 - [Network Basic Workflow ](network_basic_workflow/README.md)
+   * [Demo Video](https://www.youtube.com/watch?v=XYv9OkHwO8s)
    * Is similar to Network Workshop 101 AAP Exercises
    * Network Backups and Restore to a server
    * Network User
