@@ -8,13 +8,12 @@
   gather_facts: False
 
   tasks:
-    - name: Retrieve a repository from a distant location and make it available to the local EE
-      ansible.scm.git_retrieve:
-        origin:
-          url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
-        parent_directory: /tmp/
-      register: repository
-      when: inventory_hostname == 'localhost'
+    - name: Clone a Repo to EE
+      ansible.builtin.shell:
+        cmd: "git clone -b {{ scm_branch }} http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+        chdir: /tmp/
+      delegate_to: "localhost"
+      run_once: true
 
     - name: Network Backup and Resource Manager
       ansible.builtin.include_role:
