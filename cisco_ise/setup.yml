@@ -1,0 +1,197 @@
+---
+- name: Playbook to configure ansible controller
+  hosts: localhost
+  connection: local
+  vars:
+    user: "{{ username }}"
+
+  environment:
+    CONTROLLER_HOST: "ansible-1"
+    CONTROLLER_USERNAME: "admin"
+    CONTROLLER_PASSWORD: "{{ password }}"
+    CONTROLLER_VERIFY_SSL: false
+
+  tasks:
+    - name: Create projects
+      ansible.controller.project:
+        name: Student Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Add group
+      ansible.controller.group:
+        name: cisco
+        variables:
+          ansible_connection: network_cli
+          ansible_network_os: cisco.ios.ios
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Add group
+      ansible.controller.group:
+        name: arista
+        variables:
+          ansible_connection: network_cli
+          ansible_network_os: arista.eos.eos
+          ansible_become: "true"
+          ansible_become_method: enable
+        inventory: "Workshop Inventory"
+
+    - name: Add group
+      ansible.controller.group:
+        name: juniper
+        variables:
+          ansible_connection: netconf
+          ansible_network_os: junipernetworks.junos.junos
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Create Execution Environments
+      ansible.controller.execution_environment:
+        name: "Validated Network"
+        image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+        pull: missing
+
+    - name: Gitea Credential Type
+      ansible.controller.credential_type:
+        injectors:
+          extra_vars:
+            email: "{{ email | default ('{{ email }}') }}"
+            password: "{{ git_password | default ('{{ git_password }}') }}"
+            username: "{{ username | default ('{{ username }}') }}"
+            token: "{{ git_password | default ('{{ git_password }}') }}"
+        inputs:
+          fields:
+            - id: username
+              label: Username
+              type: string
+            - id: password
+              label: Password
+              secret: true
+              type: string
+            - id: email
+              label: Email
+              type: string
+          required:
+            - username
+            - password
+            - email
+        kind: cloud
+        name: Gitea Student
+
+    - name: Gitea Credential
+      ansible.controller.credential:
+        credential_type: Gitea Student
+        description: ""
+        inputs:
+          username: "gitea"
+          password: "gitea"
+          email: admin@example.com
+        name: Gitea Credential
+        organization: "Red Hat network organization"
+
+
+
+    # This Starts the Cisco ISE Section
+    - name: Add Host
+      ansible.controller.host:
+        name: ISE
+        inventory: "Workshop Inventory"
+        state: present
+        enabled: true
+
+    - name: Add group
+      ansible.controller.group:
+        name: ise_servers
+        hosts:
+          - ISE
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Create a job-template - Network-Cisco-ISE-Get-Groups
+      ansible.controller.job_template:
+        name: "Network-Cisco-ISE-Get-Groups"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_ise/get_groups.yaml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Cisco-ISE-Get-Users
+      ansible.controller.job_template:
+        name: "Network-Cisco-ISE-Get-Users"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_ise/get_users.yaml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Cisco-ISE-Network-Devices
+      ansible.controller.job_template:
+        name: "Network-Cisco-ISE-Network-Devices"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_ise/get_network_devices.yaml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Cisco-ISE-Endpoints
+      ansible.controller.job_template:
+        name: "Network-Cisco-ISE-Endpoints"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_ise/get_endpoints.yaml"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Workshop Workflow
+      ansible.controller.workflow_job_template:
+        name: "Network-Cisco-ISE-Workflow"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+
+    - name: Network-Cisco-ISE-Endpoints
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Cisco-ISE-Endpoints
+        workflow: "Network-Cisco-ISE-Workflow"
+        unified_job_template: Network-Cisco-ISE-Endpoints
+        organization: "Red Hat network organization"
+        state: present
+
+    - name: Network-Cisco-ISE-Network-Devices
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Cisco-ISE-Network-Devices
+        workflow: "Network-Cisco-ISE-Workflow"
+        unified_job_template: "Network-Cisco-ISE-Network-Devices"
+        organization: "Red Hat network organization"
+        state: present
+        success_nodes:
+          - Network-Cisco-ISE-Endpoints
+
+    - name: Network-Cisco-ISE-Get-Users
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Cisco-ISE-Get-Users
+        workflow: "Network-Cisco-ISE-Workflow"
+        unified_job_template: "Network-Cisco-ISE-Get-Users"
+        organization: "Red Hat network organization"
+        state: present
+        success_nodes:
+          - Network-Cisco-ISE-Network-Devices
+
+    - name: Network-Cisco-ISE-Get-Groups
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Cisco-ISE-Get-Groups 
+        workflow: "Network-Cisco-ISE-Workflow"
+        unified_job_template: "Network-Cisco-ISE-Get-Groups"
+        organization: "Red Hat network organization"
+        state: present
+        success_nodes:
+          - Network-Cisco-ISE-Get-Users
