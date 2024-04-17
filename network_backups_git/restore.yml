@@ -1,8 +1,12 @@
 ---
-- name: Backup Cisco Configs to Gitea in Branches
+- name: Restore Configs from Gitea in Branches to Cisco
   hosts: "{{ _group }}"
   gather_facts: False
-
+  vars:
+    ansible_network_cli_ssh_type: paramiko
+    ansible_connection: network_cli
+    ansible_network_os: cisco.ios.ios
+    
   tasks:
     - name: Clone a Repo to EE
       ansible.builtin.shell:
@@ -11,20 +15,64 @@
       delegate_to: "localhost"
       run_once: true
 
-    - name: push configs to devices
+    - name: enable scp
       cisco.ios.ios_config:
-        src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
-        save_when: changed
+       lines: ip scp server enable
+       save_when: changed
       when: inventory_hostname in groups['cisco']
-
-    - name: push configs to devices
-      arista.eos.eos_config:
+     
+    - name: copy file to cisco
+      ansible.netcommon.net_put:
         src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
+        dest: nvram:startup-config
+      when: inventory_hostname in groups['cisco']
+      
+- name: Restore Configs from Gitea in Branches to Arista
+  hosts: "{{ _group }}"
+  gather_facts: False
+  vars:
+    ansible_network_cli_ssh_type: paramiko
+     
+  tasks:    
+
+    - name: enable SCP
+      arista.eos.eos_config:
+        lines: 
+        - username ec2-user privilege 15 role network-admin nopassword
+        - aaa authentication login console local
+        - aaa authorization exec default local
         save_when: changed
       when: inventory_hostname in groups['arista']
+  
+    - name: copy file to arista
+      ansible.netcommon.net_put:
+        src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
+        dest: //mnt/flash/startup-config
+      when: inventory_hostname in groups['arista']
+
+- name: Restore Configs from Gitea in Branches to Juniper
+  hosts: "{{ _group }}"
+  gather_facts: False
+  vars:
+    #ansible_network_cli_ssh_type: paramiko
+    #ansible_connection: network_cli
+    #ansible_network_os: junipernetworks.junos.junos
+     
+  tasks:    
+  
+    #- name: copy file to juniper
+    #  ansible.netcommon.net_put:
+    #    src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
+    #    dest: /var/tmp/{{ inventory_hostname }}.txt
+    #  when: inventory_hostname in groups['juniper']
 
     - name: push configs to devices
       junipernetworks.junos.junos_config:
         src: /tmp/network-demos-repo/network_backup_files/{{ inventory_hostname }}.txt
         confirm_commit: true
+        update: override
       when: inventory_hostname in groups['juniper']
+
+
+
+    
