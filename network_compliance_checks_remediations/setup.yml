@@ -1,96 +1,156 @@
-- name: Playbook to configure ansible controller
-  hosts: localhost
-  connection: local
-  vars:
-    user: "{{ username }}"
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - execution_environments
+  - hosts
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
 
-  environment:
-    CONTROLLER_HOST: "ansible-1"
-    CONTROLLER_USERNAME: "admin"
-    CONTROLLER_PASSWORD: "{{ password }}"
-    CONTROLLER_VERIFY_SSL: false
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
 
-  tasks:
-    - name: Create projects
-      ansible.controller.project:
-        name: Student Project
-        organization: "Red Hat network organization"
-        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
-        scm_type: git
-        allow_override: true
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+  - name: Meraki_API
+    kind: cloud
+    inputs:
+      fields:
+        - id: MERAKI_KEY
+          type: string
+          label: Meraki Dashboard API key
+          secret: true
+      required:
+        - MERAKI_KEY
+    injectors:
+      extra_vars:
+          MERAKI_KEY: "{  { MERAKI_KEY | default ('{  { MERAKI_KEY }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+
+controller_templates:
+  - name: "Network-Check-Compliance"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "network_compliance_checks_remediations/compliance.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    job_type: check
+    state: "present"
+
+  - name: "Network-Run-Compliance"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "network_compliance_checks_remediations/compliance_run.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    state: "present"
+
+
+controller_workflows:
+  - name: Network-Compliance-Workflow
+    inventory: "Workshop Inventory"
+    organization: "Red Hat network organization"
+    state: present
+    survey_enabled: true
+    survey:
+      name: ""
+      description: ""
+      spec:
+        - question_name: Which groups/devices to run checks against?
+          type: multiselect
+          variable: _group
+          required: true
+          default: ""
+          choices:
+            - cisco
+            - arista
+            - juniper
+        - question_name: Please select the desired compliance roles?
+          type: multiselect
+          variable: tag
+          required: true
+          default: ""
+          choices:
+            - logging
+            - snmp
+            - ntp
+            - stig
+    workflow_nodes:
+      - identifier: Network-Check-Compliance
+        unified_job_template:
+          name: Network-Check-Compliance
+        organization: 
+          name: "Red Hat network organization"
+        success_nodes: "Change Approval"
         state: present
-        scm_update_on_launch: yes
 
-    - name: Add group
-      ansible.controller.group:
-        name: cisco
-        variables:
-          ansible_connection: network_cli
-          ansible_network_os: cisco.ios.ios
-        inventory: "Workshop Inventory"
+      - identifier: "Change Approval"
+        approval_node:
+          name: "Change Approval"
+          timeout: 0
+        success_nodes:
+          - Network-Run-Compliance
         state: present
 
-    - name: Add group
-      ansible.controller.group:
-        name: arista
-        variables:
-          ansible_connection: network_cli
-          ansible_network_os: arista.eos.eos
-          ansible_become: "true"
-          ansible_become_method: enable
-        inventory: "Workshop Inventory"
-
-    - name: Add group
-      ansible.controller.group:
-        name: juniper
-        variables:
-          ansible_connection: netconf
-          ansible_network_os: junipernetworks.junos.junos
-        inventory: "Workshop Inventory"
+      - identifier: Network-Run-Compliance
+        unified_job_template:
+          name: Network-Run-Compliance
+        organization:
+          name: "Red Hat network organization"
         state: present
+      - identifier: "Change Approval"
 
-    - name: Create Execution Environments
-      ansible.controller.execution_environment:
-        name: "Validated Network"
-        image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
-        pull: missing
-
-    - name: Gitea Credential Type
-      ansible.controller.credential_type:
-        injectors:
-          extra_vars:
-            email: "{{ email | default ('{{ email }}') }}"
-            password: "{{ git_password | default ('{{ git_password }}') }}"
-            username: "{{ username | default ('{{ username }}') }}"
-            token: "{{ git_password | default ('{{ git_password }}') }}"
-        inputs:
-          fields:
-            - id: username
-              label: Username
-              type: string
-            - id: password
-              label: Password
-              secret: true
-              type: string
-            - id: email
-              label: Email
-              type: string
-          required:
-            - username
-            - password
-            - email
-        kind: cloud
-        name: Gitea Student
-
-    - name: Gitea Credential
-      ansible.controller.credential:
-        credential_type: Gitea Student
-        description: ""
-        inputs:
-          username: "gitea"
-          password: "gitea"
-          email: admin@example.com
-        name: Gitea Credential
-        organization: "Red Hat network organization"
-
-
+...
