@@ -127,6 +127,13 @@ controller_projects:
     wait: true
     scm_url: https://github.com/taruch/symmetrical-octo-umbrella.git
 
+  - name: Ansible Network Examples
+    organization: "Red Hat network organization"
+    scm_url: "https://github.com/taruch/ansible-network-examples.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
 
 controller_templates:
   - name: Cisco / CA / Generate Certificate
