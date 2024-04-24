@@ -26,6 +26,7 @@ For the below demos insure you are always using files from /home/student/network
    * Handlers
    * Cisco STIG
 - [Scoped Configuration Management](scoped_configuration_management/README.md)
+   * [Demo Video](https://youtu.be/1z7NuObWhPE?si=vqB1QCBrMmY2cpor)
    * Validated Content: `network.base` 
    * Operations: Persist, Deploy, Detect, Remediate
    * BGP
