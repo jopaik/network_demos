@@ -449,7 +449,7 @@
 - name: stigrule_215838_ntp_server_1
   ignore_errors: "{{ ignore_all_errors }}"
   notify: "save configuration"
-  ios_ntp_global:
+  cisco.ios.ios_ntp_global:
     server: "{{ iosxeSTIG_stigrule_215838_ntp_server_1_Server }}"
   when: iosxeSTIG_stigrule_215838_Manage
 
@@ -458,7 +458,7 @@
 - name: stigrule_215838_ntp_server_2
   ignore_errors: "{{ ignore_all_errors }}"
   notify: "save configuration"
-  ios_ntp_global:
+  cisco.ios.ios_ntp_global:
     server: "{{ iosxeSTIG_stigrule_215838_ntp_server_2_Server }}"
   when: iosxeSTIG_stigrule_215838_Manage
 
