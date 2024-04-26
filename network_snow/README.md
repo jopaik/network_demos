@@ -6,15 +6,16 @@
 1. Connect to SNOW instuqt lab and launch a new instance 
 https://play.instruqt.com/embed/redhat/tracks/getting-started-servicenow-automation?token=em_5ktpLJWtzpbqcDyM
 2. Collect the SNOW user/pass for a session
-3. Launch the "" Workflow Template and supply the SNOW User/Pass when prompted.
-4. Review Workflow Job and note the job-ID to be used for appoval.
+3. Launch the `Network ServiceNow Workflow Template` and supply the SNOW User/Pass when prompted.
+4. Review Workflow Job and note the job-ID to be used for appoval. Also note the servicenow incident-ID in the output
 5. Access SNOW with user/pass and verify incident-ID
-6. Launch the ""fix job-template and provide the Workflow Job-ID and Banner Entry
+6. Launch the `Network-Banner-Fix job-template` and provide the `Network ServiceNow Workflow Template` Job-ID and Banner Entry
 7. Verify completed Job-template
-8. Verify the completed "" Workflow template
+8. Verify the completed  Workflow template
 9. Verify the closed incident in the Workflow
-10. Verify SNOW and search for the closed incident "ticket"
-11. Verify the login banner on rtr1
+10. Verify SNOW and search for the closed incident "ticket" using the inicident-id
+11. Verify the login banner on rtr1 with ssh
+
 ## CMDB and Dynamic Inventory Source with SNOW
 1. launch the Network-CMDB-Update job template
 2. update the  the snow inventory source and sync
