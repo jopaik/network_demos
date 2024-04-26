@@ -105,7 +105,15 @@ rtr3                       : ok=8    changed=1    unreachable=0    failed=0    s
 rtr4                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
 ```
 ### Step 2 - Review Branches
-
+Note, you can use the gitea gui/web as an alternative to the following git cli instructions.
+Simply open a tab and paste in your lab url and modify it to append `/gitea`
+```
+https://student1.hjjzl.example.opentlc.com/gitea
+user= gitea
+password = gitea
+repo= https://student1.hjjzl.example.opentlc.com/gitea/gitea/network-demos-repo
+```  
+#### Git CLI
 1. In VSCode terminal `network_backups_git/`
 ~~~
 $ git branch -r
