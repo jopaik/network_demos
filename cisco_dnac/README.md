@@ -70,7 +70,7 @@ sw1_2024-01-2922:34:55.cfg  sw2_2024-01-2922:35:00.cfg  sw3_2024-01-2922:35:04.c
 Truncated
 
 ## Step 4 - Dnac-Compliance job-template 
-Launch the Dnac-Compliance job-template to check if the current Device Software Versions are in compliance.
+Launch the Dnac-Config-Compliance job-template to check if the current Device Software Versions are in compliance.  In the survey, select sw1.
 
 ### Note, if compliance fails
 Please be aware that the version of the dnac switch devices may change over time. If needed you can edit the compliance_assert.yml.
