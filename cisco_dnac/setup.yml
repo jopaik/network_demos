@@ -84,7 +84,7 @@ controller_inventory_sources:
     inventory: "DNAC Inventory"
     update_on_launch: True
     source: scm
-    source_path: dynamic_inventory/dna_center.yml
+    source_path: inventory/dynamic_inventory/dna_center.yml
     source_project: "DNAC Project"
     execution_environment: "Validated Network"
 
