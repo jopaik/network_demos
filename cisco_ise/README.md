@@ -13,11 +13,12 @@
 ## Cisco ISE
 
 [Table of Contents](#table-of-contents)
-- [Step 1 - SNOW user/pass](#step-1-snow-user/pass)
-- [Step 2 - Collect user/pass](#step-2-collect-user/pass)
-- [Step 3 - Launch the Workflow Template ](#step-3-launch-the-workflow-template)
-- [Step 4 - Note the Workflow job-ID](#step-4-note-the-workflow-job-ID)
-- [Step 5 - SNOW incident](#step-5-snow-incident)
+- [Step 1 - Launch the Workflow Template ](#step-1-launch-the-workflow-template)
+- [Step 2 - Note the Workflow job-ID](#step-2-note-the-workflow-job-ID)
+- Step 3 - Review the Network-Cisco-Ise-Groups job-template output (#step-3-Review the Network-Cisco-Ise-Groups job-template output)
+- Step 4 - Review the Network-Cisco-Ise-Network-Devices job-template output
+- Step 5 - Review the Network-Cisco-Ise-Endpoints job-template output
+- Key Takeaways
 
 ## Objective
 To integrate Ansible workflows with the ISE to glean endpoint and device configuration state info.
@@ -346,7 +347,7 @@ Endpoints:
 * APP can configure ISE as an alternative to the GUI
 * AAP has access to device and endpoint configuration, policy and posture state in ISE
 * AAP can pass ISE configuration data to ITSM CMDB
-* ISE devices can be used a a dynamic inventory source
+* ISE devices can be used as a dynamic inventory source
 * AAP is an alternative to pxgrid for provisioning non-Cisco devices 
 
 ## Return to Demo Menu
