@@ -80,14 +80,8 @@ controller_credential_types:
         - username
         - password
 
-controller_credentials:
-  - name: Insights Inventory
-    credential_type: Insights Collection
-    organization: Default
-    inputs:
-      insights_user: REPLACEME
-      insights_password: REPLACEME
 
+controller_credentials:
   - name: ServiceNow ITSM
     credential_type: ServiceNow ITSM
     description: ''
@@ -95,20 +89,22 @@ controller_credentials:
       host: https://ven05430.service-now.com/
       password: ''
       username: admin
-    organization: Default
+    organization: Red Hat network organization
 
   - name: CA Host Credential
     credential_type: CA Credential Type
     inputs:
       username: ca-admin
       password: CHANGE_ME
-    organization: Default
+    organization: Red Hat network organization
+
 
 controller_execution_environments:
   - name: ruch-network-ee
     description: 'Network Examples EE'
     image: quay.io/truch/network-examples:latest
     pull: missing
+
 
 controller_hosts:
   - name: ca-host
@@ -122,15 +118,23 @@ controller_hosts:
 
 controller_projects:
   - name: ServiceNow Examples
-    organization: Default
+    organization: Red Hat network organization
     scm_type: git
     wait: true
     scm_url: https://github.com/taruch/symmetrical-octo-umbrella.git
 
+  - name: Ansible Network Examples
+    organization: "Red Hat network organization"
+    scm_url: "https://github.com/taruch/ansible-network-examples.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
 
 controller_templates:
   - name: Cisco / CA / Generate Certificate
     execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -146,6 +150,7 @@ controller_templates:
 
   - name: Juniper / CA / Generate Certificate
     execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -161,6 +166,7 @@ controller_templates:
  
   - name: Cisco / Check Certificate Date
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -176,6 +182,7 @@ controller_templates:
 
   - name: Juniper / Check Certificate Date
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -193,6 +200,7 @@ controller_templates:
     description: Check for Trustpoint on Host with Certificate
     diff_mode: false
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -209,6 +217,7 @@ controller_templates:
   - name: Juniper / Check for Certificate
     description: Check for Trustpoint on Host with Certificate
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -224,6 +233,7 @@ controller_templates:
 
   - name: Cisco / Host Base Configuration
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -239,6 +249,7 @@ controller_templates:
 
   - name: Juniper / Host Base Configuration
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -254,6 +265,7 @@ controller_templates:
 
   - name: Cisco / Trustpoint Create
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -284,6 +296,7 @@ controller_templates:
 
   - name: Juniper / CA Profile Create
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -300,6 +313,7 @@ controller_templates:
 
   - name: Cisco / Trustpoint Create w/Survey
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -329,6 +343,7 @@ controller_templates:
 
   - name: Cisco / Trustpoint Delete
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -358,6 +373,7 @@ controller_templates:
 
   - name: Juniper / CA Profile Delete
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -387,6 +403,7 @@ controller_templates:
 
   - name: Cisco / Trustpoint Authenticate CA
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -417,6 +434,7 @@ controller_templates:
 
   - name: Juniper / Import CA Certificate to CA Profile
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -447,6 +465,7 @@ controller_templates:
 
   - name: Cisco / Trustpoint Import Host Certificate
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -477,6 +496,7 @@ controller_templates:
 
   - name: 'Juniper / Import Host Certificate to CA Profile'
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -507,6 +527,7 @@ controller_templates:
 
   - name: Juniper / View Certificates
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     force_handlers: false
     forks: 0
     host_config_key: ''
@@ -523,6 +544,7 @@ controller_templates:
 
   - name: ServiceNow / Change Create
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -538,6 +560,7 @@ controller_templates:
 
   - name: ServiceNow / Change Update
     execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
     inventory: Workshop Inventory
@@ -556,7 +579,7 @@ controller_workflows:
   - name: 'Cisco / Certificate Management'
     description: ''
     inventory: Workshop Inventory
-    organization: Default
+    organization: Red Hat network organization
     survey:
       description: ''
       name: ''
@@ -696,7 +719,7 @@ controller_workflows:
   - name: 'Juniper / Certificate Management'
     description: ''
     inventory: Workshop Inventory
-    organization: Default
+    organization: Red Hat network organization
     survey:
       description: ''
       name: ''
