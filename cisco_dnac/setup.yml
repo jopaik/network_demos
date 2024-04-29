@@ -1,11 +1,11 @@
 ---
 controller_components:
   - projects
+  - execution_environments
   - inventories
   - inventory_sources
   - credential_types
   - credentials
-  - execution_environments
   - hosts
   - groups
   - inventory_sources
