@@ -37,7 +37,7 @@
 - name: Get intended state from NetBox based on device ID from play 1
   uri:
       url: "https://netbox-demo.netboxlabs.com/api/dcim/devices/{{ device.json.results.0['id'] }}/render-config/"
-      method: POST
+      method: GET
       return_content: yes
       headers:
           accept: "application/json"

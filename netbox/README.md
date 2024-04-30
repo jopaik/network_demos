@@ -34,19 +34,26 @@ The netbox.netbox collection allows Ansible to manage Netbox easily from the API
 Connect to Netbox Demo server to create and copy an API token
 https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 
+Go to Admin -> API Tokens on the left hand side and create a new token.  If you do not hit the create button, you didn't finish and the inventory source sync won't work. 
+
+Copy this somewhere - you will use it multiple times in job template surveys.
+
 ### Step 2 - Network-Netbox-Setup Workflow Template
 Launch the Network-Netbox-Setup Workflow Template to configure a device and settings on Netbox
+- Look at the Device Types task where device types are being created on the Netbox 
 
 ### Step 3 - Review the Netbox GUI 
 Review the Netbox GUI (devices, templates etc)
+- Look at the c8000v device type created by the Network-Netbox-Setup job template in the Netbox GUI
 
 ### Step 4 - Add the API Token
 Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
+Update the source-nbox "NETBOX_TOKEN" source variable and save.
 
 ### Step 5 - Review the Netbox Inventory on AAP
 
 ### Step 6 - Launch the Network-Netbox-Facts job-template 
-Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
+Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1.  Click on the "Gather all facts" task to look at the JSON and see what was gathered.
 
 ### Step 7 - Launch the Network-Netbox-Compare-Configs job-template 
 Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
