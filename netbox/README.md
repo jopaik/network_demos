@@ -34,6 +34,8 @@ The netbox.netbox collection allows Ansible to manage Netbox easily from the API
 Connect to Netbox Demo server to create and copy an API token
 https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 
+* Don't foget to save the api token to a notepad. You will need it throughout this demo.
+
 ### Step 2 - Network-Netbox-Setup Job Template
 Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox.
 
