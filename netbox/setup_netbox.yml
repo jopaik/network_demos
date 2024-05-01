@@ -329,4 +329,4 @@
         state: present
 
     - debug:
-        msg: "{{ hostvars['rtr1']['ansible_host'] }}"
+        msg: "rtr1 IP address: {{ hostvars['rtr1']['ansible_host'] }}"
