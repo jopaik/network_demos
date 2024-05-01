@@ -47,7 +47,7 @@ Add the API Token to Netbox inventory source to sync with Netbox as a dynamic in
 You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP. rtr1 is also in group sites_rtp.
 
 ### Step 6 - Launch the Network-Netbox-Facts job-template 
-Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
+Launch the Network-Netbox-Facts job-template to demonstrate using the Netbox Inventory for rtr1
 
 ### Step 7 - Launch the Network-Netbox-Compare-Configs job-template 
 Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
