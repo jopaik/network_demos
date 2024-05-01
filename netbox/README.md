@@ -39,6 +39,31 @@ https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 ### Step 2 - Network-Netbox-Setup Job Template
 Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox.
 
+#### jinja2 template:
+One of the configs we are pushing into Netbox is a jinja2 template. Optionally you can create jinja2 templates in Netbox directly. In this demo we are using the netbox collection to make configure Netbox from Ansible. In either case, jinja2 templates would have many variables that map to Netbox device configurations in the database. For this demo, we are simply looking for the Netbox device-name to define the hostname for rtr1. These templates are used in Netbox to render configs on devices. When using Ansible to deploy/render device changes, it's important to first check for configuration drift between the running device and the Netbox config/template.
+
+jinja2 snipit:
+~~~
+ version 17.6
+            service timestamps debug datetime msec
+            service timestamps log datetime msec
+            service password-encryption
+            ! Call-home is enabled by Smart-Licensing.
+            service call-home
+            platform qfp utilization monitor load 80
+            platform punt-keepalive disable-kernel-core
+            platform console virtual
+            !
+            hostname {{ device.name | default ('{{ device.name }}') }}
+            !         
+            boot-start-marker
+            boot-end-marker
+            !
+            !
+            vrf definition GS
+             rd 100:100
+~~~
+
 ### Step 3 - Review the Netbox GUI 
 Review the Netbox GUI (devices, templates etc)
 
