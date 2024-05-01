@@ -40,7 +40,8 @@ https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox.
 
 #### jinja2 template:
-One of the configs we are pushing into Netbox is a jinja2 template. Optionally you can create jinja2 templates in Netbox directly. In this demo we are using the netbox collection to make configure Netbox from Ansible. In either case, jinja2 templates would have many variables that map to Netbox device configurations in the database. For this demo, we are simply looking for the Netbox device-name to define the hostname for rtr1. These templates are used in Netbox to render configs on devices. When using Ansible to deploy/render device changes, it's important to first check for configuration drift between the running device and the Netbox config/template.
+One of the configs we are pushing into Netbox is a jinja2 template. Optionally you can create jinja2 templates in Netbox directly. In this demo we are using the netbox collection to configure Netbox from Ansible. 
+In either case, jinja2 templates will have many variables that map to the Netbox device configurations in the database. For this demo, we are simply looking for the Netbox device-name to define the hostname for rtr1. These templates are used in Netbox to render configs on devices. When using Ansible to deploy/render device changes, it's important to first check for configuration drift between the running device and the Netbox config/template.
 
 jinja2 snipit:
 ~~~
@@ -80,6 +81,11 @@ Launch the Network-Netbox-Facts job-template to demonstrate using the Netbox Inv
 Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
 
 * Note, that every router from RHDP will have different IP addresses, certs etc. These nuances will show as Diffs.
+
+Access the jinja2 template from Netbox
+ ![netbox](../images/netboxdevice.png)
+
+
 
 ### Step 8 - Verify Config drift checks 
 Verify Config drift checks by changing the config on rtr1 and relaunching the Network-Netbox-Compare-Configs job-template
