@@ -86,7 +86,6 @@ Verify Config drift checks by changing the config on rtr1 and relaunching the Ne
 
 * For example, add a new loopback 100 or something simular to simulate an out-of-band (OOB) change. 
 
-
 # Key Takeaways
 * Configure Netbox with AAP as an alternative to the GUI
 * Use Netbox as a dynamic inventory source for Ansible
