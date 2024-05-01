@@ -44,6 +44,7 @@ Review the Netbox GUI (devices, templates etc)
 Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
 
 ### Step 5 - Review the Netbox Inventory on AAP
+You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP.
 
 ### Step 6 - Launch the Network-Netbox-Facts job-template 
 Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
