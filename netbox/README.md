@@ -51,12 +51,12 @@ Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory 
 ### Step 7 - Launch the Network-Netbox-Compare-Configs job-template 
 Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
 
-* Note, that every router from RHDP will have different IP addresses, certs etc. These nuances will show as Diffs 
+* Note, that every router from RHDP will have different IP addresses, certs etc. These nuances will show as Diffs.
 
 ### Step 8 - Verify Config drift checks 
 Verify Config drift checks by changing the config on rtr1 and relaunching the Network-Netbox-Compare-Configs job-template
 
-* For example, add a new loopback 100 or something simular to simulate an out of band (OOB)change. 
+* For example, add a new loopback 100 or something simular to simulate an out-of-band (OOB) change. 
 
 
 # Key Takeaways
