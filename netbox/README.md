@@ -35,16 +35,16 @@ Connect to Netbox Demo server to create and copy an API token
 https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 
 ### Step 2 - Network-Netbox-Setup Job Template
-Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox
+Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox.
 
 ### Step 3 - Review the Netbox GUI 
 Review the Netbox GUI (devices, templates etc)
 
 ### Step 4 - Add the API Token
-Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
+Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory.
 
 ### Step 5 - Review the Netbox Inventory on AAP
-You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP.
+You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP. rtr1 is also in group sites_rtp.
 
 ### Step 6 - Launch the Network-Netbox-Facts job-template 
 Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
