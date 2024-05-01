@@ -16,7 +16,7 @@ https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Netbox Demo Server](#step-1-netbox-demo-server)
-- [Step 2 - Network-Netbox-Setup Workflow Template](#step-2-network-netbox-setup-workflow -template)
+- [Step 2 - Network-Netbox-Setup Job Template](#step-2-network-netbox-setup-job-template)
 - [Step 3 - Review the Netbox GUI](#step-3-review-the-netbox-gui)
 - [Step 4 - Add the API Token](#step-4-add-the-api-token)
 - [Step 5 - Review the Netbox Inventory on AAP](#step-5-review-the-netbox-inventory-on-aap)
@@ -34,8 +34,8 @@ The netbox.netbox collection allows Ansible to manage Netbox easily from the API
 Connect to Netbox Demo server to create and copy an API token
 https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 
-### Step 2 - Network-Netbox-Setup Workflow Template
-Launch the Network-Netbox-Setup Workflow Template to configure a device and settings on Netbox
+### Step 2 - Network-Netbox-Setup Job Template
+Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox
 
 ### Step 3 - Review the Netbox GUI 
 Review the Netbox GUI (devices, templates etc)
