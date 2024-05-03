@@ -1245,5 +1245,18 @@
          org_id: ''
         ask_variables_on_launch: true
 
+    # This section starts the network_eda demo
+    - name: Create a job-template - Network-EDA
+      ansible.controller.job_template:
+          name: "Network-EDA"
+          organization: "Red Hat network organization"
+          inventory: "Workshop Inventory"
+          project: "Student Project"
+          playbook: "network_eda/prepare_network.yml"
+          execution_environment: "Validated Network"
+          credentials:
+          - "Workshop Credential"
+          - "Controller Credential"
+
 
    

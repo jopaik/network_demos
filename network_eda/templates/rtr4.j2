@@ -1,0 +1,11 @@
+!
+interface Tunnel1
+   mtu 1394
+   ip address 10.102.102.4/24
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+   tunnel mode gre
+   tunnel source interface Ethernet1
+   tunnel destination {{ hostvars['rtr3'].ansible_host }}
+   tunnel path-mtu-discovery
+   tunnel ttl 10

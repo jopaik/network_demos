@@ -1,0 +1,28 @@
+interface Loopback0
+   ip address 192.168.2.2/32
+!
+interface Tunnel0
+   mtu 1394
+   ip address 10.101.101.2/24
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+   tunnel mode gre
+   tunnel source interface Ethernet1
+   tunnel destination 172.18.16.36
+   tunnel path-mtu-discovery
+   tunnel ttl 10
+!
+interface Tunnel1
+   mtu 1394
+   ip address 10.200.200.2/24
+   ip ospf network point-to-point
+   ip ospf area 0.0.0.0
+   tunnel source interface Ethernet1
+   tunnel destination 18.225.149.108
+   tunnel path-mtu-discovery
+   tunnel ttl 10
+!
+no router bgp 65001 
+!
+router ospf 1
+   no redistribute bgp

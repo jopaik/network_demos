@@ -1,0 +1,19 @@
+no router bgp 65000
+interface Tunnel0
+ ip address 10.100.100.1 255.255.255.0
+ ip mtu 1476
+ ip tcp adjust-mss 1360
+ ip ospf 1 area 0
+ tunnel source GigabitEthernet1
+ tunnel destination 172.16.192.24
+!         
+interface Tunnel1
+ ip address 10.200.200.1 255.255.255.0
+ tunnel source GigabitEthernet1
+ ip mtu 1476
+ ip tcp adjust-mss 1360
+ ip ospf 1 area 0
+!
+!
+router ospf 1
+ no redistribute bgp 65000
