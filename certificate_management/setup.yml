@@ -11,22 +11,6 @@ controller_components:
 
 
 controller_credential_types:
-  - name: Insights Collection
-    kind: cloud
-    inputs:
-      fields:
-        - id: insights_user
-          type: string
-          label: Insights User
-        - id: insights_password
-          type: string
-          label: Insights Password
-          secret: true
-    injectors:
-      env:
-        INSIGHTS_USER: "{% raw %}{  { insights_user  }}{% endraw %}"
-        INSIGHTS_PASSWORD: "{% raw %}{  { insights_password  }}{% endraw %}"
-
   - name: ServiceNow ITSM
     kind: cloud
     inputs:
@@ -88,7 +72,7 @@ controller_credentials:
     inputs:
       host: https://ven05430.service-now.com/
       password: ''
-      username: admin
+      username: CHANGE_ME
     organization: Red Hat network organization
 
   - name: CA Host Credential
