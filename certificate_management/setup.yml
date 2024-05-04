@@ -116,6 +116,22 @@ controller_projects:
     scm_update_on_launch: yes
 
 controller_templates:
+  - name: CA Server Setup
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: 'ca-host'
+    playbook: certificate_management/ca_server_setup.yml
+    prevent_instance_group_fallback: false
+    project: Ansible Network Examples
+    credentials:
+    - CA Host Credential 
+
   - name: Cisco / CA / Generate Certificate
     execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
