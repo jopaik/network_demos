@@ -227,7 +227,7 @@
         ansible_password: "{{ CA_PASSWORD }}"
       community.crypto.openssl_privatekey:
         path: "{{ ca_files }}/demoCA/private/cakey.pem"
-        passphrase: "{{ ca_passphrase }}"
+        passphrase: "{{ CA_PASSPHRASE }}"
         cipher: auto
         size: 2048
 
@@ -237,7 +237,7 @@
         ansible_password: "{{ CA_PASSWORD }}"
       community.crypto.openssl_csr_pipe:
         privatekey_path: "{{ ca_files }}/demoCA/private/cakey.pem"
-        privatekey_passphrase: "{{ ca_passphrase }}"
+        privatekey_passphrase: "{{ CA_PASSPHRASE }}"
         # common_name: Ansible CA
         subject:
           CN: ca-server.ansible.local
@@ -263,7 +263,7 @@
         path: "{{ ca_files }}/demoCA/cacert.pem"
         csr_content: "{{ ca_csr.csr }}"
         privatekey_path: "{{ ca_files }}/demoCA/private/cakey.pem"
-        privatekey_passphrase: "{{ ca_passphrase }}"
+        privatekey_passphrase: "{{ CA_PASSPHRASE }}"
         provider: selfsigned
 
 ...

@@ -8,7 +8,6 @@
 
   vars:
     # client: "{{ data.client | default('rtr1')}}"
-    ca_passphrase: 'PASSW0RD'
     ansible_user: ca-admin
     ansible_password: "{{ CA_PASSWORD }}"
     trustpoint: CACERT
@@ -30,7 +29,7 @@
           -out /tmp/{{ inventory_hostname }}_{{ trustpoint }}.cer
           -days {{ renewal_days }} -notext
         responses:
-          'Enter pass phrase': "{{ ca_passphrase }}"
+          'Enter pass phrase': "{{ CA_PASSPHRASE }}"
           'certificate?': 'y'
           'commit?': 'y'
       delegate_to: ca-host
