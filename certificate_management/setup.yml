@@ -96,7 +96,7 @@ controller_credentials:
     inputs:
       username: ca-admin
       password: CHANGE_ME
-    organization: Red Hat network organization
+    organization: "Red Hat network organization"
 
 
 controller_execution_environments:
@@ -118,7 +118,7 @@ controller_hosts:
 
 controller_projects:
   - name: ServiceNow Examples
-    organization: Red Hat network organization
+    organization: "Red Hat network organization"
     scm_type: git
     wait: true
     scm_url: https://github.com/taruch/symmetrical-octo-umbrella.git
@@ -580,6 +580,7 @@ controller_workflows:
     description: ''
     inventory: Workshop Inventory
     organization: Red Hat network organization
+    survey_enabled: true
     survey:
       description: ''
       name: ''
@@ -610,7 +611,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / Check for Certificate'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template
         related:
           always_nodes: []
@@ -623,7 +624,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / Trustpoint Create'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -635,7 +636,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / Check Certificate Date'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -647,7 +648,7 @@ controller_workflows:
         unified_job_template:
           name: 'ServiceNow / Change Create'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template
         related:
           always_nodes: []
@@ -659,7 +660,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / CA / Generate Certificate'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -671,7 +672,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / Trustpoint Authenticate CA'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -683,7 +684,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / Trustpoint Import Host Certificate'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -695,7 +696,7 @@ controller_workflows:
         unified_job_template:
           name: 'Cisco / Check Certificate Date'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -707,19 +708,19 @@ controller_workflows:
         unified_job_template:
           name: 'ServiceNow / Change Update'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
           credentials: []
           failure_nodes: []
           success_nodes: []
-    survey_enabled: true
 
   - name: 'Juniper / Certificate Management'
     description: ''
     inventory: Workshop Inventory
     organization: Red Hat network organization
+    survey_enabled: true
     survey:
       description: ''
       name: ''
@@ -740,6 +741,8 @@ controller_workflows:
           required: true
           type: integer
           variable: min_days
+          max: 1024
+          min: 1
         - choices: ''
           default: ''
           new_question: true
@@ -755,7 +758,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / Check for Certificate'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template
         related:
           always_nodes: []
@@ -768,7 +771,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / CA Profile Create'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -780,7 +783,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / Check Certificate Date'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -792,7 +795,7 @@ controller_workflows:
         unified_job_template:
           name: 'ServiceNow / Change Create'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template
         related:
           always_nodes: []
@@ -804,7 +807,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / CA / Generate Certificate'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -816,7 +819,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / Import CA Certificate to CA Profile'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -828,7 +831,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / Import Host Certificate to CA Profile'
           organization: 
-              name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -840,7 +843,7 @@ controller_workflows:
         unified_job_template:
           name: 'Juniper / Check Certificate Date'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
@@ -852,13 +855,12 @@ controller_workflows:
         unified_job_template:
           name: 'ServiceNow / Change Update'
           organization: 
-            name: Default
+            name: "Red Hat network organization"
           type: job_template 
         related:
           always_nodes: []
           credentials: []
           failure_nodes: []
           success_nodes: []
-    survey_enabled: true
 
 ...
