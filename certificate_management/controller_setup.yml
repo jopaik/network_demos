@@ -88,17 +88,6 @@
               username: admin
           organization: Default
 
-    - name: Create Gitlab Registry Credential
-      ansible.controller.credential:
-          name: Gitlab Ansible_EE Token
-          credential_type: Container Registry
-          description: ''
-          inputs:
-              host: registry.gitlab.com
-              username: truch1
-              verify_ssl: true
-          organization: Default
-
     - name: Create CA Host Credential
       ansible.controller.credential:
           name: CA Host Credential
@@ -107,6 +96,7 @@
           inputs:
               username: ca-admin
               password: CHANGE_ME
+              passphrase: CHANGE_ME
           organization: Default
 
     - name: Import Execution Environments
