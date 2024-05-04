@@ -121,7 +121,7 @@ controller_templates:
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
-    inventory: Workshop Inventory
+    inventory: Demo Inventory
     job_slice_count: 1
     job_tags: ''
     job_type: run
@@ -146,7 +146,7 @@ controller_templates:
     prevent_instance_group_fallback: false
     project: Ansible Network Examples
     credentials:
-    - CA Host Credential 
+    - Demo Credential 
 
   - name: Juniper / CA / Generate Certificate
     execution_environment: 'ruch-network-ee'
