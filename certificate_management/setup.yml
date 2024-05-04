@@ -573,7 +573,7 @@ controller_workflows:
           required: true
           type: text
           variable: trustpoint
-        - question_name: How long should the certificate renew for?
+        - question_name: How many days should the certificate be signed for?
           default: ''
           max: 1024
           min: 1
@@ -721,20 +721,20 @@ controller_workflows:
           default: ''
           new_question: true
           question_description: ''
-          question_name: Minimum Days Before Certificate Renewal?
+          question_name: How many days should the certificate be signed for?
           required: true
           type: integer
-          variable: min_days
+          variable: renewal_days
           max: 1024
           min: 1
         - choices: ''
           default: ''
           new_question: true
           question_description: ''
-          question_name: How many days should the certificate be signed for??
+          question_name: Minimum Days Before Certificate Renewal?
           required: true
           type: integer
-          variable: renewal_days
+          variable: min_days
           max: 1024
           min: 1
     workflow_nodes:
