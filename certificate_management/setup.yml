@@ -29,11 +29,8 @@ controller_credential_types:
         - instance
         - username
         - password
+        - passphrase
     injectors:
-      env:
-        SN_HOST: "{  { host }}"
-        SN_PASSWORD: "{  { password }}"
-        SN_USERNAME: "{  { username }}"
       extra_vars:
         SN_HOST: "{  { host }}"
         SN_PASSWORD: "{  { password }}"
@@ -45,8 +42,9 @@ controller_credential_types:
     injectors:
       extra_vars:
         CA_HOST: "{  { host }}"
-        CA_PASSWORD: "{  { password  }}"
-        CA_USERNAME: "{  { username  }}"
+        CA_PASSWORD: "{  { password }}"
+        CA_USERNAME: "{  { username }}"
+        CA_PASSPHRASE: "{  { passphrase }}"
     inputs:
       fields:
         - id: host
@@ -59,10 +57,15 @@ controller_credential_types:
           label: Password
           secret: true
           type: string
+        - id: passphrase
+          label: CA Secret
+          secret: true
+          type: string
       required:
         - host
         - username
         - password
+        - passphrase
 
 
 controller_credentials:
@@ -80,6 +83,7 @@ controller_credentials:
     inputs:
       username: ca-admin
       password: CHANGE_ME
+      passphrase: CHANGE_ME
     organization: "Red Hat network organization"
 
 
@@ -128,7 +132,7 @@ controller_templates:
     limit: 'ca-host'
     playbook: certificate_management/ca_server_setup.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - CA Host Credential
     - Demo Credential
