@@ -150,7 +150,7 @@ controller_templates:
     limit: 'cisco'
     playbook: certificate_management/generate_certificate.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - CA Host Credential 
 
@@ -166,7 +166,7 @@ controller_templates:
     limit: 'juniper'
     playbook: certificate_management/generate_certificate.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - CA Host Credential 
  
@@ -182,7 +182,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/check_certificates_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     -  Workshop Credential
 
@@ -198,7 +198,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/check_certificate_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     -  Workshop Credential
 
@@ -216,7 +216,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/check_certificates_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
 
@@ -233,7 +233,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/check_certificate_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
 
@@ -249,7 +249,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
 
@@ -265,7 +265,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/check_certificate_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
 
@@ -281,7 +281,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     - CA Host Credential
@@ -312,7 +312,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     - CA Host Credential
@@ -329,7 +329,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     survey:
@@ -359,7 +359,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     survey:
@@ -389,7 +389,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/check_certificate_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     survey:
@@ -419,7 +419,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     - CA Host Credential 
@@ -450,7 +450,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     - CA Host Credential          
@@ -481,7 +481,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_cisco.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     - CA Host Credential
@@ -512,7 +512,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
     - CA Host Credential
@@ -544,7 +544,7 @@ controller_templates:
     limit: ''
     playbook: certificate_management/certificate_conf_junos.yml
     prevent_instance_group_fallback: false
-    project: Ansible Network Examples
+    project: Network Demos
     credentials:
     - Workshop Credential
 
