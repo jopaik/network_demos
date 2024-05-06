@@ -18,3 +18,11 @@ ip sla schedule 1 life forever start-time now
 
 track 1 ip sla 1 reachability
 ip route 192.168.4.4 255.255.255.255 10.100.100.2 track 1
+
+telemetry ietf subscription 1
+ encoding encode-kvgpb
+ filter xpath /ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry
+ source-address {{ hostvars[inventory_hostname].ansible_host }}
+ stream yang-push
+ update-policy periodic 6000
+ receiver ip address 3.12.230.106 57000 protocol grpc-tcp
