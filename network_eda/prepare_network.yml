@@ -1,0 +1,25 @@
+---
+- name: prepare network topology for network EDA
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+    - name: prepare cisco
+      cisco.ios.ios_config:
+        src: templates/rtr1.j2
+      when: inventory_hostname == 'rtr1'
+
+    - name: prepare arista
+      arista.eos.eos:
+        src: templates/rtr2.j2
+      when: inventory_hostname == 'rtr2'
+
+    - name: prepare arista
+      arista.eos.eos:
+        src: templates/rtr4.j2
+      when: inventory_hostname == 'rtr4'
+
+    - name: prepare juniper
+      junipernetworks.junos.junos:
+        src: templates/rtr3.j2
+      when: inventory_hostname == 'rtr3'
