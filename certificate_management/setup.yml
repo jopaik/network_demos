@@ -362,6 +362,7 @@ controller_templates:
     project: Network Demos
     credentials:
     - Workshop Credential
+    survey_enabled: true
     survey:
         description: ''
         name: ''

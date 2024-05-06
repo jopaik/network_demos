@@ -5,31 +5,20 @@ for the network devices.  If you use another project, such as Ansible Product-De
 and won't be usable in this demo; this will require you to manually create the inventory host
 in the workshop inventory.
 
-Create the project "Ansible Network Examples"
- - Name: Ansible Network Examples
- - Organization: Default
- - Source Control Type: Git
- - Source Control URL: https://github.com/taruch/ansible-network-examples.git
-Save, and wait for the job to sync
-
-Create the Setup Job Template "Ansible Network Examples Setup"
- - Name: Setup - Ansible Network Examples
- - Inventory: Workshop Inventory
- - Project: Ansible Network Exampels
- - Playbook: controller_setup.yml
- - Credentials: Red Hat Ansible Automation Platform / Controller Credential
-LAUNCH!
 
 Update the credential	"CA Host Credential"
  - Host: Host for the CA host (FQDN or IP)
  - Username: ca-admin
  - Password: password for CA host
+ - CA Secret: private key password
 
 Update the credential "ServiceNow ITSM"
  - Password: password for PSA ServiceNow instance
 
 Update the hostname for the ca-host in the workshop inventory
  - Change the "Change Me" to be the ca host ip or FQDN
+
+Run the `CA Server Setup` template to configure the RHEL-9 CA Host if you haven't already 
 
 =====CISCO=====
 Show the rtr beforehand - no trustpoints, no certificates:
