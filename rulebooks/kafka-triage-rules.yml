@@ -8,7 +8,7 @@
         group_id:
   rules:
     - name: Retrieve Data and Launch Job-template
-      condition: events.body.fields.latest_return_code": "ret-code-timeout"
+      condition: events.body.fields.latest_return_code: ret-code-timeout
       action:
         debug:
           msg: Simple debug message
