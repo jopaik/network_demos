@@ -1,0 +1,16 @@
+---
+- name: Change to Secondary ISP config
+  hosts: rtr1
+
+  tasks:
+
+  - ansible.builtin.debug:
+        msg: " Caution you have switched over to the secondary ISP"
+    run_once: true
+
+  - name: reset IP SLA counters 
+    cisco.ios.ios_config:
+      lines: ip sla restart 1
+    when: inventory_host == "rtr1"
+
+  

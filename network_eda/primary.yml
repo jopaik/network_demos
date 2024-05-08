@@ -1,3 +1,8 @@
 ---
-- name: Return to primary ISP config
-  hosts: 
+- name: Changed back to Primary ISP config
+  hosts: localhost
+
+  tasks:
+
+  - ansible.builtin.debug:
+        msg: "You have switched back to the primary ISP"
