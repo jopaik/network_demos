@@ -1,29 +1,31 @@
+!
 no router bgp 65000
 !         
 interface Tunnel1
- ip address 10.200.200.1 255.255.255.0
  tunnel source GigabitEthernet1
  ip mtu 1476
  ip tcp adjust-mss 1360
  ip ospf 1 area 0
-!
+ tunnel destination {{ hostvars['rtr2'].ansible_host }}
 !
 router ospf 1
  no redistribute bgp 65000
-
-no ip sla 1
+ network 0.0.0.0 0.0.0.0 area 0
+!
 ip sla 1
- icmp-echo 192.168.4.4
- frequency 5 
-ip sla schedule 1 life forever start-time now 
-
+ icmp-echo 192.168.40.4 source-interface Tunnel1
+  frequency 5
+ip sla schedule 1 life forever start-time now
+!         
 track 1 ip sla 1 reachability
-ip route 192.168.4.4 255.255.255.255 10.100.100.2 track 1
-
+ip route 192.168.40.4 255.255.255.255 Tunnel1 track 1
+!
+netconf-yang
+!
 telemetry ietf subscription 1
  encoding encode-kvgpb
  filter xpath /ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry
- source-address {{ hostvars[inventory_hostname].private_ip }}
+ source-address {{ hostvars['rtr1'].private_ip }}
  stream yang-push
  update-policy periodic 6000
  receiver ip address 3.12.230.106 57000 protocol grpc-tcp
