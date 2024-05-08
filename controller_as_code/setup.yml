@@ -1258,5 +1258,29 @@
           - "Workshop Credential"
           - "Controller Credential"
 
+    - name: Create a job-template - Network-EDA-Primary
+      ansible.controller.job_template:
+        name: "Network-EDA-Primary"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_eda/primary.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-EDA-Secondary
+      ansible.controller.job_template:
+        name: "Network-EDA-Secondary"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_eda/secondary.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
 
    
