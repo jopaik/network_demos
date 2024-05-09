@@ -22,6 +22,8 @@ ip route 192.168.40.4 255.255.255.255 Tunnel1 track 1
 !
 netconf-yang
 !
+ip sla restart 1
+!
 telemetry ietf subscription 1
  encoding encode-kvgpb
  filter xpath /ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry
