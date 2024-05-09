@@ -11,6 +11,6 @@
   - name: reset IP SLA counters 
     cisco.ios.ios_config:
       lines: ip sla restart 1
-    when: inventory_host == "rtr1"
+    when: inventory_hostname == "rtr1"
 
   
