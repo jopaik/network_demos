@@ -29,7 +29,7 @@ For the below demos insure you are always using files from /home/student/network
    * [Demo Video](https://youtu.be/1z7NuObWhPE?si=vqB1QCBrMmY2cpor)
    * Validated Content: `network.base` 
    * Operations: Persist, Deploy, Detect, Remediate
-   * BGP
+   * network.bgp
 - [Network Basic Workflow ](network_basic_workflow/README.md)
    * [Demo Video](https://www.youtube.com/watch?v=XYv9OkHwO8s)
    * Is similar to Network Workshop 101 AAP Exercises
@@ -68,6 +68,10 @@ For the below demos insure you are always using files from /home/student/network
    * Dynamic Inventory
    * Config Drift Checks
 - [Network Troubleshooting](network_troubleshooting)
+   * wip
+- [NetDevOps](netdevops)
+   * wip
+- [Routing Protocol Migration](routing_protocol_migration)
    * wip
     
 # Getting Started

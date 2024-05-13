@@ -1279,6 +1279,7 @@
         playbook: "network_eda/secondary.yml"
         credentials:
           - "Workshop Credential"
+          - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present"
 
