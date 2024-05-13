@@ -1282,6 +1282,10 @@
           - "Controller Credential"
         execution_environment: "Validated Network"
         state: "present"
+        extra_vars:
+          SN_HOST: https://ven05430.service-now.com
+          SN_USERNAME: admin
+          SN_PASSWORD: ""
 
 
    
