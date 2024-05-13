@@ -1,8 +1,68 @@
 ---
 - name: Changed back to Primary ISP config
-  hosts: localhost
+  hosts: rtr1
 
   tasks:
 
   - ansible.builtin.debug:
-        msg: "You have switched back to the primary ISP"
+        msg: "Congratulations, you have switched back to the Primary ISP"
+
+  # Router Checks
+  - name: Grab Current Time
+    set_fact: current_time="{{ lookup('pipe','date +%Y-%m-%d\ %H:%M:%S') }}"
+
+  - name: Check IP SLA
+    cisco.ios.ios_command:
+      commands:
+        - show ip sla statistics
+    register: stats
+
+  - name: Traceroute
+    cisco.ios.ios_command:
+      commands:
+        - traceroute 192.168.40.4
+    register: trace
+
+  - name: Show ip route
+    cisco.ios.ios_command:
+      commands:
+        - sh ip route 192.168.40.4
+    register: route
+
+#Close SNOW Incident 
+  - name: Resolve ticket
+    servicenow.itsm.incident:
+      instance:
+        host: "{{ SN_HOST }}"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
+      number: "{{ incident_num }}"
+      state: resolved
+      close_code: "Solved (Permanently)"
+      close_notes: "Problem appears fixed! ##### IP SLA: {{stats.stdout_lines}} ##### traceroute: {{trace.stdout_lines}} #####  route: {{route.stdout_lines}}"
+      short_description: "{{inventory_hostname}} is now using the Primary ISP Link, resolving ticket"
+    delegate_to: localhost
+    when: 
+      - "'Number of successes: 0' not in stats.stdout[0]"      
+      - "'ip-10-200-200-2.us-east-2.compute.internal (10.200.200.2)' in trace.stdout[0]"
+      - "'* directly connected, via Tunnel1' in route.stdout[0]"
+
+  - name: Close ticket
+    servicenow.itsm.incident:
+      instance:
+        host: "{{ SN_HOST }}"
+        username: "{{ SN_USERNAME }}"
+        password: "{{ SN_PASSWORD }}"
+      close_code: "Solved (Permanently)"
+      close_notes: "The incident is closed"
+      state: closed
+      number: "{{ incident_num }}"
+      short_description: "{{inventory_hostname}} is now using the Primary ISP Link, closing ticket"
+    delegate_to: localhost
+    when: 
+      - "'Number of successes: 0' not in stats.stdout[0]"      
+      - "'ip-10-200-200-2.us-east-2.compute.internal (10.200.200.2)' in trace.stdout[0]"
+      - "'* directly connected, via Tunnel1' in route.stdout[0]"
+
+
+

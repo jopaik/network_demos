@@ -29,5 +29,5 @@ telemetry ietf subscription 1
  filter xpath /ip-sla-ios-xe-oper:ip-sla-stats/sla-oper-entry
  source-address {{ hostvars['rtr1'].private_ip }}
  stream yang-push
- update-policy periodic 6000
+ update-policy periodic 3000
  receiver ip address 3.12.230.106 57000 protocol grpc-tcp
