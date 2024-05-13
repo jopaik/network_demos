@@ -3,66 +3,65 @@
   hosts: rtr1
 
   tasks:
+    - ansible.builtin.debug:
+        msg: " Caution you are experiencing a Primary ISP link failure! "
+      run_once: true
 
-  - ansible.builtin.debug:
-        msg: " Caution you have switched over to the secondary ISP"
-    run_once: true
+    # Router Checks
+    - name: reset IP SLA counters
+      cisco.ios.ios_config:
+        lines: ip sla restart 1
+      when: inventory_hostname == "rtr1"
 
-# Router Checks
-  - name: reset IP SLA counters 
-    cisco.ios.ios_config:
-      lines: ip sla restart 1
-    when: inventory_hostname == "rtr1"
+    - name: Grab Current Time
+      set_fact: current_time="{{ lookup('pipe','date +%Y-%m-%d\ %H:%M:%S') }}"
 
-  - name: Grab Current Time
-    set_fact: current_time="{{ lookup('pipe','date +%Y-%m-%d\ %H:%M:%S') }}"
+    - name: Check IP SLA
+      cisco.ios.ios_command:
+        commands:
+          - show ip sla statistics
+      register: stats
 
-  - name: Check IP SLA
-    cisco.ios.ios_command:
-      commands:
-        - show ip sla statistics
-    register: stats
+    - name: Traceroute
+      cisco.ios.ios_command:
+        commands:
+          - traceroute 192.168.40.4
+      register: trace
 
-  - name: Traceroute
-    cisco.ios.ios_command:
-      commands:
-        - traceroute 192.168.40.4
-    register: trace
+    - name: Show ip route
+      cisco.ios.ios_command:
+        commands:
+          - sh ip route 192.168.40.4
+      register: route
 
-  - name: Show ip route
-    cisco.ios.ios_command:
-      commands:
-        - sh ip route 192.168.40.4
-    register: route
+    #Add SNOW Incident
+    - name: Create SNOW ticket for Secondary Link
+      servicenow.itsm.incident:
+        instance:
+          host: "{{ SN_HOST }}"
+          username: "{{ SN_USERNAME }}"
+          password: "{{ SN_PASSWORD }}"
+        state: new
+        impact: medium
+        urgency: medium
+        description: "{{inventory_hostname}} ipsla has failed and Primary link is down!   traceroute: {{trace.stdout_lines}}   route: {{route.stdout_lines}}"
+        short_description: "Primary ISP link is down {{inventory_hostname}} Cat8000v @ {{ current_time }}"
+      register: snow_var
+      delegate_to: localhost
+      when:
+        - "'ip-10-100-100-2.us-east-2.compute.internal (10.100.100.2)' in trace.stdout[0]"
+        - "'* 10.100.100.2, from 192.168.4.4' in route.stdout[0]"
 
-#Add SNOW Incident 
-
-  - name: Create SNOW incident if router fails over to Secondary ISP
-    block:
-      - name: Create SNOW ticket
-        servicenow.itsm.incident:
-          instance:
-            host: "{{ SN_HOST }}"
-            username: "{{ SN_USERNAME }}"
-            password: "{{ SN_PASSWORD }}"
-          state: new
-          impact: high
-          urgency: high
-          description: "{{inventory_hostname}} ipsla has failed and Primary ISP link is down!   traceroute: {{trace.stdout_lines}}   route: {{route.stdout_lines}}"
-          short_description: "Primary ISP link is down {{inventory_hostname}} Cat8000v @ {{ current_time }}"
-        register: snow_var
-        delegate_to: localhost
-        when: "'Number of failures: 0' not in stats.stdout"
-
-      - name: Show incident number
-        ansible.builtin.debug:
-          msg: 
+    - name: Show incident number
+      ansible.builtin.debug:
+        msg:
           - "{{ snow_var.record.number }}"
+      delegate_to: localhost
 
-# Update incident ID 
+    # Update incident ID
 
-  - name: Update job-template - Network-EDA-Primary
-    ansible.controller.job_template:
+    - name: Update job-template - Network-EDA-Primary
+      ansible.controller.job_template:
         name: "Network-EDA-Primary"
         organization: "Red Hat network organization"
         credentials:
@@ -74,7 +73,4 @@
           SN_HOST: https://ven05430.service-now.com
           SN_USERNAME: admin
           SN_PASSWORD: "{{ SN_PASSWORD }}"
-    delegate_to: localhost
-
-      
-          
+      delegate_to: localhost
