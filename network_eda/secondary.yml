@@ -52,7 +52,7 @@
           short_description: "Primary ISP link is down {{inventory_hostname}} Cat8000v @ {{ current_time }}"
         register: snow_var
         delegate_to: localhost
-        when: '"Number of failures: 0" in stats.stdout_lines[0][7]'
+        when: "'Number of failures: 0' not in snow_var.stdout"
 
       - name: Show incident number
         ansible.builtin.debug:
