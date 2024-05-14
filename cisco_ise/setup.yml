@@ -1,0 +1,152 @@
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - execution_environments
+  - hosts
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+
+# This Starts the Cisco ISE Section
+
+controller_hosts:
+  - name: ISE
+    inventory: "Workshop Inventory"
+    state: present
+    enabled: true
+
+controller_groups:
+  - name: ise_servers
+    hosts:
+      - ISE
+    inventory: "Workshop Inventory"
+    state: present
+
+controller_templates:
+  - name: "Network-Cisco-ISE-Get-Groups"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_ise/get_groups.yaml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+  - name: "Network-Cisco-ISE-Get-Users"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_ise/get_users.yaml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+  - name: "Network-Cisco-ISE-Network-Devices"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_ise/get_network_devices.yaml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+  - name: "Network-Cisco-ISE-Endpoints"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_ise/get_endpoints.yaml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+controller_workflows:
+  - name: "Network-Cisco-ISE-Workflow"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    workflow_nodes:
+      - identifier: Network-Cisco-ISE-Get-Groups 
+        unified_job_template: 
+          name: "Network-Cisco-ISE-Get-Groups"
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: Network-Cisco-ISE-Get-Users
+      - identifier: Network-Cisco-ISE-Get-Users
+        unified_job_template: 
+          name: "Network-Cisco-ISE-Get-Users"
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: Network-Cisco-ISE-Network-Devices
+      - identifier: Network-Cisco-ISE-Network-Devices
+        unified_job_template: 
+          name: "Network-Cisco-ISE-Network-Devices"
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: Network-Cisco-ISE-Endpoints
+      - identifier: Network-Cisco-ISE-Endpoints
+        unified_job_template: 
+          name: Network-Cisco-ISE-Endpoints
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+
+...

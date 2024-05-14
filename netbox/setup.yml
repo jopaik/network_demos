@@ -1,0 +1,164 @@
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - inventories
+  - inventory_sources
+  - execution_environments
+  - hosts
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+  - name: Netbox Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+
+controller_inventories:
+  - name: Netbox Inventory
+    organization: "Red Hat network organization"
+
+controller_inventory_sources:
+  - name: "source-nbox"
+    description: Source for inventory
+    inventory: "Netbox Inventory"
+    update_on_launch: True
+    source: scm
+    source_path: dynamic_inventory/netbox.inventory.yml
+    source_project: "Netbox Project"
+    execution_environment: "Validated Network"
+    source_vars:
+      NETBOX_TOKEN: ""
+
+
+controller_templates:
+  - name: "Network-Netbox-Setup"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "netbox/setup_netbox.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    state: "present"
+    survey_enabled: yes
+    survey:
+      {
+        "description": "",
+        "name": "",
+        "spec":
+          [
+            {
+              "choices": "",
+              "default": "",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "Please provide the API Key Token ",
+              "question_name": "Please provide the API Key Token",
+              "required": true,
+              "type": "textarea",
+              "variable": "netbox_api_key",
+            },
+          ],
+      }
+
+  - name: "Network-Netbox-Facts"
+    organization: "Red Hat network organization"
+    inventory: "Netbox Inventory"
+    project: "Netbox Project"
+    playbook: "netbox/facts.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    state: "present"
+
+  - name: "Network-Netbox-Compare-Configs"
+    organization: "Red Hat network organization"
+    inventory: "Netbox Inventory"
+    project: "Netbox Project"
+    playbook: "netbox/compare_intended_vs_actual.yml"
+    credentials:
+      - "Workshop Credential"
+      - "Gitea Credential"
+    execution_environment: "Validated Network"
+    state: "present"
+    diff_mode: true
+    survey_enabled: yes
+    survey:
+      {
+        "description": "",
+        "name": "",
+        "spec":
+          [
+            {
+              "choices": "",
+              "default": "",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "Please provide the API Key Token ",
+              "question_name": "Please provide the API Key Token",
+              "required": true,
+              "type": "textarea",
+              "variable": "netbox_api_key",
+            },
+          ],
+      }

@@ -1,4 +1,6 @@
 ---
+# The ReST API documentation can be found here: https://demo.netbox.dev/api/schema/swagger-ui/
+
 - name: Clone a Repo to EE
   shell:
     cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"

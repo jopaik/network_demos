@@ -22,8 +22,15 @@ The hosts.yml file in this demo can be modified to run in the Cisco Devnet ACI a
 
 ### Always On:
 apic_host: sandboxapicdc.cisco.com
+apic_username: 'admin'
 apic_password: '!v3G@!4@Y'
 https://sandboxapicdc.cisco.com
+
+# Demo:
+- Click on and walk through the 0-ACI-as-Code-Workflow to Deploy ACI fabrics as Code
+- It will ask for a change-id - this is for SNOW, and isn't implemented yet so just put something tactful in.
+- Watch the output in the ACI-Day0-1-Config-Staging
+- Take a look at the ACI-Day2-Health-Check.  Talk about what goes into the health score and why it is important.
 
 # Key Takeaways
 * Easy migration from postman to Ansible with csv files

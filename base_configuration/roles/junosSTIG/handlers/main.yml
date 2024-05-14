@@ -1,0 +1,4 @@
+- name: save configuration
+  junos_config:
+    confirm_commit: yes
+  when: junosSTIG_save_configuration_Manage

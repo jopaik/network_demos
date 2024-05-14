@@ -1,0 +1,62 @@
+- name: Cisco IOS XE STIG
+  hosts: cisco
+  gather_facts: no
+  vars_files:
+    - iosxeSTIG.yml
+
+  tasks:
+    - name : stigrule_216675_no_cdp_run
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "cdp run"
+
+    - name : stigrule_215823_disable_boot_server unset
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "ip boot server"
+    
+    - name : stigrule_215823_disable_bootp_server unset
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "ip bootp server"
+
+    - name : stigrule_215823_disable_dns_server
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "ip dns server"
+
+    - name : stigrule_215823_disable_identd
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "ip identd"
+
+    - name : stigrule_215823_disable_finger
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "ip finger"
+
+    - name : stigrule_215823_disable_http_server
+      ignore_errors: "{{ ignore_all_errors }}"
+      notify: "save configuration"
+      ios_config:
+        defaults: yes
+        lines: "ip http server"
+
+
+  handlers:
+    - name: save configuration
+      ios_command:
+        commands: write memory
+

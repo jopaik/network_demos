@@ -67,15 +67,17 @@ jinja2 snipit:
 
 ### Step 3 - Review the Netbox GUI 
 Review the Netbox GUI (devices, templates etc)
+- Look at the c8000v device type created by the Network-Netbox-Setup job template in the Netbox GUI
 
 ### Step 4 - Add the API Token
-Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory.
+Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
+Update the source-nbox "NETBOX_TOKEN" source variable and save.
 
 ### Step 5 - Review the Netbox Inventory on AAP
 You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP. rtr1 is also in group sites_rtp.
 
 ### Step 6 - Launch the Network-Netbox-Facts job-template 
-Launch the Network-Netbox-Facts job-template to demonstrate using the Netbox Inventory for rtr1
+Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1.  Click on the "Gather all facts" task to look at the JSON and see what was gathered.
 
 ### Step 7 - Launch the Network-Netbox-Compare-Configs job-template 
 Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
