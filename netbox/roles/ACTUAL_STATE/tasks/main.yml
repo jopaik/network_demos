@@ -1,9 +1,14 @@
 ---
-- name: Clone a Repo to EE
-  shell:
-    cmd: "git clone http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
-    chdir: /tmp/
-  delegate_to: localhost
+- name: Retrieve a repository from a distant location and make it available to the local EE
+  ansible.scm.git_retrieve:
+    origin:
+      url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+    parent_directory: /tmp/
+    branch:
+      name: "master"
+      duplicate_detection: no
+  register: repository
+  when: inventory_hostname == 'localhost'
 
 - name: Backup cisco ios configuration
   cisco.ios.ios_config:
