@@ -13,6 +13,9 @@
         origin:
           url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
         parent_directory: /tmp/
+        branch:
+          name: "{{ branch_name | default ('ansible-{play_name}') }}-{{ansible_date_time.iso8601_basic_short}}"
+          duplicate_detection: no
       register: repository
       when: inventory_hostname == 'localhost'
 
@@ -51,6 +54,9 @@
         origin:
           url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
         parent_directory: /tmp/
+        branch:
+          name: "{{ branch_name | default ('ansible-{play_name}') }}-{{ansible_date_time.iso8601_basic_short}}"
+          duplicate_detection: no
       register: repository
       when: inventory_hostname == 'localhost'
 
@@ -84,22 +90,28 @@
               required: true
               default: ""
               choices:
-                - "{{ branches.stdout_lines[1] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[2] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[3] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[4] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[5] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[6] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[7] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[8] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[9] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[10] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[11] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[12] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[13] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[14] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[15] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[16] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[1] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[2] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[3] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[4] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[5] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[6] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[7] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[8] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[9] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[10] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[11] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[12] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[13] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[14] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[15] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[16] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[17] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[18] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[19] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[20] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[21] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[22] | default('') | replace('  origin/','') }}"
             - question_name: Which Group or Groups to Check Config Drift?
               type: multiselect
               variable: _group
@@ -134,22 +146,28 @@
               required: true
               default: ""
               choices:
-                - "{{ branches.stdout_lines[1] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[2] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[3] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[4] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[5] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[6] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[7] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[8] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[9] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[10] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[11] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[12] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[13] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[14] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[15] | default('') | replace('origin/','') }}"
-                - "{{ branches.stdout_lines[16] | default('') | replace('origin/','') }}"
+                - "{{ branches.stdout_lines[1] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[2] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[3] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[4] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[5] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[6] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[7] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[8] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[9] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[10] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[11] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[12] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[13] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[14] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[15] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[16] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[17] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[18] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[19] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[20] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[21] | default('') | replace('  origin/','') }}"
+                - "{{ branches.stdout_lines[22] | default('') | replace('  origin/','') }}"
             - question_name: Which Group or Groups to Rollback?
               type: multiselect
               variable: _group
