@@ -3,7 +3,7 @@
 
 # Summary of steps
 1. Collect Backup configurations from routers and save them to Gitea branches
-2. Verify Branches in local GIT CLI `git checkout` or with the optional Gitea GUI
+2. Verify Branches in the local GIT CLI using ```git checkout``` or with the optional Gitea GUI
 3. Modify the Routers from the CLI
 4. Verify Job-template(s) exist
 5. Launch the Network-Intended Job-Template
@@ -24,7 +24,7 @@ To enable multi-vendor router configuration backups to Gitea and subsequently th
 This demo uses the ansible.scm collection and the network.backup role from Validated Content `network.backup` to backup router configurations to git branches in Gitea. Additionally we will check for configuration drift and restore configurations when appropriate.
 
 ### Step 1 - Collect Backup Configurations
-Access your AAP Controller from your RHDP POD and run the 'Network-Backups-Git' job template. The survey prompt allows for custom naming your branch or default branch naming when ignored. 
+Access your AAP Controller from your RHDP POD and run the 'Network-Backups-Git' job template. The survey will prompt for optionally naming your branch or inserts default branch naming when ignored. 
 
 Output - Network-Backups-Git `backups.yml` with explanations
 ```
@@ -35,7 +35,7 @@ PLAY [Backup Cisco Configs to Gitea in Branches] *******************************
 TASK [Retrieve a repository from a distant location and make it available to the local EE] ***
 changed: [localhost] 
 ```
-`The above task uses `ansible..scm.git_retrieve` to clone the network-demos-rep from the gitea repository to the execution environment`
+`The above task uses `ansible..scm.git_retrieve` to clone the network-demos-rep from the gitea repository to the execution environment.`
 ```
 TASK [Network Backup and Resource Manager] *************************************
 ```
@@ -105,14 +105,16 @@ rtr3                       : ok=8    changed=1    unreachable=0    failed=0    s
 rtr4                       : ok=8    changed=1    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0   
 ```
 ### Step 2 - Review Branches
-Note, you can use the gitea gui/web as an alternative to the following git cli instructions.
+Note, the following steps provide GIT CLI instructions but you're familiar with gitea you can use the gitea gui/web as an alternative.
 Simply open a tab and paste in your lab url and modify it to append `/gitea`
+#### For example:
 ```
 https://student1.hjjzl.example.opentlc.com/gitea
 user= gitea
 password = gitea
 repo= https://student1.hjjzl.example.opentlc.com/gitea/gitea/network-demos-repo
 ```  
+The above would require you to use your student number and lab number not `student1.hjjzl`
 #### Git CLI
 1. In VSCode terminal `network_backups_git/`
 ~~~
