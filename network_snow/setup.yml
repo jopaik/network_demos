@@ -1,0 +1,336 @@
+- name: Playbook to configure ansible controller
+  hosts: localhost
+  connection: local
+  vars:
+    user: "{{ username }}"
+
+  environment:
+    CONTROLLER_HOST: "ansible-1"
+    CONTROLLER_USERNAME: "admin"
+    CONTROLLER_PASSWORD: "{{ password }}"
+    CONTROLLER_VERIFY_SSL: false
+
+  tasks:
+    - name: Create projects
+      ansible.controller.project:
+        name: Student Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Add group
+      ansible.controller.group:
+        name: cisco
+        variables:
+          ansible_connection: network_cli
+          ansible_network_os: cisco.ios.ios
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Add group
+      ansible.controller.group:
+        name: arista
+        variables:
+          ansible_connection: network_cli
+          ansible_network_os: arista.eos.eos
+          ansible_become: "true"
+          ansible_become_method: enable
+        inventory: "Workshop Inventory"
+
+    - name: Add group
+      ansible.controller.group:
+        name: juniper
+        variables:
+          ansible_connection: netconf
+          ansible_network_os: junipernetworks.junos.junos
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Create Execution Environments
+      ansible.controller.execution_environment:
+        name: "Validated Network"
+        image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+        pull: missing
+
+    - name: Gitea Credential Type
+      ansible.controller.credential_type:
+        injectors:
+          extra_vars:
+            email: "{{ email | default ('{{ email }}') }}"
+            password: "{{ git_password | default ('{{ git_password }}') }}"
+            username: "{{ username | default ('{{ username }}') }}"
+            token: "{{ git_password | default ('{{ git_password }}') }}"
+        inputs:
+          fields:
+            - id: username
+              label: Username
+              type: string
+            - id: password
+              label: Password
+              secret: true
+              type: string
+            - id: email
+              label: Email
+              type: string
+          required:
+            - username
+            - password
+            - email
+        kind: cloud
+        name: Gitea Student
+
+    - name: Gitea Credential
+      ansible.controller.credential:
+        credential_type: Gitea Student
+        description: ""
+        inputs:
+          username: "gitea"
+          password: "gitea"
+          email: admin@example.com
+        name: Gitea Credential
+        organization: "Red Hat network organization"
+
+
+    #This section starts the Network - SNOW demo
+
+    - name: Create Inventory
+      ansible.controller.inventory:
+        name: SNOW Inventory
+        organization: "Red Hat network organization"
+
+    - name: Create projects
+      ansible.controller.project:
+        name: SNOW Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Add an inventory source
+      ansible.controller.inventory_source:
+        name: "source-snow"
+        description: Source for inventory
+        inventory: "SNOW Inventory"
+        update_on_launch: True
+        source: scm
+        source_path: dynamic_inventory/now.yml
+        source_project: SNOW Project
+        execution_environment: "Validated Network"
+        source_vars:
+          SN_USERNAME: ""
+          SN_PASSWORD: ""
+
+    - name: Create a job-template - Network-Banner-Check
+      ansible.controller.job_template:
+        name: "Network-Banner-Check"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/banner_incident.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Banner-Resolve
+      ansible.controller.job_template:
+        name: "Network-Banner-Resolve"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/banner_resolve.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Banner-Fix
+      ansible.controller.job_template:
+        name: "Network-Banner-Fix"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/banner_fix.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Controller Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "Please type into the text field the desired banner",
+                  "question_name": "Please enter the banner text",
+                  "required": true,
+                  "type": "textarea",
+                  "variable": "net_banner",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 1,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "workflow_job_id",
+                  "required": true,
+                  "type": "text",
+                  "variable": "workflow_job_id",
+                },
+              ],
+          }
+
+    - name: Workshop Workflow
+      ansible.controller.workflow_job_template:
+        name: "Network-ServiceNow-Workflow"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        extra_vars:
+          SN_HOST: https://ansible.service-now.com
+        state: present
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Username",
+                  "required": true,
+                  "type": "text",
+                  "variable": "SN_USERNAME",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "formattedChoices":
+                    [{ "choice": "", "id": 0, "isDefault": false }],
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": false,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Password",
+                  "required": true,
+                  "type": "password",
+                  "variable": "SN_PASSWORD",
+                },
+              ],
+          }
+
+    - name: Network-Banner-Resolve
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Banner-Resolve
+        workflow: "Network-ServiceNow-Workflow"
+        unified_job_template: Network-Banner-Resolve
+        organization: "Red Hat network organization"
+        state: present
+
+    - name: Troubleshoot-Approval
+      ansible.controller.workflow_job_template_node:
+        identifier: Troubleshoot-Approval
+        workflow_job_template: "Network-ServiceNow-Workflow"
+        organization: "Red Hat network organization"
+        approval_node:
+          name: "Troubleshoot-Approval"
+          timeout: 0
+        state: present
+
+    - name: Troubleshoot-Approval
+      ansible.controller.workflow_job_template_node:
+        identifier: Troubleshoot-Approval
+        workflow_job_template: "Network-ServiceNow-Workflow"
+        organization: "Red Hat network organization"
+        state: present
+        success_nodes:
+          - "Network-Banner-Resolve"
+      ignore_errors: true
+
+    - name: Network-Banner-Check
+      ansible.controller.workflow_job_template_node:
+        identifier: Network-Banner-Check
+        workflow: "Network-ServiceNow-Workflow"
+        unified_job_template: Network-Banner-Check
+        organization: "Red Hat network organization"
+        state: present
+        failure_nodes:
+          - Troubleshoot-Approval
+
+    - name: Create a job-template - Network-CMDP-Udate
+      ansible.controller.job_template:
+        name: "Network-CMDB-Update"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_snow/update_cmdb.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+        survey_enabled: yes
+        survey_spec:
+          {
+            "description": "",
+            "name": "",
+            "spec":
+              [
+                {
+                  "choices": "",
+                  "default": "",
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": true,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Username",
+                  "required": true,
+                  "type": "text",
+                  "variable": "SN_USERNAME",
+                },
+                {
+                  "choices": "",
+                  "default": "",
+                  "formattedChoices":
+                    [{ "choice": "", "id": 0, "isDefault": false }],
+                  "max": 1024,
+                  "min": 0,
+                  "new_question": false,
+                  "question_description": "",
+                  "question_name": "Enter your SNOW Password",
+                  "required": true,
+                  "type": "password",
+                  "variable": "SN_PASSWORD",
+                },
+              ],
+          }
+    - name: Create a job-template - Network-SNOW-Facts
+      ansible.controller.job_template:
+        name: "Network-SNOW-Facts"
+        organization: "Red Hat network organization"
+        inventory: "SNOW Inventory"
+        project: "SNOW Project"
+        playbook: "network_snow/facts.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"

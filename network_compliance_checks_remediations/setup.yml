@@ -1,0 +1,156 @@
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - execution_environments
+  - hosts
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+  - name: Meraki_API
+    kind: cloud
+    inputs:
+      fields:
+        - id: MERAKI_KEY
+          type: string
+          label: Meraki Dashboard API key
+          secret: true
+      required:
+        - MERAKI_KEY
+    injectors:
+      extra_vars:
+          MERAKI_KEY: "{  { MERAKI_KEY | default ('{  { MERAKI_KEY }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+
+controller_templates:
+  - name: "Network-Check-Compliance"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "network_compliance_checks_remediations/compliance.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    job_type: check
+    state: "present"
+
+  - name: "Network-Run-Compliance"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "network_compliance_checks_remediations/compliance_run.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    state: "present"
+
+
+controller_workflows:
+  - name: Network-Compliance-Workflow
+    inventory: "Workshop Inventory"
+    organization: "Red Hat network organization"
+    state: present
+    survey_enabled: true
+    survey:
+      name: ""
+      description: ""
+      spec:
+        - question_name: Which groups/devices to run checks against?
+          type: multiselect
+          variable: _group
+          required: true
+          default: ""
+          choices:
+            - cisco
+            - arista
+            - juniper
+        - question_name: Please select the desired compliance roles?
+          type: multiselect
+          variable: tag
+          required: true
+          default: ""
+          choices:
+            - logging
+            - snmp
+            - ntp
+            - stig
+    workflow_nodes:
+      - identifier: Network-Check-Compliance
+        unified_job_template:
+          name: Network-Check-Compliance
+        organization: 
+          name: "Red Hat network organization"
+        success_nodes: "Change Approval"
+        state: present
+
+      - identifier: "Change Approval"
+        approval_node:
+          name: "Change Approval"
+          timeout: 0
+        success_nodes:
+          - Network-Run-Compliance
+        state: present
+
+      - identifier: Network-Run-Compliance
+        unified_job_template:
+          name: Network-Run-Compliance
+        organization:
+          name: "Red Hat network organization"
+        state: present
+      - identifier: "Change Approval"
+
+...

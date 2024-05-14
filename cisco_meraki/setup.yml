@@ -1,0 +1,195 @@
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - execution_environments
+  - hosts
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+  - name: Meraki_API
+    kind: cloud
+    inputs:
+      fields:
+        - id: MERAKI_KEY
+          type: string
+          label: Meraki Dashboard API key
+          secret: true
+      required:
+        - MERAKI_KEY
+    injectors:
+      extra_vars:
+          MERAKI_KEY: "{  { MERAKI_KEY | default ('{  { MERAKI_KEY }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+  - name: Meraki API
+    credential_type: Meraki_API
+    description: ""
+    inputs:
+      MERAKI_KEY: "1234567890"
+    organization: "Red Hat network organization"
+
+controller_templates:
+  - name: "Network-Meraki-Get-Org-ID"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_meraki/get_orgID.yml"
+    execution_environment: "Validated Network"
+    credentials: 
+      - 'Meraki API'
+    state: "present"
+
+  - name: "Network-Meraki-Create-Network"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_meraki/create_network.yml"
+    execution_environment: "Validated Network"
+    credentials: 
+      - 'Meraki API'
+    state: "present"
+    survey_enabled: yes
+    survey:
+      {
+        "description": "",
+        "name": "",
+        "spec":
+          [
+            {
+              "choices": "",
+              "default": "",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "Please provide your Organization ID",
+              "question_name": "Please provide your Organization ID",
+              "required": true,
+              "type": "textarea",
+              "variable": "org_id",
+            },
+            {
+              "choices": "",
+              "default": "",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "Please provide your Network name",
+              "question_name": "Please provide your Network name",
+              "required": true,
+              "type": "textarea",
+              "variable": "network_name",
+            },
+          ],
+      }
+
+  - name: "Network-Meraki-Remove-Network"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_meraki/remove_network.yml"
+    execution_environment: "Validated Network"
+    credentials: 
+      - 'Meraki API'
+    state: "present"
+    survey_enabled: yes
+    survey:
+      {
+        "description": "",
+        "name": "",
+        "spec":
+          [
+            {
+              "choices": "",
+              "default": "",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "Please provide your Organization ID",
+              "question_name": "Please provide your Organization ID",
+              "required": true,
+              "type": "textarea",
+              "variable": "org_id",
+            },
+            {
+              "choices": "",
+              "default": "",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "Please provide your Network name",
+              "question_name": "Please provide your Network name",
+              "required": true,
+              "type": "textarea",
+              "variable": "network_name",
+            },
+          ],
+      }
+
+  - name: "Network-Meraki-Multi-SSID"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_meraki/multiple_ssid.yml"
+    execution_environment: "Validated Network"
+    credentials: 
+      - 'Meraki API'
+    state: "present"
+    extra_vars:
+      org_id: ''
+    ask_variables_on_launch: true
+
+...

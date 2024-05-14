@@ -1,0 +1,251 @@
+---
+controller_components:
+  - projects
+  - credential_types
+  - credentials
+  - execution_environments
+  - hosts
+  - groups
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
+
+
+controller_credential_types:
+  - name: ServiceNow ITSM
+    kind: cloud
+    inputs:
+      fields:
+        - id: host
+          label: Host
+          type: string
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+      required:
+        - instance
+        - username
+        - password
+        - passphrase
+    injectors:
+      extra_vars:
+        SN_HOST: "{  { host }}"
+        SN_PASSWORD: "{  { password }}"
+        SN_USERNAME: "{  { username }}"
+    
+
+controller_credentials:
+  - name: ServiceNow ITSM
+    credential_type: ServiceNow ITSM
+    description: ''
+    inputs:
+      host: https://ven05430.service-now.com/
+      password: ''
+      username: CHANGE_ME
+    organization: Red Hat network organization
+
+
+controller_execution_environments:
+  - name: ruch-network-ee
+    description: 'Network Examples EE'
+    image: quay.io/truch/network-examples:latest
+    pull: missing
+
+
+
+controller_hosts:
+  - name: nxosv1
+    description: "Nexus Switch 1"
+    inventory: "Workshop Inventory"
+    state: present
+    enabled: true
+    variables:
+      ansible_host=198.18.1.51
+      ansible_user=admin
+      ansible_password=admin
+
+  - name: nxosv2
+    description: "Nexus Switch 2"
+    inventory: "Workshop Inventory"
+    state: present
+    enabled: true
+    variables:
+      ansible_host=198.18.1.52
+      ansible_user=admin
+      ansible_password=admin
+
+
+controller_groups:
+  - name: nxos
+    description: Cisco Nexus hosts
+    inventory: "Workshop Inventory"
+    variables: 
+      ansible_network_os: nxos
+      ansible_connection: network_cli
+    hosts:
+      - nxosv1
+      - nxosv2
+      
+
+controller_projects:
+  - name: ServiceNow Examples
+    organization: "Red Hat network organization"
+    scm_type: git
+    wait: true
+    scm_url: https://github.com/taruch/symmetrical-octo-umbrella.git
+
+
+controller_templates:
+  - name: IOS Base Configuration
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: 
+    playbook: base_configuration/ios_base_configuration.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+
+
+  - name: IOS Gather Data (GitOps)
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: 'gitops'
+    job_type: run
+    limit: 
+    playbook: base_configuration/ios_gather_data.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+    survey_enabled: true
+    survey:
+        description: ''
+        name: ''
+        spec:
+        -   choices: ''
+            default: ''
+            max: 24
+            min: 1
+            new_question: true
+            question_description: ''
+            question_name: What is the name for the commit (i.e. Joe Smith)?
+            required: true
+            type: text
+            variable: git_name
+        -   choices: ''
+            default: ''
+            max: 24
+            min: 1
+            new_question: true
+            question_description: ''
+            question_name: What is the email to for the commit (i.e. joe@mycompany.com)?
+            required: true
+            type: text
+            variable: git_email
+
+  - name: NXOS Base Configuration
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: 
+    playbook: base_configuration/nxos_base_configuration.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+
+
+  - name: NXOS Gather Data (GitOps)
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: 
+    playbook: base_configuration/nxos_gather_data.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+    survey_enabled: true
+    survey:
+        description: ''
+        name: ''
+        spec:
+        -   choices: ''
+            default: ''
+            max: 24
+            min: 1
+            new_question: true
+            question_description: ''
+            question_name: What is the name for the commit (i.e. Joe Smith)?
+            required: true
+            type: text
+            variable: git_name
+        -   choices: ''
+            default: ''
+            max: 24
+            min: 1
+            new_question: true
+            question_description: ''
+            question_name: What is the email to for the commit (i.e. joe@mycompany.com)?
+            required: true
+            type: text
+            variable: git_email
+
+  - name: NXOS Add Admin User
+    execution_environment: ruch-network-ee
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: ''
+    playbook: base_configuration/nxos_users.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+
+
+  - name: Network STIG
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: ''
+    playbook: base_configuration/network_STIG_set.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+
+...

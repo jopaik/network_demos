@@ -1,0 +1,168 @@
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - execution_environments
+  - hosts
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+controller_hosts:
+  - name: apic1
+    inventory: "Workshop Inventory"
+    state: present
+    enabled: true
+    variables:
+      #apic_host: 10.10.20.14 # change for devnet reservered sandbox
+      apic_host: sandboxapicdc.cisco.com #change for always on sandbox
+      #apic_host: 192.168.0.180
+
+controller_groups:
+  - name: apic
+    hosts:
+      - apic1
+    inventory: "Workshop Inventory"
+    state: present
+
+
+controller_templates:
+  - name: "ACI-Day0-1-Config-Staging"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_day0-1.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+  - name: "ACI-Rollback"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_rollback.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+  - name: "ACI-Day2-Health-Check"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_health_day2.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+
+
+controller_workflows:
+  - name: 0-ACI-as-Code-Workflow
+    survey_enabled: yes
+    survey:
+      description: ""
+      name: ""
+      spec:
+        - question_name: "Enter your Username"
+          default: ""
+          new_question: true
+          question_description: ""
+          required: true
+          type: "text"
+          variable: "apic_username"
+        - question_name: "Enter your Password"
+          default: ""
+          new_question: false
+          question_description: ""
+          required: true
+          type: "password"
+          variable: "apic_password"
+        - question_name: "Validate APIC Certificate"
+          choices: "False\nTrue"
+          default: "False"
+          new_question: true
+          question_description: ""
+          required: true
+          type: "multiplechoice"
+          variable: "apic_validate_certs"
+        - question_name: "Please enter your Change-ID"
+          new_question: false
+          question_description: ""
+          required: true
+          type: "text"
+          variable: "snapshot"
+    workflow_nodes:
+      - identifier: ACI-Day0-1-Config-Staging
+        unified_job_template:
+          name: ACI-Day0-1-Config-Staging
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          success_nodes: 
+            - identifier: ACI-Day2-Health-Check
+          failure_nodes: 
+            - identifier: ACI-Rollback
+      - identifier: ACI-Day2-Health-Check
+        unified_job_template: 
+          name: ACI-Day2-Health-Check
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+      - identifier: ACI-Rollback
+        unified_job_template: 
+          name: ACI-Rollback
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+
+...

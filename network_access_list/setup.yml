@@ -1,0 +1,95 @@
+- name: Playbook to configure ansible controller
+  hosts: localhost
+  connection: local
+  vars:
+    user: "{{ username }}"
+
+  environment:
+    CONTROLLER_HOST: "ansible-1"
+    CONTROLLER_USERNAME: "admin"
+    CONTROLLER_PASSWORD: "{{ password }}"
+    CONTROLLER_VERIFY_SSL: false
+
+  tasks:
+    - name: Create projects
+      ansible.controller.project:
+        name: Student Project
+        organization: "Red Hat network organization"
+        scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+        scm_type: git
+        allow_override: true
+        state: present
+        scm_update_on_launch: yes
+
+    - name: Add group
+      ansible.controller.group:
+        name: cisco
+        variables:
+          ansible_connection: network_cli
+          ansible_network_os: cisco.ios.ios
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Add group
+      ansible.controller.group:
+        name: arista
+        variables:
+          ansible_connection: network_cli
+          ansible_network_os: arista.eos.eos
+          ansible_become: "true"
+          ansible_become_method: enable
+        inventory: "Workshop Inventory"
+
+    - name: Add group
+      ansible.controller.group:
+        name: juniper
+        variables:
+          ansible_connection: netconf
+          ansible_network_os: junipernetworks.junos.junos
+        inventory: "Workshop Inventory"
+        state: present
+
+    - name: Create Execution Environments
+      ansible.controller.execution_environment:
+        name: "Validated Network"
+        image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+        pull: missing
+
+    - name: Gitea Credential Type
+      ansible.controller.credential_type:
+        injectors:
+          extra_vars:
+            email: "{{ email | default ('{{ email }}') }}"
+            password: "{{ git_password | default ('{{ git_password }}') }}"
+            username: "{{ username | default ('{{ username }}') }}"
+            token: "{{ git_password | default ('{{ git_password }}') }}"
+        inputs:
+          fields:
+            - id: username
+              label: Username
+              type: string
+            - id: password
+              label: Password
+              secret: true
+              type: string
+            - id: email
+              label: Email
+              type: string
+          required:
+            - username
+            - password
+            - email
+        kind: cloud
+        name: Gitea Student
+
+    - name: Gitea Credential
+      ansible.controller.credential:
+        credential_type: Gitea Student
+        description: ""
+        inputs:
+          username: "gitea"
+          password: "gitea"
+          email: admin@example.com
+        name: Gitea Credential
+        organization: "Red Hat network organization"
+

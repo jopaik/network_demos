@@ -1,0 +1,17 @@
+- name: Cisco IOS XE STIG
+  hosts: cisco,juniper
+  gather_facts: false
+
+  tasks:
+
+    - name: Run Cisco STIG
+      when: ansible_network_os == 'ios'
+      vars:
+        ignore_all_errors: False
+      ansible.builtin.import_role:
+        name: iosxeSTIG
+
+    - name: Run JunOS STIG
+      when: ansible_network_os == 'junos'
+      ansible.builtin.import_role:
+        name: junosSTIG

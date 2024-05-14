@@ -1,0 +1,158 @@
+---
+controller_components:
+  - projects
+  - execution_environments
+  - inventories
+  - inventory_sources
+  - credential_types
+  - credentials
+  - hosts
+  - groups
+  - inventory_sources
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+  - name: DNAC Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+    #This section includes Cisco DNAC
+
+controller_inventories:
+  - name: DNAC Inventory
+    organization: "Red Hat network organization"
+
+controller_inventory_sources:
+  - name: "source-dnac"
+    description: Source for inventory
+    inventory: "DNAC Inventory"
+    update_on_launch: True
+    source: scm
+    source_path: dynamic_inventory/dna_center.yml
+    source_project: "DNAC Project"
+    execution_environment: "Validated Network"
+
+controller_hosts:
+  - name: dnac_server
+    inventory: "DNAC Inventory"
+    state: present
+    enabled: true
+    variables:
+      dnac_host: https://sandboxdnac.cisco.com
+      dnac_port: 443
+      dnac_username: devnetuser
+      dnac_password: Cisco123!
+
+controller_groups:
+  - name: dnac_servers
+    hosts:
+      - dnac_server
+    inventory: "DNAC Inventory"
+    state: present
+
+controller_templates:
+  - name: "DNAC-Config-Retrieve"
+    organization: "Red Hat network organization"
+    inventory: "DNAC Inventory"
+    project: "DNAC Project"
+    playbook: "cisco_dnac/config_collect.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+    credentials:
+      - "Gitea Credential"
+    survey_enabled: true
+    survey:
+      name: ""
+      description: ""
+      spec:
+        - question_name: Which groups/devices to retrieve Configs from DNAC
+          type: multiselect
+          variable: device_id
+          required: true
+          default: ""
+          choices:
+            - sw1
+            - sw2
+            - sw3
+            - sw4
+
+  - name: "DNAC-Config-Compliance"
+    organization: "Red Hat network organization"
+    inventory: "DNAC Inventory"
+    project: "DNAC Project"
+    playbook: "cisco_dnac/config_compliance.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+    credentials:
+      - "Gitea Credential"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      description: ""
+      spec:
+        - question_name: Which groups/devices to retrieve Compliance info from DNAC
+          type: multiselect
+          variable: device_id
+          required: true
+          default: ""
+          choices:
+            - sw1
+            - sw2
+            - sw3
+            - sw4
