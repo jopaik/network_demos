@@ -51,7 +51,7 @@
 
     - name: Include Allowed Domains for Migration
       ansible.builtin.shell:
-        cmd: podman exec --user git gitea sed -i '$ a\\n[migrations]\nALLOWED_DOMAINS = gitlab.com,github.com' /data/gitea/conf/app.ini
+        cmd: podman exec --user git gitea sed -i '$ a\\n[migrations]\nALLOWED_DOMAINS = gitlab.com' /data/gitea/conf/app.ini
       become: true
       become_user: student
 
