@@ -11,7 +11,7 @@
       ansible.builtin.import_role:
         name: iosxeSTIG
 
-    - name: Run JunOS STIG
-      when: ansible_network_os == 'junos'
-      ansible.builtin.import_role:
-        name: junosSTIG
+    #- name: Run JunOS STIG
+    #  when: ansible_network_os == 'junos'
+    #  ansible.builtin.import_role:
+    #    name: junosSTIG
