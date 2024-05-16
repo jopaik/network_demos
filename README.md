@@ -68,11 +68,13 @@ For the below demos insure you are always using files from /home/student/network
    * Dynamic Inventory
    * Config Drift Checks
 - [Network Troubleshooting](network_troubleshooting)
-   * wip
+   * tdub wip
 - [NetDevOps](netdevops)
-   * wip
+   * tdub wip
 - [Routing Protocol Migration](routing_protocol_migration)
-   * wip
+   * tdub wip
+- [Network Upgrades as Code](network_upgrades_as_code)
+   * tdub wip
     
 # Getting Started
 
