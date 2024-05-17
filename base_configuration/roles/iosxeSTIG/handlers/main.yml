@@ -1,4 +1,8 @@
 - name: save configuration
-  ios_command:
+  cisco.ios.ios_command:
     commands: write memory
   when: iosxeSTIG_save_configuration_Manage
+
+- name: change_happened
+  ansible.builtin.debug:
+    msg: "Things changed - do something useful"
