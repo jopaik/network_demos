@@ -10,6 +10,7 @@
         ignore_all_errors: False
       ansible.builtin.include_role:
         name: iosxeSTIG
+      # notify: cisco_stig
       register: cisco_stig_reg
 
     - name: Debug
@@ -22,7 +23,6 @@
     #     name: junosSTIG
 
   handlers:
-   - name: cisco_stig
+   - name: Cisco_stig
      ansible.builtin.debug:
        msg: "Woot!"
-
