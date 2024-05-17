@@ -10,13 +10,19 @@
         ignore_all_errors: False
       ansible.builtin.import_role:
         name: iosxeSTIG
-      register: cisco_stig
+      notify: cisco_stig
 
     - name: Debug
       ansible.builtin.debug:
         var: cisco_stig
 
-    - name: Run JunOS STIG
-      when: ansible_network_os == 'junos'
-      ansible.builtin.import_role:
-        name: junosSTIG
+    # - name: Run JunOS STIG
+    #   when: ansible_network_os == 'junos'
+    #   ansible.builtin.import_role:
+    #     name: junosSTIG
+
+  handlers:
+   - name: cisco_stig
+     ansible.builtin.debug:
+       msg: "Woot!"
+
