@@ -23,6 +23,6 @@
     #     name: junosSTIG
 
   handlers:
-   - name: Cisco_stig
-     ansible.builtin.debug:
-       msg: "Woot!"
+    - name: Cisco_stig
+      ansible.builtin.debug:
+        msg: "Woot!"
