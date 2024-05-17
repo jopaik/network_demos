@@ -10,7 +10,6 @@
         ignore_all_errors: False
       ansible.builtin.include_role:
         name: iosxeSTIG
-      notify: cisco_stig
       register: cisco_stig_reg
 
     - name: Debug
