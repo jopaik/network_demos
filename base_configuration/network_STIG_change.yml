@@ -14,6 +14,9 @@
       # notify: cisco_stig
       register: cisco_stig_reg
 
+    - name:
+      ansible_builtin.meta: flush_handlers
+
     - name: Debug
       ansible.builtin.debug:
         var: change_fact
@@ -23,7 +26,4 @@
     #   ansible.builtin.import_role:
     #     name: junosSTIG
 
-  handlers:
-    - name: Cisco_stig
-      ansible.builtin.debug:
-        msg: "Woot!"
+
