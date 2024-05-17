@@ -14,7 +14,7 @@
       # notify: cisco_stig
       register: cisco_stig_reg
 
-    - name:
+    - name: flush handlers
       ansible_builtin.meta: flush_handlers
 
     - name: Debug
