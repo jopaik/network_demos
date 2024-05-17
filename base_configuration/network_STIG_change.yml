@@ -14,8 +14,8 @@
       # notify: cisco_stig
       register: cisco_stig_reg
 
-    - name: flush handlers
-      ansible_builtin.meta: flush_handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
 
     - name: Debug
       ansible.builtin.debug:
