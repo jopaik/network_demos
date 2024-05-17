@@ -8,13 +8,14 @@
       when: ansible_network_os == 'ios'
       vars:
         ignore_all_errors: False
-      ansible.builtin.import_role:
+      ansible.builtin.include_role:
         name: iosxeSTIG
       notify: cisco_stig
+      register: cisco_stig_reg
 
     - name: Debug
       ansible.builtin.debug:
-        var: cisco_stig
+        var: cisco_stig_reg
 
     # - name: Run JunOS STIG
     #   when: ansible_network_os == 'junos'
