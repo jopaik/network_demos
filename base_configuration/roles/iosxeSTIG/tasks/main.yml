@@ -596,7 +596,7 @@
       when:
         - iosxeSTIG_stigrule_217001_Manage
       # R-215807 CISC-ND-000010
-      - name : stigrule_215807_ip_http_max_connections_2
+      - name: stigrule_215807_ip_http_max_connections_2
         ignore_errors: "{{ ignore_all_errors }}"
         notify: "save configuration"
         ios_config:

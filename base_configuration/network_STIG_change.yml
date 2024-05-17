@@ -15,7 +15,7 @@
 
     - name: Debug
       ansible.builtin.debug:
-        var: cisco_stig_reg
+        var: change_fact
 
     # - name: Run JunOS STIG
     #   when: ansible_network_os == 'junos'
