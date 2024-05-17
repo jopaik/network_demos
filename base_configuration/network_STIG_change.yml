@@ -1,7 +1,8 @@
 - name: Cisco IOS XE STIG
   hosts: cisco,juniper
   gather_facts: false
-
+  vars:
+    change_fact: false
   tasks:
 
     - name: Run Cisco STIG

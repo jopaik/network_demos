@@ -159,7 +159,9 @@
     # R-215823 CISC-ND-000470
     - name : stigrule_215823_disable_http_server
       ignore_errors: "{{ ignore_all_errors }}"
-      notify: "save configuration"
+      notify: 
+        - "save configuration"
+        - "change_happened"
       ios_config:
         defaults: yes
         lines: "{{ iosxeSTIG_stigrule_215823_disable_http_server_Lines }}"
