@@ -31,7 +31,7 @@
         state: new
         type: normal
         # service: "Network Routing"
-        requested_by: ansible_workflow
+        requested_by: splunk_ansible_workflow
         description: "{{ inventory_hostname }} device is out of compliance and needs to be brought into compliance"
         short_description: "{{ inventory_hostname }}"
         priority: normal
