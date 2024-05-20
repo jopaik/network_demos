@@ -5,21 +5,21 @@
     change_fact: true
   tasks:
 
-    # - name: Run Cisco STIG
-    #   when: ansible_network_os == 'ios'
-    #   vars:
-    #     ignore_all_errors: False
-    #   ansible.builtin.include_role:
-    #     name: iosxeSTIG
-    #   # notify: cisco_stig
-    #   register: cisco_stig_reg
+    - name: Run Cisco STIG
+      when: ansible_network_os == 'ios'
+      vars:
+        ignore_all_errors: False
+      ansible.builtin.include_role:
+        name: iosxeSTIG
+      # notify: cisco_stig
+      register: cisco_stig_reg
 
-    # - name: Force all notified handlers to run at this point, not waiting for normal sync points
-    #   ansible.builtin.meta: flush_handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
 
-    # - name: Debug
-    #   ansible.builtin.debug:
-    #     var: change_fact
+    - name: Debug
+      ansible.builtin.debug:
+        var: change_fact
 
 
     - name: Create incident
@@ -32,10 +32,10 @@
         state: new
         type: normal
         # service: "Network Routing"
-        requested_by: splunk_ansible_workflow
+        requested_by: "splunk_ansible_workflow"
         description: "{{ inventory_hostname }} device is out of compliance and needs to be brought into compliance"
         short_description: "{{ inventory_hostname }}"
-        priority: moderate
+        priority: low
         impact: low
         risk: low
         category: network
