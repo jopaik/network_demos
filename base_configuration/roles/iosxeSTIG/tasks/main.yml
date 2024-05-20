@@ -253,7 +253,7 @@
   register: cmd_result
 - name : stigrule_215823_disable_udp_small_servers
   ignore_errors: "{{ ignore_all_errors }}"
-  notify: 
+  notify:
     - "save configuration"
     - "change_happened"
   cisco.ios.ios_config:
