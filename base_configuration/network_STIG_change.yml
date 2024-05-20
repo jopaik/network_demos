@@ -32,8 +32,8 @@
         type: normal
         service: "Network Routing"
         requested_by: ansible_workflow
-        short_description: "{{ inventory_hostname }} device is out of compliance"
-        description: "Banner is missing on {{ inventory_hostname }} @ {{ current_time }}"
+        description: "{{ inventory_hostname }} device is out of compliance and needs to be brought into compliance"
+        short_description: "{{ inventory_hostname }}"
         priority: normal
         impact: low
         risk: low
