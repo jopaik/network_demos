@@ -5,21 +5,22 @@
     change_fact: true
   tasks:
 
-    # - name: Run Cisco STIG
-    #   when: ansible_network_os == 'ios'
-    #   vars:
-    #     ignore_all_errors: False
-    #   ansible.builtin.include_role:
-    #     name: iosxeSTIG
-    #   # notify: cisco_stig
-    #   register: cisco_stig_reg
+    - name: Run Cisco STIG
+      when: ansible_network_os == 'ios'
+      vars:
+        ignore_all_errors: False
+      ansible.builtin.include_role:
+        name: iosxeSTIG
+      # notify: cisco_stig
+      check_mode: true
+      register: cisco_stig_reg
 
-    # - name: Force all notified handlers to run at this point, not waiting for normal sync points
-    #   ansible.builtin.meta: flush_handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
 
-    # - name: Debug
-    #   ansible.builtin.debug:
-    #     var: change_fact
+    - name: Debug
+      ansible.builtin.debug:
+        var: change_fact
 
 
     - name: Create Change Request
@@ -43,7 +44,7 @@
           planned_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
           answer: true
       register: change_out
-      # register: snow_var
+      check_mode: false
       delegate_to: localhost
 
     - name: Set fact for change number
