@@ -21,6 +21,8 @@
         query: {"playbook": "network_STIG_change.yml"}
       register: STIG_job
       ignore_errors: true
+      run_once: true
+      delegate_to: localhost
 
     - name: Get the job from the list of running jobs
       when: STIG_job
