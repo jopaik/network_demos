@@ -6,14 +6,14 @@
     changed_rules: []
   tasks:
 
-    - name: Run Cisco STIG
-      when: ansible_network_os == 'ios'
-      vars:
-        ignore_all_errors: False
-      ansible.builtin.include_role:
-        name: iosxeSTIG
-      # notify: cisco_stig
-      register: cisco_stig_reg
+    # - name: Run Cisco STIG
+    #   when: ansible_network_os == 'ios'
+    #   vars:
+    #     ignore_all_errors: False
+    #   ansible.builtin.include_role:
+    #     name: iosxeSTIG
+    #   # notify: cisco_stig
+    #   register: cisco_stig_reg
 
     - name: List running jobs for the network_STIG_change.yml playbook
       ansible.controller.job_list:
