@@ -470,25 +470,25 @@
   when:
     - iosxeSTIG_stigrule_215837_Manage
 # R-215838 CISC-ND-001030
-# Replace ntp servers' IP address before enabling.
-- name : stigrule_215838_ntp_server_1
-  ignore_errors: "{{ ignore_all_errors }}"
-  notify: 
-    - "save configuration"
-    - "change_happened"
-  ios_ntp:
-    server: "{{ iosxeSTIG_stigrule_215838_ntp_server_1_Server }}"
-  when: iosxeSTIG_stigrule_215838_Manage
-# R-215838 CISC-ND-001030
-# Replace ntp servers' IP address before enabling.
-- name : stigrule_215838_ntp_server_2
-  ignore_errors: "{{ ignore_all_errors }}"
-  notify: 
-    - "save configuration"
-    - "change_happened"
-  ios_ntp:
-    server: "{{ iosxeSTIG_stigrule_215838_ntp_server_2_Server }}"
-  when: iosxeSTIG_stigrule_215838_Manage
+# # Replace ntp servers' IP address before enabling.
+# - name : stigrule_215838_ntp_server_1
+#   ignore_errors: "{{ ignore_all_errors }}"
+#   notify: 
+#     - "save configuration"
+#     - "change_happened"
+#   ios_ntp:
+#     server: "{{ iosxeSTIG_stigrule_215838_ntp_server_1_Server }}"
+#   when: iosxeSTIG_stigrule_215838_Manage
+# # R-215838 CISC-ND-001030
+# # Replace ntp servers' IP address before enabling.
+# - name : stigrule_215838_ntp_server_2
+#   ignore_errors: "{{ ignore_all_errors }}"
+#   notify: 
+#     - "save configuration"
+#     - "change_happened"
+#   ios_ntp:
+#     server: "{{ iosxeSTIG_stigrule_215838_ntp_server_2_Server }}"
+#   when: iosxeSTIG_stigrule_215838_Manage
 # R-215840 CISC-ND-001050
 # service timestamps log datetime localtime is set in 215817.
 - name : stigrule_215840_service_timestamps_log_datetime_localtime
@@ -1179,25 +1179,25 @@
   when:
     - iosxeSTIG_stigrule_215837_Manage
 # R-215838 CISC-ND-001030
-# Replace ntp servers' IP address before enabling.
-- name : stigrule_215838_ntp_server_1
-  ignore_errors: "{{ ignore_all_errors }}"
-  notify: 
-    - "save configuration"
-    - "change_happened"
-  ios_ntp:
-    server: "{{ iosxeSTIG_stigrule_215838_ntp_server_1_Server }}"
-  when: iosxeSTIG_stigrule_215838_Manage
-# R-215838 CISC-ND-001030
-# Replace ntp servers' IP address before enabling.
-- name : stigrule_215838_ntp_server_2
-  ignore_errors: "{{ ignore_all_errors }}"
-  notify: 
-    - "save configuration"
-    - "change_happened"
-  ios_ntp:
-    server: "{{ iosxeSTIG_stigrule_215838_ntp_server_2_Server }}"
-  when: iosxeSTIG_stigrule_215838_Manage
+# # Replace ntp servers' IP address before enabling.
+# - name : stigrule_215838_ntp_server_1
+#   ignore_errors: "{{ ignore_all_errors }}"
+#   notify: 
+#     - "save configuration"
+#     - "change_happened"
+#   ios_ntp:
+#     server: "{{ iosxeSTIG_stigrule_215838_ntp_server_1_Server }}"
+#   when: iosxeSTIG_stigrule_215838_Manage
+# # R-215838 CISC-ND-001030
+# # Replace ntp servers' IP address before enabling.
+# - name : stigrule_215838_ntp_server_2
+#   ignore_errors: "{{ ignore_all_errors }}"
+#   notify: 
+#     - "save configuration"
+#     - "change_happened"
+#   ios_ntp:
+#     server: "{{ iosxeSTIG_stigrule_215838_ntp_server_2_Server }}"
+#   when: iosxeSTIG_stigrule_215838_Manage
 # R-215840 CISC-ND-001050
 # service timestamps log datetime localtime is set in 215817.
 - name : stigrule_215840_service_timestamps_log_datetime_localtime
