@@ -1,6 +1,3 @@
 ---
 collections:
-- cisco.ios
-- junipernetworks.junos
-- servicenow.itsm
 - ansible.controller

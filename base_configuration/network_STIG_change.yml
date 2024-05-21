@@ -50,8 +50,8 @@
         type: normal
         # service: "Network Routing"
         requested_by: "splunk_ansible_workflow"
-        description: >
-          "{{ inventory_hostname }} is out of compliance \n
+        description: |
+          "{{ inventory_hostname }} is out of compliance
           URL for the Job: {{ job_url }}"
         short_description: "{{ inventory_hostname }}"
         priority: low
