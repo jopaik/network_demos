@@ -12,16 +12,16 @@
       ansible.builtin.include_role:
         name: iosxeSTIG
       # notify: cisco_stig
-      check_mode: true
       register: cisco_stig_reg
 
     - name: Force all notified handlers to run at this point, not waiting for normal sync points
       ansible.builtin.meta: flush_handlers
+      check_mode: false
 
     - name: Debug
       ansible.builtin.debug:
         var: change_fact
-
+      check_mode: false
 
     - name: Create Change Request
       when: change_fact == true
