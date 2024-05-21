@@ -22,7 +22,7 @@
     #     var: change_fact
 
 
-    - name: Create incident
+    - name: Create Change Request
       when: change_fact == true
       servicenow.itsm.change_request:
         instance:
@@ -33,7 +33,7 @@
         type: normal
         # service: "Network Routing"
         requested_by: "splunk_ansible_workflow"
-        description: "{{ inventory_hostname }} device is out of compliance and needs to be brought into compliance"
+        description: "{{ inventory_hostname }} device is awesome"
         short_description: "{{ inventory_hostname }}"
         priority: low
         impact: low
