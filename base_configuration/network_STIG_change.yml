@@ -3,6 +3,7 @@
   gather_facts: false
   vars:
     change_fact: true
+    changed_rules: []
   tasks:
 
     - name: Run Cisco STIG
@@ -13,6 +14,18 @@
         name: iosxeSTIG
       # notify: cisco_stig
       register: cisco_stig_reg
+
+    - name: List running jobs for the network_STIG_change.yml playbook
+      job_list:
+        status: running
+        query: {"playbook": "network_STIG_change.yml"}
+      register: STIG_job
+      ignore_errors: true
+
+    - name: Get the job from the list of running jobs
+      when: STIG_job
+      ansible.builtin.set_fact:
+        job_url: "https://ansible-dev.redhatgov.io/#/jobs/playbook/{{ STIG_job[0].id }}/output"
 
     - name: Force all notified handlers to run at this point, not waiting for normal sync points
       ansible.builtin.meta: flush_handlers
@@ -34,7 +47,9 @@
         type: normal
         # service: "Network Routing"
         requested_by: "splunk_ansible_workflow"
-        description: "{{ inventory_hostname }} device is awesome"
+        description: >
+          "{{ inventory_hostname }} device is our of compliance
+          URL for the Job: {{ job_url }}"
         short_description: "{{ inventory_hostname }}"
         priority: low
         impact: low
