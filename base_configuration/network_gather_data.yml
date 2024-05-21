@@ -1,22 +1,21 @@
 ---
-- name: Gather configuration information from NXOS devices
-  hosts: ios,juniper
+- name: Gather configuration information from network devices
+  hosts: cisco,juniper
   gather_facts: false
 
   tasks:
-    - name: Backup Config
-      tags:
-        - never
-        - backup
-      ansible.netcommon.cli_config
-        backup: true
-
+    # - name: Backup Config
+    #   tags:
+    #     - never
+    #     - backup
+    #   ansible.netcommon.cli_config
+    #     backup: true
 
     - name: Gather network information as structured data
-      when: ansible_network_os == ios
+      when: ansible_network_os == 'ios'
       tags:
         - always
-      cisco.nxos.nxos_facts:
+      cisco.ios.ios_facts:
         gather_network_resources:
           - 'static_routes'
           - 'ntp_global'
@@ -32,6 +31,15 @@
           - '!all'
 
 
+    - name: collect default set of facts and configuration
+      when: ansible_network_os == 'junos'
+      tags:
+        - always
+      junipernetworks.junos.junos_facts:
+        # gather_subset: config
+        gather_subset: all
+        gather_network_resources: all
+
     - name: Print out
       tags:
         - always
@@ -39,12 +47,12 @@
         msg: "{{ ansible_network_resources }}"
         verbosity: 2
 
-
     - name: GitOps functions
       tags:
         - gitops
         - never
       delegate_to: localhost
+      when: ansible_network_resources is defined
       block:
         - name: Retrieve a repository from a distant location and make it available locally
           ansible.scm.git_retrieve:
@@ -59,14 +67,12 @@
             verbosity: 2
 
         - name: Create a host_vars directory if it does not exist
-          when: ansible_network_resources is defined
           ansible.builtin.file:
             path: "{{ repository['path'] }}/host_vars"
             state: directory
             mode: '0755'
 
         - name: Add network facts to the repository
-          when: ansible_network_resources is defined
           ansible.builtin.copy:
             content: "{{ ansible_network_resources | to_nice_yaml }}"
             dest: "{{ repository['path'] }}/host_vars/{{ inventory_hostname }}"

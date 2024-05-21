@@ -1,17 +1,22 @@
 ---
-- name: Configure IOS XE device
-  hosts: ios
+- name: Configure network devices
+  hosts: cisco,juniper
   gather_facts: false
   vars:
     _domain_name_: ansible.local
+    # ansible_connection: ansible.netcommon.network_cli
+
   tasks:
     - name: Backup Config
       tags:
-        - always
+        - backup
+        - never
       cisco.ios.ios_config:
         backup: true
 
     - name: Configure hostname and domain name
+      when:
+        ansible_network_os == 'ios'
       tags:
         - always
       cisco.ios.ios_system:
@@ -23,6 +28,7 @@
           - "{{ _domain_name_ }}"
 
     - name: Configure NTP
+      when: ansible_network_os == 'ios'
       tags:
         - never
         - ntp
@@ -47,7 +53,9 @@
             msg: "{{ result.commands }}"
       # End of NTP block tasks
 
+
     - name: Configure VLANs
+      when: ansible_network_os == 'ios'
       tags:
         - never
         - vlans
@@ -77,7 +85,8 @@
             msg: "{{ result.commands }}"
       # End of VLAN block tasks
 
-    - name: Configure interfaces
+    - name: Configure IOS interfaces
+      when: ansible_network_os == 'ios'
       tags:
         - never
         - interfaces
@@ -98,7 +107,32 @@
             msg: "{{ result.commands }}"
       # End of interfaces block tasks
 
+    - name: Configure JunOS interfaces
+      when: ansible_network_os == 'junos'
+      tags:
+        - never
+        - interfaces
+      block:
+        - name: Print out interfaces
+          ansible.builtin.debug:
+            msg: "{{ interfaces }}"
+            verbosity: 2
+
+        - name: Make interface config changes based on host_vars data
+          # vars:
+          #   ansible_connection: network_cli
+          junipernetworks.junos.junos_interfaces:
+            config: "{{ interfaces }}"
+            state: merged
+          register: result
+
+        - name: Print any interface configuration changes
+          ansible.builtin.debug:
+            msg: "{{ result.commands }}"
+      # End of interfaces block tasks
+
     - name: Configure l2 interfaces
+      when: ansible_network_os == 'ios'
       tags:
         - never
         - interfaces
@@ -120,6 +154,7 @@
       # End of interfaces block tasks
 
     - name: Configure L3 interface
+      when: ansible_network_os == 'ios'
       tags:
         - never
         - l3_interfaces
@@ -141,7 +176,31 @@
             msg: "{{ result.commands }}"
       # end of l3_interfaces block tasks
 
+    - name: Configure L3 interface
+      when: ansible_network_os == 'junos'
+      tags:
+        - never
+        - l3_interfaces
+      block:
+        - name: Print out L3 interfaces
+          ansible.builtin.debug:
+            msg: "{{ l3_interfaces }}"
+            verbosity: 2
+
+        - name: Make L3 interface config changes based on host_vars data
+          junipernetworks.junos.junos_l3_interfaces:
+            config: "{{ l3_interfaces }}"
+            state: merged
+          register: result
+          # check_mode: true
+
+        - name: Print any L3 interface configuration changes
+          ansible.builtin.debug:
+            msg: "{{ result.commands }}"
+      # end of l3_interfaces block tasks
+
     - name: Configure SNMPv3
+      when: ansible_network_os == 'ios'
       tags:
         - never
         - snmp
