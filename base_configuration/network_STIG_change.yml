@@ -18,7 +18,7 @@
     - name: List running jobs for the network_STIG_change.yml playbook
       ansible.controller.job_list:
         status: running
-        query: {"playbook": "network_STIG_change.yml"}
+        # query: {"playbook": "network_STIG_change.yml"}
       register: STIG_job
       ignore_errors: true
       run_once: true
