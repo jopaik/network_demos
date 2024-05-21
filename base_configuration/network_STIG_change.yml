@@ -36,7 +36,7 @@
 
     - name: Debug STIG_job
       ansible.builtin.debug:
-        msg: "{{ STIG_job.result[0] }}"
+        msg: "{{ STIG_job }}"
 
     - name: Get the job from the list of running jobs
       when: STIG_job
