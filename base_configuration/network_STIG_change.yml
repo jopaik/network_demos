@@ -15,7 +15,17 @@
     #   # notify: cisco_stig
     #   register: cisco_stig_reg
 
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
+      check_mode: false
+
+    - name: Debug
+      ansible.builtin.debug:
+        var: change_fact
+      check_mode: false
+
     - name: List running jobs for the network_STIG_change.yml playbook
+      when: change_fact == true
       ansible.controller.job_list:
         status: running
         # query: {"playbook": "network_STIG_change.yml"}
@@ -29,14 +39,6 @@
       ansible.builtin.set_fact:
         job_url: "{{ STIG_job.results.invocation }}/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
 
-    - name: Force all notified handlers to run at this point, not waiting for normal sync points
-      ansible.builtin.meta: flush_handlers
-      check_mode: false
-
-    - name: Debug
-      ansible.builtin.debug:
-        var: change_fact
-      check_mode: false
 
     - name: Create Change Request
       when: change_fact == true
