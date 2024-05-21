@@ -1,5 +1,5 @@
 - name: Cisco IOS XE STIG
-  hosts: cisco,juniper
+  hosts: "{{ _hosts }}"
   gather_facts: false
 
   tasks:
