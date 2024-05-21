@@ -27,7 +27,7 @@
     - name: Get the job from the list of running jobs
       when: STIG_job
       ansible.builtin.set_fact:
-        job_url: "https://ansible-dev.redhatgov.io/#/jobs/playbook/{{ STIG_job[0].id }}/output"
+        job_url: "https://ansible-dev.redhatgov.io/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
 
     - name: Force all notified handlers to run at this point, not waiting for normal sync points
       ansible.builtin.meta: flush_handlers
