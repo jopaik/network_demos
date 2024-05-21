@@ -16,7 +16,7 @@
       register: cisco_stig_reg
 
     - name: List running jobs for the network_STIG_change.yml playbook
-      job_list:
+      ansible.controller.job_list:
         status: running
         query: {"playbook": "network_STIG_change.yml"}
       register: STIG_job
