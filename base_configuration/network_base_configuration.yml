@@ -8,6 +8,7 @@
 
   tasks:
     - name: Backup Config
+      when: ansible_network_os == 'ios'
       tags:
         - backup
         - never
@@ -119,8 +120,6 @@
             verbosity: 2
 
         - name: Make interface config changes based on host_vars data
-          # vars:
-          #   ansible_connection: network_cli
           junipernetworks.junos.junos_interfaces:
             config: "{{ interfaces }}"
             state: merged
@@ -153,6 +152,29 @@
             msg: "{{ result.commands }}"
       # End of interfaces block tasks
 
+    - name: Configure l2 interfaces
+      when: ansible_network_os == 'junos'
+      tags:
+        - never
+        - interfaces
+      block:
+        - name: Print out interfaces
+          ansible.builtin.debug:
+            msg: "{{ l2_interfaces }}"
+            verbosity: 2
+
+        - name: Make interface config changes based on host_vars data
+          junipernetworks.junos.junos_l2_interfaces:
+            config: "{{ l2_interfaces }}"
+            # state: merged
+            state: overridden
+          register: result
+
+        - name: Print any interface configuration changes
+          ansible.builtin.debug:
+            msg: "{{ result.commands }}"
+      # End of interfaces block tasks
+
     - name: Configure L3 interface
       when: ansible_network_os == 'ios'
       tags:
@@ -165,7 +187,7 @@
             verbosity: 2
 
         - name: Make L3 interface config changes based on host_vars data
-          cisco.ios.ios_l3_interfaces:
+          junipernetworks.junos.junos_l3_interfaces:
             config: "{{ l3_interfaces }}"
             state: merged
           register: result
