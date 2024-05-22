@@ -41,7 +41,7 @@
     - name: Obtain the job id from the list of running jobs
       when: STIG_job
       ansible.builtin.set_fact:
-        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
+        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
       run_once: true
       delegate_to: localhost
 
