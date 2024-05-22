@@ -28,25 +28,26 @@
       ansible.builtin.pause:
         seconds: 20
 
+    - name: List running jobs for the network_STIG_change.yml playbook
+      ansible.controller.job_list:
+        status: running
+        query: {"name": "Network STIG Validate"}
+      ignore_errors: true
+      run_once: true
+      delegate_to: localhost
+      check_mode: false
+      register: STIG_job
+
+    - name: Obtain the job id from the list of running jobs
+      when: STIG_job
+      ansible.builtin.set_fact:
+        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
+      run_once: true
+      delegate_to: localhost
+
     - name: Create Change Request Ticket in ITSM System
       when: change_fact == true
       block:
-        - name: List running jobs for the network_STIG_change.yml playbook
-          ansible.controller.job_list:
-            status: running
-            query: {"name": "Network STIG"}
-          register: STIG_job
-          ignore_errors: true
-          run_once: true
-          delegate_to: localhost
-
-        - name: Obtain the job id from the list of running jobs
-          when: STIG_job
-          ansible.builtin.set_fact:
-            job_url: "https://{{ ansible_controller }}/#/jobs/playbook/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
-          run_once: true
-          delegate_to: localhost
-
         - name: Create Change Request
           servicenow.itsm.change_request:
             instance:
@@ -55,7 +56,6 @@
               password: "{{ SN_PASSWORD }}"
             state: new
             type: normal
-            # service: "Network Routing"
             requested_by: "splunk_ansible_workflow"
             description: |
               '{{ inventory_hostname }} is out of compliance.
@@ -70,7 +70,6 @@
               planned_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
               answer: true
           register: change_out
-          check_mode: false
           delegate_to: localhost
 
         - name: Set fact for change number
@@ -81,6 +80,7 @@
         - name: Debug change number
           debug:
             msg: "{{ change_number }}"
+      check_mode: false
 
     # - name: Set change Number
     #   ansible.builtin.set_stats:
