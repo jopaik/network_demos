@@ -24,7 +24,7 @@
         var: change_fact
       check_mode: false
 
-    - name: Pause for 5 minutes to build app cache
+    - name: Pause for 20 seconds to wait for handlers to flush 
       ansible.builtin.pause:
         seconds: 20
 
