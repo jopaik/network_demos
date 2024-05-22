@@ -35,6 +35,8 @@
         query: {"name": "Network STIG"}
       register: STIG_job
       ignore_errors: true
+      run_once: true
+      delegate_to: localhost
 
     - name: Obtain the job id from the list of running jobs
       when: change_fact == true
