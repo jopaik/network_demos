@@ -28,59 +28,59 @@
       ansible.builtin.pause:
         seconds: 20
 
-    - name: List running jobs for the network_STIG_change.yml playbook
+    - name: Create Change Request Ticket in ITSM System
       when: change_fact == true
-      ansible.controller.job_list:
-        status: running
-        query: {"name": "Network STIG"}
-      register: STIG_job
-      ignore_errors: true
-      run_once: true
-      delegate_to: localhost
+      block:
+        - name: List running jobs for the network_STIG_change.yml playbook
+          ansible.controller.job_list:
+            status: running
+            query: {"name": "Network STIG"}
+          register: STIG_job
+          ignore_errors: true
+          run_once: true
+          delegate_to: localhost
 
-    - name: Obtain the job id from the list of running jobs
-      when: change_fact == true
-      ansible.builtin.set_fact:
-        job_url: "https://ansible-dev.redhatgov.io/#/jobs/playbook/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
-      run_once: true
-      delegate_to: localhost
+        - name: Obtain the job id from the list of running jobs
+          when: STIG_job
+          ansible.builtin.set_fact:
+            job_url: "https://ansible-dev.redhatgov.io/#/jobs/playbook/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
+          run_once: true
+          delegate_to: localhost
 
-    - name: Create Change Request
-      when: change_fact == true
-      servicenow.itsm.change_request:
-        instance:
-          host: "{{ SN_HOST }}"
-          username: "{{ SN_USERNAME }}"
-          password: "{{ SN_PASSWORD }}"
-        state: new
-        type: normal
-        # service: "Network Routing"
-        requested_by: "splunk_ansible_workflow"
-        description: |
-          '{{ inventory_hostname }} is out of compliance
-          URL for the Job: {{ job_url }}'
-        short_description: "{{ inventory_hostname }}"
-        priority: low
-        impact: low
-        risk: low
-        category: network
-        other:
-          planned_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
-          answer: true
-      register: change_out
-      check_mode: false
-      delegate_to: localhost
+        - name: Create Change Request
+          servicenow.itsm.change_request:
+            instance:
+              host: "{{ SN_HOST }}"
+              username: "{{ SN_USERNAME }}"
+              password: "{{ SN_PASSWORD }}"
+            state: new
+            type: normal
+            # service: "Network Routing"
+            requested_by: "splunk_ansible_workflow"
+            description: |
+              '{{ inventory_hostname }} is out of compliance.
+              Use the following URL for details: {{ job_url }}'
+            short_description: "{{ inventory_hostname }}"
+            priority: low
+            impact: low
+            risk: low
+            category: network
+            assignment_group: 'Network CAB Managers'
+            other:
+              planned_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
+              answer: true
+          register: change_out
+          check_mode: false
+          delegate_to: localhost
 
-    - name: Set fact for change number
-      when: change_fact == true
-      ansible.builtin.set_fact:
-        #change_number: 'CHG0030022'
-        change_number: "{{ change_out.record.number }}"
+        - name: Set fact for change number
+          ansible.builtin.set_fact:
+            #change_number: 'CHG0030022'
+            change_number: "{{ change_out.record.number }}"
 
-    - name: Debug change number
-      when: change_fact == true
-      debug:
-        msg: "{{ change_number }}"
+        - name: Debug change number
+          debug:
+            msg: "{{ change_number }}"
 
     # - name: Set change Number
     #   ansible.builtin.set_stats:
