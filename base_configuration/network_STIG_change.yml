@@ -72,11 +72,13 @@
       delegate_to: localhost
 
     - name: Set fact for change number
+      when: change_fact == true
       ansible.builtin.set_fact:
         #change_number: 'CHG0030022'
         change_number: "{{ change_out.record.number }}"
 
     - name: Debug change number
+      when: change_fact == true
       debug:
         msg: "{{ change_number }}"
 
