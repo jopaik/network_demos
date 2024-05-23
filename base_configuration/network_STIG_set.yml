@@ -7,8 +7,7 @@
     - name: List running jobs for the network_STIG_change.yml playbook
       ansible.controller.job_list:
         status: running
-        query: {"name": "Network STIG Validate"}
-      ignore_errors: true
+        query: {"name": "Network STIG Run"}
       run_once: true
       delegate_to: localhost
       check_mode: false
@@ -34,3 +33,4 @@
         data:
           change_number: "{{ ticket_number }}" 
           job_url: "{{ job_url }}"
+          stig_job_status: "{{ STIG_job.results[0] }}"
