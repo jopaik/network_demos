@@ -31,6 +31,5 @@
     - name: Set change Number
       ansible.builtin.set_stats:
         data:
-          change_number: "{{ ticket_number }}" 
           job_url: "{{ job_url }}"
           stig_job_status: "{{ STIG_job.results[0] }}"
