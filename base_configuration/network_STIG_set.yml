@@ -4,6 +4,23 @@
 
   tasks:
 
+    - name: List running jobs for the network_STIG_change.yml playbook
+      ansible.controller.job_list:
+        status: running
+        query: {"name": "Network STIG Validate"}
+      ignore_errors: true
+      run_once: true
+      delegate_to: localhost
+      check_mode: false
+      register: STIG_job
+
+    - name: Derive the URL for the currently running job template
+      when: STIG_job
+      ansible.builtin.set_fact:
+        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
+      run_once: true
+      delegate_to: localhost
+
     - name: Run Cisco STIG
       when: ansible_network_os == 'ios'
       vars:
@@ -11,7 +28,6 @@
       ansible.builtin.import_role:
         name: iosxeSTIG
 
-    #- name: Run JunOS STIG
-    #  when: ansible_network_os == 'junos'
-    #  ansible.builtin.import_role:
-    #    name: junosSTIG
+    - name: Set fact for change number
+      ansible.builtin.set_fact:
+        change_number: "{{ ticket_number }}" 
