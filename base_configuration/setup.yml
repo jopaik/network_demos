@@ -1,7 +1,6 @@
 ---
 controller_components:
   - projects
-  - credential_types
   - credentials
   - execution_environments
   - hosts
