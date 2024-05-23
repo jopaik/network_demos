@@ -67,6 +67,8 @@ For the below demos insure you are always using files from /home/student/network
    * Asible + Netbox SSOT 
    * Dynamic Inventory
    * Config Drift Checks
+- [Network Brownfield Resource Modules](network-brownfield-resource-modules)
+   * tdub wip   
 - [Network Troubleshooting](network_troubleshooting)
    * tdub wip
 - [NetDevOps](netdevops)
