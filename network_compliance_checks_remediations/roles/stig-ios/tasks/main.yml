@@ -668,3 +668,5 @@
     lines: "{{ iosxeSTIG_stigrule_217001_ip_options_drop_Lines }}"
   when:
     - iosxeSTIG_stigrule_217001_Manage
+
+

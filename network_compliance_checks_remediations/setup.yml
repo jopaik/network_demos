@@ -127,7 +127,8 @@ controller_workflows:
             - logging
             - snmp
             - ntp
-            - stig
+            - stig-ios
+            - stig-junos
     workflow_nodes:
       - identifier: Network-Check-Compliance
         unified_job_template:

@@ -210,7 +210,8 @@
                 - logging
                 - snmp
                 - ntp
-                - stig
+                - stig-ios
+                - stig-junos
 
     - name: Node Network-Run-Compliance
       ansible.controller.workflow_job_template_node:
