@@ -231,23 +231,8 @@ controller_templates:
     credentials:
       - "Workshop Credential"
 
-
-  - name: Network STIG - Configure
-    organization: "Red Hat network organization"
-    forks: 0
-    host_config_key: ''
-    inventory: Workshop Inventory
-    job_slice_count: 1
-    job_tags: ''
-    job_type: run
-    limit: ''
-    playbook: base_configuration/network_STIG_set.yml
-    prevent_instance_group_fallback: false
-    project: Network Demos
-    credentials:
-      - "Workshop Credential"
-
   - name: Network STIG - Validate
+    execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
@@ -262,7 +247,24 @@ controller_templates:
     credentials:
       - "Workshop Credential"
 
+  - name: Network STIG - Configure
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: ''
+    playbook: base_configuration/network_STIG_set.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+
   - name: ServiceNow / Update Change Request - Implementing
+    execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
@@ -278,6 +280,7 @@ controller_templates:
       - "Workshop Credential"
 
   - name: ServiceNow / Update Change Request - Review
+    execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
@@ -293,6 +296,7 @@ controller_templates:
       - "Workshop Credential"
 
   - name: ServiceNow / Update Change Request - Closed
+    execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
@@ -310,7 +314,7 @@ controller_templates:
     credentials:
       - "Workshop Credential"
 
-  - name: 'Network (IOS) STIG Configure'
+  - name: 'Network STIG Configure Workflow'
     description: 'Re-apply configuration settings in response to violation'
     inventory: Workshop Inventory
     organization: Red Hat network organization
@@ -324,8 +328,7 @@ controller_templates:
         related:
           always_nodes: []
           credentials: []
-          failure_nodes:
-            - identifier: Create Trustpoint
+          failure_nodes: []
           success_nodes:
             - identifier: Apply STIG Settings
       - identifier: Apply STIG Settings
