@@ -232,7 +232,7 @@ controller_templates:
       - "Workshop Credential"
 
 
-  - name: Network STIG
+  - name: Network STIG - Configure
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
@@ -242,6 +242,21 @@ controller_templates:
     job_type: run
     limit: ''
     playbook: base_configuration/network_STIG_set.yml
+    prevent_instance_group_fallback: false
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+
+  - name: Network STIG - Validate
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: check
+    limit: ''
+    playbook: base_configuration/network_STIG_change.yml
     prevent_instance_group_fallback: false
     project: Network Demos
     credentials:
