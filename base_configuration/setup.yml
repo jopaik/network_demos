@@ -27,14 +27,13 @@ controller_credential_types:
           secret: true
           type: string
       required:
-        - instance
+        - host
         - username
         - password
-        - passphrase
     injectors:
       env:
         SN_HOST: !unsafe '{{ host }}'
-        SN_PASSWORD: '{{ password }}'
+        SN_PASSWORD: !unsafe '{{ password }}'
         SN_USERNAME: !unsafe '{{ username }}'
     
 
