@@ -243,9 +243,13 @@ controller_templates:
     limit: ''
     playbook: base_configuration/network_STIG_change.yml
     prevent_instance_group_fallback: false
+    variables:
+      ansible_controller: ""
     project: Network Demos
     credentials:
       - "Workshop Credential"
+      - "Controller Credential"
+      - "ServiceNow ITSM"
 
   - name: Network STIG - Configure
     execution_environment: 'ruch-network-ee'
