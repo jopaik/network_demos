@@ -11,30 +11,30 @@ controller_components:
 
 
 controller_credential_types:
-  # - name: ServiceNow ITSM
-  #   kind: cloud
-  #   inputs:
-  #     fields:
-  #       - id: host
-  #         label: Host
-  #         type: string
-  #       - id: username
-  #         label: Username
-  #         type: string
-  #       - id: password
-  #         label: Password
-  #         secret: true
-  #         type: string
-  #     required:
-  #       - instance
-  #       - username
-  #       - password
-  #       - passphrase
-  #   injectors:
-  #     extra_vars:
-  #       SN_HOST: "{  { host }}"
-  #       SN_PASSWORD: "{  { password }}"
-  #       SN_USERNAME: "{  { username }}"
+  - name: ServiceNow ITSM
+    kind: cloud
+    inputs:
+      fields:
+        - id: host
+          label: Host
+          type: string
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+      required:
+        - instance
+        - username
+        - password
+        - passphrase
+    injectors:
+      env:
+        SN_HOST: !unsafe '{{ host }}'
+        SN_PASSWORD: '{{ password }}'
+        SN_USERNAME: !unsafe '{{ username }}'
     
 
 controller_credentials:
