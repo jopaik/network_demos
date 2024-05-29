@@ -268,7 +268,6 @@ controller_templates:
     host_config_key: ''
     inventory: Workshop Inventory
     job_slice_count: 1
-    job_tags: ''
     job_type: check
     limit: ''
     playbook: itsm_change_update.yml
@@ -284,13 +283,12 @@ controller_templates:
     host_config_key: ''
     inventory: Workshop Inventory
     job_slice_count: 1
-    job_tags: ''
     job_type: check
     limit: ''
     playbook: itsm_change_update.yml
     prevent_instance_group_fallback: false
     project: ServiceNow Examples
-    job_tags: 'review'
+    job_tags: review
     credentials:
       - "Workshop Credential"
 
