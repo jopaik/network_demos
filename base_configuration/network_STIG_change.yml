@@ -45,6 +45,14 @@
       ansible.builtin.pause:
         seconds: 20
 
+    - name: get all task status from job
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.controller.job_status:
+        job_id: "{{ STIG_job.job_id }}"
+      check_mode: false
+      run_once: true
+      delegate_to: localhost
+      register: STIG_job_status
 
     - name: List running jobs for the network_STIG_change.yml playbook
       ansible.controller.job_list:
