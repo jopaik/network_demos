@@ -314,6 +314,7 @@ controller_templates:
     credentials:
       - "Workshop Credential"
 
+controller_workflows:
   - name: 'Network STIG Configuration Workflow'
     description: 'Apply configuration settings in response to violation'
     inventory: Workshop Inventory
@@ -342,31 +343,31 @@ controller_templates:
           always_nodes: []
           credentials: []
           failure_nodes: []
+          success_nodes:
+            - identifier: 'Change Request - Review'
+      - identifier: 'Change Request - Review'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Review'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template 
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Change Request - Closed'
+      - identifier: 'Change Request - Closed'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Closed'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
           success_nodes: []
-      #       - identifier: 'Change Request - Review'
-      # - identifier: 'Change Request - Review'
-      #   unified_job_template:
-      #     name: 'ServiceNow / Update Change Request - Review'
-      #     organization: 
-      #       name: "Red Hat network organization"
-      #     type: job_template 
-      #   related:
-      #     always_nodes: []
-      #     credentials: []
-      #     failure_nodes: []
-      #     success_nodes:
-      #       - identifier: 'Change Request - Closed'
-      # - identifier: 'Change Request - Closed'
-      #   unified_job_template:
-      #     name: 'ServiceNow / Update Change Request - Closed'
-      #     organization: 
-      #       name: "Red Hat network organization"
-      #     type: job_template
-      #   related:
-      #     always_nodes: []
-      #     credentials: []
-      #     failure_nodes: []
-      #     success_nodes: []
 
 
 ...
