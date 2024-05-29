@@ -1,0 +1,27 @@
+---
+- name: Playbook to stage/scp .bin to router bootflash
+  hosts: _group
+  gather_facts: False
+
+  tasks:
+  - name: check if image already exist in bootflash
+    ios_command:
+      commands: 'dir bootflash: | include {{ new_image_ios }}'
+    register: check_image
+  
+  - name: Push new image from project to bootflash
+    vars:
+      ansible_command_timeout: 300
+      number_of_retries: 2
+    ansible.netcommon.net_put:
+      src: '{{ new_image_ios }}'
+      dest: nvram:startup-config
+    register: cisco_changed
+    interval: 10
+    retries: "{{ number_of_retries | int }}"
+    wait_for: result[0] contains OK
+    when: 
+    - check_image.stdout[0].find( new_image_ios )  == -1
+    - inventory_hostname in groups['cisco']
+  
+ 
