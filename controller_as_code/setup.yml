@@ -1388,7 +1388,7 @@
         workflow_job_template: "Network-Upgrade-Workflow"
         organization: "Red Hat network organization"
         success_nodes:
-          - Network-Upgrade-Uprade
+          - Network-Upgrade-Upgrade
         state: present
 
     - name: Node Network-Upgrade-Staging
