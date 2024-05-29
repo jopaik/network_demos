@@ -1348,7 +1348,7 @@
           description: ""
           spec:
             - question_name: Which Cisco IOS version to Stage
-              type: multiselect
+              type: multiplechoice
               variable: image_staging
               required: true
               default: ""
@@ -1356,7 +1356,7 @@
                 - 17.06.06a
                 - 17.07.01a
             - question_name: Which Cisco IOS version to Upgrade
-              type: multiselect
+              type: multiplechoice
               variable: image_upgrade
               required: true
               default: ""
