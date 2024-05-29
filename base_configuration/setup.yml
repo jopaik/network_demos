@@ -259,7 +259,7 @@ controller_templates:
     limit: ''
     playbook: base_configuration/network_STIG_set.yml
     prevent_instance_group_fallback: false
-    project: Network Demos
+    project: 'Network Demos'
     credentials:
       - "Workshop Credential"
 
@@ -270,11 +270,11 @@ controller_templates:
     host_config_key: ''
     inventory: Workshop Inventory
     job_slice_count: 1
-    job_type: check
+    job_type: run
     limit: ''
     playbook: itsm_change_update.yml
     prevent_instance_group_fallback: false
-    project: ServiceNow Examples
+    project: 'ServiceNow Examples'
     job_tags: 'implement'
     credentials:
       - "Workshop Credential"
@@ -286,11 +286,11 @@ controller_templates:
     host_config_key: ''
     inventory: Workshop Inventory
     job_slice_count: 1
-    job_type: check
+    job_type: run
     limit: ''
     playbook: itsm_change_update.yml
     prevent_instance_group_fallback: false
-    project: ServiceNow Examples
+    project: 'ServiceNow Examples'
     job_tags: review
     credentials:
       - "Workshop Credential"
@@ -303,23 +303,23 @@ controller_templates:
     inventory: Workshop Inventory
     job_slice_count: 1
     job_tags: ''
-    job_type: check
+    job_type: run
     limit: ''
     playbook: itsm_change_update.yml
     prevent_instance_group_fallback: false
-    project: ServiceNow Examples
+    project: 'ServiceNow Examples'
     variables:
       close_code: "successful"
       close_notes: "STIG was successfully implemented on {{ inventory_hostname }}"
     credentials:
       - "Workshop Credential"
 
-  - name: 'Network STIG Configure Workflow'
-    description: 'Re-apply configuration settings in response to violation'
+  - name: 'Network STIG Configuration Workflow'
+    description: 'Apply configuration settings in response to violation'
     inventory: Workshop Inventory
     organization: Red Hat network organization
     workflow_nodes:
-      - identifier: Change Request - Implementing
+      - identifier: 'Change Request - Implementing'
         unified_job_template:
           name: 'ServiceNow / Update Change Request - Implementing'
           organization: 
@@ -330,8 +330,8 @@ controller_templates:
           credentials: []
           failure_nodes: []
           success_nodes:
-            - identifier: Apply STIG Settings
-      - identifier: Apply STIG Settings
+            - identifier: 'Apply STIG Settings'
+      - identifier: 'Apply STIG Settings'
         unified_job_template:
           name: 'Network STIG - Configure'
           organization: 
@@ -342,8 +342,8 @@ controller_templates:
           credentials: []
           failure_nodes: []
           success_nodes:
-            - identifier: Change Request - Review
-      - identifier: Change Request - Review
+            - identifier: 'Change Request - Review'
+      - identifier: 'Change Request - Review'
         unified_job_template:
           name: 'ServiceNow / Update Change Request - Review'
           organization: 
@@ -354,8 +354,8 @@ controller_templates:
           credentials: []
           failure_nodes: []
           success_nodes:
-            - identifier: Change Request - Closed
-      - identifier: Change Request - Closed
+            - identifier: 'Change Request - Closed'
+      - identifier: 'Change Request - Closed'
         unified_job_template:
           name: 'ServiceNow / Update Change Request - Closed'
           organization: 
