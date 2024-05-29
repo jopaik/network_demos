@@ -316,7 +316,6 @@ controller_templates:
     description: 'Re-apply configuration settings in response to violation'
     inventory: Workshop Inventory
     organization: Red Hat network organization
-    survey_enabled: flase
     workflow_nodes:
       - identifier: Change Request - Implementing
         unified_job_template:
