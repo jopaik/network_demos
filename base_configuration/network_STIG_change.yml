@@ -9,7 +9,7 @@
     - name: List running jobs for the network_STIG_change.yml playbook
       ansible.controller.job_list:
         status: running
-        query: {"name": "Network STIG Validate"}
+        query: {"name": "Network STIG - Validate"}
       check_mode: false
       run_once: true
       delegate_to: localhost
@@ -44,6 +44,16 @@
     - name: Pause for 20 seconds to wait for handlers to flush 
       ansible.builtin.pause:
         seconds: 20
+
+
+    - name: List running jobs for the network_STIG_change.yml playbook
+      ansible.controller.job_list:
+        status: running
+        query: {"name": "Network STIG - Validate"}
+      check_mode: false
+      run_once: true
+      delegate_to: localhost
+      register: STIG_job2
 
     - name: Create Change Request Ticket in ITSM System
       when: change_fact == true
