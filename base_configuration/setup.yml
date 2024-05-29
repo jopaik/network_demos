@@ -314,58 +314,59 @@ controller_templates:
     credentials:
       - "Workshop Credential"
 
-  # - name: 'Network STIG Configuration Workflow'
-  #   description: 'Apply configuration settings in response to violation'
-  #   inventory: Workshop Inventory
-  #   organization: Red Hat network organization
-  #   workflow_nodes:
-  #     - identifier: 'Change Request - Implementing'
-  #       unified_job_template:
-  #         name: 'ServiceNow / Update Change Request - Implementing'
-  #         organization: 
-  #           name: "Red Hat network organization"
-  #         type: job_template
-  #       related:
-  #         always_nodes: []
-  #         credentials: []
-  #         failure_nodes: []
-  #         success_nodes:
-  #           - identifier: 'Apply STIG Settings'
-  #     - identifier: 'Apply STIG Settings'
-  #       unified_job_template:
-  #         name: 'Network STIG - Configure'
-  #         organization: 
-  #           name: "Red Hat network organization"
-  #         type: job_template 
-  #       related:
-  #         always_nodes: []
-  #         credentials: []
-  #         failure_nodes: []
-  #         success_nodes:
-  #           - identifier: 'Change Request - Review'
-  #     - identifier: 'Change Request - Review'
-  #       unified_job_template:
-  #         name: 'ServiceNow / Update Change Request - Review'
-  #         organization: 
-  #           name: "Red Hat network organization"
-  #         type: job_template 
-  #       related:
-  #         always_nodes: []
-  #         credentials: []
-  #         failure_nodes: []
-  #         success_nodes:
-  #           - identifier: 'Change Request - Closed'
-  #     - identifier: 'Change Request - Closed'
-  #       unified_job_template:
-  #         name: 'ServiceNow / Update Change Request - Closed'
-  #         organization: 
-  #           name: "Red Hat network organization"
-  #         type: job_template
-  #       related:
-  #         always_nodes: []
-  #         credentials: []
-  #         failure_nodes: []
-  #         success_nodes: []
+  - name: 'Network STIG Configuration Workflow'
+    description: 'Apply configuration settings in response to violation'
+    inventory: Workshop Inventory
+    organization: Red Hat network organization
+    survey_enabled: false
+    workflow_nodes:
+      - identifier: 'Change Request - Implementing'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Implementing'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Apply STIG Settings'
+      - identifier: 'Apply STIG Settings'
+        unified_job_template:
+          name: 'Network STIG - Configure'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template 
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Change Request - Review'
+      - identifier: 'Change Request - Review'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Review'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template 
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Change Request - Closed'
+      - identifier: 'Change Request - Closed'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Closed'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes: []
 
 
 ...
