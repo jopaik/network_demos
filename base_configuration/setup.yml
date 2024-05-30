@@ -266,6 +266,8 @@ controller_templates:
     project: 'Network Demos'
     credentials:
       - "Workshop Credential"
+      - "Controller Credential"
+
 
   - name: ServiceNow / Update Change Request - Implementing
     execution_environment: 'ruch-network-ee'
@@ -281,7 +283,7 @@ controller_templates:
     project: 'ServiceNow Examples'
     job_tags: 'implement'
     credentials:
-      - "Workshop Credential"
+      - "ServiceNow ITSM"
 
   - name: ServiceNow / Update Change Request - Review
     execution_environment: 'ruch-network-ee'
@@ -297,7 +299,7 @@ controller_templates:
     project: 'ServiceNow Examples'
     job_tags: review
     credentials:
-      - "Workshop Credential"
+      - "ServiceNow ITSM"
 
   - name: ServiceNow / Update Change Request - Closed
     execution_environment: 'ruch-network-ee'
@@ -316,13 +318,14 @@ controller_templates:
       close_code: "successful"
       close_notes: "STIG was successfully implemented on {{ inventory_hostname }}"
     credentials:
-      - "Workshop Credential"
+      - "ServiceNow ITSM"
 
 controller_workflows:
   - name: 'Network STIG Configuration Workflow'
     description: 'Apply configuration settings in response to violation'
     inventory: Workshop Inventory
     organization: Red Hat network organization
+    ask_variables_on_launch: true
     survey_enabled: false
     workflow_nodes:
       - identifier: 'Change Request - Implementing'

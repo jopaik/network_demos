@@ -13,13 +13,6 @@
       check_mode: false
       register: STIG_job
 
-    - name: Derive the URL for the currently running job template
-      when: STIG_job
-      ansible.builtin.set_fact:
-        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
-      run_once: true
-      delegate_to: localhost
-
     - name: Run Cisco STIG
       when: ansible_network_os == 'ios'
       ignore_errors: true
@@ -27,9 +20,3 @@
         ignore_all_errors: False
       ansible.builtin.import_role:
         name: iosxeSTIG
-
-    - name: Set change Number
-      ansible.builtin.set_stats:
-        data:
-          job_url: "{{ job_url }}"
-          stig_job_status: "{{ STIG_job.results[0] }}"
