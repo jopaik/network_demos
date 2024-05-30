@@ -18,7 +18,7 @@
 - [Step 5 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
 
 ## Objective
-To stage firmware images and upgrade network devices with Ansible.
+To stage firmware images and upgrade network devices with Ansible. Please note it takes several minutes to both stage files and upgrade.   
 
 ## Overview
 Ansible can scp firmware images to network devices. The workflow includes an approval node to control when an upgrade will be activated based on change control.  
