@@ -266,6 +266,8 @@ controller_templates:
     project: 'Network Demos'
     credentials:
       - "Workshop Credential"
+      - "Controller Credential"
+
 
   - name: ServiceNow / Update Change Request - Implementing
     execution_environment: 'ruch-network-ee'
