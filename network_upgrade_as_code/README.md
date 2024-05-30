@@ -30,7 +30,7 @@ pip install gdown
 ~~~
 
 ### Step 2 - Download Images
-From the folder `nework_upgrade_as_code`
+From the folder `network_upgrade_as_code/`
 ~~~
 gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
