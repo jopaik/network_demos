@@ -4,16 +4,17 @@
 # Summary of steps
 1. Install gdown
 2. Download the two c8000v images to `network_upgrade_as_code`
-3. Run the Network-Upgrade-Workflow template and choose image
-4. Approve the upgrade
-5. Review the Network-Upgrade-Upgrade jog-template 
+3. Temporarily modify .gitignore and stage the .bin files. Also move the images out of the repo when done.
+4. Run the Network-Upgrade-Workflow template and choose image
+5. Approve the upgrade
+6. Review the Network-Upgrade-Upgrade jog-template 
 
 # Network Upgrade as Code
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Install gdown](#step-1-install-gdown)
 - [Step 2 - Download Images](#step-2-download-images)
-  [Step 3 - Temporarily modify](step-3-temporarily-modify)
+- [Step 3 - Temporarily modify](step-3-temporarily-modify)
 - [Step 4 - Network-Upgrade-Workflow](#step-3-network-upgrade-workflow)
 - [Step 5 - Approve the upgrade](#step-4-approve-the-upgrade)
 - [Step 6 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
@@ -50,7 +51,16 @@ This will take a few minutes due to the file size.
 17.06.06a
 17.07.01a
 ~~~
-3. Edit and Push .gitignore by uncommiting out the c8000v
+3. Move the image files out of the network-demos-repo to the home directory
+~~~
+[student@ansible-1 network_upgrade_as_code]$ ls
+ansible-navigator.log                 README.md                                               staging.yml
+c8000v-universalk9.17.06.06a.SPA.bin  setup.yml                                               upgrade-artifact-2024-05-29T16:59:06.427433+00:00.json
+c8000v-universalk9.17.07.01a.SPA.bin  staging-artifact-2024-05-29T17:38:07.356799+00:00.json  upgrade.yml
+[student@ansible-1 network_upgrade_as_code]$ mv c8000v-universalk9.17.0* ~student/
+~~~
+
+4. Edit and Push .gitignore by uncommiting out the c8000v
 ~~~
 ansible-navigator.log
 *artifact*
