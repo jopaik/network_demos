@@ -44,6 +44,7 @@ ansible-navigator.log
 *.swp
 #*c8000v-universalk9*
 ~~~
+This will take a few minutes due to the file size.
 2. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files.
 ~~~
 17.06.06a
@@ -55,7 +56,8 @@ ansible-navigator.log
 *artifact*
 *.swp
 *c8000v-universalk9*
-
+~~~
+This step is necessary due to the file size restriction for gitea etc. 
 
 ### Step 4 - Run the Network-Upgrade-Workflow
 Run the Network-Upgrade-Workflow template and choose the image to stage and upgrade
