@@ -3,5 +3,6 @@
 - name: save configuration
   when: 
   - save == 'yes'
+  - ansible_network_os != junipernetwork.junos.junos
   ios_command:
     commands: write memory

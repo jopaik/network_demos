@@ -1,9 +1,22 @@
 ---
 - name: Playbook to stage/scp .bin to router bootflash
-  hosts: _group
+  hosts: rtr1 
   gather_facts: False
+  vars:
+   new_version: "{{ image_staging }}" 
+   #17.06.06a
+   #17.07.01a
+   new_image_ios: "c8000v-universalk9.{{ new_version }}.SPA.bin" 
+   ansible_network_cli_ssh_type: paramiko
 
   tasks:
+
+  - name: enable scp
+    cisco.ios.ios_config:
+      lines: 
+      - ip scp server enable
+      - ip ssh window-size 131072 
+     
   - name: check if image already exist in bootflash
     ios_command:
       commands: 'dir bootflash: | include {{ new_image_ios }}'
@@ -11,15 +24,11 @@
   
   - name: Push new image from project to bootflash
     vars:
-      ansible_command_timeout: 300
-      number_of_retries: 2
+      ansible_command_timeout: 1200
     ansible.netcommon.net_put:
       src: '{{ new_image_ios }}'
-      dest: nvram:startup-config
+      dest: flash:{{new_image_ios }}
     register: cisco_changed
-    interval: 10
-    retries: "{{ number_of_retries | int }}"
-    wait_for: result[0] contains OK
     when: 
     - check_image.stdout[0].find( new_image_ios )  == -1
     - inventory_hostname in groups['cisco']
