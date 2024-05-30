@@ -2,102 +2,89 @@
  - [Menu of Demos](../README.md)
 
 # Summary of steps
-1. Connect to Netbox Demo server to create and copy an API token
-https://netbox-demo.netboxlabs.com/ user=admin pass=admin
-2. Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox
-3. Review the Netbox GUI (devices, templates etc)
-4. Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
-5. Review the Netbox Inventory on AAP
-6. Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
-7. Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
-8. Verify Config drift checks by changing the config on rtr1. Also not the serial number, IPs, and cert informaiton will be different in every demo POD.
+1. Install gdown
+2. Download the two c8000v images to `network_upgrade_as_code`
+3. Run the Network-Upgrade-Workflow template and choose image
+4. Approve the upgrade
+5. Review the Network-Upgrade-Upgrade jog-template 
 
-# Netbox
+# Network Upgrade as Code
 
 [Table of Contents](#table-of-contents)
-- [Step 1 - Netbox Demo Server](#step-1-netbox-demo-server)
-- [Step 2 - Network-Netbox-Setup Job Template](#step-2-network-netbox-setup-job-template)
-- [Step 3 - Review the Netbox GUI](#step-3-review-the-netbox-gui)
-- [Step 4 - Add the API Token](#step-4-add-the-api-token)
-- [Step 5 - Review the Netbox Inventory on AAP](#step-5-review-the-netbox-inventory-on-aap)
-- [Step 6 - Launch the Network-Netbox-Facts job-template](#step-6-launch-the-network-netbox-facts-job-template)
-- [Step 7 - Launch the Network-Netbox-Compare-Configs job-template](#step-7-)
-- [Step 8 - Verify Config drift checks by changing the config on rtr1](#step-8-)
+- [Step 1 - Install gdown](#step-1-install-gdown)
+- [Step 2 - Download Images](#step-2-download-images)
+- [Step 3 - Network-Upgrade-Workflow](#step-3-network-upgrade-workflow)
+- [Step 4 - Approve the upgrade](#step-4-approve-the-upgrade)
+- [Step 5 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
 
 ## Objective
-To integrate Ansible with Netbox as a single source of truth (SSOT)
+To stage firmware images and upgrade network devices with Ansible.
 
 ## Overview
-The netbox.netbox collection allows Ansible to manage Netbox easily from the API. In this demo we use Ansible to check for config drift from routers config managed via Netbox. 
+Ansible can scp firmware images to network devices. The workflow includes an approval node to control when an upgrade will be activated based on change control.  
 
 ### Step 1 - Netbox Demo Server
-Connect to Netbox Demo server to create and copy an API token
-https://netbox-demo.netboxlabs.com/ user=admin pass=admin
-
-* Don't foget to save the api token to a notepad. You will need it throughout this demo.
-
-### Step 2 - Network-Netbox-Setup Job Template
-Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox.
-
-#### jinja2 template:
-One of the configs we are pushing into Netbox is a jinja2 template. Optionally you can create jinja2 templates in Netbox directly. In this demo we are using the netbox collection to configure Netbox from Ansible. 
-In either case, jinja2 templates will have many variables that map to the Netbox device configurations in the database. For this demo, we are simply looking for the Netbox device-name to define the hostname for rtr1. These templates are used in Netbox to render configs on devices. When using Ansible to deploy/render device changes, it's important to first check for configuration drift between the running device and the Netbox config/template.
-
-jinja2 snipit:
+Install gdown
 ~~~
- version 17.6
-            service timestamps debug datetime msec
-            service timestamps log datetime msec
-            service password-encryption
-            ! Call-home is enabled by Smart-Licensing.
-            service call-home
-            platform qfp utilization monitor load 80
-            platform punt-keepalive disable-kernel-core
-            platform console virtual
-            !
-            hostname {{ device.name | default ('{{ device.name }}') }}
-            !         
-            boot-start-marker
-            boot-end-marker
-            !
-            !
-            vrf definition GS
-             rd 100:100
+pip install gdown
 ~~~
 
-### Step 3 - Review the Netbox GUI 
-Review the Netbox GUI (devices, templates etc)
-- Look at the c8000v device type created by the Network-Netbox-Setup job template in the Netbox GUI
-
-### Step 4 - Add the API Token
-Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
-Update the source-nbox "NETBOX_TOKEN" source variable and save.
-
-### Step 5 - Review the Netbox Inventory on AAP
-You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP. rtr1 is also in group sites_rtp.
-
-### Step 6 - Launch the Network-Netbox-Facts job-template 
-Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1.  Click on the "Gather all facts" task to look at the JSON and see what was gathered.
-
-### Step 7 - Launch the Network-Netbox-Compare-Configs job-template 
-Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
-
-* Note, that every router from RHDP will have different IP addresses, certs etc. These nuances will show as Diffs.
-
-Access the jinja2 template from Netbox
- ![netbox](../images/netboxdevice.png)
+### Step 2 - Download Images
+From the folder `nework_upgrade_as_code`
+~~~
+gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
+gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
+~~~
 
 
+### Step 3 - Run the Network-Upgrade-Workflow
+Run the Network-Upgrade-Workflow template and choose the image to stage and upgrade
+*Select the version not already running on tr1
+~~~
+ssh rtr1
+sh ver
+Cisco IOS XE Software, Version 17.06.06a
+~~~
 
-### Step 8 - Verify Config drift checks 
-Verify Config drift checks by changing the config on rtr1 and relaunching the Network-Netbox-Compare-Configs job-template
+Choices
+~~~
+17.06.06a
+17.07.01a
+~~~
 
-* For example, add a new loopback 100 or something simular to simulate an out-of-band (OOB) change. 
+### Step 4 - Approve the upgrade
+Return to the AAP JOB for the Workflow and accept the approval node
+
+### Step 5 - Review the Network-Upgrade-Upgrade Job-Template output
+~~~
+TASK [debug] *******************************************************************
+ok: [rtr1] => {
+    "install_activate_output.stdout_lines": [
+        [
+            "install_add_activate_commit: START Wed May 29 18:47:28 UTC 2024",
+            "install_add_activate_commit: Adding PACKAGE",
+            "install_add_activate_commit: Checking whether new add is allowed ....",
+            "",
+            "--- Starting Add ---",
+            "Performing Add on Active/Standby",
+            "  [1] Add package(s) on R0",
+            "  [1] Finished Add on R0",
+            "Checking status of Add on [R0]",
+            "Add: Passed on [R0]",
+            "Finished Add",
+            "",
+            "Image added. Version: 17.06.01a.0.1",
+            "install_add_activate_commit: Activating PACKAGE",
+~~~
+~~~
+ssh rtr1
+sh ver
+Cisco IOS XE Software, Version 17.07.01a
+~~~
 
 # Key Takeaways
-* Configure Netbox with AAP as an alternative to the GUI
-* Use Netbox as a dynamic inventory source for Ansible
-* Comapare Netbox device configs as a source of truth for config drift.
-*
+* Ansible can scp firmware images to network devices. `netcommon.net_put` 
+* Approval nodes can control when an upgrade will be activated based on change control. 
+
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
