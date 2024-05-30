@@ -37,18 +37,25 @@ gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
 ~~~
 ### Step 3 - Temporarily modify .gitignore and stage .bin files
-
+1. Edit and Push .gitignore by commiting out the c8000v
 ~~~
 ansible-navigator.log
 *artifact*
 *.swp
 #*c8000v-universalk9*
 ~~~
-Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files.
+2. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files.
 ~~~
 17.06.06a
 17.07.01a
 ~~~
+3. Edit and Push .gitignore by uncommiting out the c8000v
+~~~
+ansible-navigator.log
+*artifact*
+*.swp
+*c8000v-universalk9*
+
 
 ### Step 4 - Run the Network-Upgrade-Workflow
 Run the Network-Upgrade-Workflow template and choose the image to stage and upgrade
