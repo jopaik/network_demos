@@ -13,9 +13,10 @@
 [Table of Contents](#table-of-contents)
 - [Step 1 - Install gdown](#step-1-install-gdown)
 - [Step 2 - Download Images](#step-2-download-images)
-- [Step 3 - Network-Upgrade-Workflow](#step-3-network-upgrade-workflow)
-- [Step 4 - Approve the upgrade](#step-4-approve-the-upgrade)
-- [Step 5 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
+  [Step 3 - Temporarily modify](step-3-temporarily-modify)
+- [Step 4 - Network-Upgrade-Workflow](#step-3-network-upgrade-workflow)
+- [Step 5 - Approve the upgrade](#step-4-approve-the-upgrade)
+- [Step 6 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
 
 ## Objective
 To stage firmware images and upgrade network devices with Ansible. Please note it takes several minutes to both stage files and upgrade.   
@@ -35,9 +36,21 @@ From the folder `network_upgrade_as_code/`
 gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
 ~~~
+### Step 3 - Temporarily modify .gitignore and stage .bin files
 
+~~~
+ansible-navigator.log
+*artifact*
+*.swp
+#*c8000v-universalk9*
+~~~
+Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files.
+~~~
+17.06.06a
+17.07.01a
+~~~
 
-### Step 3 - Run the Network-Upgrade-Workflow
+### Step 4 - Run the Network-Upgrade-Workflow
 Run the Network-Upgrade-Workflow template and choose the image to stage and upgrade
 *Select the version not already running on tr1
 ~~~
@@ -52,10 +65,10 @@ Choices
 17.07.01a
 ~~~
 
-### Step 4 - Approve the upgrade
+### Step 5 - Approve the upgrade
 Return to the AAP JOB for the Workflow and accept the approval node
 
-### Step 5 - Review the Network-Upgrade-Upgrade Job-Template output
+### Step 6 - Review the Network-Upgrade-Upgrade Job-Template output
 ~~~
 TASK [debug] *******************************************************************
 ok: [rtr1] => {
