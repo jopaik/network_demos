@@ -71,9 +71,9 @@
               start_date: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
               expected_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
               implementation_plan: >
-                "Implement the following playbook, which will run the tasks detailed in the second link"
-                https://student1.pnbzp.example.opentlc.com/#/templates/job_template/24/details
-                https://gitlab.com/redhatautomation/network_demos/-/blob/main/base_configuration/network_STIG_set.yml?ref_type=heads"
+                Implement the following playbook, which will run the tasks detailed in the second link \n
+                https://student1.pnbzp.example.opentlc.com/#/templates/job_template/24/details \n
+                https://gitlab.com/redhatautomation/network_demos/-/blob/main/base_configuration/network_STIG_set.yml?ref_type=heads
               answer: true
           register: change_out
           delegate_to: localhost
