@@ -1,0 +1,151 @@
+---
+controller_components:
+  - projects
+  - hosts
+  - groups
+  - credential_types
+  - credentials
+  - inventories
+  - inventory_sources
+  - execution_environments
+  - hosts
+  - job_templates
+  - workflow_job_templates
+
+controller_projects:
+  - name: Student Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+  - name: Netbox Project
+    organization: "Red Hat network organization"
+    scm_url: "http://ansible-1:3000/gitea/network-demos-repo.git"
+    scm_type: git
+    allow_override: true
+    state: present
+    scm_update_on_launch: yes
+
+controller_execution_environments:
+  - name: "Validated Network"
+    image: registry.gitlab.com/redhatautomation/validated-network-ee:latest
+    pull: missing
+
+controller_credential_types:
+  - name: Gitea Student
+    kind: cloud 
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
+
+controller_credentials:
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
+
+controller_templates:
+  - name: "Network-Topology"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "network_topology/onboard_network.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+    state: "present"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      description: ""
+      spec:
+        - question_name: Please select the IP Address for rtr1 tu1
+          type: multiplechoice
+          variable: rtr1_tu1
+          required: true
+          default: "10.200.200.1"
+          choices:
+            - "10.200.200.1"
+            - "10.199.199.1"
+        - question_name: Please provide description for rtr1 tu1
+          type: text
+          variable: rtr1_desc
+          required: true
+          default: "rtr1 tu1"
+          choices: ''
+          max: 1024
+          min: 0
+        - question_name: Please select the IP Address for rtr2 tu1
+          type: multiplechoice
+          variable: rtr2_tu1
+          required: true
+          default: "10.100.100.2"
+          choices:
+            - "10.100.100.2"
+            - "10.199.199.2"
+        - question_name: Please provide description for rtr2 tu1
+          type: text
+          variable: rtr2_desc
+          required: true
+          default: "rtr2 tu1"
+          choices: ''
+          max: 1024
+          min: 0
+        - question_name: Please select the IP Address for rtr3 tu1
+          type: multiplechoice
+          variable: rtr3_tu1
+          required: true
+          default: "10.102.102.3"
+          choices:
+            - "10.102.102.3"
+            - "10.199.199.3"
+        - question_name: Please provide description for rtr3 tu1
+          type: text
+          variable: rtr3_desc
+          required: true
+          default: "rtr3"
+          choices: ''
+          max: 1024
+          min: 0
+        - question_name: Please select the IP Address for rtr4 tu1
+          type: multiplechoice
+          variable: rtr4_tu1
+          required: true
+          default: "10.102.102.4"
+          choices:
+            - "10.102.102.4"
+            - "10.199.199.4"
+        - question_name: Please provide description for rtr4 tu1
+          type: text
+          variable: rtr4_desc
+          required: true
+          default: "rtr4 tu1"
+          choices: ''
+          max: 1024
+          min: 0
