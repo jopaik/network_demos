@@ -85,6 +85,10 @@
 
         - name: Retrieve change requests by number
           servicenow.itsm.change_request_info:
+            instance:
+              host: "{{ SN_HOST }}"
+              username: "{{ SN_USERNAME }}"
+              password: "{{ SN_PASSWORD }}"
             number: "{{ change_number }}"
           register: result
 
