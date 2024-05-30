@@ -7,7 +7,9 @@
 
   tasks:
     - debug:
-        msg: "branch: {{scm_branch}}"
+        msg: "branch: {{branch_name}}"
+      delegate_to: "localhost"
+      run_once: true
 
     - name: Retrieve a repository from a distant location and make it available to the local EE
       ansible.scm.git_retrieve:
@@ -15,7 +17,7 @@
           url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
         parent_directory: /tmp/
         branch:
-          name: "{{scm_branch}}"
+          name: "{{branch_name}}"
           duplicate_detection: no  
       delegate_to: "localhost"
       run_once: true

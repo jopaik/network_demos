@@ -1,4 +1,6 @@
 ---
 collections:
-- cisco.ios
-- junipernetworks.junos
+  - name: cisco.ios
+  - name: junipernetworks.junos
+  - name: servicenow.itsm
+    version: 2.1.0

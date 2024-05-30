@@ -1,0 +1,53 @@
+---
+- name: Gather configuration information from network devices
+  hosts: catalyst
+  gather_facts: false
+
+  tasks:
+
+    - name: Gather network information
+      cisco.ios.ios_facts:
+        gather_network_resources:
+          - 'all'
+          #- "acl_interfaces"
+          #- "acls"
+          #- "bgp_address_family"
+          #- "bgp_global"
+          #- "hostname"
+          #- "interfaces"
+          #- "l2_interfaces"
+          #- "l3_interfaces"
+          #- "lacp"
+          #- "lacp_interfaces"
+          #- "lag_interfaces"
+          #- "lldp_global"
+          #- "lldp_interfaces"
+          #- "logging_global"
+          #- "ntp_global"
+          #- "ospf_interfaces"
+          #- "ospfv2"
+          #- "ospfv3"
+          #- "prefix_lists"
+          #- "route_maps"
+          #- "service"
+          #- "snmp_server"
+          #- "static_routes"
+          #- system module 
+          #- user 
+          #- vlans 
+          #- vrf module 
+
+    - name: Create a host_vars directory if it does not exist
+      ansible.builtin.file:
+        path: "host_vars/"
+        state: directory
+        mode: '0755'
+
+    - name: Add network facts to the host_vars
+      ansible.builtin.copy:
+        content: "{{ ansible_network_resources | to_nice_yaml }}"
+        dest: "host_vars/{{ inventory_hostname }}/brownfield.yaml"
+     
+
+
+   

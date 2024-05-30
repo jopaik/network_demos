@@ -86,7 +86,7 @@
           spec:
             - question_name: Which Branch would you like to Check Config Drift from?
               type: multiplechoice
-              variable: scm_branch
+              variable: branch_name
               required: true
               default: ""
               choices:
@@ -142,7 +142,7 @@
           spec:
             - question_name: Which Branch would you like to Restore from?
               type: multiplechoice
-              variable: scm_branch
+              variable: branch_name
               required: true
               default: ""
               choices:

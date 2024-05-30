@@ -1,0 +1,108 @@
+- name: Cisco IOS XE STIG
+  hosts: cisco
+  gather_facts: false
+  vars:
+    change_fact: false
+
+  tasks:
+
+    - name: List running jobs for the network_STIG_change.yml playbook
+      ansible.controller.job_list:
+        status: running
+        query: {"name": "Network STIG - Validate"}
+      check_mode: false
+      run_once: true
+      delegate_to: localhost
+      register: STIG_job
+
+    - name: Derive the URL for the currently running job template
+      when: STIG_job
+      ansible.builtin.set_fact:
+        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
+      check_mode: false
+      run_once: true
+      delegate_to: localhost
+
+    - name: Run Cisco STIG
+      when: ansible_network_os == 'ios'
+      vars:
+        ignore_all_errors: False
+      ansible.builtin.include_role:
+        name: iosxeSTIG
+      # notify: cisco_stig
+      register: cisco_stig_reg
+
+    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+      ansible.builtin.meta: flush_handlers
+      check_mode: false
+
+    - name: Debug
+      ansible.builtin.debug:
+        var: change_fact
+      check_mode: false
+
+    - name: Pause for 20 seconds to wait for handlers to flush 
+      ansible.builtin.pause:
+        seconds: 20
+
+    - name: get all task status from job
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.controller.job_status:
+        job_id: "{{ STIG_job.job_id }}"
+      check_mode: false
+      run_once: true
+      delegate_to: localhost
+      register: STIG_job_status
+
+    - name: List running jobs for the network_STIG_change.yml playbook
+      ansible.controller.job_list:
+        status: running
+        query: {"name": "Network STIG - Validate"}
+      check_mode: false
+      run_once: true
+      delegate_to: localhost
+      register: STIG_job2
+
+    - name: Create Change Request Ticket in ITSM System
+      when: change_fact == true
+      block:
+        - name: Create Change Request
+          servicenow.itsm.change_request:
+            instance:
+              host: "{{ SN_HOST }}"
+              username: "{{ SN_USERNAME }}"
+              password: "{{ SN_PASSWORD }}"
+            state: new
+            type: normal
+            requested_by: "splunk_ansible_workflow"
+            description: |
+              '{{ inventory_hostname }} is out of compliance.
+              Use the following URL for details: {{ job_url }}'
+            short_description: "{{ inventory_hostname }}"
+            priority: low
+            impact: low
+            risk: low
+            category: network
+            assignment_group: 'Network CAB Managers'
+            other:
+              planned_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
+              answer: true
+          register: change_out
+          delegate_to: localhost
+
+        - name: Set fact for change number
+          ansible.builtin.set_fact:
+            #change_number: 'CHG0030022'
+            change_number: "{{ change_out.record.number }}"
+
+        - name: Debug change number
+          debug:
+            msg: "{{ change_number }}"
+      check_mode: false
+
+    # - name: Set change Number
+    #   ansible.builtin.set_stats:
+    #     data:
+    #       change_number: "{{ change_number }}"
+
+

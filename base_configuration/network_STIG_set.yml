@@ -1,17 +1,35 @@
 - name: Cisco IOS XE STIG
-  hosts: cisco,juniper
+  hosts: "{{ _hosts }}"
   gather_facts: false
 
   tasks:
 
+    - name: List running jobs for the network_STIG_change.yml playbook
+      ansible.controller.job_list:
+        status: running
+        query: {"name": "Network STIG Run"}
+      run_once: true
+      delegate_to: localhost
+      check_mode: false
+      register: STIG_job
+
+    - name: Derive the URL for the currently running job template
+      when: STIG_job
+      ansible.builtin.set_fact:
+        job_url: "https://{{ ansible_controller }}/#/jobs/playbook/{{ STIG_job.results[0].id }}/output"
+      run_once: true
+      delegate_to: localhost
+
     - name: Run Cisco STIG
       when: ansible_network_os == 'ios'
+      ignore_errors: true
       vars:
         ignore_all_errors: False
       ansible.builtin.import_role:
         name: iosxeSTIG
 
-    #- name: Run JunOS STIG
-    #  when: ansible_network_os == 'junos'
-    #  ansible.builtin.import_role:
-    #    name: junosSTIG
+    - name: Set change Number
+      ansible.builtin.set_stats:
+        data:
+          job_url: "{{ job_url }}"
+          stig_job_status: "{{ STIG_job.results[0] }}"

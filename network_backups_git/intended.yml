@@ -1,5 +1,5 @@
 ---
-- name: Backup Cisco Configs to Gitea in Branches
+- name: Compare Cisco Configs in Gitea in Branches to Running Routers
   hosts: "{{ _group }}"
   gather_facts: False
 
@@ -10,8 +10,8 @@
           url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
         parent_directory: /tmp/
         branch:
-          name: "{{scm_branch}}"
-          duplicate_detection: no  
+            name: "{{branch_name}}"
+            duplicate_detection: no  
       delegate_to: "localhost"
       run_once: true
 

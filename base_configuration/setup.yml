@@ -27,15 +27,14 @@ controller_credential_types:
           secret: true
           type: string
       required:
-        - instance
+        - host
         - username
         - password
-        - passphrase
     injectors:
       extra_vars:
-        SN_HOST: "{  { host }}"
-        SN_PASSWORD: "{  { password }}"
-        SN_USERNAME: "{  { username }}"
+        SN_HOST: !unsafe '{{ host }}'
+        SN_PASSWORD: !unsafe '{{ password }}'
+        SN_USERNAME: !unsafe '{{ username }}'
     
 
 controller_credentials:
@@ -232,8 +231,28 @@ controller_templates:
     credentials:
       - "Workshop Credential"
 
+  - name: Network STIG - Validate
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: check
+    limit: ''
+    playbook: base_configuration/network_STIG_change.yml
+    prevent_instance_group_fallback: false
+    variables:
+      ansible_controller: ""
+    project: Network Demos
+    credentials:
+      - "Workshop Credential"
+      - "Controller Credential"
+      - "ServiceNow ITSM"
 
-  - name: Network STIG
+  - name: Network STIG - Configure
+    execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
     host_config_key: ''
@@ -244,8 +263,116 @@ controller_templates:
     limit: ''
     playbook: base_configuration/network_STIG_set.yml
     prevent_instance_group_fallback: false
-    project: Network Demos
+    project: 'Network Demos'
     credentials:
       - "Workshop Credential"
 
+  - name: ServiceNow / Update Change Request - Implementing
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_type: run
+    limit: ''
+    playbook: itsm_change_update.yml
+    prevent_instance_group_fallback: false
+    project: 'ServiceNow Examples'
+    job_tags: 'implement'
+    credentials:
+      - "Workshop Credential"
+
+  - name: ServiceNow / Update Change Request - Review
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_type: run
+    limit: ''
+    playbook: itsm_change_update.yml
+    prevent_instance_group_fallback: false
+    project: 'ServiceNow Examples'
+    job_tags: review
+    credentials:
+      - "Workshop Credential"
+
+  - name: ServiceNow / Update Change Request - Closed
+    execution_environment: 'ruch-network-ee'
+    organization: "Red Hat network organization"
+    forks: 0
+    host_config_key: ''
+    inventory: Workshop Inventory
+    job_slice_count: 1
+    job_tags: ''
+    job_type: run
+    limit: ''
+    playbook: itsm_change_update.yml
+    prevent_instance_group_fallback: false
+    project: 'ServiceNow Examples'
+    variables:
+      close_code: "successful"
+      close_notes: "STIG was successfully implemented on {{ inventory_hostname }}"
+    credentials:
+      - "Workshop Credential"
+
+controller_workflows:
+  - name: 'Network STIG Configuration Workflow'
+    description: 'Apply configuration settings in response to violation'
+    inventory: Workshop Inventory
+    organization: Red Hat network organization
+    survey_enabled: false
+    workflow_nodes:
+      - identifier: 'Change Request - Implementing'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Implementing'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Apply STIG Settings'
+      - identifier: 'Apply STIG Settings'
+        unified_job_template:
+          name: 'Network STIG - Configure'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template 
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Change Request - Review'
+      - identifier: 'Change Request - Review'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Review'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template 
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - identifier: 'Change Request - Closed'
+      - identifier: 'Change Request - Closed'
+        unified_job_template:
+          name: 'ServiceNow / Update Change Request - Closed'
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes: []
+
+
 ...
+
