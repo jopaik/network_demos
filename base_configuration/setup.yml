@@ -323,6 +323,7 @@ controller_workflows:
     description: 'Apply configuration settings in response to violation'
     inventory: Workshop Inventory
     organization: Red Hat network organization
+    ask_variables_on_launch: true
     survey_enabled: false
     workflow_nodes:
       - identifier: 'Change Request - Implementing'
