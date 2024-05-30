@@ -45,24 +45,6 @@
       ansible.builtin.pause:
         seconds: 20
 
-    - name: get all task status from job
-      # Content suggestion provided by Ansible Lightspeed
-      ansible.controller.job_status:
-        job_id: "{{ STIG_job.job_id }}"
-      check_mode: false
-      run_once: true
-      delegate_to: localhost
-      register: STIG_job_status
-
-    - name: List running jobs for the network_STIG_change.yml playbook
-      ansible.controller.job_list:
-        status: running
-        query: {"name": "Network STIG - Validate"}
-      check_mode: false
-      run_once: true
-      delegate_to: localhost
-      register: STIG_job2
-
     - name: Create Change Request Ticket in ITSM System
       when: change_fact == true
       block:
@@ -82,10 +64,12 @@
             priority: low
             impact: low
             risk: low
+            urgency: medium
             category: network
             assignment_group: 'Network CAB Managers'
             other:
               planned_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
+              expected_start: "{{ lookup('pipe','date +%Y%m%d%H%M%S')}}"
               answer: true
           register: change_out
           delegate_to: localhost
@@ -94,10 +78,19 @@
           ansible.builtin.set_fact:
             #change_number: 'CHG0030022'
             change_number: "{{ change_out.record.number }}"
-
+        
         - name: Debug change number
           debug:
             msg: "{{ change_number }}"
+
+        - name: Retrieve change requests by number
+          servicenow.itsm.change_request_info:
+            number: "{{ change_number }}"
+          register: result
+
+        - name: Debug change number
+          debug:
+            msg: "{{ result }}"
       check_mode: false
 
     # - name: Set change Number
