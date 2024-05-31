@@ -1496,7 +1496,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "network_brownfield_resource_modules/onboard_network.yml"
+        playbook: "network_brownfield_resource_modules/brownfield.yml"
         credentials:
           - "Workshop Credential"
           - "Gitea Credential"
