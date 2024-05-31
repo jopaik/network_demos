@@ -1,6 +1,6 @@
 ---
 - name: Gather configuration information from network devices
-  hosts: cat
+  hosts: switches
   gather_facts: false
 
   tasks:
