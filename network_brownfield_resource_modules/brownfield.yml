@@ -1,9 +1,20 @@
 ---
 - name: Gather configuration information from network devices
-  hosts: catalyst
+  hosts: cat
   gather_facts: false
 
   tasks:
+
+    - name: Retrieve a repository from a distant location and make it available to the local EE
+      ansible.scm.git_retrieve:
+        origin:
+          url: "https://gitlab.com/tdubiel1/catalyst-demo.git" #Change
+        parent_directory: /tmp/
+        branch:
+            name: "main"
+            duplicate_detection: no  
+      delegate_to: "localhost"
+      run_once: true
 
     - name: Gather network information
       cisco.ios.ios_facts:
@@ -47,6 +58,15 @@
       ansible.builtin.copy:
         content: "{{ ansible_network_resources | to_nice_yaml }}"
         dest: "host_vars/{{ inventory_hostname }}/brownfield.yaml"
+
+    - name: Publish the changes
+      ansible.scm.git_publish:
+        path: "{{ repository['path'] }}"
+        token: "{{ password }}"
+        user:
+          name: "{{ username }}"
+          email: "{{ email }}"
+      when: inventory_hostname == 'localhost'
      
 
 

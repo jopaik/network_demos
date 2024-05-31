@@ -1,34 +1,63 @@
 ---
-- name: Backup Cisco Configs to Gitea in Branches
-  hosts:
-    - localhost
-    - cisco
-    - arista
-    - juniper
-  gather_facts: True
+- name: Gather configuration information from network devices
+  hosts: catalyst
+  gather_facts: false
 
   tasks:
+
     - name: Retrieve a repository from a distant location and make it available to the local EE
       ansible.scm.git_retrieve:
         origin:
-          url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+          url: "add your repo url"
         parent_directory: /tmp/
         branch:
-          name: "{{ branch_name | default ('ansible-{play_name}') }}-{{ansible_date_time.iso8601_basic_short}}"
-          duplicate_detection: no
-      register: repository
-      when: inventory_hostname == 'localhost'
+            name: "main"
+            duplicate_detection: no  
+      delegate_to: "localhost"
+      run_once: true
 
-    - name: Network Backup and Resource Manager
-      ansible.builtin.include_role:
-        name: network.backup.run
-      vars:
-        ansible_connection: network_cli
-        operation: backup
-        type: full
-        data_store:
-          local: "/tmp/network-demos-repo/network_backup_files"
-      when: inventory_hostname != 'localhost'
+    - name: Gather network information
+      cisco.ios.ios_facts:
+        gather_network_resources:
+          - 'all'
+          #- "acl_interfaces"
+          #- "acls"
+          #- "bgp_address_family"
+          #- "bgp_global"
+          #- "hostname"
+          #- "interfaces"
+          #- "l2_interfaces"
+          #- "l3_interfaces"
+          #- "lacp"
+          #- "lacp_interfaces"
+          #- "lag_interfaces"
+          #- "lldp_global"
+          #- "lldp_interfaces"
+          #- "logging_global"
+          #- "ntp_global"
+          #- "ospf_interfaces"
+          #- "ospfv2"
+          #- "ospfv3"
+          #- "prefix_lists"
+          #- "route_maps"
+          #- "service"
+          #- "snmp_server"
+          #- "static_routes"
+          #- system module 
+          #- user 
+          #- vlans 
+          #- vrf module 
+
+    - name: Create a host_vars directory if it does not exist
+      ansible.builtin.file:
+        path: "host_vars/"
+        state: directory
+        mode: '0755'
+
+    - name: Add network facts to the host_vars
+      ansible.builtin.copy:
+        content: "{{ ansible_network_resources | to_nice_yaml }}"
+        dest: "host_vars/{{ inventory_hostname }}/brownfield.yaml"
 
     - name: Publish the changes
       ansible.scm.git_publish:
@@ -38,144 +67,3 @@
           name: "{{ username }}"
           email: "{{ email }}"
       when: inventory_hostname == 'localhost'
-
-#Prepare for Intent and Restore
-- name: Prepare Branches for Intent and Restore
-  hosts:
-    - localhost
-    - cisco
-    - arista
-    - juniper
-  gather_facts: False
-
-  tasks:
-    - name: Retrieve a repository from a distant location and make it available to the local EE
-      ansible.scm.git_retrieve:
-        origin:
-          url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
-        parent_directory: /tmp/
-        branch:
-          name: "{{ branch_name | default ('ansible-{play_name}') }}-{{ansible_date_time.iso8601_basic_short}}"
-          duplicate_detection: no
-      register: repository
-      when: inventory_hostname == 'localhost'
-
-    - name: List the Branches
-      ansible.builtin.shell:
-        cmd: "git branch -r"
-        chdir: /tmp/network-demos-repo/
-      when: inventory_hostname == 'localhost'
-      register: branches
-
-    - name: Create a job-template - Network-Git-Intent
-      ansible.controller.job_template:
-        name: "Network-Git-Intent"
-        organization: "Red Hat network organization"
-        inventory: "Workshop Inventory"
-        project: "Student Project"
-        playbook: "network_backups_git/intended.yml"
-        credentials:
-          - "Workshop Credential"
-        execution_environment: "Validated Network"
-        state: "present"
-        diff_mode: true
-        survey_enabled: true
-        survey_spec:
-          name: ""
-          description: ""
-          spec:
-            - question_name: Which Branch would you like to Check Config Drift from?
-              type: multiplechoice
-              variable: branch_name
-              required: true
-              default: ""
-              choices:
-                - "{{ branches.stdout_lines[1] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[2] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[3] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[4] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[5] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[6] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[7] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[8] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[9] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[10] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[11] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[12] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[13] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[14] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[15] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[16] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[17] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[18] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[19] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[20] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[21] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[22] | default('') | replace('  origin/','') }}"
-            - question_name: Which Group or Groups to Check Config Drift?
-              type: multiselect
-              variable: _group
-              required: true
-              default: ""
-              choices:
-                - cisco
-                - arista
-                - juniper
-      when: inventory_hostname == 'localhost'
-      ignore_errors: true
-
-    - name: Create a job-template - Network-Git-Restore
-      ansible.controller.job_template:
-        name: "Network-Git-Restore"
-        organization: "Red Hat network organization"
-        inventory: "Workshop Inventory"
-        project: "Student Project"
-        playbook: "network_backups_git/restore.yml"
-        credentials:
-          - "Workshop Credential"
-        execution_environment: "Validated Network"
-        state: "present"
-        survey_enabled: true
-        survey_spec:
-          name: ""
-          description: ""
-          spec:
-            - question_name: Which Branch would you like to Restore from?
-              type: multiplechoice
-              variable: branch_name
-              required: true
-              default: ""
-              choices:
-                - "{{ branches.stdout_lines[1] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[2] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[3] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[4] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[5] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[6] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[7] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[8] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[9] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[10] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[11] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[12] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[13] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[14] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[15] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[16] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[17] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[18] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[19] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[20] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[21] | default('') | replace('  origin/','') }}"
-                - "{{ branches.stdout_lines[22] | default('') | replace('  origin/','') }}"
-            - question_name: Which Group or Groups to Rollback?
-              type: multiselect
-              variable: _group
-              required: true
-              default: ""
-              choices:
-                - cisco
-                - arista
-                - juniper
-      when: inventory_hostname == 'localhost'
-      ignore_errors: true

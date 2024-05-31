@@ -1488,6 +1488,20 @@
               choices: ''
               max: 1024
               min: 0
+
+    # This section includes Network-Brownfield-Resource-Modules
+    - name: Create a job-template - Network-Brownfield-Resource-Modules
+      ansible.controller.job_template:
+        name: "Network-Brownfield-Resource-Modules"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_brownfield_resource_modules/onboard_network.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+        execution_environment: "Validated Network"
+        state: "present"
                 
 
 
