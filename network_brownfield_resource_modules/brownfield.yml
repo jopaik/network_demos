@@ -4,14 +4,13 @@
   gather_facts: false
 
   tasks:
-
     - name: Retrieve a repository from a distant location and make it available to the local EE
       ansible.scm.git_retrieve:
         origin:
-          url: "https://gitlab.com/tdubiel1/catalyst-demo.git" #Change
+          url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
         parent_directory: /tmp/
         branch:
-            name: "main"
+            name: main
             duplicate_detection: no  
       delegate_to: "localhost"
       run_once: true
