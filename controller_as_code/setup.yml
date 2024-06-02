@@ -1502,6 +1502,32 @@
           - "Gitea Credential"
         execution_environment: "Validated Network"
         state: "present"
+
+    - name: Create a job-template - Network-Brownfield-Deploy
+      ansible.controller.job_template:
+        name: "Network-Brownfield-Resource-Deploy"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_brownfield_resource_modules/deploy.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Brownfield-Diff
+      ansible.controller.job_template:
+        name: "Network-Brownfield-Resource-Diff"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_brownfield_resource_modules/diff.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        job_type: check
+        diff_mode: true
+        state: "present"    
     
     - name: Add Host
       ansible.controller.host:
