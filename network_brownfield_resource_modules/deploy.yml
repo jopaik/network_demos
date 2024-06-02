@@ -3,33 +3,33 @@
   hosts: switches
   gather_facts: false
   vars:
-    resource:
-      - static_routes
-      - ntp_global
-      - logging_global
-      - hostname
-      - snmp_server
-      - vlans
-      - interfaces
-      - l2_interfaces
-      - l3_interfaces
-      - bfd_interfaces
-      - lldp_global
-      - lldp_interfaces
-      - ospf_interfaces
-      - prefix_lists
-      - route_maps
-      - telemetry
+   resource:
+    - static_routes
+    - ntp_global
+    - logging_global
+    - hostname
+    - snmp_server
+    - vlans
+    - interfaces
+    - l2_interfaces
+    - l3_interfaces
+    - bfd_interfaces
+    - lldp_global
+    - lldp_interfaces
+    - ospf_interfaces
+    - prefix_lists
+    - route_maps
+    - telemetry
 
   tasks:
-    - include_vars:
-        file: host_vars/{{ inventory_hostname }}/brownfield.yaml
-        name: brownfield
-
+    
     - name: Apply configuration
       ansible.netcommon.network_resource:
         os_name: cisco.nxos.nxos
         name: "{{ item }}"
-        config: "{{ brownfield[item] }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
         state: merged
       loop: "{{ resource }}"
+       
+      
+        
