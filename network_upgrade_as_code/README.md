@@ -3,7 +3,7 @@
 
 # Summary of steps
 1. Install gdown
-2. Download the two c8000v images to `network_upgrade_as_code`
+2. Download the two c8000v images to `network_upgrade_as_code` and push to gitea
 3. Temporarily modify .gitignore and stage the .bin files. Also move the images out of the repo when done.
 4. Run the Network-Upgrade-Workflow template and choose image
 5. Approve the upgrade
