@@ -75,7 +75,7 @@ For the below demos insure you are always using files from /home/student/network
    * tdub wip
 - [Routing Protocol Migration](routing_protocol_migration)
    * tdub wip
-- [Network Upgrades as Code](network_upgrades_as_code)
+- [Network Upgrade as Code](network_upgrade_as_code)
    * tdub wip
     
 # Getting Started
