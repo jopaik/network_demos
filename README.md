@@ -70,7 +70,14 @@ For the below demos insure you are always using files from /home/student/network
    * Get Device Info
    * Get Endpoint Info
 - [Cisco Meraki](cisco_meraki)
-   * WIP
+   * tdub wip
+- [Cisco SDWAN](cisco_sdwan)
+   * tdub wip
+- [Cisco Thousand Eyes](cisco_thusand_eyes)
+   * tdub wip
+- [Arista AVD](arista_avd)
+   * tdub wip
+   
 - [NetBox](netbox)
    * Ansible + Netbox SSOT 
    * Dynamic Inventory
@@ -79,10 +86,11 @@ For the below demos insure you are always using files from /home/student/network
    * tdub wip
 - [NetDevOps](netdevops)
    * tdub wip
-- [Routing Protocol Migration](routing_protocol_migration)
+- [Network Routing Protocol Migration](routing_protocol_migration)
    * tdub wip
-
-    
+- [Network Netcommon Playground](routing_protocol_migration)
+   * tdub wip
+   
 # Getting Started
 
 ## Summary of steps
