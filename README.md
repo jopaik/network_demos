@@ -50,6 +50,14 @@ For the below demos insure you are always using files from /home/student/network
    * Close Tickets 
    * Dynamic Inventory from CMDB
    * Get Facts
+- [Network Brownfield Resource Modules](network-brownfield-resource-modules)
+   * Ingest the device configurations
+   * Make changed to the SSOT (host_vars)
+   * Detect differences (drift) between the SSOT and Running Confurations
+   * Deploy changes using netcommon + resource modules 
+- [Network Upgrade as Code](network_upgrade_as_code)
+   * Stage ios images to Cisco router
+   * Upgrade or Downgrade the Cisco router as code
 - [Cisco ACI](cisco_aci)
    * Deploy ACI fabrics as Code
    * Make Health Checks from Ansible to Validate ACI State
@@ -67,19 +75,13 @@ For the below demos insure you are always using files from /home/student/network
    * Ansible + Netbox SSOT 
    * Dynamic Inventory
    * Config Drift Checks
-- [Network Brownfield Resource Modules](network-brownfield-resource-modules)
-   * Ingest the device configurations
-   * Make changed to the SSOT (host_vars)
-   * Detect differences (drift) between the SSOT and Running Confurations
-   * Deploy changes using netcommon + resource modules 
 - [Network Troubleshooting](network_troubleshooting)
    * tdub wip
 - [NetDevOps](netdevops)
    * tdub wip
 - [Routing Protocol Migration](routing_protocol_migration)
    * tdub wip
-- [Network Upgrade as Code](network_upgrade_as_code)
-   * tdub wip
+
     
 # Getting Started
 
