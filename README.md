@@ -64,11 +64,14 @@ For the below demos insure you are always using files from /home/student/network
 - [Cisco Meraki](cisco_meraki)
    * WIP
 - [NetBox](netbox)
-   * Asible + Netbox SSOT 
+   * Ansible + Netbox SSOT 
    * Dynamic Inventory
    * Config Drift Checks
 - [Network Brownfield Resource Modules](network-brownfield-resource-modules)
-   * tdub wip   
+   * Ingest the device configurations
+   * Make changed to the SSOT (host_vars)
+   * Detect differences (drift) between the SSOT and Running Confurations
+   * Deploy changes using netcommon + resource modules 
 - [Network Troubleshooting](network_troubleshooting)
    * tdub wip
 - [NetDevOps](netdevops)
