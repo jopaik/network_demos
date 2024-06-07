@@ -3,7 +3,7 @@
   hosts: switches
   gather_facts: false
   vars:
-   resource:
+   resources:
     - static_routes
     - ntp_global
     - logging_global
@@ -29,7 +29,7 @@
         name: "{{ item }}"
         config: "{{ hostvars[inventory_hostname][item] }}"
         state: merged
-      loop: "{{ resource }}"
+      loop: "{{ resources }}"
        
       
         

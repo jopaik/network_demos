@@ -272,6 +272,18 @@
         execution_environment: "Validated Network"
         state: "present"
 
+    - name: Create a job-template - Network-Validated-List
+      ansible.controller.job_template:
+        name: "Network-Validated-Persist"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "scoped_configuration_management/list.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
     - name: Create a job-template - Network-Validated-Deploy
       ansible.controller.job_template:
         name: "Network-Validated-Deploy"
@@ -1552,3 +1564,40 @@
           ansible_network_os: cisco.ios.ios
         inventory: "Workshop Inventory"
         state: present
+# This section includes Network-Netcommon-Playground
+
+    - name: Create a job-template - Network-Netcommon-Facts
+      ansible.controller.job_template:
+        name: "Network-Netcommon-Facts"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_netcommon_playground/network_netcommon_facts.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Netcommon-Deploy
+      ansible.controller.job_template:
+        name: "Network-Netcommon-Deploy"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_netcommon_playground/network_netcommon_deploy.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+
+    - name: Create a job-template - Network-Netcommon-Diff
+      ansible.controller.job_template:
+        name: "Network-Netcommon-Diff"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_netcommon_playground/network_netcommon_diff.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"

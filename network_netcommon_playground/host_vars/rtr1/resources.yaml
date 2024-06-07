@@ -1,0 +1,26 @@
+---
+resources:
+        #- acl_interfaces
+        # - acls
+        #- evpn_evi
+        #- evpn_global
+        - hostname
+        - interfaces
+        - l2_interfaces
+        - l3_interfaces
+        - lacp
+        - lacp_interfaces
+        #- lag_interfaces
+        #- lldp_global
+        #- lldp_interfaces
+        - logging_global
+        #- ntp_global
+        #- ospf_interfaces
+        #- ospfv2
+        #- ospfv3
+        #- prefix_lists
+        #- route_maps
+        #- snmp_server
+        - static_routes
+        - vlans
+        #- vxlan_vtep
