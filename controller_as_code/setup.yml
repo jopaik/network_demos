@@ -1575,6 +1575,7 @@
         playbook: "network_netcommon_playground/network_netcommon_facts.yml"
         credentials:
           - "Workshop Credential"
+          - "Gitea Credential"
         execution_environment: "Validated Network"
         state: "present"
 
