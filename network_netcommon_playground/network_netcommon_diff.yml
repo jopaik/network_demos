@@ -1,0 +1,32 @@
+---
+- name: Diff configuration changes
+  hosts: routers
+  gather_facts: false
+  
+  tasks:
+    - name: Diff configuration for ios
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ item }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
+      loop: "{{ resources }}"
+      when: ansible_network_os == 'cisco.ios.ios'
+    
+    - name: Diff configuration for junos
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ item }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
+      loop: "{{ resources }}"
+      when: ansible_network_os == 'junipernetworks.junos.junos'
+
+    - name: Diff configuration for eos
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ item }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
+      loop: "{{ resources }}"
+      when: ansible_network_os == 'arista.eos.eos'

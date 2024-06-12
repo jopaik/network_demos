@@ -1599,5 +1599,7 @@
         playbook: "network_netcommon_playground/network_netcommon_diff.yml"
         credentials:
           - "Workshop Credential"
+        job_type: check
+        diff_mode: true
         execution_environment: "Validated Network"
         state: "present"
