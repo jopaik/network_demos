@@ -27,5 +27,6 @@
         os_name: "{{ ansible_network_os }}"
         name: "{{ item }}"
         config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
       loop: "{{ resources }}"
       when: ansible_network_os == 'junipernetworks.junos.junos'
