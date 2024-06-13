@@ -1604,3 +1604,39 @@
         diff_mode: true
         execution_environment: "Validated Network"
         state: "present"
+
+    - name: Create a job-template - Network-Netcommon-Backups
+      ansible.controller.job_template:
+        name: "Network-Netcommon-Backups"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_netcommon_playground/network_netcommon_backup.yml"
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
+          - "Controller Credential"
+        execution_environment: "Validated Network"
+        state: "present"
+        survey_enabled: true
+        survey_spec:
+          name: ""
+          description: ""
+          spec:
+            - question_name: Would you like to add a custom branch name or ignore for the default?
+              type: text
+              max: 1024
+              min: 0
+              variable: branch_name
+              required: false
+              default: ""
+            - question_name: Which Group or Groups to Backup Configurations
+              type: multiselect
+              variable: _group
+              required: true
+              default: ""
+              choices:
+                - cisco
+                - arista
+                - juniper
+      when: inventory_hostname == 'localhost'
