@@ -59,7 +59,7 @@
     - name: Restore Arista configuration
       ansible.netcommon.cli_config:
         config: configure replace flash:startup-config 
-      #ansible.netcommon.cli_restore:
+      #ansible.netcommon.cli_restore: #logging issue
       #  filename: "startup-config"
       #  path: nvram://
       when: inventory_hostname in groups['arista']  
