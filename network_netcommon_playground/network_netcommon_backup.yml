@@ -23,7 +23,7 @@
       ansible.netcommon.cli_backup:
         filename: '{{ inventory_hostname }}.txt'
         dir_path: "/tmp/network-demos-repo/network_backup_files"
-      when: inventory_hostname == 'localhost'
+      when: inventory_hostname != 'localhost'
         
     - name: Publish the changes
       ansible.scm.git_publish:
