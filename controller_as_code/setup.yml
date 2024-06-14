@@ -1651,3 +1651,15 @@
           - "Workshop Credential"
         execution_environment: "Validated Network"
         state: "present"
+    
+    - name: Create a job-template - Network-Netcommon-Commands
+      ansible.controller.job_template:
+        name: "Network-Netcommon-Commands"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_netcommon_playground/network_netcommon_commands.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
