@@ -1639,4 +1639,15 @@
                 - cisco
                 - arista
                 - juniper
-      when: inventory_hostname == 'localhost'
+    
+    - name: Create a job-template - Network-Netcommon-Ping
+      ansible.controller.job_template:
+        name: "Network-Netcommon-Ping"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "network_netcommon_playground/network_netcommon_ping.yml"
+        credentials:
+          - "Workshop Credential"
+        execution_environment: "Validated Network"
+        state: "present"
