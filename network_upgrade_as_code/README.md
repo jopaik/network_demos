@@ -32,18 +32,10 @@ pip install gdown
 
 ### Step 2 - Download Images
 From the folder `network_upgrade_as_code/`
+1. 
 ~~~
 gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
-~~~
-### Step 3 - Run the staging job template
-Move the images to the /home/student directory when done
-
-This will take a few minutes due to the file size.
-1. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files to save time during the demo.
-~~~
-17.06.06a
-17.07.01a
 ~~~
 2. Push to gitea repo
 This way the image files will be available for Ansible.
@@ -56,6 +48,15 @@ git add --all
 git commit -m "deploy"
 git push
 ~~~
+### Step 3 - Run the staging job template
+
+This will take a few minutes due to the file size.
+1. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files to save time during the demo.
+~~~
+17.06.06a
+17.07.01a
+~~~
+
 ### Step 4 Move Images
  Move the image files out of the network-demos-repo to the home directory
 It's important to move the files to avoid the repo in Gitea taking a long time to update or fail. 
@@ -72,7 +73,17 @@ c8000v-universalk9.17.06.06a.SPA.bin  setup.yml                                 
 c8000v-universalk9.17.07.01a.SPA.bin  staging-artifact-2024-05-29T17:38:07.356799+00:00.json  upgrade.yml
 [student@ansible-1 network_upgrade_as_code]$ mv c8000v-universalk9.17.0* ~student/
 ~~~
+2. Push to gitea repo
+This way the image files will no longer be in the repo.
+Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
+![Save](../../images/save_commit.png)
 
+or update from the terminal
+~~~
+git add --all
+git commit -m "deploy"
+git push
+~~~
 ### Step 5 - Run the demo
 This time run the Network-Upgrade-Workflow template and approve the upgrade
 
