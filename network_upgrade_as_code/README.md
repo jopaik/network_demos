@@ -38,7 +38,7 @@ gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
 ~~~
 2. Push to gitea repo
-This way the image files will be available for Ansible.
+This way the image files will be available for Ansible. Normally we would store these image files on a server instead of the git repo.
 Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
 ![Save](../../images/save_commit.png)
 
