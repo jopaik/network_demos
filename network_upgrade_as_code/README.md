@@ -13,9 +13,10 @@
 [Table of Contents](#table-of-contents)
 - [Step 1 - Install gdown](#step-1-install-gdown)
 - [Step 2 - Download Images](#step-2-download-images)
-- [Step 3 - Move Images](step-3-move-images)
-- [Step 4 - Run the Demo](#step-4-run-the-demo)
-- [Step 5 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
+- [Step 3 - Run the staging job template](step-3-run-the-staging-job-template)
+- [Step 4 - Move Images](step-3-move-images)
+- [Step 5 - Run the Demo](#step-4-run-the-demo)
+- [Step 6 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
 
 ## Objective
 To stage firmware images and upgrade network devices with Ansible. Please note it takes several minutes to both stage files and upgrade.   
@@ -35,7 +36,8 @@ From the folder `network_upgrade_as_code/`
 gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
 ~~~
-### Step 3 - Move the images to the /home/student directory when done
+### Step 3 - Run the staging job template
+Move the images to the /home/student directory when done
 
 This will take a few minutes due to the file size.
 1. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files to save time during the demo.
@@ -43,13 +45,26 @@ This will take a few minutes due to the file size.
 17.06.06a
 17.07.01a
 ~~~
-2. Move the image files out of the network-demos-repo to the home directory
+2. Push to gitea repo
+This way the image files will be available for Ansible.
+Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
+![Save](../../images/save_commit.png)
+
+or update from the terminal
+~~~
+git add --all
+git commit -m "deploy"
+git push
+~~~
+### Step 4 Move Images
+ Move the image files out of the network-demos-repo to the home directory
 It's important to move the files to avoid the repo in Gitea taking a long time to update or fail. 
 
  mv the files
 ~~~
 mv c8000v-universalk9.17.06.06a.SPA.bin /home/student  
 mv c8000v-universalk9.17.07.01a.SPA.bin /home/student
+~~~
 ~~~
 [student@ansible-1 network_upgrade_as_code]$ ls
 ansible-navigator.log                 README.md                                               staging.yml
@@ -58,12 +73,12 @@ c8000v-universalk9.17.07.01a.SPA.bin  staging-artifact-2024-05-29T17:38:07.35679
 [student@ansible-1 network_upgrade_as_code]$ mv c8000v-universalk9.17.0* ~student/
 ~~~
 
-### Step 4 - Run the demo
+### Step 5 - Run the demo
 This time run the Network-Upgrade-Workflow template and approve the upgrade
 
 ##### Remember to return to the AAP JOB for the Workflow and accept the approval node
 
-### Step 5 - Review the Network-Upgrade-Upgrade Job-Template output
+### Step 6 - Review the Network-Upgrade-Upgrade Job-Template output
 ~~~
 TASK [debug] *******************************************************************
 ok: [rtr1] => {
