@@ -36,19 +36,20 @@ gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
 ~~~
 ### Step 3 - Move the images to the /home/student directory when done
-1. mv
-~~~
-mv c8000v-universalk9.17.06.06a.SPA.bin /home/student  
-mv c8000v-universalk9.17.07.01a.SPA.bin /home/student
-~~~
+
 This will take a few minutes due to the file size.
-2. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files to save time during the demo.
+1. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files to save time during the demo.
 ~~~
 17.06.06a
 17.07.01a
 ~~~
-3. Move the image files out of the network-demos-repo to the home directory
+2. Move the image files out of the network-demos-repo to the home directory
 It's important to move the files to avoid the repo in Gitea taking a long time to update or fail. 
+
+ mv the files
+~~~
+mv c8000v-universalk9.17.06.06a.SPA.bin /home/student  
+mv c8000v-universalk9.17.07.01a.SPA.bin /home/student
 ~~~
 [student@ansible-1 network_upgrade_as_code]$ ls
 ansible-navigator.log                 README.md                                               staging.yml
