@@ -497,6 +497,9 @@
         playbook: "cisco_aci/playbooks/aci_brownfield_yaml.yml"
         execution_environment: "Validated Network"
         state: present
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
         extra_vars:
           apic_username: admin
           apic_password: '!v3G@!4@Y'
