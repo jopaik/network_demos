@@ -100,7 +100,6 @@ controller_templates:
       - "Workshop Credential"
       - "Controller Credential"
     execution_environment: "Validated Network"
-    state: "present"
 
   - name: "Network Automation - Restore"
     organization: "Red Hat network organization"
@@ -110,7 +109,6 @@ controller_templates:
     credentials:
       - "Workshop Credential"
     execution_environment: "Validated Network"
-    state: "present"
 
   - name: "Network-Banner"
     organization: "Red Hat network organization"
@@ -120,7 +118,6 @@ controller_templates:
     credentials:
       - "Workshop Credential"
     execution_environment: "Validated Network"
-    state: present
 
   - name: Network-User"
     organization: "Red Hat network organization"
@@ -130,69 +127,71 @@ controller_templates:
     credentials:
       - "Workshop Credential"
     execution_environment: "Validated Network"
-    state: "present"
 
 controller_workflows:
   - name: "Network Basic Workflow"
     organization: "Red Hat network organization"
-    state: present
     survey_enabled: true
-    survey_spec:
-      {
-        "description": "",
-        "name": "",
-        "spec":
-          [
-            {
-              "choices": "",
-              "default": "",
-              "max": 1024,
-              "min": 0,
-              "new_question": true,
-              "question_description": "Please type into the text field the desired banner",
-              "question_name": "Please enter the banner text",
-              "required": true,
-              "type": "textarea",
-              "variable": "net_banner",
-            },
-            {
-              "choices": "login\nmotd",
-              "default": "login",
-              "max": 1024,
-              "min": 0,
-              "new_question": true,
-              "question_description": "Please choose an option",
-              "question_name": "Please enter the banner type",
-              "required": true,
-              "type": "multiplechoice",
-              "variable": "net_type",
-            },
-          ],
-      }
+    survey:
+      description: ""
+      name: ""
+      spec:
+        - choices: ""
+          default: ""
+          max: 1024
+          min: 0
+          new_question: true
+          question_description: "Please type into the text field the desired banner"
+          question_name: "Please enter the banner text"
+          required: true
+          type: "textarea"
+          variable: "net_banner"
+
+        - choices: "login\nmotd"
+          default: "login"
+          max: 1024
+          min: 0
+          new_question: true
+          question_description: "Please choose an option"
+          question_name: "Please enter the banner type"
+          required: true
+          type: "multiplechoice"
+          variable: "net_type"
     workflow_nodes:
       - identifier: Backup network configuration
         unified_job_template:
           name: Backup network configurations
           organization:
             name: "Red Hat network organization"
-        state: present
-        success_nodes:
-          - Network-Banner
-          - Network-User
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes: []
+          success_nodes:
+            - Network-Banner
+            - Network-User
       - identifier: Network-User
         unified_job_template:
           name: Network-User
           organization:
             name: "Red Hat network organization"
-        failure_nodes:
-          - Network Automation - Restore
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes:
+            - Network Automation - Restore
+          success_nodes: []
       - identifier: Network-Banner
         unified_job_template:
           name: Network-Banner
           organization:
             name: "Red Hat network organization"
-        failure_nodes:
-          - Network Automation - Restore
+        related:
+          always_nodes: []
+          credentials: []
+          failure_nodes:
+            - Network Automation - Restore
+          success_nodes: []
       - identifier: Network Automation - Restore
         unified_job_template:
           name: Network Automation - Restore
