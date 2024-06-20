@@ -1,0 +1,37 @@
+---
+- name: Compare Configurations
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+    
+    - name: Gather facts (eos)
+      arista.eos.eos_facts:
+        gather_network_resources:
+          - all
+      when: ansible_network_os == 'arista.eos.eos'
+
+    - name: Gather facts (ios)
+      cisco.ios.ios_facts:
+        gather_network_resources:
+           - all
+      when: ansible_network_os == 'cisco.ios.ios'
+
+    - name: Gather facts (junos)
+      junipernetworks.junos.junos_facts:
+        gather_network_resources:
+           - all
+      when: ansible_network_os == 'junipernetworks.junos.junos'
+
+    - name: Add network facts to the host_vars
+      ansible.builtin.copy:
+        content: "{{ ansible_network_resources | to_nice_yaml }}"
+        dest: "host_vars/{{ inventory_hostname }}/facts.yaml"
+      delegate_to: localhost
+      notify: Please Review Diffs
+
+  handlers:
+    - name: Please Review Diffs
+      ansible.builtin.debug:
+        msg:
+          - "Please review the diff(s) detected on: {{ inventory_hostname }}"

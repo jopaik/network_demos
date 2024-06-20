@@ -1,0 +1,6 @@
+logging_global:
+    persistent:
+        filesize: 8192
+        immediate: true
+        size: 1000000
+    userinfo: true

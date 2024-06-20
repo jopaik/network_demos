@@ -1,0 +1,15 @@
+---
+- name: Ping Endpoints
+  hosts: routers
+  gather_facts: false
+
+  vars:
+   ping_dest: 
+    - 8.8.8.8
+    - 8.8.8.4
+    
+  tasks:
+  - name: Test reachability to destinations
+    ansible.netcommon.net_ping:
+      dest: "{{ item }}"
+    loop: "{{ ping_dest }}"

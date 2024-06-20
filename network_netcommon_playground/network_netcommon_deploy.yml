@@ -1,0 +1,33 @@
+---
+- name: Deploy configuration changes
+  hosts: routers
+  gather_facts: false
+  
+  tasks:
+    
+    - name: Apply configuration to ios
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ item }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
+      loop: "{{ resources }}"
+      when: ansible_network_os == 'cisco.ios.ios'
+    
+    - name: Apply configuration to junos
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ item }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
+      loop: "{{ resources }}"
+      when: ansible_network_os == 'junipernetworks.junos.junos'
+
+    - name: Apply configuration to eos
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ item }}"
+        config: "{{ hostvars[inventory_hostname][item] }}"
+        state: replaced
+      loop: "{{ resources }}"
+      when: ansible_network_os == 'arista.eos.eos'

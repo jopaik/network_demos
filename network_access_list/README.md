@@ -10,7 +10,7 @@
 6. Launch the Network ACLs Remediate Template
 8. Verify that the ACL entry is returned to it's original configuration
 
-# Network Backups GIT
+# Network Access Lists
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Launch the Network ACLS Deploy job-template](#step-1---credential)

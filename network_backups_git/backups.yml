@@ -1,5 +1,5 @@
 ---
-- name: Backup Cisco Configs to Gitea in Branches
+- name: Backup Router Configs to Gitea in Branches
   hosts:
     - localhost
     - cisco

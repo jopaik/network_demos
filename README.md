@@ -8,6 +8,14 @@ Upon receiving a POD environment, please scroll down directly to the `Getting St
 
 ## Menu of Demos
 For the below demos insure you are always using files from /home/student/network-demos-repo/
+- [Network Basic Workflow ](network_basic_workflow/README.md)
+   * [Demo Video](https://www.youtube.com/watch?v=XYv9OkHwO8s)
+   * Is similar to Network Workshop 101 AAP Exercises
+   * Network Backups and Restore to a server
+   * Network User
+   * Network Banner
+   * Workflow
+   * Self Service Survey
 - [Network Backups GIT](network_backups_git/README.md)
    * Validated Content: network.backup 
    * Self Service Survey
@@ -30,14 +38,6 @@ For the below demos insure you are always using files from /home/student/network
    * Validated Content: `network.base` 
    * Operations: Persist, Deploy, Detect, Remediate
    * network.bgp
-- [Network Basic Workflow ](network_basic_workflow/README.md)
-   * [Demo Video](https://www.youtube.com/watch?v=XYv9OkHwO8s)
-   * Is similar to Network Workshop 101 AAP Exercises
-   * Network Backups and Restore to a server
-   * Network User
-   * Network Banner
-   * Workflow
-   * Self Service Survey
 - [Network Access List](network_access_list/README.md)
    * Deploy ACLS with Validated Content
    * Detect incorrect ACL Entries
@@ -50,6 +50,14 @@ For the below demos insure you are always using files from /home/student/network
    * Close Tickets 
    * Dynamic Inventory from CMDB
    * Get Facts
+- [Network Brownfield Resource Modules](network-brownfield-resource-modules)
+   * Ingest the device configurations
+   * Make changed to the SSOT (host_vars)
+   * Detect differences (drift) between the SSOT and Running Confurations
+   * Deploy changes using netcommon + resource modules 
+- [Network Upgrade as Code](network_upgrade_as_code)
+   * Stage ios images to Cisco router
+   * Upgrade or Downgrade the Cisco router as code
 - [Cisco ACI](cisco_aci)
    * Deploy ACI fabrics as Code
    * Make Health Checks from Ansible to Validate ACI State
@@ -62,22 +70,27 @@ For the below demos insure you are always using files from /home/student/network
    * Get Device Info
    * Get Endpoint Info
 - [Cisco Meraki](cisco_meraki)
-   * WIP
+   * tdub wip
+- [Cisco SDWAN](cisco_sdwan)
+   * tdub wip
+- [Cisco Thousand Eyes](cisco_thusand_eyes)
+   * tdub wip
+- [Arista AVD](arista_avd)
+   * tdub wip
+   
 - [NetBox](netbox)
-   * Asible + Netbox SSOT 
+   * Ansible + Netbox SSOT 
    * Dynamic Inventory
    * Config Drift Checks
-- [Network Brownfield Resource Modules](network-brownfield-resource-modules)
-   * tdub wip   
 - [Network Troubleshooting](network_troubleshooting)
    * tdub wip
 - [NetDevOps](netdevops)
    * tdub wip
-- [Routing Protocol Migration](routing_protocol_migration)
+- [Network Routing Protocol Migration](routing_protocol_migration)
    * tdub wip
-- [Network Upgrade as Code](network_upgrade_as_code)
+- [Network Netcommon Playground](routing_protocol_migration)
    * tdub wip
-    
+   
 # Getting Started
 
 ## Summary of steps

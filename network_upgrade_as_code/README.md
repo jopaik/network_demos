@@ -5,8 +5,7 @@
 1. Install gdown
 2. Download the two c8000v images to `network_upgrade_as_code` and push to gitea
 3. Move the images out of the repo when done.
-4. Run the Network-Upgrade-Workflow template and choose image
-5. Approve the upgrade
+4. Run the Network-Upgrade-Workflow template and choose image and approve the upgrade
 6. Review the Network-Upgrade-Upgrade jog-template 
 
 # Network Upgrade as Code
@@ -14,9 +13,9 @@
 [Table of Contents](#table-of-contents)
 - [Step 1 - Install gdown](#step-1-install-gdown)
 - [Step 2 - Download Images](#step-2-download-images)
-- [Step 3 - Temporarily modify](step-3-temporarily-modify)
-- [Step 4 - Network-Upgrade-Workflow](#step-3-network-upgrade-workflow)
-- [Step 5 - Approve the upgrade](#step-4-approve-the-upgrade)
+- [Step 3 - Run the staging job template](step-3-run-the-staging-job-template)
+- [Step 4 - Move Images](step-3-move-images)
+- [Step 5 - Run the Demo](#step-4-run-the-demo)
 - [Step 6 - Review the Network-Upgrade-Upgrade](#step-5-review-the-network-upgrade-upgrade)
 
 ## Objective
@@ -25,7 +24,7 @@ To stage firmware images and upgrade network devices with Ansible. Please note i
 ## Overview
 Ansible can scp firmware images to network devices. The workflow includes an approval node to control when an upgrade will be activated based on change control.  
 
-### Step 1 - Netbox Demo Server
+### Step 1 - Install gdown
 Install gdown
 ~~~
 pip install gdown
@@ -33,23 +32,40 @@ pip install gdown
 
 ### Step 2 - Download Images
 From the folder `network_upgrade_as_code/`
+1. 
 ~~~
 gdown https://drive.google.com/uc?id=1_MNn6pcDJ0AYNYExyGqJNgd_XCRNqIUx
 gdown https://drive.google.com/uc?id=1Jt5HOe76_3ylk6uTaAQxAxMet_tSwUsK
 ~~~
-### Step 3 - Move the images to the /home/student directory when done
-1. mv
+2. Push to gitea repo
+This way the image files will be available for Ansible. Normally we would store these image files on a server instead of the git repo.
+Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
+![Save](../../images/save_commit.png)
+
+or update from the terminal
 ~~~
-mv c8000v-universalk9.17.06.06a.SPA.bin /home/student  
-mv c8000v-universalk9.17.07.01a.SPA.bin /home/student
+git add --all
+git commit -m "deploy"
+git push
 ~~~
+### Step 3 - Run the staging job template
+
 This will take a few minutes due to the file size.
-2. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files.
+1. Run the Network-Upgrade-Workflow template twice and deny the approval each time. The idea is to just stage both files to save time during the demo.
 ~~~
 17.06.06a
 17.07.01a
 ~~~
-3. Move the image files out of the network-demos-repo to the home directory
+
+### Step 4 Move Images
+ Move the image files out of the network-demos-repo to the home directory
+It's important to move the files to avoid the repo in Gitea taking a long time to update or fail. 
+
+ mv the files
+~~~
+mv c8000v-universalk9.17.06.06a.SPA.bin /home/student  
+mv c8000v-universalk9.17.07.01a.SPA.bin /home/student
+~~~
 ~~~
 [student@ansible-1 network_upgrade_as_code]$ ls
 ansible-navigator.log                 README.md                                               staging.yml
@@ -57,33 +73,21 @@ c8000v-universalk9.17.06.06a.SPA.bin  setup.yml                                 
 c8000v-universalk9.17.07.01a.SPA.bin  staging-artifact-2024-05-29T17:38:07.356799+00:00.json  upgrade.yml
 [student@ansible-1 network_upgrade_as_code]$ mv c8000v-universalk9.17.0* ~student/
 ~~~
+2. Push to gitea repo
+This way the image files will no longer be in the repo.
+Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
+![Save](../../images/save_commit.png)
 
-4. Edit and Push .gitignore by uncommiting out the c8000v
+or update from the terminal
 ~~~
-ansible-navigator.log
-*artifact*
-*.swp
-*c8000v-universalk9*
+git add --all
+git commit -m "deploy"
+git push
 ~~~
-This step is necessary due to the file size restriction for gitea etc. 
+### Step 5 - Run the demo
+This time run the Network-Upgrade-Workflow template and approve the upgrade
 
-### Step 4 - Run the Network-Upgrade-Workflow
-Run the Network-Upgrade-Workflow template and choose the image to stage and upgrade
-*Select the version not already running on tr1
-~~~
-ssh rtr1
-sh ver
-Cisco IOS XE Software, Version 17.06.06a
-~~~
-
-Choices
-~~~
-17.06.06a
-17.07.01a
-~~~
-
-### Step 5 - Approve the upgrade
-Return to the AAP JOB for the Workflow and accept the approval node
+##### Remember to return to the AAP JOB for the Workflow and accept the approval node
 
 ### Step 6 - Review the Network-Upgrade-Upgrade Job-Template output
 ~~~
