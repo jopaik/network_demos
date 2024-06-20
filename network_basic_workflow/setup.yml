@@ -132,9 +132,8 @@ controller_templates:
     execution_environment: "Validated Network"
     state: "present"
 
-
 controller_workflows:
-  - name: "Workshop Workflow"
+  - name: "Network Basic Workflow"
     organization: "Red Hat network organization"
     state: present
     survey_enabled: true
@@ -174,7 +173,8 @@ controller_workflows:
       - identifier: Backup network configuration
         unified_job_template:
           name: Backup network configurations
-          organization: "Red Hat network organization"
+          organization:
+            name: "Red Hat network organization"
         state: present
         success_nodes:
           - Network-Banner
@@ -182,21 +182,21 @@ controller_workflows:
       - identifier: Network-User
         unified_job_template:
           name: Network-User
-          organization: "Red Hat network organization"
-        state: present
+          organization:
+            name: "Red Hat network organization"
         failure_nodes:
           - Network Automation - Restore
       - identifier: Network-Banner
         unified_job_template:
           name: Network-Banner
-          organization: "Red Hat network organization"
-        state: present
+          organization:
+            name: "Red Hat network organization"
         failure_nodes:
           - Network Automation - Restore
       - identifier: Network Automation - Restore
         unified_job_template:
           name: Network Automation - Restore
-          organization: "Red Hat network organization"
-        state: present
+          organization:
+            name: "Red Hat network organization"
 
 ...
