@@ -163,6 +163,7 @@ controller_workflows:
           name: Backup network configurations
           organization:
             name: "Red Hat network organization"
+          type: job_template
         related:
           always_nodes: []
           credentials: []
@@ -175,6 +176,7 @@ controller_workflows:
           name: Network-User
           organization:
             name: "Red Hat network organization"
+          type: job_template
         related:
           always_nodes: []
           credentials: []
@@ -186,6 +188,7 @@ controller_workflows:
           name: Network-Banner
           organization:
             name: "Red Hat network organization"
+          type: job_template
         related:
           always_nodes: []
           credentials: []
@@ -197,5 +200,6 @@ controller_workflows:
           name: Network Automation - Restore
           organization:
             name: "Red Hat network organization"
+          type: job_template
 
 ...
