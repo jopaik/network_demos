@@ -1,0 +1,75 @@
+---
+- name: READ TENANT CONFIG
+
+  vars:
+    aci_login: &aci_login
+      hostname: "{{ apic_host }}"
+      username: "{{ apic_username }}"
+      password: "{{ apic_password }}"
+      validate_certs: "{{ apic_validate_certs }}"
+
+  delegate_to: localhost
+  ignore_errors: true
+
+  block:
+    - name: Create a host_vars directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ repository['path'] }}/cisco_aci/host_vars/{{ inventory_hostname }}/"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+
+    - name: Read Tenant
+      cisco.aci.aci_tenant:
+        <<: *aci_login
+        state: query
+      register: tenants
+
+    - name: Add tenants to the host_vars
+      ansible.builtin.copy:
+        content: "{{ tenants | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/host_vars/{{ inventory_hostname }}/tenants.yaml"
+      delegate_to: localhost
+
+    - name: Read Application Policy
+      cisco.aci.aci_ap:
+        <<: *aci_login
+        state: query
+      register: aps
+
+    - name: Add aps to the host_vars
+      ansible.builtin.copy:
+        content: "{{ aps  | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/host_vars/{{ inventory_hostname }}/aps.yaml"
+      delegate_to: localhost
+
+    - name: Read VRF
+      cisco.aci.aci_vrf:
+        <<: *aci_login
+        state: query
+
+    - name: Read BDs
+      cisco.aci.aci_bd:
+        <<: *aci_login
+        state: query
+
+    - name: Read BD SUBNETs
+      cisco.aci.aci_bd_subnet:
+        <<: *aci_login
+        state: query
+       
+    - name: Read EPGs
+      cisco.aci.aci_epg:
+        <<: *aci_login
+        state: query
+
+    - name: "cisco.aci.aci_static_binding_to_epg"
+      cisco.aci.aci_static_binding_to_epg:
+        <<: *aci_login
+        state: query
+
+    
+
+    
+
+     

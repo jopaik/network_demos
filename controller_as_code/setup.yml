@@ -488,6 +488,32 @@
         execution_environment: "Validated Network"
         state: "present"
 
+    - name: Create a job-template - ACI-Brownfield-to-YAML
+      ansible.controller.job_template:
+        name: "ACI-Brownfield-to-YAML"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_aci/playbooks/aci_brownfield_yaml.yml"
+        execution_environment: "Validated Network"
+        state: present
+        extra_vars:
+          apic_username: admin
+          apic_password: '!v3G@!4@Y'
+
+    - name: Create a job-template - ACI-Brownfield-Deploy
+      ansible.controller.job_template:
+        name: "ACI-Brownfield-Deploy"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_aci/playbooks/aci_brownfield_deploy.yml"
+        execution_environment: "Validated Network"
+        state: "present"
+        extra_vars:
+          apic_username: admin
+          apic_password: '!v3G@!4@Y'
+
     - name: Create a job-template - ACI-Rollback
       ansible.controller.job_template:
         name: "ACI-Rollback"
