@@ -56,12 +56,7 @@ controller_groups:
 
 controller_credential_types:
   - name: Gitea Student
-    injectors:
-      extra_vars:
-        email: "{{ email | default ('{{ email }}') }}"
-        password: "{{ git_password | default ('{{ git_password }}') }}"
-        username: "{{ username | default ('{{ username }}') }}"
-        token: "{{ git_password | default ('{{ git_password }}') }}"
+    kind: cloud
     inputs:
       fields:
         - id: username
@@ -78,7 +73,12 @@ controller_credential_types:
         - username
         - password
         - email
-    kind: cloud
+    injectors:
+      extra_vars:
+        email: "{  { email | default ('{  { email }}') }}"
+        password: "{  { git_password | default ('{  { git_password }}') }}"
+        username: "{  { username | default ('{  { username }}') }}"
+        token: "{  { git_password | default ('{  { git_password }}') }}"
 
 controller_credentials:
   - name: Gitea Credential
