@@ -77,7 +77,7 @@ controller_credentials:
     organization: Red Hat network organization
 
   - name: Gitea Credential
-    credential_type: Gitea User
+    credential_type: Gitea Student
     description: ""
     inputs:
       username: "gitea"
