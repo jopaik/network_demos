@@ -152,11 +152,11 @@ controller_workflows:
           - identifier: "Change Approval"
 
       - identifier: "Change Approval"
-        approval_node:
+        unified_job_template:
           name: "Change Approval"
-          organization:
-            name: "Red Hat network organization"
           type: workflow_approval
+          timeout: 900
+          description: Approval node for change approval
         related:
           always_nodes: []
           credentials: []
