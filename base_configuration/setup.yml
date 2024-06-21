@@ -60,10 +60,10 @@ controller_credential_types:
         - email
     injectors:
       extra_vars:
-        email: !unsafe '{{ email }}'
-        password: !unsafe '{{ oassword }}'
-        username: !unsafe '{{ username }}'
-        token: !unsafe '{{ token }}'
+        email: "{% raw %}{  { email  }}{% endraw %}"
+        password: "{% raw %}{  { password  }}{% endraw %}"
+        username: "{% raw %}{  { username  }}{% endraw %}"
+        token: "{% raw %}{  { token  }}{% endraw %}"
 
 
 controller_credentials:
