@@ -145,9 +145,6 @@ controller_workflows:
             name: "Red Hat network organization"
           type: job_template
         related:
-          always_nodes: []
-          credentials: []
-          failure_nodes: []
           success_nodes:
           - identifier: "Change Approval"
 
@@ -158,9 +155,6 @@ controller_workflows:
           timeout: 900
           description: Approval node for change approval
         related:
-          always_nodes: []
-          credentials: []
-          failure_nodes: []
           success_nodes:
             - identifier: Network-Run-Compliance
 
@@ -170,11 +164,5 @@ controller_workflows:
           organization:
             name: "Red Hat network organization"
           type: job_template
-        related:
-          always_nodes: []
-          credentials: []
-          failure_nodes: []
-          success_nodes:
-            - Network-Run-Compliance
 
 ...
