@@ -5,8 +5,9 @@
 
   tasks:
 
-    - name: Print network OS
-      ansible.builtin.debug: "{{ ansible_network_os }}"
+    - name: Print network OS play
+      ansible.builtin.debug: 
+        msg: "{{ ansible_network_os }}"
 
     - name: Gather network information as structured data
       ansible.builtin.include_role:
