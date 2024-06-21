@@ -4,41 +4,9 @@
   gather_facts: false
 
   tasks:
-    # - name: Backup Config
-    #   tags:
-    #     - never
-    #     - backup
-    #   ansible.netcommon.cli_config
-    #     backup: true
-
     - name: Gather network information as structured data
-      when: ansible_network_os == 'ios'
-      tags:
-        - always
-      cisco.ios.ios_facts:
-        gather_network_resources:
-          - 'static_routes'
-          - 'ntp_global'
-          - 'logging_global'
-          - 'hostname'
-          - 'snmp_server'
-          - 'vlans'
-          - 'interfaces'
-          - 'l2_interfaces'
-          - 'l3_interfaces'
-        gather_subset:
-          - '!min'
-          - '!all'
-
-
-    - name: collect default set of facts and configuration
-      when: ansible_network_os == 'junos'
-      tags:
-        - always
-      junipernetworks.junos.junos_facts:
-        # gather_subset: config
-        gather_subset: all
-        gather_network_resources: all
+      ansible.builtin.include_role:
+        name: "roles/gather_facts"
 
     - name: Print out
       tags:

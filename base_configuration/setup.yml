@@ -55,7 +55,6 @@ controller_execution_environments:
     pull: missing
 
 
-
 controller_hosts:
   - name: nxosv1
     description: "Nexus Switch 1"
@@ -83,7 +82,7 @@ controller_groups:
     description: Cisco Nexus hosts
     inventory: "Workshop Inventory"
     variables: 
-      ansible_network_os: nxos
+      ansible_network_os: cisco.nxos.nxos
       ansible_connection: network_cli
     hosts:
       - nxosv1
@@ -308,7 +307,7 @@ controller_templates:
     host_config_key: ''
     inventory: Workshop Inventory
     job_slice_count: 1
-    job_tags: ''
+    job_tags: closed
     job_type: run
     limit: ''
     playbook: itsm_change_update.yml
