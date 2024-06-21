@@ -6,28 +6,19 @@
   tasks:
 
     - name: Print network OS play
-      tags:
-        - always
-      ansible.builtin.debug: 
+      ansible.builtin.debug:
         msg: "{{ ansible_network_os }}"
 
     - name: Gather network information as structured data
-      tags:
-        - always
       ansible.builtin.include_role:
         name: gather_facts
 
     - name: Print out
-      tags:
-        - always
       ansible.builtin.debug:
         msg: "{{ ansible_network_resources }}"
         verbosity: 2
 
     - name: GitOps functions
-      tags:
-        - gitops
-        - never
       delegate_to: localhost
       when: ansible_network_resources is defined
       block:
