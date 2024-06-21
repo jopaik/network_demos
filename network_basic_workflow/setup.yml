@@ -101,15 +101,6 @@ controller_templates:
       - "Controller Credential"
     execution_environment: "Validated Network"
 
-  - name: "Network Automation - Restore"
-    organization: "Red Hat network organization"
-    inventory: "Workshop Inventory"
-    project: "Student Project"
-    playbook: "network_basic_workflow/playbooks/network_restore.yml"
-    credentials:
-      - "Workshop Credential"
-    execution_environment: "Validated Network"
-
   - name: "Network-Banner"
     organization: "Red Hat network organization"
     inventory: "Workshop Inventory"
@@ -124,6 +115,15 @@ controller_templates:
     inventory: "Workshop Inventory"
     project: "Student Project"
     playbook: "network_basic_workflow/playbooks/network_user.yml"
+    credentials:
+      - "Workshop Credential"
+    execution_environment: "Validated Network"
+
+  - name: "Network Automation - Restore"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "network_basic_workflow/playbooks/network_restore.yml"
     credentials:
       - "Workshop Credential"
     execution_environment: "Validated Network"
@@ -158,9 +158,9 @@ controller_workflows:
           type: "multiplechoice"
           variable: "net_type"
     workflow_nodes:
-      - identifier: Backup network configuration
+      - identifier: "Backup network configuration"
         unified_job_template:
-          name: Backup network configurations
+          name: "Backup network configurations"
           organization:
             name: "Red Hat network organization"
           type: job_template
@@ -169,8 +169,8 @@ controller_workflows:
           credentials: []
           failure_nodes: []
           success_nodes:
-            - Network-Banner
-            - Network-User
+            - identifier: Network-Banner
+            - identifier: Network-User
       - identifier: Network-User
         unified_job_template:
           name: Network-User
@@ -181,7 +181,7 @@ controller_workflows:
           always_nodes: []
           credentials: []
           failure_nodes:
-            - Network Automation - Restore
+            - identifier: "Network Automation - Restore"
           success_nodes: []
       - identifier: Network-Banner
         unified_job_template:
@@ -193,11 +193,11 @@ controller_workflows:
           always_nodes: []
           credentials: []
           failure_nodes:
-            - Network Automation - Restore
+            - identifier: "Network Automation - Restore"
           success_nodes: []
-      - identifier: Network Automation - Restore
+      - identifier: "Network Automation - Restore"
         unified_job_template:
-          name: Network Automation - Restore
+          name: "Network Automation - Restore"
           organization:
             name: "Red Hat network organization"
           type: job_template
