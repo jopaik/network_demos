@@ -75,12 +75,12 @@ controller_credentials:
     organization: Red Hat network organization
 
   - name: Gitea Credential
-    credential_type: Gitea Student
+    credential_type: Gitea User
     description: ""
     inputs:
       username: "gitea"
       password: "gitea"
-      email: admin@example.com
+      email: "admin@example.com"
     organization: "Red Hat network organization"
 
 controller_execution_environments:
