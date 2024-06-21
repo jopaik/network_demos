@@ -4,13 +4,27 @@
   gather_facts: false
 
   tasks:
+
+    - name: Print network OS
+      ansible.builtin.debug: "{{ ansible_network_os }}"
+
     - name: Gather network information as structured data
       ansible.builtin.include_role:
         name: gather_facts
 
+
+    - name: Run Cisco STIG
+      when: ansible_network_os == 'ios'
+      vars:
+        ignore_all_errors: False
+      ansible.builtin.include_role:
+        name: iosxeSTIG
+      # notify: cisco_stig
+      register: cisco_stig_reg
+
     - name: Print out
       tags:
-        - always
+        - never
       ansible.builtin.debug:
         msg: "{{ ansible_network_resources }}"
         verbosity: 2
