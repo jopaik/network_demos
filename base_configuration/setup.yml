@@ -37,33 +37,33 @@ controller_credential_types:
         SN_USERNAME: !unsafe '{{ username }}'
     
 
-  # - name: Gitea Student
-  #   kind: cloud
-  #   inputs:
-  #     fields:
-  #       - id: username
-  #         label: Username
-  #         type: string
-  #       - id: password
-  #         label: Password
-  #         secret: true
-  #         type: string
-  #       - id: email
-  #         label: Email
-  #         type: string
-  #       - id: token
-  #         label: Token
-  #         type: string
-  #     required:
-  #       - username
-  #       - password
-  #       - email
-  #   injectors:
-  #     extra_vars:
-  #       email: "admin@example.com"
-  #       password: "{{ git_password | default ('gitea') }}"
-  #       username: "{{ username | default ('gitea') }}"
-  #       token: "{{ git_password | default ('git_password') }}"
+  - name: Gitea Student
+    kind: cloud
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+        - id: token
+          label: Token
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: !unsafe '{{ email }}'
+        password: !unsafe '{{ oassword }}'
+        username: !unsafe '{{ username }}'
+        token: !unsafe '{{ token }}'
 
 
 controller_credentials:
