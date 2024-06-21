@@ -37,9 +37,8 @@ controller_credential_types:
         SN_USERNAME: !unsafe '{{ username }}'
     
 
-  - name: Gitea Credential Type
+  - name: Gitea Studente
     kind: cloud
-    name: Gitea Student
     inputs:
       fields:
         - id: username
