@@ -4,3 +4,4 @@ collections:
   - name: junipernetworks.junos
   - name: servicenow.itsm
     version: 2.1.0
+  - name: ansible.scm
