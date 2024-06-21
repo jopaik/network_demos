@@ -36,14 +36,14 @@
 
         - name: Create a host_vars directory if it does not exist
           ansible.builtin.file:
-            path: "{{ repository['path'] }}/host_vars"
+            path: "{{ repository['path'] }}/base_configuration/host_vars"
             state: directory
             mode: '0755'
 
         - name: Add network facts to the repository
           ansible.builtin.copy:
             content: "{{ ansible_network_resources | to_nice_yaml }}"
-            dest: "{{ repository['path'] }}/host_vars/{{ inventory_hostname }}"
+            dest: "{{ repository['path'] }}/base_configuration/host_vars/{{ inventory_hostname }}"
           register: result
 
         - name: Set date_time variable
