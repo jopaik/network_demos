@@ -497,9 +497,13 @@
         playbook: "cisco_aci/playbooks/aci_brownfield_yaml.yml"
         execution_environment: "Validated Network"
         state: present
+        credentials:
+          - "Workshop Credential"
+          - "Gitea Credential"
         extra_vars:
           apic_username: admin
           apic_password: '!v3G@!4@Y'
+          apic_validate_certs: false
 
     - name: Create a job-template - ACI-Brownfield-Deploy
       ansible.controller.job_template:
@@ -513,6 +517,7 @@
         extra_vars:
           apic_username: admin
           apic_password: '!v3G@!4@Y'
+          apic_validate_certs: false
 
     - name: Create a job-template - ACI-Rollback
       ansible.controller.job_template:
