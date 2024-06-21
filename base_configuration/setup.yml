@@ -37,6 +37,33 @@ controller_credential_types:
         SN_USERNAME: !unsafe '{{ username }}'
     
 
+  - name: Gitea Credential Type
+      kind: cloud
+      name: Gitea Student
+      inputs:
+        fields:
+          - id: username
+            label: Username
+            type: string
+          - id: password
+            label: Password
+            secret: true
+            type: string
+          - id: email
+            label: Email
+            type: string
+        required:
+          - username
+          - password
+          - email
+      injectors:
+        extra_vars:
+          email: "{{ email | default ('{{ email }}') }}"
+          password: "{{ git_password | default ('{{ git_password }}') }}"
+          username: "{{ username | default ('{{ username }}') }}"
+          token: "{{ git_password | default ('{{ git_password }}') }}"
+
+
 controller_credentials:
   - name: ServiceNow ITSM
     credential_type: ServiceNow ITSM
@@ -47,6 +74,14 @@ controller_credentials:
       username: CHANGE_ME
     organization: Red Hat network organization
 
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: admin@example.com
+    organization: "Red Hat network organization"
 
 controller_execution_environments:
   - name: ruch-network-ee
