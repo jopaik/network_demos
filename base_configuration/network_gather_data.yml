@@ -6,7 +6,7 @@
   tasks:
     - name: Gather network information as structured data
       ansible.builtin.include_role:
-        name: "roles/gather_facts"
+        name: gather_facts
 
     - name: Print out
       tags:
