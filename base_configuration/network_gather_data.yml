@@ -4,61 +4,29 @@
   gather_facts: false
 
   tasks:
-    # - name: Backup Config
-    #   tags:
-    #     - never
-    #     - backup
-    #   ansible.netcommon.cli_config
-    #     backup: true
+
+    - name: Print network OS play
+      ansible.builtin.debug:
+        msg: "{{ ansible_network_os }}"
 
     - name: Gather network information as structured data
-      when: ansible_network_os == 'ios'
-      tags:
-        - always
-      cisco.ios.ios_facts:
-        gather_network_resources:
-          - 'static_routes'
-          - 'ntp_global'
-          - 'logging_global'
-          - 'hostname'
-          - 'snmp_server'
-          - 'vlans'
-          - 'interfaces'
-          - 'l2_interfaces'
-          - 'l3_interfaces'
-        gather_subset:
-          - '!min'
-          - '!all'
-
-
-    - name: collect default set of facts and configuration
-      when: ansible_network_os == 'junos'
-      tags:
-        - always
-      junipernetworks.junos.junos_facts:
-        # gather_subset: config
-        gather_subset: all
-        gather_network_resources: all
+      ansible.builtin.include_role:
+        name: gather_facts
 
     - name: Print out
-      tags:
-        - always
       ansible.builtin.debug:
         msg: "{{ ansible_network_resources }}"
         verbosity: 2
 
     - name: GitOps functions
-      tags:
-        - gitops
-        - never
       delegate_to: localhost
       when: ansible_network_resources is defined
       block:
         - name: Retrieve a repository from a distant location and make it available locally
           ansible.scm.git_retrieve:
             origin:
-              url: "{{ git_url }}"
-              token: "{{ github_token }}"
+              url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+              token: "{{ password }}"
           register: repository
 
         - name: Debug repository data
@@ -68,14 +36,14 @@
 
         - name: Create a host_vars directory if it does not exist
           ansible.builtin.file:
-            path: "{{ repository['path'] }}/host_vars"
+            path: "{{ repository['path'] }}/base_configuration/host_vars"
             state: directory
             mode: '0755'
 
         - name: Add network facts to the repository
           ansible.builtin.copy:
             content: "{{ ansible_network_resources | to_nice_yaml }}"
-            dest: "{{ repository['path'] }}/host_vars/{{ inventory_hostname }}"
+            dest: "{{ repository['path'] }}/base_configuration/host_vars/{{ inventory_hostname }}"
           register: result
 
         - name: Set date_time variable
@@ -86,13 +54,13 @@
           when: result.changed
           ansible.scm.git_publish:
             commit:
-              message: "Backup at {{ date_time }}"
+              message: "Update at {{ date_time }}"
             include: "--all"
             path: "{{ repository['path'] }}"
+            token: "{{ password }}"
             user:
-              name: "Todd Ruch"
-              email: truch@redhat.com
-            token: "{{ github_token }}"
+              name: "{{ username }}"
+              email: "{{ email }}"
       ### End of GitOps Block
 
 ...

@@ -141,25 +141,28 @@ controller_workflows:
       - identifier: Network-Check-Compliance
         unified_job_template:
           name: Network-Check-Compliance
-        organization: 
-          name: "Red Hat network organization"
-        success_nodes: "Change Approval"
-        state: present
+          organization: 
+            name: "Red Hat network organization"
+          type: job_template
+        related:
+          success_nodes:
+          - identifier: "Change Approval"
 
       - identifier: "Change Approval"
-        approval_node:
+        unified_job_template:
           name: "Change Approval"
-          timeout: 0
-        success_nodes:
-          - Network-Run-Compliance
-        state: present
+          type: workflow_approval
+          timeout: 900
+          description: Approval node for change approval
+        related:
+          success_nodes:
+            - identifier: Network-Run-Compliance
 
       - identifier: Network-Run-Compliance
         unified_job_template:
           name: Network-Run-Compliance
-        organization:
-          name: "Red Hat network organization"
-        state: present
-      - identifier: "Change Approval"
+          organization:
+            name: "Red Hat network organization"
+          type: job_template
 
 ...

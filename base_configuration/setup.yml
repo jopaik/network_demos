@@ -37,6 +37,35 @@ controller_credential_types:
         SN_USERNAME: !unsafe '{{ username }}'
     
 
+  - name: Gitea Student
+    kind: cloud
+    inputs:
+      fields:
+        - id: username
+          label: Username
+          type: string
+        - id: password
+          label: Password
+          secret: true
+          type: string
+        - id: email
+          label: Email
+          type: string
+        - id: token
+          label: Token
+          type: string
+      required:
+        - username
+        - password
+        - email
+    injectors:
+      extra_vars:
+        email: "{% raw %}{  { email  }}{% endraw %}"
+        password: "{% raw %}{  { password  }}{% endraw %}"
+        username: "{% raw %}{  { username  }}{% endraw %}"
+        token: "{% raw %}{  { token  }}{% endraw %}"
+
+
 controller_credentials:
   - name: ServiceNow ITSM
     credential_type: ServiceNow ITSM
@@ -47,13 +76,20 @@ controller_credentials:
       username: CHANGE_ME
     organization: Red Hat network organization
 
+  - name: Gitea Credential
+    credential_type: Gitea Student
+    description: ""
+    inputs:
+      username: "gitea"
+      password: "gitea"
+      email: "admin@example.com"
+    organization: "Red Hat network organization"
 
 controller_execution_environments:
   - name: ruch-network-ee
     description: 'Network Examples EE'
     image: quay.io/truch/network-examples:latest
     pull: missing
-
 
 
 controller_hosts:
@@ -83,7 +119,7 @@ controller_groups:
     description: Cisco Nexus hosts
     inventory: "Workshop Inventory"
     variables: 
-      ansible_network_os: nxos
+      ansible_network_os: cisco.nxos.nxos
       ansible_connection: network_cli
     hosts:
       - nxosv1
@@ -99,7 +135,7 @@ controller_projects:
 
 
 controller_templates:
-  - name: IOS Base Configuration
+  - name: Network Base Configuration
     execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
@@ -109,14 +145,14 @@ controller_templates:
     job_tags: ''
     job_type: run
     limit: 
-    playbook: base_configuration/ios_base_configuration.yml
+    playbook: base_configuration/network_base_configuration.yml
     prevent_instance_group_fallback: false
     project: Network Demos
     credentials:
       - "Workshop Credential"
 
 
-  - name: IOS Gather Data (GitOps)
+  - name: Network Gather Data (GitOps)
     execution_environment: 'ruch-network-ee'
     organization: "Red Hat network organization"
     forks: 0
@@ -126,7 +162,7 @@ controller_templates:
     job_tags: 'gitops'
     job_type: run
     limit: 
-    playbook: base_configuration/ios_gather_data.yml
+    playbook: base_configuration/network_gather_data.yml
     prevent_instance_group_fallback: false
     project: Network Demos
     credentials:
@@ -157,63 +193,6 @@ controller_templates:
             type: text
             variable: git_email
 
-  - name: NXOS Base Configuration
-    execution_environment: 'ruch-network-ee'
-    organization: "Red Hat network organization"
-    forks: 0
-    host_config_key: ''
-    inventory: Workshop Inventory
-    job_slice_count: 1
-    job_tags: ''
-    job_type: run
-    limit: 
-    playbook: base_configuration/nxos_base_configuration.yml
-    prevent_instance_group_fallback: false
-    project: Network Demos
-    credentials:
-      - "Workshop Credential"
-
-
-  - name: NXOS Gather Data (GitOps)
-    execution_environment: 'ruch-network-ee'
-    organization: "Red Hat network organization"
-    forks: 0
-    host_config_key: ''
-    inventory: Workshop Inventory
-    job_slice_count: 1
-    job_tags: ''
-    job_type: run
-    limit: 
-    playbook: base_configuration/nxos_gather_data.yml
-    prevent_instance_group_fallback: false
-    project: Network Demos
-    credentials:
-      - "Workshop Credential"
-    survey_enabled: true
-    survey:
-        description: ''
-        name: ''
-        spec:
-        -   choices: ''
-            default: ''
-            max: 24
-            min: 1
-            new_question: true
-            question_description: ''
-            question_name: What is the name for the commit (i.e. Joe Smith)?
-            required: true
-            type: text
-            variable: git_name
-        -   choices: ''
-            default: ''
-            max: 24
-            min: 1
-            new_question: true
-            question_description: ''
-            question_name: What is the email to for the commit (i.e. joe@mycompany.com)?
-            required: true
-            type: text
-            variable: git_email
 
   - name: NXOS Add Admin User
     execution_environment: ruch-network-ee
@@ -308,7 +287,7 @@ controller_templates:
     host_config_key: ''
     inventory: Workshop Inventory
     job_slice_count: 1
-    job_tags: ''
+    job_tags: closed
     job_type: run
     limit: ''
     playbook: itsm_change_update.yml

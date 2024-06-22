@@ -1,0 +1,15 @@
+- name: Gather network information as structured data
+  cisco.nxos.nxos_facts:
+    gather_network_resources:
+      - 'static_routes'
+      - 'ntp_global'
+      - 'logging_global'
+      - 'hostname'
+      - 'snmp_server'
+      - 'vlans'
+      - 'interfaces'
+      - 'l2_interfaces'
+      - 'l3_interfaces'
+    gather_subset:
+      - '!min'
+      - '!all'

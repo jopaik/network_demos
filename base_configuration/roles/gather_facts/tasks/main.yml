@@ -1,0 +1,4 @@
+---
+
+- name: Load supported platform file or fail
+  ansible.builtin.include_tasks: "{{ ansible_network_os }}.yml"
