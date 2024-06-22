@@ -1,0 +1,233 @@
+changed: false
+bd_subnets:
+-   fvSubnet:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            configIssues: ''
+            ctrl: nd
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-PROD/BD-PROD_BD/subnet-[192.168.0.1/24]
+            extMngdBy: ''
+            ip: 192.168.0.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T08:26:43.103+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            configIssues: ''
+            ctrl: nd
+            debugMessage: ''
+            descr: Subnet Created Using Ansible
+            dn: uni/tn-CC_test/BD-prod_bd/subnet-[10.10.101.1/24]
+            extMngdBy: ''
+            ip: 10.10.101.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T09:22:03.142+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: ''
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-Mossab/BD-BD-VLAN10/subnet-[10.0.1.254/24]
+            extMngdBy: ''
+            ip: 10.0.1.254/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T09:38:29.901+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: ''
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-Mossab/BD-BD-VLAN20/subnet-[10.0.2.254/24]
+            extMngdBy: ''
+            ip: 10.0.2.254/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T09:39:16.480+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: ''
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-Mossab/BD-BD-VLAN30/subnet-[10.0.3.254/24]
+            extMngdBy: ''
+            ip: 10.0.3.254/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T09:39:52.440+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: ''
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-API_Test/BD-Bridge/subnet-[10.0.0.1/24]
+            extMngdBy: ''
+            ip: 10.0.0.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T13:51:42.630+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: public
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: nd
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-DRO/BD-BD-1/subnet-[10.0.2.1/24]
+            extMngdBy: ''
+            ip: 10.0.2.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T14:28:14.670+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: nd
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-DRO/BD-BD-1/subnet-[10.0.1.1/24]
+            extMngdBy: ''
+            ip: 10.0.1.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T14:28:14.670+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: nd
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-DRO/BD-BD-2/subnet-[10.1.3.1/24]
+            extMngdBy: ''
+            ip: 10.1.3.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T14:28:14.670+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            ctrl: ''
+            debugMessage: ''
+            descr: ''
+            dn: uni/tn-NB-TENANT/BD-BD-WEB/subnet-[10.10.10.1/24]
+            extMngdBy: ''
+            ip: 10.10.10.1/24
+            ipDPLearning: enabled
+            lcOwn: local
+            modTs: '2024-06-21T17:05:29.506+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+failed: false
