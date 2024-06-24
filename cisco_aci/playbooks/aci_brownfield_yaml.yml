@@ -21,7 +21,8 @@
     include_role:
        name: "{{ item }}"
     loop: 
-        - "../roles/brownfield_tenant_collect"
+        #- "../roles/brownfield_tenant_collect"
+        - "../roles/brownfield_contracts_collect"
 
   - name: Publish the changes
     ansible.scm.git_publish:

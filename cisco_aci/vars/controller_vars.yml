@@ -1,0 +1,74 @@
+---
+validate_certs: false
+organization: Networks
+
+templates:
+  - name: ACI-Day0-1-Config-Staging
+    project: aci-read-csv
+    inventory: aci_csv
+    playbook: playbooks/aci_day0-1.yml
+  - name: ACI-Rollback
+    project: aci-read-csv
+    inventory: aci_csv
+    playbook: playbooks/aci_rollback.yml
+  - name: ACI-day2-Health-Check
+    project: aci-read-csv
+    inventory: aci_csv
+    playbook: playbooks/aci_health_day2.yml
+  - name: ACI-PreFlightCheck
+    project: aci-read-csv
+    inventory: aci_csv
+    playbook: playbooks/aci_preflight.yml
+  - name: 0-ACI-Prepare-Env
+    project: aci-read-csv
+    inventory: aci_csv
+    playbook: playbooks/aci_prepare_env.yml
+    survey_enabled: yes
+    survey_spec: {
+                            "description": "",
+                            "name": "",
+                            "spec": [
+                                {
+                                    "choices": "",
+                                    "default": "",
+                                    "max": 1024,
+                                    "min": 0,
+                                    "new_question": true,
+                                    "question_description": "",
+                                    "question_name": "Enter your Username",
+                                    "required": true,
+                                    "type": "text",
+                                    "variable": "apic_username"
+                                },
+                                {
+                                    "choices": "",
+                                    "default": "",
+                                    "formattedChoices": [
+                                        {
+                                            "choice": "",
+                                            "id": 0,
+                                            "isDefault": false
+                                        }
+                                    ],
+                                    "max": 1024,
+                                    "min": 0,
+                                    "new_question": false,
+                                    "question_description": "",
+                                    "question_name": "Enter your Password",
+                                    "required": true,
+                                    "type": "password",
+                                    "variable": "apic_password"
+                                },
+                                {
+                                    "choices": "False\nTrue",
+                                    "default": "False",
+                                    "max": 1024,
+                                    "min": 0,
+                                    "new_question": true,
+                                    "question_description": "",
+                                    "question_name": "Validate APIC Certificate",
+                                    "required": true,
+                                    "type": "multiplechoice",
+                                    "variable": "apic_validate_certs"
+                                }]}
+...

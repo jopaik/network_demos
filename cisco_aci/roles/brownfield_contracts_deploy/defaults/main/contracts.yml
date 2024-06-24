@@ -1,0 +1,75 @@
+changed: false
+contracts:
+-   vzBrCP:
+        attributes:
+            accessPrivilege: USER
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-common/brc-default
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2024-06-23T10:07:19.629+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '0'
+            userdom: all
+-   vzBrCP:
+        attributes:
+            accessPrivilege: USER
+            annotation: orchestrator:ansible
+            childAction: ''
+            configIssues: ''
+            descr: Created by AAP2.2 for web
+            dn: uni/tn-Ansible/brc-web
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2024-06-23T20:36:46.900+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: web
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+-   vzBrCP:
+        attributes:
+            accessPrivilege: USER
+            annotation: orchestrator:ansible
+            childAction: ''
+            configIssues: ''
+            descr: Created by AAP2.2 for database
+            dn: uni/tn-Ansible/brc-database
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2024-06-23T20:36:44.682+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: database
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+failed: false

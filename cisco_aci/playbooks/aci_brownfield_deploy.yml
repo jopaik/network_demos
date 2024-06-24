@@ -9,7 +9,8 @@
     include_role:
        name: "{{ item }}"
     loop: 
-        - "../roles/brownfield_tenant_deploy"
+        #- "../roles/brownfield_tenant_deploy"
+        - "../roles/brownfield_contracts_deploy"
         
 
 

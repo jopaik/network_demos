@@ -1,5 +1,5 @@
 ---
-- name: READ TENANT CONFIG
+- name: DEPLOY TENANT CONFIG
 
   vars:
     aci_login: &aci_login
@@ -44,14 +44,22 @@
         label: "{{ ap_item['fvAp']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}-{{ ap_item['fvAp']['attributes']['name'] }}"
 
     - name: Create VRF
-      aci_vrf:
+      cisco.aci.aci_vrf:
         <<: *aci_login
-        tenant: "{{  vrf_item.tenant | default(omit, True) }}"
-        vrf_name: "{{ vrf_item.vrf | default(omit, True) }}"
-      loop: "{{ aci_static_binding_to_epg.list }}"
+        annotation: "{{ vrf_item['fvCtx']['attributes']['annotation'] | default(omit, True) }}"
+        vrf_name: "{{ vrf_item['fvCtx']['attributes']['name'] | default(omit, True) }}"
+        description: "{{ vrf_item['fvCtx']['attributes']['name'] | default(omit, True) }}"
+        policy_control_direction: "{{ vrf_item['fvCtx']['attributes']['pcEnfDir'] | default(omit, True) }}"
+        policy_control_preference: "{{ vrf_item['fvCtx']['attributes']['pcEnfPref'] | default(omit, True) }}"
+        preferred_group: "{{ vrf_item['fvCtx']['children']['vzAny']['attributes']['prefGrMemb'] | default(omit, True) }}"
+        tenant: "{{ vrf_item['fvCtx']['attributes']['dn'] | split ('/ctx-') | first | trim | split ('uni/tn-') | last | trim }}"
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ vrfs }}"
       loop_control:
         loop_var: vrf_item
-        label: "{{ vrf_item.vrf }}"
+        label: "{{ vrf_item['fvCtx']['attributes']['dn'] | split ('/ctx-') | first | trim | split ('uni/tn-') | last | trim }}-{{ vrf_item['fvCtx']['attributes']['name'] | default(omit, True) }}"
     
     - name: Deploy BDs
       cisco.aci.aci_bd:
@@ -129,3 +137,23 @@
       loop_control:
         loop_var: epg_item
         label: "{{ epg_item['fvAEPg']['attributes']['dn'] | split ('/ap') | first | trim | split ('uni/tn-') | last | trim }}-{{ epg_item['fvAEPg']['attributes']['name'] | default(omit, True) }}"
+    
+    - name: "cisco.aci.aci_static_binding_to_epg"
+      cisco.aci.aci_static_binding_to_epg:
+        <<: *aci_login
+        tenant: "{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/ap') | first | trim | split ('uni/tn-') | last | trim }}"
+        ap: "{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/epg') | first | trim | split ('ap-') | last | trim }}"
+        epg: "{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/rspathAtt') | first | trim | split ('epg-') | last | trim }}"
+        encap_id: "{{ binding_item['fvRsPathAtt']['attributes']['encap'] | split ('-') | last | trim }}"
+        deploy_immediacy: "{{ binding_item['fvRsPathAtt']['attributes']['instrImedcy'] | default(omit, True) }}"
+        interface: "{{ binding_item['fvRsPathAtt']['attributes']['tDn'] | split (']') | first | trim  | split ('[') | last | trim }}"
+        pod_id: "{{ binding_item['fvRsPathAtt']['attributes']['tDn'] | split ('/pro') | first | trim  | split ('pod-') | last | trim }}"
+        leafs: "{{ binding_item['fvRsPathAtt']['attributes']['tDn'] | split ('/pat') | first | trim  | split ('s-') | last | trim }}"
+        interface_type: vpc
+        interface_mode: trunk
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ static_bindings }}"
+      loop_control:
+        loop_var: "{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/ap') | first | trim | split ('uni/tn-') | last | trim }}-{{ binding_item['fvRsPathAtt']['attributes']['tDn'] | split (']') | first | trim  | split ('[') | last | trim }}"

@@ -2,338 +2,66 @@ changed: false
 tenants:
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-ID1_TRUSTED_PROD_TNT
+            dn: uni/tn-infra
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:29:06.577+00:00'
+            modTs: '2024-06-23T10:07:24.108+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: ID1_TRUSTED_PROD_TNT
+            name: infra
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
             status: ''
-            uid: '15374'
-            userdom: ':all:'
+            uid: '0'
+            userdom: all
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-ID1_TRUSTED_RTL_TNT
+            dn: uni/tn-common
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:29:09.303+00:00'
+            modTs: '2024-06-23T10:07:19.629+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: ID1_TRUSTED_RTL_TNT
+            name: common
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
             status: ''
-            uid: '15374'
-            userdom: ':all:'
+            uid: '0'
+            userdom: all
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-ID1_UNTRUSTED_PROD_TNT
+            dn: uni/tn-mgmt
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:29:11.001+00:00'
+            modTs: '2024-06-23T10:07:23.887+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: ID1_UNTRUSTED_PROD_TNT
+            name: mgmt
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
             status: ''
-            uid: '15374'
-            userdom: ':all:'
+            uid: '0'
+            userdom: all
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
-            descr: ''
-            dn: uni/tn-ID1_UNTRUSTED_RTL_TNT
+            descr: Try ACI tool demo at https://oneaciapp.talapupa.com
+            dn: uni/tn-oneaciapp
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:29:12.679+00:00'
+            modTs: '2024-06-23T10:59:06.397+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: ID1_UNTRUSTED_RTL_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID1_NMS_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:14.576+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID1_NMS_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_TRUSTED_PROD_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:16.375+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_TRUSTED_PROD_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_TRUSTED_RTL_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:18.065+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_TRUSTED_RTL_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_UNTRUSTED_PROD_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:19.783+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_UNTRUSTED_PROD_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_UNTRUSTED_RTL_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:21.505+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_UNTRUSTED_RTL_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_NMS_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:23.189+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_NMS_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-API_Test
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:24.865+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: API_Test
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-API_Test1
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:26.584+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: API_Test1
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Configured with REST API
-            dn: uni/tn-ExampleTenant
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:28.277+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ExampleTenant
-            nameAlias: StudentName_NIMM
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Configured with REST API
-            dn: uni/tn-Normativitas
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:29.991+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Normativitas
-            nameAlias: halooo_world
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-DRO
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:31.713+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: DRO
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Tenant creado en Python API por Oscar :)
-            dn: uni/tn-Ten-Py-101
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T14:47:51.587+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Ten-Py-101
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: SFY_DMZ_Zone
-            dn: uni/tn-SFY_DMZ_TN
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:34.825+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: SFY_DMZ_TN
-            nameAlias: SFY_DMZ_Zone
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: SFY_PCIDSS_Zone
-            dn: uni/tn-SFY_PCIDSS_TN
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:36.633+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: SFY_PCIDSS_TN
-            nameAlias: SFY_PCIDSS_Zone
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: SFY_Prod_Zone
-            dn: uni/tn-SFY_PROD_TN
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:38.379+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: SFY_PROD_TN
-            nameAlias: SFY_Prod_Zone
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-NB-TENANT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:41.826+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: NB-TENANT
+            name: oneaciapp
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
@@ -345,12 +73,12 @@ tenants:
             annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-Amit-test
+            dn: uni/tn-M_DTenantA
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:34:04.912+00:00'
+            modTs: '2024-06-23T13:31:25.232+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: Amit-test
+            name: M_DTenantA
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
@@ -359,84 +87,50 @@ tenants:
             userdom: ':all:'
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: This tenant is created by terraform
-            dn: uni/tn-DEMO-tenant
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T19:30:04.876+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: DEMO-tenant
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-infra
+            dn: uni/tn-M_DTenantB
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T14:47:46.464+00:00'
+            modTs: '2024-06-23T13:32:45.950+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: infra
+            name: M_DTenantB
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
             status: ''
-            uid: '0'
-            userdom: all
+            uid: '15374'
+            userdom: ':all:'
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-common
+            dn: uni/tn-wrre
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T14:47:48.157+00:00'
+            modTs: '2024-06-23T13:36:10.092+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: common
+            name: wrre
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
             status: ''
-            uid: '0'
-            userdom: all
+            uid: '15374'
+            userdom: ':all:'
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-mgmt
+            dn: uni/tn-user
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T14:47:49.859+00:00'
+            modTs: '2024-06-23T14:02:56.220+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: mgmt
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '0'
-            userdom: all
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Try ACI tool demo at https://oneaciapp.talapupa.com
-            dn: uni/tn-oneaciapp
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:47.982+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: oneaciapp
-            nameAlias: ''
+            name: user
+            nameAlias: user
             ownerKey: ''
             ownerTag: ''
             status: ''
@@ -444,355 +138,15 @@ tenants:
             userdom: ':all:'
 -   fvTenant:
         attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: mytenant
-            dn: uni/tn-mytenant
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:49.680+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: mytenant
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
+            annotation: ''
             childAction: ''
             descr: ''
-            dn: uni/tn-Test
+            dn: uni/tn-kvm
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:29:51.399+00:00'
+            modTs: '2024-06-23T14:39:55.349+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: Test
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-Jestem_glupkiem
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:53.078+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Jestem_glupkiem
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-God-save-the-Queen
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:54.839+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: God-save-the-Queen
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-Zycie_w_zycie
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:56.529+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Zycie_w_zycie
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-Kocham_Julie
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:29:59.230+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Kocham_Julie
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-Glosuj_na_PIS
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:00.923+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Glosuj_na_PIS
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-IRIS007
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:02.630+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: IRIS007
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID1_PR_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:04.338+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID1_PR_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Tenant created by Ansible
-            dn: uni/tn-MM_01
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T08:21:46.177+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: MM_01
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Tenant created by Ansible
-            dn: uni/tn-MM_02
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T08:21:52.214+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: MM_02
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Tenant created by Ansible
-            dn: uni/tn-MM_03
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T08:21:56.953+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: MM_03
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Tenant created by Ansible
-            dn: uni/tn-MM_04
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T08:22:01.605+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: MM_04
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Tenant created by Ansible
-            dn: uni/tn-MM_05
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T08:22:06.103+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: MM_05
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-Check_Test
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:13.204+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Check_Test
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID1_RT_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:14.913+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID1_RT_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-PROD
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T08:26:28.342+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: PROD
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Testing and learning
-            dn: uni/tn-Vinh_test
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:18.272+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: Vinh_test
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_PR_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:19.971+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_PR_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: ''
-            dn: uni/tn-ID2_RT_TNT
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:21.685+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: ID2_RT_TNT
-            nameAlias: ''
-            ownerKey: ''
-            ownerTag: ''
-            status: ''
-            uid: '15374'
-            userdom: ':all:'
--   fvTenant:
-        attributes:
-            annotation: orchestrator:ansible
-            childAction: ''
-            descr: Test with terraform module
-            dn: uni/tn-TN_XXX
-            extMngdBy: ''
-            lcOwn: local
-            modTs: '2024-06-21T18:30:23.590+00:00'
-            monPolDn: uni/tn-common/monepg-default
-            name: TN_XXX
+            name: kvm
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
@@ -804,12 +158,63 @@ tenants:
             annotation: orchestrator:ansible
             childAction: ''
             descr: Tenant Created Using Ansible
-            dn: uni/tn-CC_test
+            dn: uni/tn-1HC_12057
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T09:20:25.949+00:00'
+            modTs: '2024-06-23T15:56:00.649+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: CC_test
+            name: 1HC_12057
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvTenant:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: Configured with REST API
+            dn: uni/tn-CreativeMinority
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-23T16:40:30.167+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: CreativeMinority
+            nameAlias: Yoel_672022326
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvTenant:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-Villains
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-23T17:44:07.425+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: Villains
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvTenant:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-MyTenant1
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-23T17:52:10.468+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: MyTenant1
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
@@ -820,13 +225,13 @@ tenants:
         attributes:
             annotation: orchestrator:ansible
             childAction: ''
-            descr: ''
-            dn: uni/tn-Mossab
+            descr: Created with AAP2.4
+            dn: uni/tn-Ansible
             extMngdBy: ''
             lcOwn: local
-            modTs: '2024-06-21T18:30:26.737+00:00'
+            modTs: '2024-06-23T18:06:41.210+00:00'
             monPolDn: uni/tn-common/monepg-default
-            name: Mossab
+            name: Ansible
             nameAlias: ''
             ownerKey: ''
             ownerTag: ''
