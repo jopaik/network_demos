@@ -1,0 +1,108 @@
+changed: false
+l3out:
+-   l3extOut:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-common/out-default
+            enforceRtctrl: export
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T07:14:22.829+00:00'
+            monPolDn: ''
+            mplsEnabled: 'no'
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '0'
+            userdom: all
+        children:
+        -   l3extRsEctx:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2024-06-24T16:55:49.103+00:00'
+                    monPolDn: ''
+                    rType: mo
+                    rn: rsectx
+                    state: formed
+                    stateQual: default-target
+                    status: ''
+                    tCl: fvCtx
+                    tContextDn: ''
+                    tDn: uni/tn-common/ctx-default
+                    tRn: ctx-default
+                    tType: name
+                    tnFvCtxName: ''
+                    uid: '0'
+                    userdom: all
+-   l3extOut:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            descr: ''
+            dn: uni/tn-Ansible/out-Ansible_l3out
+            enforceRtctrl: export
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T18:16:00.172+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            mplsEnabled: 'no'
+            name: Ansible_l3out
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+        children:
+        -   l3extRsL3DomAtt:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2024-06-24T18:16:00.184+00:00'
+                    monPolDn: uni/tn-common/monepg-default
+                    rType: mo
+                    rn: rsl3DomAtt
+                    state: missing-target
+                    stateQual: none
+                    status: ''
+                    tCl: extnwDomP
+                    tDn: uni/l3dom-Ansible_external_corporate
+                    tType: mo
+                    uid: '15374'
+                    userdom: ':all:'
+        -   l3extRsEctx:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2024-06-24T18:16:00.172+00:00'
+                    monPolDn: uni/tn-common/monepg-default
+                    rType: mo
+                    rn: rsectx
+                    state: formed
+                    stateQual: none
+                    status: ''
+                    tCl: fvCtx
+                    tContextDn: ''
+                    tDn: uni/tn-Ansible/ctx-Ansible_vrf
+                    tRn: ctx-Ansible_vrf
+                    tType: name
+                    tnFvCtxName: Ansible_vrf
+                    uid: '0'
+                    userdom: all
+failed: false

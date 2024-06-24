@@ -1,0 +1,81 @@
+---
+- name: DEPLOY TENANT CONFIG
+
+  vars:
+    aci_login: &aci_login
+      hostname: "{{ apic_host }}"
+      username: "{{ apic_username }}"
+      password: "{{ apic_password }}"
+      validate_certs: "{{ apic_validate_certs }}"
+    
+  delegate_to: localhost
+  ignore_errors: true
+  block:
+
+    - name: Add Interface Policy Leaf Profile
+      cisco.aci.aci_interface_policy_leaf_profile:
+        <<: *aci_login
+        annotation: "{{ profile_item['infraAccPortP']['attributes']['annotation'] | default(omit, True) }}"
+        interface_profile: "{{ profile_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
+        description: "{{ profile_item['infraAccPortP']['attributes']['descr'] | default(omit, True) }}" 
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ interface_profile }}"
+      loop_control:
+        loop_var: profile_item
+        label: "{{ profile_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
+  
+    - name: Add Access Ports to Interface Policy Leaf Profile
+      cisco.aci.aci_access_port_to_interface_policy_leaf_profile:
+        <<: *aci_login
+        annotation: "{{ access_item['infraHPortS']['attributes']['annotation'] | default(omit, True) }}"
+        interface_profile: "{{ access_item['infraHPortS']['attributes']['dn'] | split ('/hports') | first | trim | split ('accportprof-') | last | trim }}"
+        access_port_selector: "{{ access_item['infraHPortS']['attributes']['name'] | default(omit, True) }}"
+        description: "{{ access_item['infraHPortS']['attributes']['descr'] | default(omit, True) }}"
+        policy_group: "{{ access_item['infraHPortS']['attributes']['dn'] | split ('/hports') | first | trim | split ('accportprof-') | last | trim }}"
+        interface_type: vpc
+        type: leaf
+        from_card: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['fromCard'] | default(omit, True) }}"
+        from_port: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['fromPort'] | default(omit, True) }}"
+        to_card: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['toCard'] | default(omit, True) }}"
+        to_port: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['toPort'] | default(omit, True) }}"
+        port_blk: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['name'] | default(omit, True) }}"
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ leaf_profile }}"
+      loop_control:
+        loop_var: access_item
+        label: "{{ access_item['infraHPortS']['attributes']['name'] | default(omit, True) }}"
+      
+    - name: Add a new VLAN Pool
+      cisco.aci.aci_vlan_pool:
+        <<: *aci_login
+        annotation: "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['annotation'] | default(omit, True) }}"
+        pool: "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['name'] | default(omit, True) }}"
+        pool_allocation_mode:  "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['allocMode'] | default(omit, True) }}"
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ vlan_pool }}"
+      loop_control:
+        loop_var: vlan_pool_item
+        label: "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['name'] | default(omit, True) }}"
+
+    - name: Add a new VLAN Encap Block
+      cisco.aci.aci_vlan_pool_encap_block:
+        <<: *aci_login
+        annotation: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['annotation'] | default(omit, True) }}"
+        #pool: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('uni/infra/vlanns-[') | last | trim | split(']-') | first | trim }}"
+        pool_allocation_mode: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['allocMode'] | default(omit, True) }}"
+        block_start: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('vlan-') | last | trim }}"
+        block_end: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('vlan-') | last | trim }}"
+        block_name: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['name'] | default(omit, True) }}"
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ vlan_encap }}"
+      loop_control:
+        loop_var: vl_pool_item
+        #label: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('vlan-') | last | trim }}-{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('vlan-') | last | trim }}"

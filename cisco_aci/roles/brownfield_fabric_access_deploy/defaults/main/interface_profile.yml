@@ -1,0 +1,345 @@
+changed: false
+interface_profile:
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: SL 2501
+            dn: uni/infra/accportprof-LF_2501_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:40:22.584+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_2501_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: BL 113-114
+            dn: uni/infra/accportprof-LF_113_114_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:23.190+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_113_114_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: BL 114
+            dn: uni/infra/accportprof-LF_114_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:23.563+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_114_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            creator: USER
+            descr: SL 2502
+            dn: uni/infra/accportprof-LF_2502_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T10:27:53.795+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_2502_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: BL 113
+            dn: uni/infra/accportprof-LF_113_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:24.387+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_113_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            creator: USER
+            descr: BL 111
+            dn: uni/infra/accportprof-LF_111_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T10:27:53.795+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_111_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: BL 111-112
+            dn: uni/infra/accportprof-LF_111_112_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:25.218+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_111_112_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/accportprof-LF_2501_2502_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:25.631+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_2501_2502_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: BL 112
+            dn: uni/infra/accportprof-LF_112_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:26.049+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_112_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            creator: USER
+            descr: LEAF_101
+            dn: uni/infra/accportprof-LEAF_101
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T11:40:15.648+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LEAF_101
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: CSV
+            dn: uni/infra/accportprof-Ansible_FI-1A
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:12:52.673+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Ansible_FI-1A
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: CSV
+            dn: uni/infra/accportprof-Ansible_FI-1B
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:12:58.297+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Ansible_FI-1B
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: CSV
+            dn: uni/infra/accportprof-Ansible_corporate_external
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:13:02.764+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Ansible_corporate_external
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/accportprof-HDReady_INT_Pro
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:28.171+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: HDReady_INT_Pro
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/accportprof-NB-LEAF-101
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T17:06:26.063+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: NB-LEAF-101
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/accportprof-NB-LEAF-102
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T17:09:36.472+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: NB-LEAF-102
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/accportprof-DB_INT
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:29.417+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: DB_INT
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAccPortP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/accportprof-LF_120_IPR
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T20:41:29.806+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: LF_120_IPR
+            nameAlias: ''
+            nodeId: '0'
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+failed: false

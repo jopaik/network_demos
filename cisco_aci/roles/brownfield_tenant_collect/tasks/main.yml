@@ -10,7 +10,6 @@
 
   delegate_to: localhost
   ignore_errors: true
-
   block:
     #TENANTS
     - name: Create a defaults directory if it does not exist
@@ -18,8 +17,7 @@
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/"
         state: directory
         mode: '0755'
-      delegate_to: localhost
-
+      
     - name: Read Tenant
       cisco.aci.aci_tenant:
         <<: *aci_login
@@ -30,15 +28,13 @@
       ansible.builtin.copy:
         content: "{{ tenants | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/tenants.yml"
-      delegate_to: localhost
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/tenants.yml"
         regexp: 'current'
         replace: 'tenants'
-      delegate_to: localhost  
-
+        
    #APPLICATION PROFILES
     - name: Read Application Policy
       cisco.aci.aci_ap:
@@ -50,15 +46,13 @@
       ansible.builtin.copy:
         content: "{{ aps  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/aps.yml"
-      delegate_to: localhost
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/aps.yml"
         regexp: 'current'
         replace: 'aps'
-      delegate_to: localhost  
-
+        
     #VRFs
     - name: Read VRF
       cisco.aci.aci_vrf:
@@ -70,15 +64,13 @@
       ansible.builtin.copy:
         content: "{{ vrfs  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/vrfs.yml"
-      delegate_to: localhost
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/vrfs.yml"
         regexp: 'current'
         replace: 'vrfs'
-      delegate_to: localhost  
-
+        
     #BRIDGE DOMAINS
     - name: Read BDs
       cisco.aci.aci_bd:
@@ -90,15 +82,13 @@
       ansible.builtin.copy:
         content: "{{ bds  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/bds.yml"
-      delegate_to: localhost
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/bds.yml"
         regexp: 'current'
         replace: 'bds'
-      delegate_to: localhost  
-
+        
     #BD SUBNETS
     - name: Read BD SUBNETs
       cisco.aci.aci_bd_subnet:
@@ -110,15 +100,13 @@
       ansible.builtin.copy:
         content: "{{ bd_subnets  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/bd_subnets.yml"
-      delegate_to: localhost
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/bd_subnets.yml"
         regexp: 'current'
         replace: 'bd_subnets'
-      delegate_to: localhost  
-
+        
     #EPGs
     - name: Read EPGs
       cisco.aci.aci_epg:
@@ -130,15 +118,13 @@
       ansible.builtin.copy:
         content: "{{ epgs  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/epgs.yml"
-      delegate_to: localhost  
-
+        
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/epgs.yml"
         regexp: 'current'
         replace: 'epgs'
-      delegate_to: localhost  
-    
+        
     #Static Bindings to EPGs
     - name: "cisco.aci.aci_static_binding_to_epg"
       cisco.aci.aci_static_binding_to_epg:
@@ -150,14 +136,13 @@
       ansible.builtin.copy:
         content: "{{ static_bindings | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/static_bindings.yml"
-      delegate_to: localhost 
-
+       
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/static_bindings.yml"
         regexp: 'current'
         replace: 'static_bindings'
-      delegate_to: localhost  
+        
 
     
 

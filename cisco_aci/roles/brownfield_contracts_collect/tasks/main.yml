@@ -18,8 +18,7 @@
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/"
         state: directory
         mode: '0755'
-      delegate_to: localhost
-
+      
     - name: Read Filters
       cisco.aci.aci_filter:
         <<: *aci_login
@@ -31,14 +30,12 @@
       ansible.builtin.copy:
         content: "{{ filters | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/filters.yml"
-      delegate_to: localhost
 
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/filters.yml"
         regexp: 'current'
         replace: 'filters'
-      delegate_to: localhost  
 
    #FILTER ENTRIES
     - name: Read Filter Entries 
@@ -51,15 +48,13 @@
       ansible.builtin.copy:
         content: "{{ entries  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/entries.yml"
-      delegate_to: localhost
-
+    
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/entries.yml"
         regexp: 'current'
         replace: 'entries'
-      delegate_to: localhost  
-
+    
     #CONTRACTS
     - name: Read Contracts
       cisco.aci.aci_contract:
@@ -71,14 +66,12 @@
       ansible.builtin.copy:
         content: "{{ contracts  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/contracts.yml"
-      delegate_to: localhost
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/contracts.yml"
         regexp: 'current'
         replace: 'contracts'
-      delegate_to: localhost  
 
     #Subjects
     - name: Read Subjects
@@ -91,14 +84,12 @@
       ansible.builtin.copy:
         content: "{{ subjects  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/subjects.yml"
-      delegate_to: localhost
-
+    
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/subjects.yml"
         regexp: 'current'
         replace: 'subjects'
-      delegate_to: localhost  
 
     #Associated
     - name: Read Associated
@@ -111,14 +102,12 @@
       ansible.builtin.copy:
         content: "{{ associated  | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/associated.yml"
-      delegate_to: localhost
-
+     
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/associated.yml"
         regexp: 'current'
         replace: 'associated'
-      delegate_to: localhost  
 
     #EPG binding provider
     - name: Read EPGs Binding
@@ -132,15 +121,13 @@
       ansible.builtin.copy:
         content: "{{ provider | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/provider.yml"
-      delegate_to: localhost  
-
+    
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/provider.yml"
         regexp: 'current'
         replace: 'provider'
-      delegate_to: localhost  
-
+      
      #EPG binding consumer
     - name: Read EPGs Binding
       cisco.aci.aci_epg_to_contract:
@@ -153,13 +140,10 @@
       ansible.builtin.copy:
         content: "{{ consumer | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/consumer.yml"
-      delegate_to: localhost  
-
+      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_contracts_deploy/defaults/main/consumer.yml"
         regexp: 'current'
         replace: 'consumer'
-      delegate_to: localhost  
-    
-    
+      

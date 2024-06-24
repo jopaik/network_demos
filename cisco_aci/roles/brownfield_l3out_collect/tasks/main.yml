@@ -1,0 +1,93 @@
+---
+- name: READ L3OUT CONFIG
+
+  vars:
+    aci_login: &aci_login
+      hostname: "{{ apic_host }}"
+      username: "{{ apic_username }}"
+      password: "{{ apic_password }}"
+      validate_certs: "{{ apic_validate_certs }}"
+
+  delegate_to: localhost
+  ignore_errors: true
+  block:
+    #L3OUT
+    - name: Create a defaults directory if it does not exist
+      ansible.builtin.file:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/"
+        state: directory
+        mode: '0755'
+      
+    - name: Read L3out
+      cisco.aci.aci_l3out:
+        <<: *aci_login
+        state: query
+        timeout: 60
+      register: l3out
+
+    - name: Add l3outs to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ l3out | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/l3out.yml"
+      
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/l3out.yml"
+        regexp: 'current'
+        replace: 'l3out'
+
+   #EXTERNAL EPGs
+    - name: Read External EPG Entries 
+      cisco.aci.aci_l3out_extepg:
+        <<: *aci_login
+        state: query
+      register: ext
+
+    - name: Add external epgs to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ ext | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/ext.yml"
+      
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/ext.yml"
+        regexp: 'current'
+        replace: 'ext'
+        
+    #BIND PROVIDER CONTRACT to an EXTERNAL EPG
+    - name: Read Contract to External EPG
+      cisco.aci.aci_l3out_extepg_to_contract:
+        <<: *aci_login
+        state: query
+        contract_type: provider
+      register: bind_provider
+      
+    - name: Add binding to provider contracts to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ bind_provider  | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/bind_provider.yml"
+    
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/bind_provider.yml"
+        regexp: 'current'
+        replace: 'bind_provider'
+        
+    #BIND CONSUMER CONTRACT to an EXTERNAL EPG
+    - name: Read Contract to External EPG
+      cisco.aci.aci_l3out_extepg_to_contract:
+        <<: *aci_login
+        state: query
+        contract_type: consumer
+      register: bind_consumer
+       
+    - name: Add binding to provider contracts to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ bind_consumer | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/bind_consumer.yml"
+      
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/bind_consumer.yml"
+        regexp: 'current'
+        replace: 'bind_consumer'

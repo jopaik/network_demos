@@ -1,5 +1,5 @@
 changed: false
-provider:
+bind_provider:
 -   fvRsProv:
         attributes:
             accessPrivilege: USER
@@ -12,7 +12,7 @@ provider:
             intent: install
             lcOwn: local
             matchT: AtleastOne
-            modTs: '2024-06-24T13:15:07.253+00:00'
+            modTs: '2024-06-24T18:15:54.459+00:00'
             monPolDn: uni/tn-common/monepg-default
             prio: unspecified
             rType: mo
@@ -41,7 +41,7 @@ provider:
             intent: install
             lcOwn: local
             matchT: AtleastOne
-            modTs: '2024-06-24T13:15:08.948+00:00'
+            modTs: '2024-06-24T18:15:56.155+00:00'
             monPolDn: uni/tn-common/monepg-default
             prio: unspecified
             rType: mo
@@ -70,7 +70,7 @@ provider:
             intent: install
             lcOwn: local
             matchT: AtleastOne
-            modTs: '2024-06-24T13:15:16.877+00:00'
+            modTs: '2024-06-24T18:16:04.161+00:00'
             monPolDn: uni/tn-common/monepg-default
             prio: unspecified
             rType: mo

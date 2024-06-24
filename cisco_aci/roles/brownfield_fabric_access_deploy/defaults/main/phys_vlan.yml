@@ -1,0 +1,135 @@
+changed: false
+phys_vlan:
+-   l3extDomP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            dn: uni/l3dom-test
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T09:40:08.358+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: test
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+        children:
+        -   infraRsVlanNs:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2024-06-24T09:40:08.367+00:00'
+                    monPolDn: uni/fabric/monfab-default
+                    rType: mo
+                    rn: rsvlanNs
+                    state: formed
+                    stateQual: none
+                    status: ''
+                    tCl: fvnsVlanInstP
+                    tDn: uni/infra/vlanns-[myPool]-dynamic
+                    tType: mo
+                    uid: '15374'
+                    userdom: ':all:'
+-   l3extDomP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            configIssues: ''
+            dn: uni/l3dom-Ansible_corporate_external
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:13:53.200+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Ansible_corporate_external
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+        children:
+        -   infraRsVlanNs:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2024-06-24T13:13:53.207+00:00'
+                    monPolDn: uni/fabric/monfab-default
+                    rType: mo
+                    rn: rsvlanNs
+                    state: formed
+                    stateQual: none
+                    status: ''
+                    tCl: fvnsVlanInstP
+                    tDn: uni/infra/vlanns-[Ansible_general_pool]-static
+                    tType: mo
+                    uid: '15374'
+                    userdom: ':all:'
+-   l3extDomP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            dn: uni/l3dom-Routed
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:40:02.750+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Routed
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+-   l3extDomP:
+        attributes:
+            annotation: orchestrator:terraform
+            childAction: ''
+            configIssues: ''
+            dn: uni/l3dom-L3_Peering_to_Outside
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T14:20:34.576+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: L3_Peering_to_Outside
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+        children:
+        -   infraRsVlanNs:
+                attributes:
+                    annotation: orchestrator:terraform
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2024-06-24T14:20:35.501+00:00'
+                    monPolDn: uni/fabric/monfab-default
+                    rType: mo
+                    rn: rsvlanNs
+                    state: formed
+                    stateQual: none
+                    status: ''
+                    tCl: fvnsVlanInstP
+                    tDn: uni/infra/vlanns-[L3_Peering_to_Outside]-dynamic
+                    tType: mo
+                    uid: '15374'
+                    userdom: ':all:'
+failed: false

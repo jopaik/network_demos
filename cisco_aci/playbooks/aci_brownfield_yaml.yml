@@ -22,7 +22,11 @@
        name: "{{ item }}"
     loop: 
         #- "../roles/brownfield_tenant_collect"
-        - "../roles/brownfield_contracts_collect"
+        #- "../roles/brownfield_contracts_collect"
+        #- "../roles/brownfield_l3out_collect" 
+        - "../roles/brownfield_fabric_access_collect"
+        
+
 
   - name: Publish the changes
     ansible.scm.git_publish:

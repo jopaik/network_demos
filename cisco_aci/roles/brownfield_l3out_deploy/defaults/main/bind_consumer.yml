@@ -1,5 +1,5 @@
 changed: false
-consumer:
+bind_consumer:
 -   fvRsCons:
         attributes:
             accessPrivilege: USER
@@ -12,7 +12,7 @@ consumer:
             forceResolve: 'yes'
             intent: install
             lcOwn: local
-            modTs: '2024-06-24T13:15:10.628+00:00'
+            modTs: '2024-06-24T18:15:57.891+00:00'
             monPolDn: uni/tn-common/monepg-default
             prio: unspecified
             rType: mo

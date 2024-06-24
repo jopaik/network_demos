@@ -14,7 +14,6 @@
     - name: Deploy Tenants
       cisco.aci.aci_tenant:
         <<: *aci_login
-        state: present
         tenant: "{{ tenant_item['fvTenant']['attributes']['name'] | default(omit, True) }}"
         description: "{{ tenant_item['fvTenant']['attributes']['descr']| default(omit, True) }}"
         timeout: 60
@@ -29,7 +28,6 @@
     - name: Deploy APs
       cisco.aci.aci_ap:
         <<: *aci_login
-        state: present
         timeout: 60  
         annotation: "{{ ap_item['fvAp']['attributes']['annotation'] | default(omit, True) }}"
         ap: "{{ ap_item['fvAp']['attributes']['name'] | default(omit, True) }}"
@@ -64,7 +62,6 @@
     - name: Deploy BDs
       cisco.aci.aci_bd:
         <<: *aci_login
-        state: present
         timeout: 60
         allow_intersite_bum_traffic: "{{ bd_item['fvBD']['attributes']['intersiteBumTrafficAllow'] | default(omit, True) }}"
         allow_intersite_l2_stretch: "{{ bd_item['fvBD']['attributes']['intersiteL2Stretch'] | default(omit, True) }}"
@@ -103,7 +100,6 @@
     - name: Deploy BD Subnets
       cisco.aci.aci_bd_subnet:
         <<: *aci_login
-        state: present
         timeout: 60
         annotation: "{{ bd_subnets_item['fvSubnet']['attributes']['annotation'] | default(omit, True) }}"
         description: "{{ bd_subnets_item['fvSubnet']['attributes']['descr'] | default(omit, True) }}"

@@ -1,0 +1,305 @@
+changed: false
+aep:
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-default
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T07:14:23.923+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '0'
+            userdom: all
+        children:
+        -   infraProvAcc:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    configIssues: ''
+                    descr: ''
+                    extMngdBy: ''
+                    lcOwn: local
+                    modTs: '2024-06-24T07:14:23.923+00:00'
+                    monPolDn: uni/fabric/monfab-default
+                    name: default
+                    nameAlias: ''
+                    rn: provacc
+                    status: ''
+                    uid: '0'
+                    userdom: all
+                children:
+                -   infraRsFuncToEpg:
+                        attributes:
+                            annotation: ''
+                            childAction: ''
+                            encap: vlan-4
+                            extMngdBy: ''
+                            forceResolve: 'yes'
+                            instrImedcy: lazy
+                            lcOwn: local
+                            modTs: '2024-06-24T07:14:30.099+00:00'
+                            mode: regular
+                            monPolDn: uni/fabric/monfab-default
+                            primaryEncap: unknown
+                            rType: mo
+                            rn: rsfuncToEpg-[uni/tn-infra/ap-access/epg-default]
+                            state: formed
+                            stateQual: none
+                            status: ''
+                            tCl: fvAEPg
+                            tDn: uni/tn-infra/ap-access/epg-default
+                            tType: mo
+                            uid: '0'
+                            userdom: all
+                -   dhcpInfraProvP:
+                        attributes:
+                            annotation: ''
+                            childAction: ''
+                            descr: ''
+                            extMngdBy: ''
+                            lcOwn: local
+                            modTs: '2024-06-24T07:14:23.923+00:00'
+                            mode: controller
+                            name: ''
+                            nameAlias: ''
+                            rn: infraprovp
+                            status: ''
+                            uid: '0'
+                            userdom: all
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-APIC_AAEP
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T10:27:53.795+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: APIC_AAEP
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-PHYSICAL_AAEP
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T10:27:53.795+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: PHYSICAL_AAEP
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-EXTERNAL_AAEP
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T10:27:53.795+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: EXTERNAL_AAEP
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-IPN_AAEP
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T10:27:53.795+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: IPN_AAEP
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: orchestrator:ansible
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-Ansible_aep
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:13:42.750+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Ansible_aep
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+        children:
+        -   infraProvAcc:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    configIssues: ''
+                    descr: ''
+                    extMngdBy: ''
+                    lcOwn: local
+                    modTs: '2024-06-24T13:13:42.750+00:00'
+                    monPolDn: uni/fabric/monfab-default
+                    name: provacc
+                    nameAlias: ''
+                    rn: provacc
+                    status: ''
+                    uid: '15374'
+                    userdom: ':all:'
+                children:
+                -   infraRsFuncToEpg:
+                        attributes:
+                            annotation: ''
+                            childAction: ''
+                            encap: vlan-4
+                            extMngdBy: ''
+                            forceResolve: 'yes'
+                            instrImedcy: lazy
+                            lcOwn: local
+                            modTs: '2024-06-24T13:13:42.760+00:00'
+                            mode: regular
+                            monPolDn: uni/fabric/monfab-default
+                            primaryEncap: unknown
+                            rType: mo
+                            rn: rsfuncToEpg-[uni/tn-infra/ap-access/epg-default]
+                            state: formed
+                            stateQual: none
+                            status: ''
+                            tCl: fvAEPg
+                            tDn: uni/tn-infra/ap-access/epg-default
+                            tType: mo
+                            uid: '0'
+                            userdom: all
+                -   dhcpInfraProvP:
+                        attributes:
+                            annotation: ''
+                            childAction: ''
+                            descr: ''
+                            extMngdBy: ''
+                            lcOwn: local
+                            modTs: '2024-06-24T13:13:42.750+00:00'
+                            mode: controller
+                            name: ''
+                            nameAlias: ''
+                            rn: infraprovp
+                            status: ''
+                            uid: '0'
+                            userdom: all
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-PDC
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:40:08.561+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: PDC
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-HDReady_AAEP
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T13:54:33.665+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: HDReady_AAEP
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-NB-PHY-DOMAIN
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T17:04:17.464+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: NB-PHY-DOMAIN
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            creator: USER
+            descr: ''
+            dn: uni/infra/attentp-DB_AAEP
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2024-06-24T18:17:58.981+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: DB_AAEP
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+failed: false

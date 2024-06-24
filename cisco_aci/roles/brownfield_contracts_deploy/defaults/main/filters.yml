@@ -11,7 +11,7 @@ filters:
             fwdId: '1'
             id: implicit
             lcOwn: local
-            modTs: '2024-06-23T10:07:19.629+00:00'
+            modTs: '2024-06-24T07:14:23.301+00:00'
             monPolDn: uni/tn-common/monepg-default
             name: est
             nameAlias: ''
@@ -36,7 +36,7 @@ filters:
             fwdId: default
             id: implicit
             lcOwn: local
-            modTs: '2024-06-23T10:07:19.629+00:00'
+            modTs: '2024-06-24T07:14:23.301+00:00'
             monPolDn: uni/tn-common/monepg-default
             name: default
             nameAlias: ''
@@ -61,7 +61,7 @@ filters:
             fwdId: '2'
             id: implicit
             lcOwn: local
-            modTs: '2024-06-23T10:07:19.629+00:00'
+            modTs: '2024-06-24T07:14:23.301+00:00'
             monPolDn: uni/tn-common/monepg-default
             name: icmp
             nameAlias: ''
@@ -86,7 +86,7 @@ filters:
             fwdId: '3'
             id: implicit
             lcOwn: local
-            modTs: '2024-06-23T10:07:19.629+00:00'
+            modTs: '2024-06-24T07:14:23.301+00:00'
             monPolDn: uni/tn-common/monepg-default
             name: arp
             nameAlias: ''
@@ -103,6 +103,31 @@ filters:
 -   vzFilter:
         attributes:
             accessPrivilege: USER
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-ten01/flt-HTTP
+            extMngdBy: ''
+            fwdId: '0'
+            id: implicit
+            lcOwn: local
+            modTs: '2024-06-24T12:23:30.116+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: HTTP
+            nameAlias: http-80
+            ownerKey: ''
+            ownerTag: ''
+            revId: '0'
+            status: ''
+            txId: '0'
+            uid: '15374'
+            unsupportedEntries: 'no'
+            unsupportedMgmtEntries: 'no'
+            userdom: ':all:'
+            usesIds: 'yes'
+-   vzFilter:
+        attributes:
+            accessPrivilege: USER
             annotation: orchestrator:ansible
             childAction: ''
             descr: Created with AAP2.4 for http
@@ -111,7 +136,7 @@ filters:
             fwdId: '4'
             id: implicit
             lcOwn: local
-            modTs: '2024-06-23T20:36:24.965+00:00'
+            modTs: '2024-06-24T13:14:45.391+00:00'
             monPolDn: uni/tn-common/monepg-default
             name: http
             nameAlias: ''
@@ -119,7 +144,7 @@ filters:
             ownerTag: ''
             revId: '5'
             status: ''
-            txId: '14411518807585602918'
+            txId: '14411518807585596182'
             uid: '15374'
             unsupportedEntries: 'no'
             unsupportedMgmtEntries: 'no'
@@ -136,7 +161,7 @@ filters:
             fwdId: '6'
             id: implicit
             lcOwn: local
-            modTs: '2024-06-23T20:36:26.839+00:00'
+            modTs: '2024-06-24T13:14:47.073+00:00'
             monPolDn: uni/tn-common/monepg-default
             name: sql
             nameAlias: ''
@@ -144,7 +169,7 @@ filters:
             ownerTag: ''
             revId: '7'
             status: ''
-            txId: '14411518807585602922'
+            txId: '14411518807585596187'
             uid: '15374'
             unsupportedEntries: 'no'
             unsupportedMgmtEntries: 'no'
