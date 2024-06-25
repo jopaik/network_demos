@@ -1,5 +1,5 @@
 ---
-- name: DEPLOY FABRIC ACCESS CONFIG
+- name: DEPLOY TENANT CONFIG
 
   vars:
     aci_login: &aci_login
@@ -107,15 +107,15 @@
       loop_control:
         loop_var: physical_item
         label: "{{ physical_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
-
+    
     - name: Bind a Physical Domain to a Vlan Pool
       cisco.aci.aci_domain_to_vlan_pool:
         <<: *aci_login
         annotation: "{{ vlan_item['l3extDomP']['attributes']['annotation'] | default(omit, True) }}"
         domain: "{{ vlan_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
         domain_type: phys
-        #pool: "{{ vlan_item['l3extDomP']['children']['infraRsVlanNs']['attributes']['tDn'] | split (']-') | first | trim | split ('uni/infra/vlanns-') | last | trim }}"
-        #pool_allocation_mode: "{{ vlan_item['l3extDomP']['children']['infraRsVlanNs']['attributes']['tDn'] | split (']-') | last | trim }}"
+        pool: "{{ vlan_item['l3extDomP']['children'][0]['infraRsVlanNs']['attributes']['tDn'] | split (']-') | first | trim | split ('uni/infra/vlanns-') | last | trim }}"
+        pool_allocation_mode: "{{ vlan_item['l3extDomP']['children'][0]['infraRsVlanNs']['attributes']['tDn'] | split (']-') | last | trim }}"
       retries: 2
       async: 60
       poll: 0
