@@ -1,5 +1,5 @@
 ---
-- name: DEPLOY TENANT CONFIG
+- name: DEPLOY FABRIC ACCESS CONFIG
 
   vars:
     aci_login: &aci_login
@@ -67,15 +67,59 @@
       cisco.aci.aci_vlan_pool_encap_block:
         <<: *aci_login
         annotation: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['annotation'] | default(omit, True) }}"
-        #pool: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('uni/infra/vlanns-[') | last | trim | split(']-') | first | trim }}"
+        pool: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('uni/infra/vlanns-[') | last | trim | split(']-') | first | trim }}"
         pool_allocation_mode: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['allocMode'] | default(omit, True) }}"
-        block_start: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('vlan-') | last | trim }}"
-        block_end: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('vlan-') | last | trim }}"
+        block_start: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('-') | last | trim }}"
+        block_end: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('-') | last | trim }}"
         block_name: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['name'] | default(omit, True) }}"
       retries: 2
       async: 60
       poll: 0
       loop: "{{ vlan_encap }}"
       loop_control:
-        loop_var: vl_pool_item
-        #label: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('vlan-') | last | trim }}-{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('vlan-') | last | trim }}"
+        loop_var: vlan_pool_item
+        label: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('uni/infra/vlanns-[') | last | trim | split(']-') | first | trim }}-{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('vlan-') | last | trim }}-{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('vlan-') | last | trim }}"
+
+    - name: Add a new AEP
+      cisco.aci.aci_aep:
+        <<: *aci_login
+        annotation: "{{ aep_item['infraAttEntityP']['attributes']['annotation'] | default(omit, True) }}"
+        aep: "{{ aep_item['infraAttEntityP']['attributes']['name'] | default(omit, True) }}"
+        infra_vlan: true
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ aep }}"
+      loop_control:
+        loop_var: aep_item
+        label: "{{ aep_item['infraAttEntityP']['attributes']['name'] | default(omit, True) }}"
+
+    - name: Add a new Physical Domain
+      cisco.aci.aci_domain:
+        <<: *aci_login
+        annotation: "{{ physical_item['l3extDomP']['attributes']['annotation'] | default(omit, True) }}"
+        domain: "{{ physical_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
+        domain_type: phys
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ phys }}"
+      loop_control:
+        loop_var: physical_item
+        label: "{{ physical_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
+
+    - name: Bind a Physical Domain to a Vlan Pool
+      cisco.aci.aci_domain_to_vlan_pool:
+        <<: *aci_login
+        annotation: "{{ vlan_item['l3extDomP']['attributes']['annotation'] | default(omit, True) }}"
+        domain: "{{ vlan_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
+        domain_type: phys
+        #pool: "{{ vlan_item['l3extDomP']['children']['infraRsVlanNs']['attributes']['tDn'] | split (']-') | first | trim | split ('uni/infra/vlanns-') | last | trim }}"
+        #pool_allocation_mode: "{{ vlan_item['l3extDomP']['children']['infraRsVlanNs']['attributes']['tDn'] | split (']-') | last | trim }}"
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ phys_vlan }}"
+      loop_control:
+        loop_var: vlan_item
+        label: "{{ vlan_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
