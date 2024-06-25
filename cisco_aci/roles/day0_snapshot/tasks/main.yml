@@ -1,5 +1,5 @@
 ---
-- name: Fabric Access Policies
+- name: Create a Snapshot
 
   vars:
     aci_login: &aci_login
@@ -11,9 +11,8 @@
   delegate_to: localhost
 
   block:
-    - name: Create snapshot for Change-ID
+    - name: Create snapshot
       aci_config_snapshot:
         <<: *aci_login
-        export_policy: config_backup
+        export_policy: demo
         max_count: 3
-        description: "{{ snapshot | default(omit, True)  }}"

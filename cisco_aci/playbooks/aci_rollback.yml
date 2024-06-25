@@ -17,19 +17,20 @@
       cisco.aci.aci_config_snapshot:
         <<: *aci_login
         state: query
+        export_policy: demo
       register: snap
       delegate_to: localhost
 
     - name: print to baseline Snapshot
       debug:
-        var: snap.current[0].configSnapshot.attributes.name
-
+       var: snap.current[0].configSnapshotCont.children[0].configSnapshot.attributes.name
+    
     - name: Rollback Configuration
       cisco.aci.aci_config_rollback:
         <<: *aci_login
-        snapshot: "{{ snap.current[0].configSnapshot.attributes.name }}"
+        snapshot: "{{ snap.current[0].configSnapshotCont.children[0].configSnapshot.attributes.name }}"
         import_policy: rollback_config
-        export_policy: config_backup
+        export_policy: demo
         state: rollback
         description: "Rollback initial config"
         import_mode: atomic
