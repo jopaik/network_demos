@@ -10,7 +10,7 @@
 
   tasks:
     - name: Backup Config
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - backup
         - never
@@ -31,7 +31,7 @@
           - "{{ _domain_name_ }}"
 
     - name: Configure NTP
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - never
         - ntp
@@ -58,9 +58,10 @@
 
 
     - name: Configure VLANs
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - vlans
+        - never
       block:
         - name: Print out host defined VLANs
           ansible.builtin.debug:
@@ -88,7 +89,7 @@
       # End of VLAN block tasks
 
     - name: Configure IOS interfaces
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - never
         - interfaces
@@ -132,7 +133,7 @@
       # End of interfaces block tasks
 
     - name: Configure l2 interfaces
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - never
         - interfaces
@@ -177,7 +178,7 @@
       # End of interfaces block tasks
 
     - name: Configure L3 interface
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - never
         - l3_interfaces
@@ -223,7 +224,7 @@
       # end of l3_interfaces block tasks
 
     - name: Configure SNMPv3
-      when: ansible_network_os == 'ios'
+      when: ansible_network_os == 'cisco.ios.ios'
       tags:
         - never
         - snmp
