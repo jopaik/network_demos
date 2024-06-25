@@ -634,11 +634,11 @@
         unified_job_template: ACI-Day0-1-Config-Staging
         success_nodes: ACI-Day2-Health-Check
         failure_nodes: ACI-Rollback
-
-
+    
     - name: 0-ACI-Brownfield-Workflow
       ansible.controller.workflow_job_template:
         name: 0-ACI-Brownfield-Workflow
+        organization: "Red Hat network organization"
         survey_enabled: yes
         survey_spec:
           {
@@ -725,8 +725,15 @@
           name: "Change-Approval"
         state: present
         success_nodes:
-          - "ACI-Brownfield-Deploy"
-    
+          - ACI-Brownfield-Deploy
+      ignore_errors: true
+
+    - name: ACI-Brownfield-to-YAML
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Brownfield-to-YAML
+        workflow: 0-ACI-Brownfield-Workflow
+        unified_job_template: ACI-Brownfield-to-YAML
+        success_nodes: Change-Approval
 
     #This section includes Cisco DNAC
 
