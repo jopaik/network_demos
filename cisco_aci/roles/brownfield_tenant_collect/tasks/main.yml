@@ -23,7 +23,8 @@
         <<: *aci_login
         state: query
       register: tenants
-
+      retries: 2
+      
     - name: Add tenants to the roles defaults
       ansible.builtin.copy:
         content: "{{ tenants | to_nice_yaml }}"
@@ -41,7 +42,8 @@
         <<: *aci_login
         state: query
       register: aps
-
+      retries: 2
+      
     - name: Add aps to the roles defaults
       ansible.builtin.copy:
         content: "{{ aps  | to_nice_yaml }}"
@@ -59,7 +61,8 @@
         <<: *aci_login
         state: query
       register: vrfs
-
+      retries: 2
+      
     - name: Add vrfs to the roles defaults
       ansible.builtin.copy:
         content: "{{ vrfs  | to_nice_yaml }}"
@@ -77,7 +80,8 @@
         <<: *aci_login
         state: query
       register: bds
-
+      retries: 2
+      
     - name: Add bds to the roles defaults
       ansible.builtin.copy:
         content: "{{ bds  | to_nice_yaml }}"
@@ -95,6 +99,7 @@
         <<: *aci_login
         state: query
       register: bd_subnets
+      retries: 2  
 
     - name: Add bd_subnets to the roles defaults
       ansible.builtin.copy:
@@ -113,6 +118,7 @@
         <<: *aci_login
         state: query
       register: epgs
+      retries: 2
       
     - name: Add epgs to the roles defaults
       ansible.builtin.copy:
@@ -131,7 +137,8 @@
         <<: *aci_login
         state: query
       register: static_bindings
-
+      retries: 2
+      
     - name: Add static_bindings to epgs to the roles defaults
       ansible.builtin.copy:
         content: "{{ static_bindings | to_nice_yaml }}"

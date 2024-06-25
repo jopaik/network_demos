@@ -11,6 +11,18 @@
   delegate_to: localhost
   ignore_errors: true
   block:
+   
+    - name: Create Switch Policy Profiles
+      cisco.aci.aci_switch_policy_leaf_profile:
+        <<: *aci_login
+        leaf_profile: "{{sw_pol_item['infraNodeP']['attributes']['name'] | default(omit, True) }}"
+      retries: 2
+      async: 60
+      poll: 0
+      loop: "{{ switch_profile }}"
+      loop_control:
+        loop_var: sw_pol_item
+        label: "{{sw_pol_item['infraNodeP']['attributes']['name'] | default(omit, True) }}"
 
     - name: Add Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:

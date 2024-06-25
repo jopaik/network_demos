@@ -24,7 +24,8 @@
         state: query
         timeout: 60
       register: l3out
-
+      retries: 2
+             
     - name: Add l3outs to the roles defaults
       ansible.builtin.copy:
         content: "{{ l3out | to_nice_yaml }}"
@@ -42,7 +43,8 @@
         <<: *aci_login
         state: query
       register: ext
-
+      retries: 2
+            
     - name: Add external epgs to the roles defaults
       ansible.builtin.copy:
         content: "{{ ext | to_nice_yaml }}"
@@ -61,7 +63,8 @@
         state: query
         contract_type: provider
       register: bind_provider
-      
+      retries: 2
+             
     - name: Add binding to provider contracts to the roles defaults
       ansible.builtin.copy:
         content: "{{ bind_provider  | to_nice_yaml }}"
@@ -80,7 +83,8 @@
         state: query
         contract_type: consumer
       register: bind_consumer
-       
+      retries: 2
+             
     - name: Add binding to provider contracts to the roles defaults
       ansible.builtin.copy:
         content: "{{ bind_consumer | to_nice_yaml }}"

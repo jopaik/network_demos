@@ -152,4 +152,5 @@
       poll: 0
       loop: "{{ static_bindings }}"
       loop_control:
-        loop_var: "{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/ap') | first | trim | split ('uni/tn-') | last | trim }}-{{ binding_item['fvRsPathAtt']['attributes']['tDn'] | split (']') | first | trim  | split ('[') | last | trim }}"
+        loop_var: binding_item
+        label: "{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/ap') | first | trim | split ('uni/tn-') | last | trim }}-{{ binding_item['fvRsPathAtt']['attributes']['dn'] | split ('/rspathAtt') | first | trim | split ('epg-') | last | trim }}"

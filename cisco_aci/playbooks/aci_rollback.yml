@@ -23,8 +23,8 @@
 
     - name: print to baseline Snapshot
       debug:
+       # var: snap.current[0].configSnapshot.attributes.name
        var: snap.current[0].configSnapshotCont.children[0].configSnapshot.attributes.name
-    
     - name: Rollback Configuration
       cisco.aci.aci_config_rollback:
         <<: *aci_login

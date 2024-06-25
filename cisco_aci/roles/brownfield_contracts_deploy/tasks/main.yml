@@ -69,14 +69,14 @@
         tenant: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         contract: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}" 
         annotation: "{{ subj_item['vzSubj']['atributes']['annotation'] | default(omit, True) }}"
-        subject: "{{ subj_item.subject['vzSubj']['attributes']['name'] | default(omit, True) }}"
+        subject: "{{ subj_item['vzSubj']['attributes']['name'] | default(omit, True) }}"
       retries: 2
       async: 60
       poll: 0  
       loop: "{{ subjects }}"
       loop_control:
         loop_var: subj_item
-        label: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ subj_item['vzSubj']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}-{{ subj_item.subject['vzSubj']['attributes']['name'] | default(omit, True) }}"
+        label: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ subj_item['vzSubj']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}-{{ subj_item['vzSubj']['attributes']['name'] | default(omit, True) }}"
 
     - name: Contracts Subjects Associated with Filters WITH FILTERS
       cisco.aci.aci_contract_subject_to_filter:
@@ -84,7 +84,7 @@
         tenant: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         contract: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}" 
         subject: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/rss') | first | trim | split ('subj-') | last | trim }}" 
-        filter: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['tRn'] | split ('/rss') | last | trim }}" 
+        filter: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['tnVzFilterName'] | default(omit, True) }}" 
         timeout: 60     
       retries: 2
       async: 60
@@ -92,7 +92,7 @@
       loop: "{{ associated }}"
       loop_control:
         loop_var: filt_item
-        label: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}-{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/rss') | first | trim | split ('subj-') | last | trim }}-{{ filt_item['vzRsSubjFiltAtt']['attributes']['tRn'] | split ('/rss') | last | trim }}"
+        label: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ filt_item['vzRsSubjFiltAtt']['attributes']['tnVzFilterName'] | default(omit, True) }}" 
     
     - name: Contract to EPG Binding Providers
       cisco.aci.aci_epg_to_contract:
@@ -100,7 +100,7 @@
         tenant: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}" 
         ap: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}" 
         epg: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/rsp') | first | trim | split ('epg-') | last | trim }}" 
-        contract: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/prov-') | last | trim }}" 
+        contract: "{{ provider_item['fvRsProv']['attributes']['tnVzBrCPName'] | default(omit, True) }}" 
         contract_type: provider
         timeout: 60     
       retries: 2
@@ -109,7 +109,7 @@
       loop: "{{ provider }}"
       loop_control:
         loop_var: provider_item
-        label: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}-{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}-{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/rsp') | first | trim | split ('epg-') | last | trim }}-{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/prov-') | last | trim }}"
+        label: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}-{{ provider_item['fvRsProv']['attributes']['tnVzBrCPName'] | default(omit, True) }}" 
 
     - name: Contract to EPG Binding Consumers
       cisco.aci.aci_epg_to_contract:
@@ -117,7 +117,7 @@
         tenant: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}" 
         ap: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}" 
         epg: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/rsc') | first | trim | split ('epg-') | last | trim }}" 
-        contract: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/cons-') | last | trim }}" 
+        contract: "{{ consumer_item['fvRsCons']['attributes'][' tnVzBrCPName:'] | default(omit, True)  }}" 
         contract_type: consumer
         timeout: 60     
       retries: 2
@@ -126,4 +126,4 @@
       loop: "{{ consumer }}"
       loop_control:
         loop_var: consumer_item
-        label: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}-{{ provider_item['fvRsCons']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}-{{ provider_item['fvRsCons']['attributes']['dn'] | split ('/rsc') | first | trim | split ('epg-') | last | trim }}-{{ provider_item['fvRsCons']['attributes']['dn'] | split ('/cons-') | last | trim }}"
+        label: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}-{{ consumer_item['fvRsCons']['attributes']['tnVzBrCPName'] | default(omit, True) }}" 

@@ -1,8 +1,10 @@
 ---
-- name: Day0-1 deployment
+- name: ACI Brownfield to YAML Collection
   hosts: apic
   connection: local
   gather_facts: no
+  vars:
+   snapshot: changeme
 
   tasks:
   - name: Retrieve a repository from a distant location and make it available to the local EE
@@ -21,13 +23,12 @@
     include_role:
        name: "{{ item }}"
     loop: 
-        #- "../roles/brownfield_tenant_collect"
-        #- "../roles/brownfield_contracts_collect"
-        #- "../roles/brownfield_l3out_collect" 
+        - "../roles/day0_snapshot"
         - "../roles/brownfield_fabric_access_collect"
+        - "../roles/brownfield_l3out_collect" 
+        - "../roles/brownfield_contracts_collect"
+        - "../roles/brownfield_tenant_collect" 
         
-
-
   - name: Publish the changes
     ansible.scm.git_publish:
       path: "{{ repository['path'] }}"

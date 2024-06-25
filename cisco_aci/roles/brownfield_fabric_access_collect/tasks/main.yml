@@ -12,20 +12,41 @@
   ignore_errors: true
 
   block:
-    #LEAF PROFILE
     - name: Create a defaults directory if it does not exist
       ansible.builtin.file:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/"
         state: directory
         mode: '0755'
-     
+
+   #Switch Profiles
+    - name: Read Switch Policy Profiles
+      cisco.aci.aci_switch_policy_leaf_profile:
+        <<: *aci_login
+        state: query
+        timeout: 60
+      register: switch_profile
+      retries: 2
+   
+    - name: Add Interface Profile to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ switch_profile | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/switch_profile.yml"
+
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/switch_profile.yml"
+        regexp: 'current'
+        replace: 'switch_profile'
+
+    #LEAF PROFILE
     - name: Read Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:
         <<: *aci_login
         state: query
         timeout: 60
       register: interface_policy
-
+      retries: 2
+   
     - name: Add Interface Profile to the roles defaults
       ansible.builtin.copy:
         content: "{{ interface_policy | to_nice_yaml }}"
@@ -44,7 +65,8 @@
         state: query
         timeout: 60
       register: leaf_profile
-
+      retries: 2
+   
     - name: Add Port to Leaf Profile to the roles defaults
       ansible.builtin.copy:
         content: "{{ leaf_profile | to_nice_yaml }}"
@@ -63,7 +85,8 @@
         state: query
         timeout: 60
       register: vlan_pool
-
+      retries: 2
+   
     - name: Add Vlan Pools to the roles defaults
       ansible.builtin.copy:
         content: "{{ vlan_pool | to_nice_yaml }}"
@@ -82,7 +105,8 @@
         state: query
         timeout: 60
       register: vlan_encap
-      
+      retries: 2
+   
     - name: Add Vlan Pools to the roles defaults
       ansible.builtin.copy:
         content: "{{ vlan_encap | to_nice_yaml }}"
@@ -100,7 +124,8 @@
         state: query
         timeout: 60
       register: aep
-
+      retries: 2
+   
     - name: Add AEP to the roles defaults
       ansible.builtin.copy:
         content: "{{ aep | to_nice_yaml }}"
@@ -111,6 +136,7 @@
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/aep.yml"
         regexp: 'current'
         replace: 'aep'
+
   #Physical Domain
     - name: Physical Domain
       cisco.aci.aci_domain:
@@ -119,7 +145,8 @@
         domain_type: l3dom
         timeout: 60
       register: phys
-
+      retries: 2
+   
     - name: Add Physical Domain to the roles defaults
       ansible.builtin.copy:
         content: "{{ phys | to_nice_yaml }}"
@@ -140,7 +167,8 @@
         pool_allocation_mode: static
         timeout: 60
       register: phys_vlan
-
+      retries: 2
+   
     - name: Add Physical Domain to the roles defaults
       ansible.builtin.copy:
         content: "{{ phys_vlan | to_nice_yaml }}"

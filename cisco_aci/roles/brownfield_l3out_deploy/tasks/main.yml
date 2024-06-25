@@ -1,5 +1,5 @@
 ---
-- name: DEPLOY L3OUT CONFIG
+- name: DEPLOY TENANT CONFIG
 
   vars:
     aci_login: &aci_login
@@ -30,7 +30,6 @@
         loop_var: l3out_item
         label: "{{ l3out_item['l3extOut']['attributes']['dn'] | split ('/out-') | first | trim | split ('uni/tn-') | last | trim }}-{{ l3out_item['l3extOut']['attributes']['name'] | default(omit, True) }}"
       
-  
     - name: Add a new ExtEpg
       cisco.aci.aci_l3out_extepg:
         <<: *aci_login
