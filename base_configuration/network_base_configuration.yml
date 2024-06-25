@@ -1,6 +1,8 @@
 ---
 - name: Configure network devices
-  hosts: cisco,juniper
+  hosts:
+    - cisco
+    - juniper
   gather_facts: false
   vars:
     _domain_name_: ansible.local
@@ -58,7 +60,6 @@
     - name: Configure VLANs
       when: ansible_network_os == 'ios'
       tags:
-        - never
         - vlans
       block:
         - name: Print out host defined VLANs
