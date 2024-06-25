@@ -1,5 +1,5 @@
 ---
-- name: DEPLOY TENANT CONFIG
+- name: DEPLOY L3OUT CONFIG
 
   vars:
     aci_login: &aci_login
@@ -52,8 +52,8 @@
         annotation: "{{ bind_provider_item['fvRsProv']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         l3out: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/instP-') | first | trim | split ('out-') | last | trim }}" 
-        extepg: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/prov-') | first | trim | split ('instP-') | last | trim }}" 
-        contract: "{{ bind_provider_item['fvRsProv']['attributes'][' tnVzBrCPName'] | default(omit, True) }}"
+        extepg: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/rsprov-') | last | trim }}" 
+        contract: "{{ bind_provider_item['fvRsProv']['attributes']['tnVzBrCPName'] | default(omit, True) }}"
         contract_type: provider
       retries: 2
       async: 60
@@ -61,7 +61,7 @@
       loop: "{{ bind_provider }}"
       loop_control:
         loop_var: bind_provider_item
-        label: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-Provider }}"
+        label: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ bind_provider_item['fvRsProv']['attributes']['tnVzBrCPName'] | default(omit, True) }}-{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/rsprov-') | last | trim }}"
    
     - name: Bind a Consumer contract to an external EPG
       cisco.aci.aci_l3out_extepg_to_contract:
@@ -69,8 +69,8 @@
         annotation: "{{ bind_consumer_item['fvRsCons']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ bind_consumer_item['fvRsCons']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         l3out: "{{ bind_consumer_item['fvRsCons']['attributes']['dn'] | split ('/instP-') | first | trim | split ('out-') | last | trim }}" 
-        extepg: "{{ bind_consumer_item['fvRsCons']['attributes']['dn'] | split ('/prov-') | first | trim | split ('instP-') | last | trim }}" 
-        contract: "{{ bind_consumer_item['fvRsCons']['attributes'][' tnVzBrCPName'] | default(omit, True) }}"
+        extepg: "{{ bind_consumer_item['fvRsCons']['attributes']['dn'] | split ('/rscons-') | last | trim }}" 
+        contract: "{{ bind_consumer_item['fvRsCons']['attributes']['tnVzBrCPName'] | default(omit, True) }}"
         contract_type: consumer
       retries: 2
       async: 60
@@ -78,5 +78,5 @@
       loop: "{{ bind_consumer }}"
       loop_control:
         loop_var: bind_consumer_item
-        label: "{{ bind_consumer_item['fvRsCons']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-Consumer}}"
+        label: "{{ bind_consumer_item['fvRsCons']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ bind_consumer_item['fvRsCons']['attributes']['tnVzBrCPName'] | default(omit, True) }}-{{ bind_consumer_item['fvRsCons']['attributes']['dn'] | split ('/rscons-') | last | trim }}"
     
