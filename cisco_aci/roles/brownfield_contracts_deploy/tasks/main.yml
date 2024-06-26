@@ -55,9 +55,11 @@
         tenant: "{{ contract_item['vzBrCP']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         scope: "{{ contract_item['vzBrCP']['atributes']['scope'] | default(omit, True) }}"
         description: "{{ contract_item['vzBrCP']['atributes']['descr'] | default(omit, True) }}"
+        timeout: 60
       retries: 2
-      async: 60
-      poll: 0  
+      delay: 10
+      #async: 60
+      #poll: 0  
       loop: "{{ contracts }}"
       loop_control:
         loop_var: contract_item
@@ -70,9 +72,11 @@
         contract: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}" 
         annotation: "{{ subj_item['vzSubj']['atributes']['annotation'] | default(omit, True) }}"
         subject: "{{ subj_item['vzSubj']['attributes']['name'] | default(omit, True) }}"
+        timeout: 60
       retries: 2
-      async: 60
-      poll: 0  
+      delay: 10
+       #async: 60
+      #poll: 0  
       loop: "{{ subjects }}"
       loop_control:
         loop_var: subj_item
@@ -86,9 +90,10 @@
         subject: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/rss') | first | trim | split ('subj-') | last | trim }}" 
         filter: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['tnVzFilterName'] | default(omit, True) }}" 
         timeout: 60     
-      retries: 2
-      async: 60
-      poll: 0  
+      retries: 5
+      delay: 10
+      #async: 60
+      #poll: 0 
       loop: "{{ associated }}"
       loop_control:
         loop_var: filt_item
@@ -103,9 +108,10 @@
         contract: "{{ provider_item['fvRsProv']['attributes']['tnVzBrCPName'] | default(omit, True) }}" 
         contract_type: provider
         timeout: 60     
-      retries: 2
-      async: 60
-      poll: 0  
+      retries: 5
+      delay: 10
+      #async: 60
+      #poll: 0  
       loop: "{{ provider }}"
       loop_control:
         loop_var: provider_item
@@ -117,12 +123,13 @@
         tenant: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}" 
         ap: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}" 
         epg: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/rsc') | first | trim | split ('epg-') | last | trim }}" 
-        contract: "{{ consumer_item['fvRsCons']['attributes'][' tnVzBrCPName:'] | default(omit, True)  }}" 
+        contract: "{{ consumer_item['fvRsCons']['attributes']['tnVzBrCPName'] | default(omit, True)  }}" 
         contract_type: consumer
         timeout: 60     
-      retries: 2
-      async: 60
-      poll: 0  
+      retries: 5
+      delay: 10
+      #async: 60
+      #poll: 0  
       loop: "{{ consumer }}"
       loop_control:
         loop_var: consumer_item
