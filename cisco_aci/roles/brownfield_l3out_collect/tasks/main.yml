@@ -26,6 +26,7 @@
       register: l3out
       retries: 2
              
+
     - name: Add l3outs to the roles defaults
       ansible.builtin.copy:
         content: "{{ l3out | to_nice_yaml }}"
@@ -76,4 +77,22 @@
         regexp: 'current'
         replace: 'bind_provider'
         
-   
+    #BIND CONSUMER CONTRACT to an EXTERNAL EPG
+    - name: Read Contract to External EPG
+      cisco.aci.aci_l3out_extepg_to_contract:
+        <<: *aci_login
+        state: query
+        contract_type: consumer
+      register: bind_consumer
+      retries: 2
+             
+    - name: Add binding to provider contracts to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ bind_consumer | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/bind_consumer.yml"
+      
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_l3out_deploy/defaults/main/bind_consumer.yml"
+        regexp: 'current'
+        replace: 'bind_consumer'

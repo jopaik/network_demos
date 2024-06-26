@@ -25,8 +25,8 @@
         timeout: 60
       retries: 2
       delay: 10
-      #async: 60
-      #poll: 0
+      async: 60
+      poll: 0
       loop: "{{ l3out }}"
       loop_control:
         loop_var: l3out_item
@@ -42,8 +42,8 @@
         timeout: 60
       retries: 2
       delay: 10
-      #async: 60
-      #poll: 0
+      async: 60
+      poll: 0
       loop: "{{ ext }}"
       loop_control:
         loop_var: ext_item
@@ -55,17 +55,17 @@
         annotation: "{{ bind_provider_item['fvRsProv']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         l3out: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/instP-') | first | trim | split ('out-') | last | trim }}" 
-        extepg: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/rsprov-') | first | trim | split ('instp-') | last | trim }}" 
+        extepg: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/rsprov-') | first | trim | split ('instP-') | last | trim }}" 
         contract: "{{ bind_provider_item['fvRsProv']['attributes']['tnVzBrCPName'] | default(omit, True) }}"
         contract_type: provider
         timeout: 60
       retries: 2
       delay: 10
-      #async: 60
-      #poll: 0
+      async: 60
+      poll: 0
       loop: "{{ bind_provider }}"
       loop_control:
         loop_var: bind_provider_item
-        label: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/rsprov-') | first | trim | split ('instp-') | last | trim }}"
+        label: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}-{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/rsprov-') | first | trim | split ('instP-') | last | trim }}"
    
     

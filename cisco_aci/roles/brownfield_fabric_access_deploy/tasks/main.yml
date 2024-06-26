@@ -24,6 +24,21 @@
         loop_var: sw_pol_item
         label: "{{sw_pol_item['infraNodeP']['attributes']['name'] | default(omit, True) }}"
 
+    - name: ASSOCIATING AN INTERFACE SELECTOR PROFILE TO A SWITCH POLICY LEAF PROFILE
+      cisco.aci.aci_interface_selector_to_switch_policy_leaf_profile:
+        <<: *aci_login
+        leaf_profile: "{{ selector_item['infraAccPortP']['attributes']['leaf_profile'] | default(omit, True) }}"
+        interface_selector: "{{ selector_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
+      retries: 2
+      delay: 5
+      async: 60
+      poll: 0
+      loop: "{{ interface_profile }}"
+      loop_control:
+        loop_var: selector_item
+        label: "{{ selector_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}-{{ selector_item['infraAccPortP']['attributes']['leaf_profile'] | default(omit, True) }}"
+  
+  
     - name: Add Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:
         <<: *aci_login

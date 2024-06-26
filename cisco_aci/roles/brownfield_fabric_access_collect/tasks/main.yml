@@ -38,6 +38,7 @@
         regexp: 'current'
         replace: 'switch_profile'
 
+
     #LEAF PROFILE
     - name: Read Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:

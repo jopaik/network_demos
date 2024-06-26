@@ -139,14 +139,14 @@
       register: static_bindings
       retries: 2
       
-    - name: Add static_bindings to epgs to the roles defaults
+    - name: Add static_bindings to epgs to the roles vars
       ansible.builtin.copy:
         content: "{{ static_bindings | to_nice_yaml }}"
-        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/static_bindings.yml"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/vars/main/static_bindings.yml"
        
     - name: Modify file
       ansible.builtin.replace:
-        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/static_bindings.yml"
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_tenant_deploy/vars/main/static_bindings.yml"
         regexp: 'current'
         replace: 'static_bindings'
         

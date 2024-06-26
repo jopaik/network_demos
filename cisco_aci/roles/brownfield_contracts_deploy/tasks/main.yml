@@ -58,8 +58,8 @@
         timeout: 60
       retries: 2
       delay: 10
-      #async: 60
-      #poll: 0  
+      async: 60
+      poll: 0  
       loop: "{{ contracts }}"
       loop_control:
         loop_var: contract_item
@@ -75,8 +75,8 @@
         timeout: 60
       retries: 2
       delay: 10
-       #async: 60
-      #poll: 0  
+      async: 60
+      poll: 0  
       loop: "{{ subjects }}"
       loop_control:
         loop_var: subj_item
@@ -92,8 +92,8 @@
         timeout: 60     
       retries: 5
       delay: 10
-      #async: 60
-      #poll: 0 
+      async: 60
+      poll: 0 
       loop: "{{ associated }}"
       loop_control:
         loop_var: filt_item
@@ -110,8 +110,8 @@
         timeout: 60     
       retries: 5
       delay: 10
-      #async: 60
-      #poll: 0  
+      async: 60
+      poll: 0  
       loop: "{{ provider }}"
       loop_control:
         loop_var: provider_item
@@ -128,8 +128,8 @@
         timeout: 60     
       retries: 5
       delay: 10
-      #async: 60
-      #poll: 0  
+      async: 60
+      poll: 0  
       loop: "{{ consumer }}"
       loop_control:
         loop_var: consumer_item
