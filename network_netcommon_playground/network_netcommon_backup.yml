@@ -18,6 +18,13 @@
           duplicate_detection: no
       register: repository
       when: inventory_hostname == 'localhost'
+
+    - name: List the Branches
+      ansible.builtin.shell:
+        cmd: "git branch -r"
+        chdir: /tmp/network-demos-repo/
+      when: inventory_hostname == 'localhost'
+      register: branches
         
     - name: configurable backup path
       ansible.netcommon.cli_backup:
