@@ -36,7 +36,7 @@
       loop: "{{ interface_profile }}"
       loop_control:
         loop_var: selector_item
-        label: "{{ selector_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}-{{ selector_item['infraAccPortP']['attributes']['leaf_profile'] | default(omit, True) }}"
+        label: "{{ selector_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
   
   
     - name: Add Interface Policy Leaf Profile
@@ -150,3 +150,4 @@
       loop_control:
         loop_var: vlan_item
         label: "{{ vlan_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
+      when: phys_vlan[0]['l3extDomP']['children'] is defined

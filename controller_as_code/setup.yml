@@ -458,7 +458,7 @@
           - Network-Banner
           - Network-User
 
-    # This section includes the Cisco ACI
+      # This section includes the Cisco ACI
     - name: Add Host
       ansible.controller.host:
         name: apic1
@@ -498,7 +498,6 @@
         execution_environment: "Validated Network"
         state: present
         credentials:
-          - "Workshop Credential"
           - "Gitea Credential"
         extra_vars:
           apic_username: admin
@@ -514,6 +513,24 @@
         playbook: "cisco_aci/playbooks/aci_brownfield_deploy.yml"
         execution_environment: "Validated Network"
         state: "present"
+        credentials:
+          - "Gitea Credential"
+        extra_vars:
+          apic_username: admin
+          apic_password: '!v3G@!4@Y'
+          apic_validate_certs: false
+
+    - name: Create a job-template - ACI-Brownfield-Config
+      ansible.controller.job_template:
+        name: "ACI-Brownfield-Config"
+        organization: "Red Hat network organization"
+        inventory: "Workshop Inventory"
+        project: "Student Project"
+        playbook: "cisco_aci/playbooks/aci_brownfield_config.yml"
+        execution_environment: "Validated Network"
+        state: "present"
+        credentials:
+          - "Gitea Credential"
         extra_vars:
           apic_username: admin
           apic_password: '!v3G@!4@Y'
@@ -525,9 +542,16 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "cisco_aci/playbooks/aci_health_day2.yml"
+        playbook: "cisco_aci/playbooks/aci_brownfield_health.yml"
         execution_environment: "Validated Network"
         state: "present"
+        credentials:
+          - "Gitea Credential"
+        extra_vars:
+          apic_username: admin
+          apic_password: '!v3G@!4@Y'
+          apic_validate_certs: false
+
 
     - name: Create a job-template - ACI-Rollback
       ansible.controller.job_template:
@@ -552,7 +576,6 @@
     - name: 0-ACI-as-Code-Workflow
       ansible.controller.workflow_job_template:
         name: 0-ACI-as-Code-Workflow
-        organization: "Red Hat network organization"
         survey_enabled: yes
         survey_spec:
           {
@@ -562,7 +585,7 @@
               [
                 {
                   "choices": "",
-                  "default": "",
+                  "default": "admin",
                   "max": 1024,
                   "min": 0,
                   "new_question": true,
@@ -574,7 +597,7 @@
                 },
                 {
                   "choices": "",
-                  "default": "",
+                  "default": "!v3G@!4@Y",
                   "formattedChoices":
                     [{ "choice": "", "id": 0, "isDefault": false }],
                   "max": 1024,
@@ -598,20 +621,6 @@
                   "type": "multiplechoice",
                   "variable": "apic_validate_certs",
                 },
-                {
-                  "choices": "",
-                  "default": "",
-                  "formattedChoices":
-                    [{ "choice": "", "id": 0, "isDefault": false }],
-                  "max": 1024,
-                  "min": 0,
-                  "new_question": false,
-                  "question_description": "",
-                  "question_name": "Please enter your Change-ID",
-                  "required": true,
-                  "type": "text",
-                  "variable": "snapshot",
-                },
               ],
           }
 
@@ -634,7 +643,8 @@
         unified_job_template: ACI-Day0-1-Config-Staging
         success_nodes: ACI-Day2-Health-Check
         failure_nodes: ACI-Rollback
-    
+
+
     - name: 0-ACI-Brownfield-Workflow
       ansible.controller.workflow_job_template:
         name: 0-ACI-Brownfield-Workflow
@@ -697,13 +707,21 @@
         identifier: ACI-Brownfield-Health-Check
         workflow: 0-ACI-Brownfield-Workflow
         unified_job_template: ACI-Brownfield-Health-Check
-
+    
+    - name: ACI-Brownfield-Config
+      ansible.controller.workflow_job_template_node:
+        identifier: ACI-Brownfield-Config
+        workflow: 0-ACI-Brownfield-Workflow
+        unified_job_template: ACI-Brownfield-Config
+        success_nodes: ACI-Brownfield-Health-Check
+        failure_nodes: ACI-Rollback
+    
     - name: ACI-Brownfield-Deploy
       ansible.controller.workflow_job_template_node:
         identifier: ACI-Brownfield-Deploy
         workflow: 0-ACI-Brownfield-Workflow
         unified_job_template: ACI-Brownfield-Deploy
-        success_nodes: ACI-Brownfield-Health-Check
+        success_nodes: ACI-Brownfield-Config
         failure_nodes: ACI-Rollback
 
     - name: Change-Approval
