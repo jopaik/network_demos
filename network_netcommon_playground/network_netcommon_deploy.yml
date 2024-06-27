@@ -10,7 +10,7 @@
         os_name: "{{ ansible_network_os }}"
         name: "{{ item }}"
         config: "{{ hostvars[inventory_hostname][item] }}"
-        state: replaced
+        state: overridden
       loop: "{{ resources }}"
       when: ansible_network_os == 'cisco.ios.ios'
     
@@ -19,7 +19,7 @@
         os_name: "{{ ansible_network_os }}"
         name: "{{ item }}"
         config: "{{ hostvars[inventory_hostname][item] }}"
-        state: replaced
+        state: overridden
       loop: "{{ resources }}"
       when: ansible_network_os == 'junipernetworks.junos.junos'
 
@@ -28,6 +28,6 @@
         os_name: "{{ ansible_network_os }}"
         name: "{{ item }}"
         config: "{{ hostvars[inventory_hostname][item] }}"
-        state: replaced
+        state: overridden
       loop: "{{ resources }}"
       when: ansible_network_os == 'arista.eos.eos'
