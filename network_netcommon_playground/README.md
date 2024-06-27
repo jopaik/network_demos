@@ -42,14 +42,12 @@ git push
 ~~~
 11. Run the Network-Netcommon-Deploy job template to add and `facts.yaml' remove the changes made from the OOB change
 12. Validate the changes were made.
-
-
-
+13. Run the Network-Netcommon-Ping Job-template
 
 # Key Takeaways
-* Easy migration from postman to Ansible with csv files
-* No need to work with the APIC GUI or APIs directly
-* Easy migration to IaC methodologies (gitops, webhook triggers etc)
+* An alternative to te network.base validated roles when additional customization is desired
+* Provides a Multi-vendor automation solution for Ansible
+* Additional abstractions to remove vendor nuances and CLI knowledge
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
