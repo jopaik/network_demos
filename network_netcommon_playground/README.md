@@ -23,8 +23,8 @@ In this demo we will leverage the netcommon collection to complete common networ
 3. Review the network device backup files and playbooks in gitea user-gitea pass=gitea
 3. Make an out-of-band (OOB) change to rtr1 and save
 4. Run the Network-Netcommon-Restore job template (`selecting your backup branch`) and validate the router change was removed.
-5. In the Admin panel of the APIC GUI show the snapshot of the config that was saved for a rollback
-6. Review the health score results or a post change health check
+5. Run the Network-Netcommon-Facts Job template to gather and write the exiting configuration files for single source of truth (SSOT) to the gitea master branch.
+6. Use VSCode to review the `host_vars` in the network-demos-repo/network_netcommon_playground 
 
 
 
