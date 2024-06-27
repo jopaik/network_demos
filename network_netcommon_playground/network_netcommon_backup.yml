@@ -19,13 +19,6 @@
       register: repository
       when: inventory_hostname == 'localhost'
 
-    - name: List the Branches
-      ansible.builtin.shell:
-        cmd: "git branch -r"
-        chdir: /tmp/network-demos-repo/
-      when: inventory_hostname == 'localhost'
-      register: branches
-        
     - name: configurable backup path
       ansible.netcommon.cli_backup:
         filename: '{{ inventory_hostname }}.txt'
@@ -42,6 +35,34 @@
           name: "{{ username }}"
           email: "{{ email }}"
       when: inventory_hostname == 'localhost'
+
+  #Prepare for Restore
+- name: Prepare Branches for Intent and Restore
+  hosts:
+    - localhost
+    - cisco
+    - arista
+    - juniper
+  gather_facts: False
+
+  tasks:
+    - name: Retrieve a repository from a distant location and make it available to the local EE
+      ansible.scm.git_retrieve:
+        origin:
+          url: "http://gitea:gitea@ansible-1:3000/gitea/network-demos-repo.git"
+        parent_directory: /tmp/
+        branch:
+          name: "{{ branch_name | default ('ansible-{play_name}') }}-{{ansible_date_time.iso8601_basic_short}}"
+          duplicate_detection: no
+      register: repository
+      when: inventory_hostname == 'localhost'
+
+    - name: List the Branches
+      ansible.builtin.shell:
+        cmd: "git branch -r"
+        chdir: /tmp/network-demos-repo/
+      when: inventory_hostname == 'localhost'
+      register: branches
 
     - name: Create a job-template - Network-Netcommon-Restore
       ansible.controller.job_template:
