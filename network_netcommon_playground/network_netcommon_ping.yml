@@ -1,12 +1,12 @@
 ---
 - name: Ping Endpoints
-  hosts: routers
+  hosts: cisco,juniper
   gather_facts: false
 
   vars:
    ping_dest: 
     - 8.8.8.8
-    - 8.8.8.4
+   ansible_connection: network_cli
     
   tasks:
   - name: Test reachability to destinations
