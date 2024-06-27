@@ -22,7 +22,7 @@
 16. On the router validate the primary link is working by showing the state of IP SLA and static route for 192.168.40.4
 
 ## Overview
-Please note, the above steps will only work for individuals who have access to both a servicenow and EDA environment. In the future when the RHDP Network Workshop includes and EDA controller these instructions will be updated to explain a self run demo using the instruqt servicenow + the RHDP network workshop. 
+Please note, the above steps will only work for individuals who have access to both a servicenow and an EDA environment. In the future when the RHDP Network Workshop includes an EDA controller these instructions will be updated. The intent will be to run a self run demo using the instruqt servicenow + the RHDP network workshop. 
 
 ## Objective
 This demo will show how EDA can automate observing network router failures by examining the data from the router's streaming telemetry. EDA is used to automate the opening of a servicenow trouble `incident1` ticket to include the results of automated and triaged trouble shooting.The EDA can also open and close tickets to track scenarios where network links go down and are restored without manual intervention. 
