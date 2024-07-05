@@ -78,7 +78,6 @@ controller_groups:
     inventory: "Workshop Inventory"
     state: present
 
-
 controller_templates:
   - name: "ACI-Day0-1-Config-Staging"
     organization: "Red Hat network organization"
@@ -104,6 +103,73 @@ controller_templates:
     execution_environment: "Validated Network"
     state: "present"
 
+  - name: "ACI-Brownfield-to-YAML"
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_brownfield_yaml.yml"
+    execution_environment: "Validated Network"
+    state: present
+    credentials:
+      - "Gitea Credential"
+    extra_vars:
+      apic_username: admin
+      apic_password: '!v3G@!4@Y'
+      apic_validate_certs: false
+
+  - name: ACI-Brownfield-Deploy
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_brownfield_deploy.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+    credentials:
+      - "Gitea Credential"
+    extra_vars:
+      apic_username: admin
+      apic_password: '!v3G@!4@Y'
+      apic_validate_certs: false
+
+  - name: ACI-Brownfield-Config
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_brownfield_config.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+    credentials:
+      - "Gitea Credential"
+    extra_vars:
+      apic_username: admin
+      apic_password: '!v3G@!4@Y'
+      apic_validate_certs: false
+
+  - name: ACI-Brownfield-Health-Check
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_brownfield_health.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+    credentials:
+      - "Gitea Credential"
+    extra_vars:
+      apic_username: admin
+      apic_password: '!v3G@!4@Y'
+      apic_validate_certs: false
+
+  - name: ACI-Rollback
+    organization: "Red Hat network organization"
+    inventory: "Workshop Inventory"
+    project: "Student Project"
+    playbook: "cisco_aci/playbooks/aci_rollback.yml"
+    execution_environment: "Validated Network"
+    state: "present"
+    extra_vars:
+        apic_username: admin
+        apic_password: '!v3G@!4@Y'
+        apic_validate_certs: false
 
 controller_workflows:
   - name: 0-ACI-as-Code-Workflow
@@ -113,14 +179,14 @@ controller_workflows:
       name: ""
       spec:
         - question_name: "Enter your Username"
-          default: ""
+          default: "admin"
           new_question: true
           question_description: ""
           required: true
           type: "text"
           variable: "apic_username"
         - question_name: "Enter your Password"
-          default: ""
+          default: "'!v3G@!4@Y'"
           new_question: false
           question_description: ""
           required: true
@@ -164,5 +230,99 @@ controller_workflows:
           organization: 
             name: "Red Hat network organization"
           type: job_template
+
+  - name: 0-ACI-Brownfield-Workflow
+    organization: "Red Hat network organization"
+    survey_enabled: yes
+    survey_spec:
+      {
+        "description": "",
+        "name": "",
+        "spec":
+          [
+            {
+              "choices": "",
+              "default": "admin",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "",
+              "question_name": "Enter your Username",
+              "required": true,
+              "type": "text",
+              "variable": "apic_username",
+            },
+            {
+              "choices": "",
+              "default": "!v3G@!4@Y",
+              "formattedChoices":
+                [{ "choice": "", "id": 0, "isDefault": false }],
+              "max": 1024,
+              "min": 0,
+              "new_question": false,
+              "question_description": "",
+              "question_name": "Enter your Password",
+              "required": true,
+              "type": "password",
+              "variable": "apic_password",
+            },
+            {
+              "choices": "False\nTrue",
+              "default": "False",
+              "max": 1024,
+              "min": 0,
+              "new_question": true,
+              "question_description": "",
+              "question_name": "Validate APIC Certificate",
+              "required": true,
+              "type": "multiplechoice",
+              "variable": "apic_validate_certs",
+            },
+          ],
+      }
+    workflow_nodes:
+    - name: ACI-Rollback
+      identifier: ACI-Rollback
+      workflow: 0-ACI-Brownfield-Workflow
+      unified_job_template: ACI-Rollback
+    - name: ACI-Brownfield-Health-Check
+      identifier: ACI-Brownfield-Health-Check
+      workflow: 0-ACI-Brownfield-Workflow
+      unified_job_template: ACI-Brownfield-Health-Check 
+    - name: ACI-Brownfield-Config
+      identifier: ACI-Brownfield-Config
+      workflow: 0-ACI-Brownfield-Workflow
+      unified_job_template: ACI-Brownfield-Config
+      success_nodes: ACI-Brownfield-Health-Check
+      failure_nodes: ACI-Rollback
+    - name: ACI-Brownfield-Deploy
+      identifier: ACI-Brownfield-Deploy
+      workflow: 0-ACI-Brownfield-Workflow
+      unified_job_template: ACI-Brownfield-Deploy
+      success_nodes: ACI-Brownfield-Config
+      failure_nodes: ACI-Rollback
+    - name: Change-Approval
+      identifier: Change-Approval
+      workflow_job_template: 0-ACI-Brownfield-Workflow
+      organization: "Red Hat network organization"
+      approval_node:
+        name: "Change-Approval"
+        timeout: 0
+      state: present
+    - name: Change-Approval
+      identifier: Change-Approval
+      workflow_job_template: 0-ACI-Brownfield-Workflow
+      organization: "Red Hat network organization"
+      approval_node:
+        name: "Change-Approval"
+      state: present
+      success_nodes:
+        - ACI-Brownfield-Deploy
+      ignore_errors: true
+    - name: ACI-Brownfield-to-YAML
+      identifier: ACI-Brownfield-to-YAML
+      workflow: 0-ACI-Brownfield-Workflow
+      unified_job_template: ACI-Brownfield-to-YAML
+      success_nodes: Change-Approval
 
 ...
