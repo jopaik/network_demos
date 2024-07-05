@@ -141,7 +141,7 @@
         annotation: "{{ vlan_item['l3extDomP']['attributes']['annotation'] | default(omit, True) }}"
         domain: "{{ vlan_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
         domain_type: phys
-        pool: "{{ vlan_item['l3extDomP']['children'][0]['infraRsVlanNs']['attributes']['tDn'] | split (']-') | first | trim | split ('uni/infra/vlanns-') | last | trim }}"
+        pool: "{{ vlan_item['l3extDomP']['children'][0]['infraRsVlanNs']['attributes']['tDn'] | split (']-') | first | trim | split ('uni/infra/vlanns-[') | last | trim }}"
         pool_allocation_mode: "{{ vlan_item['l3extDomP']['children'][0]['infraRsVlanNs']['attributes']['tDn'] | split (']-') | last | trim }}"
       retries: 2
       async: 60
