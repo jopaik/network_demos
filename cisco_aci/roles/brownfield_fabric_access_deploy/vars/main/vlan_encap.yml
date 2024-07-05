@@ -2,7 +2,7 @@ changed: false
 vlan_encap:
 -   fvnsEncapBlk:
         attributes:
-            allocMode: inherit
+            allocMode: static
             annotation: orchestrator:ansible
             descr: ''
             dn: uni/infra/vlanns-[Ansible_general_pool]-static/from-[vlan-300]-to-[vlan-399]
