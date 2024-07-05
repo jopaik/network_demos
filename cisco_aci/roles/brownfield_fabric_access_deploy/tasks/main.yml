@@ -95,7 +95,7 @@
         <<: *aci_login
         annotation: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['annotation'] | default(omit, True) }}"
         pool: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('uni/infra/vlanns-[') | last | trim | split(']-') | first | trim }}"
-        pool_allocation_mode: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['allocMode'] | default(omit, True) }}"
+        pool_allocation_mode: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('/from') | first | trim | split (']-') | last | trim }}"
         block_start: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['from'] | split ('-') | last | trim }}"
         block_end: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['to'] | split ('-') | last | trim }}"
         block_name: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['name'] | default(omit, True) }}"
