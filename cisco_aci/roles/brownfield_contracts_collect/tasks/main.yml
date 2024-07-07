@@ -1,15 +1,7 @@
 ---
 - name: READ CONTRACTS CONFIG
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
 
   block:
     #FILTERS
@@ -21,7 +13,6 @@
       
     - name: Read Filters
       cisco.aci.aci_filter:
-        <<: *aci_login
         state: query
         timeout: 60
       register: filters
@@ -41,7 +32,6 @@
    #FILTER ENTRIES
     - name: Read Filter Entries 
       cisco.aci.aci_filter_entry:
-        <<: *aci_login
         state: query
       register: entries
       retries: 2
@@ -60,7 +50,6 @@
     #CONTRACTS
     - name: Read Contracts
       cisco.aci.aci_contract:
-        <<: *aci_login
         state: query
       register: contracts
       retries: 2
@@ -79,7 +68,6 @@
     #Subjects
     - name: Read Subjects
       cisco.aci.aci_contract_subject:
-        <<: *aci_login
         state: query
       register: subjects
       retries: 2
@@ -98,7 +86,6 @@
     #Associated
     - name: Read Associated
       cisco.aci.aci_contract_subject_to_filter:
-        <<: *aci_login
         state: query
       register: associated
       retries: 2
@@ -117,7 +104,6 @@
     #EPG binding provider
     - name: Read EPGs Binding
       cisco.aci.aci_epg_to_contract:
-        <<: *aci_login
         state: query
         contract_type: provider
       register: provider
@@ -137,7 +123,6 @@
      #EPG binding consumer
     - name: Read EPGs Binding
       cisco.aci.aci_epg_to_contract:
-        <<: *aci_login
         state: query
         contract_type: consumer
       register: consumer

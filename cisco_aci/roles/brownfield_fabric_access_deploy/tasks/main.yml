@@ -1,20 +1,11 @@
 ---
 - name: DEPLOY TENANT CONFIG
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-    
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
   block:
    
     - name: Create Switch Policy Profiles
       cisco.aci.aci_switch_policy_leaf_profile:
-        <<: *aci_login
         leaf_profile: "{{sw_pol_item['infraNodeP']['attributes']['name'] | default(omit, True) }}"
       retries: 2
       async: 60
@@ -26,8 +17,8 @@
 
     - name: ASSOCIATING AN INTERFACE SELECTOR PROFILE TO A SWITCH POLICY LEAF PROFILE
       cisco.aci.aci_interface_selector_to_switch_policy_leaf_profile:
-        <<: *aci_login
-        leaf_profile: "{{ selector_item['infraAccPortP']['attributes']['leaf_profile'] | default(omit, True) }}"
+        annotation: "{{ switch_profile[0]['infraNodeP']['attributes']['annotation'] | default(omit, True) }}"
+        leaf_profile: "{{ switch_profile[0]['infraNodeP']['attributes']['name'] | default(omit, True) }}"
         interface_selector: "{{ selector_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
       retries: 2
       delay: 5
@@ -37,11 +28,9 @@
       loop_control:
         loop_var: selector_item
         label: "{{ selector_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
-  
-  
+
     - name: Add Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:
-        <<: *aci_login
         annotation: "{{ profile_item['infraAccPortP']['attributes']['annotation'] | default(omit, True) }}"
         interface_profile: "{{ profile_item['infraAccPortP']['attributes']['name'] | default(omit, True) }}"
         description: "{{ profile_item['infraAccPortP']['attributes']['descr'] | default(omit, True) }}" 
@@ -55,7 +44,6 @@
     
     - name: Add Access Ports to Interface Policy Leaf Profile
       cisco.aci.aci_access_port_to_interface_policy_leaf_profile:
-        <<: *aci_login
         annotation: "{{ access_item['infraHPortS']['attributes']['annotation'] | default(omit, True) }}"
         interface_profile: "{{ access_item['infraHPortS']['attributes']['dn'] | split ('/hports') | first | trim | split ('accportprof-') | last | trim }}"
         access_port_selector: "{{ access_item['infraHPortS']['attributes']['name'] | default(omit, True) }}"
@@ -63,11 +51,11 @@
         policy_group: "{{ access_item['infraHPortS']['attributes']['dn'] | split ('/hports') | first | trim | split ('accportprof-') | last | trim }}"
         interface_type: vpc
         type: leaf
-        from_card: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['fromCard'] | default(omit, True) }}"
-        from_port: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['fromPort'] | default(omit, True) }}"
-        to_card: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['toCard'] | default(omit, True) }}"
-        to_port: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['toPort'] | default(omit, True) }}"
-        port_blk: "{{ access_item['infraHPortS']['children']['infraPortBlk']['attributes']['name'] | default(omit, True) }}"
+        from_card: "{{ access_item['infraHPortS']['children'][0]['infraPortBlk']['attributes']['fromCard'] | default(omit, True) }}"
+        from_port: "{{ access_item['infraHPortS']['children'][0]['infraPortBlk']['attributes']['fromPort'] | default(omit, True) }}"
+        to_card: "{{ access_item['infraHPortS']['children'][0]['infraPortBlk']['attributes']['toCard'] | default(omit, True) }}"
+        to_port: "{{ access_item['infraHPortS']['children'][0]['infraPortBlk']['attributes']['toPort'] | default(omit, True) }}"
+        port_blk: "{{ access_item['infraHPortS']['children'][0]['infraPortBlk']['attributes']['name'] | default(omit, True) }}"
       retries: 2
       async: 60
       poll: 0
@@ -78,7 +66,6 @@
       
     - name: Add a new VLAN Pool
       cisco.aci.aci_vlan_pool:
-        <<: *aci_login
         annotation: "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['annotation'] | default(omit, True) }}"
         pool: "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['name'] | default(omit, True) }}"
         pool_allocation_mode:  "{{ vlan_pool_item['fvnsVlanInstP']['attributes']['allocMode'] | default(omit, True) }}"
@@ -92,7 +79,6 @@
 
     - name: Add a new VLAN Encap Block
       cisco.aci.aci_vlan_pool_encap_block:
-        <<: *aci_login
         annotation: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['annotation'] | default(omit, True) }}"
         pool: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('uni/infra/vlanns-[') | last | trim | split(']-') | first | trim }}"
         pool_allocation_mode: "{{ vlan_pool_item['fvnsEncapBlk']['attributes']['dn'] | split ('/from') | first | trim | split (']-') | last | trim }}"
@@ -109,7 +95,6 @@
 
     - name: Add a new AEP
       cisco.aci.aci_aep:
-        <<: *aci_login
         annotation: "{{ aep_item['infraAttEntityP']['attributes']['annotation'] | default(omit, True) }}"
         aep: "{{ aep_item['infraAttEntityP']['attributes']['name'] | default(omit, True) }}"
         infra_vlan: true
@@ -123,7 +108,6 @@
 
     - name: Add a new Physical Domain
       cisco.aci.aci_domain:
-        <<: *aci_login
         annotation: "{{ physical_item['l3extDomP']['attributes']['annotation'] | default(omit, True) }}"
         domain: "{{ physical_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
         domain_type: phys
@@ -137,7 +121,6 @@
     
     - name: Bind a Physical Domain to a Vlan Pool
       cisco.aci.aci_domain_to_vlan_pool:
-        <<: *aci_login
         annotation: "{{ vlan_item['l3extDomP']['attributes']['annotation'] | default(omit, True) }}"
         domain: "{{ vlan_item['l3extDomP']['attributes']['name'] | default(omit, True) }}"
         domain_type: phys

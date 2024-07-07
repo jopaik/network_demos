@@ -1,10 +1,7 @@
 ---
 - name: ACI Brownfield to YAML Collection
   hosts: apic
-  connection: local
   gather_facts: no
-  vars:
-   snapshot: changeme
 
   tasks:
   - name: Retrieve a repository from a distant location and make it available to the local EE

@@ -2,7 +2,6 @@
 - name: Validate ACI Health for New Tenants
   hosts: apic
   gather_facts: no
-  connection: local
 
   tasks:
 

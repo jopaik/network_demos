@@ -1,15 +1,7 @@
 ---
 - name: READ L3OUT CONFIG
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
   block:
     #L3OUT
     - name: Create a defaults directory if it does not exist
@@ -19,8 +11,7 @@
         mode: '0755'
       
     - name: Read L3out
-      cisco.aci.aci_l3out:
-        <<: *aci_login
+      cisco.aci.aci_l3out:      
         state: query
         timeout: 60
       register: l3out
@@ -40,8 +31,7 @@
 
    #EXTERNAL EPGs
     - name: Read External EPG Entries 
-      cisco.aci.aci_l3out_extepg:
-        <<: *aci_login
+      cisco.aci.aci_l3out_extepg:      
         state: query
       register: ext
       retries: 2
@@ -60,7 +50,6 @@
     #BIND PROVIDER CONTRACT to an EXTERNAL EPG
     - name: Read Contract to External EPG
       cisco.aci.aci_l3out_extepg_to_contract:
-        <<: *aci_login
         state: query
         contract_type: provider
       register: bind_provider
@@ -80,7 +69,6 @@
     #BIND CONSUMER CONTRACT to an EXTERNAL EPG
     - name: Read Contract to External EPG
       cisco.aci.aci_l3out_extepg_to_contract:
-        <<: *aci_login
         state: query
         contract_type: consumer
       register: bind_consumer

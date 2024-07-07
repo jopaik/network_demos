@@ -1,19 +1,10 @@
 ---
-- name: DEPLOY TENANT CONFIG
+- name: DEPLOY L3OUT
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-    
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
   block:
     - name: Add a new L3Out
-      cisco.aci.aci_l3out:
-        <<: *aci_login
+      cisco.aci.aci_l3out:      
         annotation: "{{ l3out_item['l3extOut']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ l3out_item['l3extOut']['attributes']['dn'] | split ('/out-') | first | trim | split ('uni/tn-') | last | trim }}" 
         description: "{{ l3out_item['l3extOut']['attributes']['descr'] | default(omit, True) }}"
@@ -33,8 +24,7 @@
         label: "{{ l3out_item['l3extOut']['attributes']['dn'] | split ('/out-') | first | trim | split ('uni/tn-') | last | trim }}-{{ l3out_item['l3extOut']['attributes']['name'] | default(omit, True) }}"
       
     - name: Add a new ExtEpg
-      cisco.aci.aci_l3out_extepg:
-        <<: *aci_login
+      cisco.aci.aci_l3out_extepg:      
         annotation: "{{ ext_item['l3extInstP']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ ext_item['l3extInstP']['attributes']['dn'] | split ('/out-') | first | trim | split ('uni/tn-') | last | trim }}" 
         l3out: "{{ ext_item['l3extInstP']['attributes']['dn'] | split ('/instP-') | first | trim | split ('out-') | last | trim }}" 
@@ -50,8 +40,7 @@
         label: "{{ ext_item['l3extInstP']['attributes']['dn'] | split ('/out-') | first | trim | split ('uni/tn-') | last | trim }}-{{ ext_item['l3extInstP']['attributes']['name'] | default(omit, True) }}"
 
     - name: Bind a Provider contract to an external EPG
-      cisco.aci.aci_l3out_extepg_to_contract:
-        <<: *aci_login
+      cisco.aci.aci_l3out_extepg_to_contract:     
         annotation: "{{ bind_provider_item['fvRsProv']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ bind_provider_item['fvRsProv']['attributes']['tDn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         l3out: "{{ bind_provider_item['fvRsProv']['attributes']['dn'] | split ('/instP-') | first | trim | split ('out-') | last | trim }}" 

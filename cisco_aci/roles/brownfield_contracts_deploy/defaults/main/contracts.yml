@@ -1,0 +1,141 @@
+changed: false
+contracts:
+-   vzBrCP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-common/brc-default
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.897+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '0'
+            userdom: all
+-   vzBrCP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-common/brc-power_up
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.897+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: power_up
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+-   vzBrCP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-common/brc-sql
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.897+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: sql
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: application-profile
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+-   vzBrCP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-common/brc-web
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.897+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: web
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+-   vzBrCP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-SnV/brc-web
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: web
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: context
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+-   vzBrCP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/tn-SnV/brc-database
+            extMngdBy: ''
+            intent: install
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: database
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            reevaluateAll: 'no'
+            scope: application-profile
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+failed: false

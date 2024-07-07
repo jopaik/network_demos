@@ -1,20 +1,9 @@
 ---
-- name: Create Snapshots
-
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-
-  delegate_to: localhost
-
+- name: Snapshot
   block:
    
     - name: Create snapshot 
       aci_config_snapshot:
-        <<: *aci_login
         export_policy: demo
         max_count: 3
 

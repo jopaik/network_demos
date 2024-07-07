@@ -1,0 +1,41 @@
+changed: false
+vlan_encap:
+-   fvnsEncapBlk:
+        attributes:
+            allocMode: inherit
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/infra/vlanns-[SnV_general_pool]-static/from-[vlan-100]-to-[vlan-199]
+            extMngdBy: ''
+            from: vlan-100
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: ''
+            nameAlias: ''
+            role: external
+            status: ''
+            to: vlan-199
+            uid: '15374'
+            userdom: ':all:'
+-   fvnsEncapBlk:
+        attributes:
+            allocMode: inherit
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/infra/vlanns-[Heroes_general_pool]-static/from-[vlan-200]-to-[vlan-299]
+            extMngdBy: ''
+            from: vlan-200
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: ''
+            nameAlias: ''
+            role: external
+            status: ''
+            to: vlan-299
+            uid: '15374'
+            userdom: ':all:'
+failed: false

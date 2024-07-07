@@ -67,10 +67,13 @@ controller_hosts:
     state: present
     enabled: true
     variables:
-      #apic_host: 10.10.20.14 # change for devnet reservered sandbox
-      apic_host: sandboxapicdc.cisco.com #change for always on sandbox
-      #apic_host: 192.168.0.180
-
+      ansible_host: sandboxapicdc.cisco.com      
+      ansible_connection: ansible.netcommon.httpapi
+      ansible_network_os: cisco.aci.aci
+      ansible_user: admin
+      ansible_password: '!v3G@!4@Y'
+      ansible_httpapi_validate_certs: false
+      ansible_httpapi_use_ssl: true
 controller_groups:
   - name: apic
     hosts:
@@ -112,10 +115,6 @@ controller_templates:
     state: present
     credentials:
       - "Gitea Credential"
-    extra_vars:
-      apic_username: admin
-      apic_password: '!v3G@!4@Y'
-      apic_validate_certs: false
 
   - name: ACI-Brownfield-Deploy
     organization: "Red Hat network organization"
@@ -126,10 +125,6 @@ controller_templates:
     state: "present"
     credentials:
       - "Gitea Credential"
-    extra_vars:
-      apic_username: admin
-      apic_password: '!v3G@!4@Y'
-      apic_validate_certs: false
 
   - name: ACI-Brownfield-Config
     organization: "Red Hat network organization"
@@ -140,10 +135,6 @@ controller_templates:
     state: "present"
     credentials:
       - "Gitea Credential"
-    extra_vars:
-      apic_username: admin
-      apic_password: '!v3G@!4@Y'
-      apic_validate_certs: false
 
   - name: ACI-Brownfield-Health-Check
     organization: "Red Hat network organization"
@@ -154,10 +145,6 @@ controller_templates:
     state: "present"
     credentials:
       - "Gitea Credential"
-    extra_vars:
-      apic_username: admin
-      apic_password: '!v3G@!4@Y'
-      apic_validate_certs: false
 
   - name: ACI-Rollback
     organization: "Red Hat network organization"
@@ -166,10 +153,6 @@ controller_templates:
     playbook: "cisco_aci/playbooks/aci_rollback.yml"
     execution_environment: "Validated Network"
     state: "present"
-    extra_vars:
-        apic_username: admin
-        apic_password: '!v3G@!4@Y'
-        apic_validate_certs: false
 
 controller_workflows:
   - name: 0-ACI-as-Code-Workflow
@@ -184,14 +167,14 @@ controller_workflows:
           question_description: ""
           required: true
           type: "text"
-          variable: "apic_username"
+          variable: "ansible_user"
         - question_name: "Enter your Password"
           default: "'!v3G@!4@Y'"
           new_question: false
           question_description: ""
           required: true
           type: "password"
-          variable: "apic_password"
+          variable: "ansible_password"
         - question_name: "Validate APIC Certificate"
           choices: "False\nTrue"
           default: "False"
@@ -200,12 +183,6 @@ controller_workflows:
           required: true
           type: "multiplechoice"
           variable: "apic_validate_certs"
-        - question_name: "Please enter your Change-ID"
-          new_question: false
-          question_description: ""
-          required: true
-          type: "text"
-          variable: "snapshot"
     workflow_nodes:
       - identifier: ACI-Day0-1-Config-Staging
         unified_job_template:
@@ -250,7 +227,7 @@ controller_workflows:
               "question_name": "Enter your Username",
               "required": true,
               "type": "text",
-              "variable": "apic_username",
+              "variable": "ansible_user",
             },
             {
               "choices": "",
@@ -264,7 +241,7 @@ controller_workflows:
               "question_name": "Enter your Password",
               "required": true,
               "type": "password",
-              "variable": "apic_password",
+              "variable": "ansible_password",
             },
             {
               "choices": "False\nTrue",

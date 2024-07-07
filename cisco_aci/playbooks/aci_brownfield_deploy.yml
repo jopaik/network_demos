@@ -1,7 +1,6 @@
 ---
 - name: Brownfield Deployment (new configs)
   hosts: apic
-  connection: local
   gather_facts: no
 
   tasks:

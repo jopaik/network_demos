@@ -1,15 +1,7 @@
 ---
 - name: FABRIC ACCESS CONFIG
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
 
   block:
     - name: Create a defaults directory if it does not exist
@@ -21,7 +13,6 @@
    #Switch Profiles
     - name: Read Switch Policy Profiles
       cisco.aci.aci_switch_policy_leaf_profile:
-        <<: *aci_login
         state: query
         timeout: 60
       register: switch_profile
@@ -38,11 +29,49 @@
         regexp: 'current'
         replace: 'switch_profile'
 
+ # ASSOCIATING Interface Selector to Switch Policy
+    - name: ASSOCIATING Interface Selector to Switch Policy
+      cisco.aci.aci_interface_selector_to_switch_policy_leaf_profile:
+        state: query
+        timeout: 60
+      register: selector_policy
+      retries: 2
+
+    - name: Add Interface Selector/sw policy to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ selector_policy | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/selector_policy.yml"
+
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/selector_policy.yml"
+        regexp: 'current'
+        replace: 'selector_policy'
+
+
+  # Add Interface Polices to leaf policy group
+    - name: Add Interface Polices to leaf policy group
+      cisco.aci.aci_interface_policy_leaf_policy_group:
+        state: query
+        lag_type: node
+        timeout: 60
+      register: leaf_policy
+      retries: 2
+
+    - name: Add Interface Leaf policy to the roles defaults
+      ansible.builtin.copy:
+        content: "{{ leaf_policy | to_nice_yaml }}"
+        dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/leaf_policy.yml"
+
+    - name: Modify file
+      ansible.builtin.replace:
+        path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/leaf_policy.yml"
+        regexp: 'current'
+        replace: 'leaf_policy'
 
     #LEAF PROFILE
     - name: Read Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:
-        <<: *aci_login
         state: query
         timeout: 60
       register: interface_policy
@@ -62,7 +91,6 @@
    #Access PORTS 
     - name: Read Fabric Access Port to Leaf Profile
       cisco.aci.aci_access_port_to_interface_policy_leaf_profile:
-        <<: *aci_login
         state: query
         timeout: 60
       register: leaf_profile
@@ -82,7 +110,6 @@
    #VLAN POOLS
     - name: READ VLAN Pool
       cisco.aci.aci_vlan_pool:
-        <<: *aci_login
         state: query
         timeout: 60
       register: vlan_pool
@@ -102,7 +129,6 @@
    #VLAN Encap Block
     - name: Read VLAN Encap Block
       cisco.aci.aci_vlan_pool_encap_block:
-        <<: *aci_login
         state: query
         timeout: 60
       register: vlan_encap
@@ -121,7 +147,6 @@
   #AEP
     - name: Add a new AEP
       cisco.aci.aci_aep:
-        <<: *aci_login
         state: query
         timeout: 60
       register: aep
@@ -131,7 +156,6 @@
       ansible.builtin.copy:
         content: "{{ aep | to_nice_yaml }}"
         dest: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/aep.yml"
-      
     - name: Modify file
       ansible.builtin.replace:
         path: "{{ repository['path'] }}/cisco_aci/roles/brownfield_fabric_access_deploy/defaults/main/aep.yml"
@@ -141,7 +165,6 @@
   #Physical Domain
     - name: Physical Domain
       cisco.aci.aci_domain:
-        <<: *aci_login
         state: query
         domain_type: l3dom
         timeout: 60
@@ -162,7 +185,6 @@
     #Bind Domain to Vlan
     - name: Bind a Physical Domain to a Vlan Pool
       cisco.aci.aci_domain_to_vlan_pool:
-        <<: *aci_login
         state: query
         domain_type: l3dom
         pool_allocation_mode: static

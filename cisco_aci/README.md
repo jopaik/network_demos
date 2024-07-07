@@ -35,23 +35,23 @@ apic_password: '!v3G@!4@Y'
 https://sandboxapicdc.cisco.com
 
 # Demo1: Deploying ACI-as-CODE with csvfiles
-- Click on and walk through the 0-ACI-as-Code-Workflow to Deploy ACI fabrics as Code
-- Watch the output in the ACI-Day0-1-Config-Staging
-- Take a look at the ACI-Day2-Health-Check.  Talk about what goes into the health score and why it is important.
+1.  Click on and walk through the 0-ACI-as-Code-Workflow to Deploy ACI fabrics as Code
+2.  Watch the output in the ACI-Day0-1-Config-Staging
+3.  Take a look at the ACI-Day2-Health-Check.  Talk about what goes into the health score and why it is important.
 
 # Demo2: Brownfield ACI-as-Code with YAML files
-- Click on and walk through the 0-ACI-as-Brownfield-Workflow to injest the current ACI fabric configurstions as 
-- Review the defaults variables `(learned configs)` in each brownfield role
-- Review the vars variables to add new configurations to the ACI fabric
-- In VSCode modify an existing tenant configuration in the defaults vars and save and push to gitea repository with git extension or CLI.
+1. Click on and walk through the 0-ACI-as-Brownfield-Workflow to injest the current ACI fabric configurstions as 
+2.  Review the defaults variables `(learned configs)` in each brownfield role
+3.  Review the vars variables to add new configurations to the ACI fabric
+4. In VSCode modify an existing tenant configuration in the defaults vars and save and push to gitea repository with git extension or CLI.
 ~~~
 git add all
 git commit -m 'changed exting tenant'
 git push
 ~~~ 
-- Return to AAP JOBs to approve change control step in the 0-ACI-as-Brownfield-Workflow
-- Review the job output for ACI-Brownfield-Deploy job-template (new configs) and ACI-Brownfield-Config) job-template for (Existing Configs)
-- Take a look at the ACI-Day2-Health-Check.  Talk about what goes into the health score and why it is important.
+5.  Return to AAP JOBs to approve change control step in the 0-ACI-as-Brownfield-Workflow
+6.  Review the job output for ACI-Brownfield-Deploy job-template (new configs) and ACI-Brownfield-Config job-template for (Existing Configs)
+7.  Take a look at the ACI-Day2-Health-Check.  Talk about what goes into the health score and why it is important.
 
 # Key Takeaways
 * Easy migration from postman to Ansible with csv files

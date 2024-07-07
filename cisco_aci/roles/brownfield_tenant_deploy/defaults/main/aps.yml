@@ -1,0 +1,147 @@
+changed: false
+aps:
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-infra/ap-access
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.622+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: access
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '0'
+            userdom: all
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-infra/ap-ave-ctrl
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.622+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ave-ctrl
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '0'
+            userdom: all
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-common/ap-default
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.897+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '0'
+            userdom: all
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-Heroes/ap-Save_The_Planet
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.098+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: Save_The_Planet
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-SnV/ap-Power_Up
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: Power_Up
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-SnV/ap-Chaos
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: Chaos
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-SnV/ap-Evolution_X
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: Evolution_X
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvAp:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-SnV/ap-Rescue
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: Rescue
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            prio: unspecified
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+failed: false

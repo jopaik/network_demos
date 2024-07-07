@@ -1,19 +1,10 @@
 ---
 - name: DEPLOY CONTRACTS CONFIG
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-    
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
   block:
     - name: Contract Filters
       cisco.aci.aci_filter:
-        <<: *aci_login
         annotation: "{{ filter_item['vzFilter']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ filter_item['vzFilter']['attributes']['dn'] | split ('/flt-') | first | trim | split ('uni/tn-') | last | trim }}" 
         filter: "{{ filter_item['vzFilter']['attributes']['name'] | default(omit, True) }}"
@@ -28,7 +19,6 @@
 
     - name: Filter Entries
       cisco.aci.aci_filter_entry:
-        <<: *aci_login
         annotation: "{{ entry_item['vzEntry']['attributes']['annotation'] | default(omit, True) }}"
         tenant: "{{ entry_item['vzEntry']['attributes']['dn'] | split ('/flt-') | first | trim | split ('uni/tn-') | last | trim }}" 
         filter: "{{ entry_item['vzEntry']['attributes']['dn'] | split ('/e-') | first | trim | split ('flt-') | last | trim }}" 
@@ -49,7 +39,6 @@
 
     - name: Tenant Contracts
       cisco.aci.aci_contract:
-        <<: *aci_login
         annotation: "{{ contract_item['vzBrCP']['attributes']['annotation'] | default(omit, True) }}"
         contract: "{{ contract_item['vzBrCP']['attributes']['name'] | default(omit, True) }}"
         tenant: "{{ contract_item['vzBrCP']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
@@ -67,7 +56,6 @@
 
     - name: Contract Subjects
       cisco.aci.aci_contract_subject:
-        <<: *aci_login
         tenant: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         contract: "{{ subj_item['vzSubj']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}" 
         annotation: "{{ subj_item['vzSubj']['atributes']['annotation'] | default(omit, True) }}"
@@ -84,7 +72,6 @@
 
     - name: Contracts Subjects Associated with Filters WITH FILTERS
       cisco.aci.aci_contract_subject_to_filter:
-        <<: *aci_login
         tenant: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/brc-') | first | trim | split ('uni/tn-') | last | trim }}" 
         contract: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/subj-') | first | trim | split ('brc-') | last | trim }}" 
         subject: "{{ filt_item['vzRsSubjFiltAtt']['attributes']['dn'] | split ('/rss') | first | trim | split ('subj-') | last | trim }}" 
@@ -101,7 +88,6 @@
     
     - name: Contract to EPG Binding Providers
       cisco.aci.aci_epg_to_contract:
-        <<: *aci_login
         tenant: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}" 
         ap: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}" 
         epg: "{{ provider_item['fvRsProv']['attributes']['dn'] | split ('/rsp') | first | trim | split ('epg-') | last | trim }}" 
@@ -119,7 +105,6 @@
 
     - name: Contract to EPG Binding Consumers
       cisco.aci.aci_epg_to_contract:
-        <<: *aci_login
         tenant: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/ap-') | first | trim | split ('uni/tn-') | last | trim }}" 
         ap: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/epg-') | first | trim | split ('ap-') | last | trim }}" 
         epg: "{{ consumer_item['fvRsCons']['attributes']['dn'] | split ('/rsc') | first | trim | split ('epg-') | last | trim }}" 

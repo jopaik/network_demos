@@ -1,0 +1,63 @@
+changed: false
+bd_subnets:
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            ctrl: ''
+            descr: ''
+            dn: uni/tn-Heroes/BD-Hero_Land/subnet-[10.1.120.1/22]
+            extMngdBy: ''
+            ip: 10.1.120.1/22
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.098+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: public
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            ctrl: ''
+            descr: ''
+            dn: uni/tn-Heroes/BD-Hero_Land/subnet-[192.168.120.1/22]
+            extMngdBy: ''
+            ip: 192.168.120.1/22
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.098+00:00'
+            monPolDn: uni/tn-common/monepg-default
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+-   fvSubnet:
+        attributes:
+            annotation: ''
+            childAction: ''
+            ctrl: nd
+            descr: ''
+            dn: uni/tn-SnV/BD-antigravity/subnet-[10.2.10.1/23]
+            extMngdBy: ''
+            ip: 10.2.10.1/23
+            lcOwn: local
+            modTs: '2020-11-08T20:47:59.010+00:00'
+            monPolDn: ''
+            name: ''
+            nameAlias: ''
+            preferred: 'no'
+            scope: private
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+            virtual: 'no'
+failed: false

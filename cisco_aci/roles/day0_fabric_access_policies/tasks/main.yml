@@ -1,14 +1,6 @@
 ---
 - name: FABRIC ACCESS POLICIES
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-
-  delegate_to: localhost
   ignore_errors: true
 
   block:
@@ -16,13 +8,15 @@
       community.general.read_csv:
         path: ../csv_files/day0/aci_fabric_access_sw_profile_selector.csv # location of CSV file
       register: sw_profile_selector
+      delegate_to: localhost
 
     - name: Create Switch Policy Profiles
       cisco.aci.aci_switch_policy_leaf_profile:
-        <<: *aci_login
         leaf_profile: "{{sw_pol_item.sw_policy_profile | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ sw_profile_selector.list }}"
       loop_control:
         loop_var: sw_pol_item
@@ -30,11 +24,12 @@
 
     - name: ASSOCIATING AN INTERFACE SELECTOR PROFILE TO A SWITCH POLICY LEAF PROFILE
       cisco.aci.aci_interface_selector_to_switch_policy_leaf_profile:
-        <<: *aci_login
         leaf_profile: "{{ sw_pol_selector_item.sw_policy_profile | default(omit, True) }}"
         interface_selector: "{{ sw_pol_selector_item.interface_selector_profile | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ sw_profile_selector.list }}"
       loop_control:
         loop_var: sw_pol_selector_item
@@ -44,14 +39,16 @@
       community.general.read_csv:
         path: ../csv_files/day0/aci_fabric_access_policies.csv # location of CSV file
       register: aci_fabric_access
+      delegate_to: localhost
 
     - name: Create CDP Interface Policy to enable/disable CDP
       cisco.aci.aci_interface_policy_cdp:
-        <<: *aci_login
         name: "{{  cdp_item.cdp_policy | default(omit, True) }}"
         admin_state: "{{ cdp_item.cdp_enabled | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: cdp_item
@@ -59,11 +56,12 @@
 
     - name: Create MCP Interface Policy to enable/disable MCP
       cisco.aci.aci_interface_policy_mcp:
-        <<: *aci_login
         mcp: "{{  mcp_item.mcp_policy | default(omit, True) }}"
         admin_state: "{{ mcp_item.mcp_enabled | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: mcp_item
@@ -71,10 +69,11 @@
          
     - name: Create LLDP Interface Policy to enable/disable LLDP
       cisco.aci.aci_interface_policy_lldp:
-        <<: *aci_login
         name: "{{  lldp_item.lldp_policy | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: lldp_item
@@ -82,7 +81,6 @@
 
     - name: Create a Link Level Policy
       cisco.aci.aci_interface_policy_link_level:
-        <<: *aci_login
         link_level_policy: "{{  level_item.link_level_policy | default(omit, True) }}"
         description: via Ansible
         auto_negotiation: on
@@ -91,6 +89,8 @@
         forwarding_error_correction: cl91-rs-fec
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: level_item
@@ -98,7 +98,6 @@
 
     - name: Add Interface Polices to leaf policy group
       cisco.aci.aci_interface_policy_leaf_policy_group:
-        <<: *aci_login
         policy_group: "{{  add_ifselector_item.policy_group | default(omit, True)  }}"
         description: "{{  add_ifselector_item.pg_descr | default(omit, True)  }}"
         lag_type: "{{  add_ifselector_item.lag_type | default(omit, True)  }}"
@@ -120,6 +119,8 @@
         aep: "{{  add_ifselector_item.aep | default(omit, True)  }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: add_ifselector_item

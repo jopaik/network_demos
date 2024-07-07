@@ -5,18 +5,18 @@ leaf_profile:
             annotation: orchestrator:ansible
             descr: Brownfield
             dn: uni/infra/accportprof-Ansible_FI-1A/hports-ethernet1_22-24-typ-range
-            name: ethernet1_22-24
+            name: ethernet1_25-27
             type: range
         children:
         -   infraPortBlk:
                 attributes:
                     descr: ''
                     fromCard: '1'
-                    fromPort: '22'
+                    fromPort: '25'
                     lcOwn: local
-                    name: ethernet1_22-24
+                    name: ethernet1_25-27
                     toCard: '1'
-                    toPort: '24'
+                    toPort: '27'
         -   infraRsAccBaseGrp:
                 attributes:
                     annotation: ''
@@ -37,7 +37,7 @@ leaf_profile:
                     annotation: ''
                     descr: ''
                     fromCard: '1'
-                    fromPort: '26'
+                    fromPort: '28'
                     name: ethernet1_28-30
                     toCard: '1'
                     toPort: '30'

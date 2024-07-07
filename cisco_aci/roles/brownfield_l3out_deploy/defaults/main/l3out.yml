@@ -1,0 +1,108 @@
+changed: false
+l3out:
+-   l3extOut:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-common/out-default
+            enforceRtctrl: export
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T06:28:13.488+00:00'
+            monPolDn: ''
+            mplsEnabled: 'no'
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '0'
+            userdom: all
+        children:
+        -   l3extRsEctx:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2020-11-08T20:47:58.897+00:00'
+                    monPolDn: ''
+                    rType: mo
+                    rn: rsectx
+                    state: formed
+                    stateQual: default-target
+                    status: ''
+                    tCl: fvCtx
+                    tContextDn: ''
+                    tDn: uni/tn-common/ctx-default
+                    tRn: ctx-default
+                    tType: name
+                    tnFvCtxName: ''
+                    uid: '0'
+                    userdom: all
+-   l3extOut:
+        attributes:
+            annotation: ''
+            childAction: ''
+            descr: ''
+            dn: uni/tn-Heroes/out-Heroes_external_corporate
+            enforceRtctrl: export
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.391+00:00'
+            monPolDn: ''
+            mplsEnabled: 'no'
+            name: Heroes_external_corporate
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            targetDscp: unspecified
+            uid: '15374'
+            userdom: ':all:'
+        children:
+        -   l3extRsL3DomAtt:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2020-11-08T20:47:59.230+00:00'
+                    monPolDn: ''
+                    rType: mo
+                    rn: rsl3DomAtt
+                    state: formed
+                    stateQual: none
+                    status: ''
+                    tCl: l3extDomP
+                    tDn: uni/l3dom-Heroes_external_corporate
+                    tType: mo
+                    uid: '15374'
+                    userdom: ':all:'
+        -   l3extRsEctx:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    extMngdBy: ''
+                    forceResolve: 'yes'
+                    lcOwn: local
+                    modTs: '2020-11-08T07:02:16.668+00:00'
+                    monPolDn: ''
+                    rType: mo
+                    rn: rsectx
+                    state: formed
+                    stateQual: none
+                    status: ''
+                    tCl: fvCtx
+                    tContextDn: ''
+                    tDn: uni/tn-Heroes/ctx-Heroes_Only
+                    tRn: ctx-Heroes_Only
+                    tType: name
+                    tnFvCtxName: Heroes_Only
+                    uid: '0'
+                    userdom: all
+failed: false

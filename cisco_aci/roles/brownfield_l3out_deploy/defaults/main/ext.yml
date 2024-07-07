@@ -1,0 +1,32 @@
+changed: false
+ext:
+-   l3extInstP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            configSt: applied
+            descr: ''
+            dn: uni/tn-Heroes/out-Heroes_external_corporate/instP-Heroes_default
+            exceptionTag: ''
+            extMngdBy: ''
+            floodOnEncap: disabled
+            isSharedSrvMsiteEPg: 'no'
+            lcOwn: local
+            matchT: AtleastOne
+            mcast: 'no'
+            modTs: '2020-11-08T20:47:59.098+00:00'
+            monPolDn: ''
+            name: Heroes_default
+            nameAlias: ''
+            pcTag: '32772'
+            prefGrMemb: exclude
+            prio: unspecified
+            scope: '2359296'
+            status: ''
+            targetDscp: unspecified
+            triggerSt: triggerable
+            txId: '14411518807585587326'
+            uid: '15374'
+            userdom: ':all:'
+failed: false

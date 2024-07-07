@@ -1,0 +1,41 @@
+changed: false
+vlan_pool:
+-   fvnsVlanInstP:
+        attributes:
+            allocMode: static
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/vlanns-[SnV_general_pool]-static
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: SnV_general_pool
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   fvnsVlanInstP:
+        attributes:
+            allocMode: static
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/vlanns-[Heroes_general_pool]-static
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Heroes_general_pool
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+failed: false

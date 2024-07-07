@@ -1,7 +1,6 @@
 ---
 - name: Brownfield Changes to SSOT (Existing Configs)
   hosts: apic
-  connection: local
   gather_facts: no
 
   tasks:

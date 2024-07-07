@@ -1,30 +1,24 @@
 ---
 - name: FABRIC ACCESS PORT TO PROFILE
 
-  vars:
-    aci_login: &aci_login
-      hostname: "{{ apic_host }}"
-      username: "{{ apic_username }}"
-      password: "{{ apic_password }}"
-      validate_certs: "{{ apic_validate_certs }}"
-
-  delegate_to: localhost
-  ignore_errors: true
+  #ignore_errors: true
 
   block:
     - name: Read CSV File csv_files/day0/aci_fabric_access_port_to_profile.csv
       read_csv:
         path: ../csv_files/day0/aci_fabric_access_port_to_profile.csv # location of CSV file
       register: aci_access_port_to_interface_policy_leaf_profile
+      delegate_to: localhost
 
     - name: Add Interface Policy Leaf Profile
       cisco.aci.aci_interface_policy_leaf_profile:
-        <<: *aci_login
         interface_profile: "{{ profile_item.interface_profile | default(omit, True) }}"
         description: "{{ profile_item.description | default(omit, True) }}"
         type: "{{ profile_item.type | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: profile_item
@@ -32,7 +26,6 @@
         
     - name: Add Access Ports to Interface Policy Leaf Profile
       cisco.aci.aci_access_port_to_interface_policy_leaf_profile:
-        <<: *aci_login
         interface_profile: "{{ access_item.interface_profile | default(omit, True)  }}"
         access_port_selector: "{{ access_item.access_port_selector | default(omit, True)  }}"
         description: "{{ access_item.description | default(omit, True)  }}"
@@ -46,6 +39,8 @@
         port_blk: "{{ access_item.port_blk  | default(omit, True) }}"
       retries: 2
       delay: 5
+      async: 60
+      poll: 0
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: access_item

@@ -1,0 +1,149 @@
+changed: false
+aep:
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/attentp-default
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: default
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '0'
+            userdom: all
+        children:
+        -   infraProvAcc:
+                attributes:
+                    annotation: ''
+                    childAction: ''
+                    configIssues: ''
+                    descr: ''
+                    extMngdBy: ''
+                    lcOwn: local
+                    modTs: '2020-11-08T20:47:58.706+00:00'
+                    monPolDn: uni/fabric/monfab-default
+                    name: default
+                    nameAlias: ''
+                    rn: provacc
+                    status: ''
+                    uid: '0'
+                    userdom: all
+                children:
+                -   infraRsFuncToEpg:
+                        attributes:
+                            annotation: ''
+                            childAction: ''
+                            encap: vlan-4
+                            extMngdBy: ''
+                            forceResolve: 'yes'
+                            instrImedcy: lazy
+                            lcOwn: local
+                            modTs: '2020-11-08T06:28:21.151+00:00'
+                            mode: regular
+                            monPolDn: uni/fabric/monfab-default
+                            primaryEncap: unknown
+                            rType: mo
+                            rn: rsfuncToEpg-[uni/tn-infra/ap-access/epg-default]
+                            state: formed
+                            stateQual: none
+                            status: ''
+                            tCl: fvAEPg
+                            tDn: uni/tn-infra/ap-access/epg-default
+                            tType: mo
+                            uid: '0'
+                            userdom: all
+                -   dhcpInfraProvP:
+                        attributes:
+                            annotation: ''
+                            childAction: ''
+                            descr: ''
+                            extMngdBy: ''
+                            lcOwn: local
+                            modTs: '2020-11-08T06:28:15.069+00:00'
+                            mode: controller
+                            name: ''
+                            nameAlias: ''
+                            rn: infraprovp
+                            status: ''
+                            uid: '0'
+                            userdom: all
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/attentp-Heroes_phys
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Heroes_phys
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/attentp-Heroes_corporate_external
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: Heroes_corporate_external
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/attentp-SnV_phys
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: SnV_phys
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+-   infraAttEntityP:
+        attributes:
+            annotation: ''
+            childAction: ''
+            configIssues: ''
+            descr: ''
+            dn: uni/infra/attentp-SnV_corporate_external
+            extMngdBy: ''
+            lcOwn: local
+            modTs: '2020-11-08T20:47:58.706+00:00'
+            monPolDn: uni/fabric/monfab-default
+            name: SnV_corporate_external
+            nameAlias: ''
+            ownerKey: ''
+            ownerTag: ''
+            status: ''
+            uid: '15374'
+            userdom: ':all:'
+failed: false
