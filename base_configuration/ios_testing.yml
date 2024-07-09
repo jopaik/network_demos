@@ -1,7 +1,7 @@
 ---
 - name: Gather configuration information from Cisco IOS-XE devices
   hosts: cisco
-  gather_facts: no
+  gather_facts: false
 
   tasks:
     - name: copy running config to startup config
@@ -19,9 +19,6 @@
           dir_path: /tmp/
           filename: "{{ inventory_hostname }}.txt"
       register: config_output
-
-    - name: Check for backup on EE
-      ansible.builtin.command: cat /tmp/"{{ inventory_hostname }}.txt"
 
     # This task removes the Current configuration... from the top of IOS routers show run
     - name: Remove non config lines - regexp
