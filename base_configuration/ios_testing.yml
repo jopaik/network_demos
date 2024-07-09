@@ -20,6 +20,9 @@
           filename: "{{ inventory_hostname }}.txt"
       register: config_output
 
+    - name: Print out config
+      ansible.builtin.command: "cat /tmp/{{ inventory_hostname }}.txt"
+
     # This task removes the Current configuration... from the top of IOS routers show run
     - name: Remove non config lines - regexp
       ansible.builtin.lineinfile:
