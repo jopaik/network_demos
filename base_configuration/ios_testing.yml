@@ -4,8 +4,7 @@
   gather_facts: false
   become: false
   vars:
-    backup-server: 'backup-server'
-
+    backup_server: backup-server
   tasks:
     - name: Gather network information as structured data - test to validate we can use ios_facts on cisco host
       cisco.ios.ios_facts:
@@ -43,7 +42,7 @@
         path: /backup/
         state: directory
         mode: "755"
-      delegate_to: "{{ backup-server }}"
+      delegate_to: "{{ backup_server }}"
       become: true    
       run_once: true
 
@@ -54,7 +53,7 @@
         mode: "644"
       when: ansible_network_resources is defined
       become: true
-      delegate_to: "{{ backup-server }}"
+      delegate_to: "{{ backup_server }}"
 
     - name: copy running config to startup config - test ability to use ios_command
       cisco.ios.ios_command:
@@ -86,7 +85,7 @@
     - name: Create time stamp for play
       ansible.builtin.set_fact:
         datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
-      delegate_to: "{{ backup-server }}"
+      delegate_to: "{{ backup_server }}"
       delegate_facts: true
       run_once: true
 
@@ -95,7 +94,7 @@
         path: /backup/
         state: directory
         mode: "755"
-      delegate_to: "{{ backup-server }}"
+      delegate_to: "{{ backup_server }}"
       become: true
       run_once: true
 
@@ -106,7 +105,7 @@
         mode: "644"
       when: config_output is defined
       become: true
-      delegate_to: "{{ backup-server }}"
+      delegate_to: "{{ backup_server }}"
 
 
 
