@@ -4,6 +4,46 @@
   gather_facts: false
 
   tasks:
+    - name: Gather network information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources:
+          - 'all'
+          # - 'ntp_global'
+          # - 'logging_global'
+          # - 'hostname'
+          # - 'snmp_server'
+          # - 'vlans'
+          # - 'interfaces'
+          # - 'l2_interfaces'
+          # - 'l3_interfaces'
+          # - 'lag_interfaces'
+          # - 'lldp_interfaces'
+          # - 'lldp_global'
+          # - 'lacp'
+          # - 'lacp_interfaces'
+          # - 'service'
+          # - 'bgp_global'
+          # - 'bgp_address_family'
+          # - 'ospf_interfaces'
+          # - 'ospfv2'
+          # - 'ospfv3'
+          # - 'prefix_lists'
+          # - 'static_routes'
+          # - 'acl_interfaces'
+
+    - name: Print out
+      ansible.builtin.debug:
+        msg: "{{ ansible_network_resources | to_nice_yaml }}"
+
+    - name: Copy variables to local filename
+      ansible.builtin.copy:
+        content: "{{ ansible_network_resources | to_nice_yaml }}"
+        dest: "/host_vars/{{ inventory_hostname }}"
+        mode: "644"
+      when: config_output is defined
+      become: true
+      delegate_to: backup-server
+
     - name: copy running config to startup config
       cisco.ios.ios_command:
         commands:
@@ -56,34 +96,5 @@
       become: true
       delegate_to: backup-server
 
-    - name: Gather network information as structured data
-      cisco.ios.ios_facts:
-        gather_network_resources:
-          - 'all'
-          # - 'ntp_global'
-          # - 'logging_global'
-          # - 'hostname'
-          # - 'snmp_server'
-          # - 'vlans'
-          # - 'interfaces'
-          # - 'l2_interfaces'
-          # - 'l3_interfaces'
-          # - 'lag_interfaces'
-          # - 'lldp_interfaces'
-          # - 'lldp_global'
-          # - 'lacp'
-          # - 'lacp_interfaces'
-          # - 'service'
-          # - 'bgp_global'
-          # - 'bgp_address_family'
-          # - 'ospf_interfaces'
-          # - 'ospfv2'
-          # - 'ospfv3'
-          # - 'prefix_lists'
-          # - 'static_routes'
-          # - 'acl_interfaces'
 
-    - name: Print out
-      ansible.builtin.debug:
-        msg: "{{ ansible_network_resources | to_nice_yaml }}"
 
