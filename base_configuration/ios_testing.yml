@@ -4,7 +4,7 @@
   gather_facts: false
   become: false
   vars:
-
+    backup-server: 'backup-server'
 
   tasks:
     - name: Gather network information as structured data - test to validate we can use ios_facts on cisco host
@@ -38,13 +38,13 @@
       ansible.builtin.debug:
         msg: "{{ ansible_network_resources | to_nice_yaml }}"
 
-    - name: Create a directory if it does not exist
+    - name: Create a directory if it does not exist - Test to see if we can write to the RHEL host
       ansible.builtin.file:
         path: /backup/
         state: directory
         mode: "755"
-      delegate_to: backup-server
-      become: true
+      delegate_to: "{{ backup-server }}"
+      become: true    
       run_once: true
 
     - name: Copy structured network data to host - Test to see if we can write to the RHEL host
@@ -54,7 +54,7 @@
         mode: "644"
       when: ansible_network_resources is defined
       become: true
-      delegate_to: backup-server
+      delegate_to: "{{ backup-server }}"
 
     - name: copy running config to startup config - test ability to use ios_command
       cisco.ios.ios_command:
@@ -86,7 +86,7 @@
     - name: Create time stamp for play
       ansible.builtin.set_fact:
         datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
-      delegate_to: backup-server
+      delegate_to: "{{ backup-server }}"
       delegate_facts: true
       run_once: true
 
@@ -95,18 +95,18 @@
         path: /backup/
         state: directory
         mode: "755"
-      delegate_to: backup-server
+      delegate_to: "{{ backup-server }}"
       become: true
       run_once: true
 
     - name: Save configuration to backup server
       ansible.builtin.copy:
         src: "{{ config_output.backup_path }}"
-        dest: "/backup/{{ hostvars['backup-server'].datetime }}/"
+        dest: "/backup/{{ hostvars['"{{ backup-server }}"'].datetime }}/"
         mode: "644"
       when: config_output is defined
       become: true
-      delegate_to: backup-server
+      delegate_to: "{{ backup-server }}"
 
 
 
