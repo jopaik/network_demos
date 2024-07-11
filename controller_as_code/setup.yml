@@ -1567,8 +1567,8 @@
         success_nodes: "Upgrade Approval"
         state: present
 
-    # This section includes Network-Topology Demo
-    - name: Create a job-template - Network-Topology
+    # This section includes Network-Config-Push Demo
+    - name: Create a job-template - Network-Config-Push
       ansible.controller.job_template:
         name: "Network-Topology"
         organization: "Red Hat network organization"

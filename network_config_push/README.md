@@ -1,18 +1,11 @@
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
 
+This needs to be completed
 # Summary of steps
-1. Connect to Netbox Demo server to create and copy an API token
-https://netbox-demo.netboxlabs.com/ user=admin pass=admin
-2. Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox
-3. Review the Netbox GUI (devices, templates etc)
-4. Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
-5. Review the Netbox Inventory on AAP
-6. Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1
-7. Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
-8. Verify Config drift checks by changing the config on rtr1. Also not the serial number, IPs, and cert informaiton will be different in every demo POD.
+1. 
 
-# Netbox
+# Network Push
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Netbox Demo Server](#step-1-netbox-demo-server)
@@ -25,10 +18,10 @@ https://netbox-demo.netboxlabs.com/ user=admin pass=admin
 - [Step 8 - Verify Config drift checks by changing the config on rtr1](#step-8-)
 
 ## Objective
-To integrate Ansible with Netbox as a single source of truth (SSOT)
+To integrate 
 
 ## Overview
-The netbox.netbox collection allows Ansible to manage Netbox easily from the API. In this demo we use Ansible to check for config drift from routers config managed via Netbox. 
+The netbox.netbox 
 
 ### Step 1 - Netbox Demo Server
 Connect to Netbox Demo server to create and copy an API token

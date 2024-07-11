@@ -88,7 +88,9 @@ For the below demos insure you are always using files from /home/student/network
    * tdub wip
 - [Network Routing Protocol Migration](routing_protocol_migration)
    * tdub wip
-- [Network Netcommon Playground](routing_protocol_migration)
+- [Network Netcommon Playground](network_netcommon_playground)
+   * tdub wip
+- [Network Config Push](network_config_push)
    * tdub wip
    
 # Getting Started
