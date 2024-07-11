@@ -2,9 +2,12 @@
 - name: Gather configuration information from Cisco IOS-XE devices
   hosts: cisco
   gather_facts: false
+  become: false
+  vars:
+
 
   tasks:
-    - name: Gather network information as structured data
+    - name: Gather network information as structured data - test to validate we can use ios_facts on cisco host
       cisco.ios.ios_facts:
         gather_network_resources:
           - 'all'
@@ -35,16 +38,25 @@
       ansible.builtin.debug:
         msg: "{{ ansible_network_resources | to_nice_yaml }}"
 
-    - name: Copy variables to local filename
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /backup/
+        state: directory
+        mode: "755"
+      delegate_to: backup-server
+      become: true
+      run_once: true
+
+    - name: Copy structured network data to host - Test to see if we can write to the RHEL host
       ansible.builtin.copy:
         content: "{{ ansible_network_resources | to_nice_yaml }}"
-        dest: "/host_vars/{{ inventory_hostname }}"
+        dest: "/backup/{{ inventory_hostname }}"
         mode: "644"
       when: ansible_network_resources is defined
       become: true
       delegate_to: backup-server
 
-    - name: copy running config to startup config
+    - name: copy running config to startup config - test ability to use ios_command
       cisco.ios.ios_command:
         commands:
           - command: 'copy running-config startup-config'
