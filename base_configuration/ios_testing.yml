@@ -1,0 +1,89 @@
+---
+- name: Gather configuration information from Cisco IOS-XE devices
+  hosts: cisco
+  gather_facts: false
+
+  tasks:
+    - name: copy running config to startup config
+      cisco.ios.ios_command:
+        commands:
+          - command: 'copy running-config startup-config'
+            prompt: Destination
+            answer: "\r"
+      register: result
+
+    - name: Backup cisco ios configuration
+      cisco.ios.ios_config:
+        backup: true
+        backup_options:
+          dir_path: /tmp/
+          filename: "{{ inventory_hostname }}.txt"
+      register: config_output
+
+    - name: Print out config
+      ansible.builtin.command: "cat /tmp/{{ inventory_hostname }}.txt"
+
+    # This task removes the Current configuration... from the top of IOS routers show run
+    - name: Remove non config lines - regexp
+      ansible.builtin.lineinfile:
+        path: "{{ config_output.backup_path }}"
+        line: "Building configuration..."
+        state: absent
+      delegate_to: localhost
+
+    - name: Create time stamp for play
+      ansible.builtin.set_fact:
+        datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
+      delegate_to: backup-server
+      delegate_facts: true
+      run_once: true
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /backup/
+        state: directory
+        mode: "755"
+      delegate_to: backup-server
+      become: true
+      run_once: true
+
+    - name: Save configuration to backup server
+      ansible.builtin.copy:
+        src: "{{ config_output.backup_path }}"
+        dest: "/backup/{{ hostvars['backup-server'].datetime }}/"
+        mode: "644"
+      when: config_output is defined
+      become: true
+      delegate_to: backup-server
+
+    - name: Gather network information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources:
+          - 'all'
+          # - 'ntp_global'
+          # - 'logging_global'
+          # - 'hostname'
+          # - 'snmp_server'
+          # - 'vlans'
+          # - 'interfaces'
+          # - 'l2_interfaces'
+          # - 'l3_interfaces'
+          # - 'lag_interfaces'
+          # - 'lldp_interfaces'
+          # - 'lldp_global'
+          # - 'lacp'
+          # - 'lacp_interfaces'
+          # - 'service'
+          # - 'bgp_global'
+          # - 'bgp_address_family'
+          # - 'ospf_interfaces'
+          # - 'ospfv2'
+          # - 'ospfv3'
+          # - 'prefix_lists'
+          # - 'static_routes'
+          # - 'acl_interfaces'
+
+    - name: Print out
+      ansible.builtin.debug:
+        msg: "{{ ansible_network_resources | to_nice_yaml }}"
+
