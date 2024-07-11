@@ -102,7 +102,7 @@
     - name: Save configuration to backup server
       ansible.builtin.copy:
         src: "{{ config_output.backup_path }}"
-        dest: "/backup/{{ hostvars['"{{ backup-server }}"'].datetime }}/"
+        dest: "/backup/{{ hostvars['backup-server'].datetime }}/"
         mode: "644"
       when: config_output is defined
       become: true
