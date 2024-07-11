@@ -40,7 +40,7 @@
         content: "{{ ansible_network_resources | to_nice_yaml }}"
         dest: "/host_vars/{{ inventory_hostname }}"
         mode: "644"
-      when: config_output is defined
+      when: ansible_network_resources is defined
       become: true
       delegate_to: backup-server
 
