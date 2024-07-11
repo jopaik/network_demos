@@ -18,7 +18,6 @@ logging_ios:
   - errors
   trap: errors
   userinfo: True
-  logging_on: enable
 
 # Juniper Compliance    
 logging_junos:
