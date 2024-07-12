@@ -72,12 +72,19 @@
             commands:
               - command: 'sho run'
 
-        - name: Copy running config to startup config
+        - name: Write mem basic command
           vars:
             ansible_command_timeout: 120
           cisco.ios.ios_command:
             commands:
-              - command: 'copy running-config startup-config'
+              - command: 'write mem'
+
+        - name: Copy running config to startup config with prompt/answer
+          vars:
+            ansible_command_timeout: 120
+          cisco.ios.ios_command:
+            commands:
+              - command: 'copy run start'
                 prompt: Destination
                 answer: "\r"
       ### End block ###
