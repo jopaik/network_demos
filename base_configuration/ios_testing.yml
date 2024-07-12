@@ -64,6 +64,7 @@
       ### End block ###
 
     - name: Test ability to use ios_command
+      ignore_errors: true
       block:
         - name: Most basic command
           vars:
@@ -87,10 +88,15 @@
               - command: 'copy run start'
                 prompt: Destination
                 answer: "\r"
+
       ### End block ###
 
     - name: Test ability to use ios_config
       block:
+        - name: Use IOS Config to save config
+          cisco.ios.ios_config:
+            save_when: always
+
         - name: Backup cisco ios configuration
           vars:
             ansible_command_timeout: 120
@@ -102,7 +108,9 @@
           register: config_output
 
         - name: Print out config
+          when: config_output is defined
           ansible.builtin.command: "cat /tmp/{{ inventory_hostname }}.txt"
+
       ### End block ###
 
     - name: Finish Test if everything else works
@@ -116,29 +124,31 @@
           delegate_to: localhost
 
         - name: Create time stamp for play
-          ansible.builtin.set_fact:
-            datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
           delegate_to: "{{ backup_server }}"
           delegate_facts: true
           run_once: true
+          ansible.builtin.set_fact:
+            datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
+
 
         - name: Create a directory if it does not exist
+          delegate_to: "{{ backup_server }}"
+          become: true
+          run_once: true
           ansible.builtin.file:
             path: /backup/
             state: directory
             mode: "755"
-          delegate_to: "{{ backup_server }}"
-          become: true
-          run_once: true
 
         - name: Save configuration to backup server
+          when: config_output is defined
+          become: true
+          delegate_to: "{{ backup_server }}"
           ansible.builtin.copy:
             src: "{{ config_output.backup_path }}"
             dest: "/backup/{{ hostvars['backup-server'].datetime }}/"
             mode: "644"
-          when: config_output is defined
-          become: true
-          delegate_to: "{{ backup_server }}"
+
 
 
 

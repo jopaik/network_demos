@@ -9,9 +9,14 @@
       ansible.builtin.debug:
         msg: "{{ ansible_network_os }}"
 
-    - name: Gather network information as structured data
-      ansible.builtin.include_role:
-        name: gather_facts
+    # This task will backup the configuration
+    - name: Backup cisco ios configuration
+      cisco.ios.ios_config:
+        backup: true
+        backup_options:
+          dir_path: /tmp/
+          filename: "{{ inventory_hostname }}.txt"
+      register: config_output
 
     - name: Print out
       ansible.builtin.debug:
