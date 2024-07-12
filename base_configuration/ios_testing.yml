@@ -5,6 +5,7 @@
   become: false
   vars:
     backup_server: backup-server
+    ANSIBLE_PERSISTENT_CONNECT_TIMEOUT: 120
   
   tasks:
     - name: Test for basic connection and login to Cisco device
