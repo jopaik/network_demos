@@ -20,7 +20,7 @@
       delegate_to: localhost
       run_once: true
       block:
-        - name: Copy structured network data to EE - Test to see if we can write to the EE
+        - name: Copy structured network data to EE
           ansible.builtin.copy:
             content: "Ansible Built This"
             dest: "/tmp/ansible_content.txt"
