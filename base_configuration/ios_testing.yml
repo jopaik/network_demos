@@ -48,7 +48,7 @@
             mode: "644"
 
         - name: Test to see if the file exists on the RHEL host
-          ansible.builtin.command: "cat /tmp/{{ inventory_hostname }}.yml"
+          ansible.builtin.command: "cat /backup/ansible_content.txt"
     ### End block ###
 
     - name: Test to see if we can do a basic fact gathering from Cisco device
