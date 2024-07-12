@@ -54,7 +54,7 @@
 
     - name: Test to see if we can do a basic fact gathering from Cisco device
       block:
-        - name: Gather network information as structured data - test to validate we can use ios_facts on cisco host
+        - name: Gather network information as structured data
           cisco.ios.ios_facts:
             gather_network_resources:
               - 'all'
@@ -66,30 +66,34 @@
 
     - name: Test ability to use ios_command
       ignore_errors: true
+      vars:
+        ansible_command_timeout: 120
       block:
-        - name: Most basic command
-          vars:
-            ansible_command_timeout: 120
+        - name: Most basic ios_command
           cisco.ios.ios_command:
             commands:
               - command: 'sho run'
 
-        - name: Write mem basic command
-          vars:
-            ansible_command_timeout: 120
+        - name: Write mem basic ios_command
           cisco.ios.ios_command:
             commands:
               - command: 'write mem'
 
-        - name: Copy running config to startup config with prompt/answer
-          vars:
-            ansible_command_timeout: 120
+        - name: Copy running config to startup config with prompt/answer (cisco.ios.ios_command)
           cisco.ios.ios_command:
             commands:
               - command: 'copy run start'
                 prompt: Destination
                 answer: "\r"
 
+        - name: Copy running config to startup config with prompt/answer (ansible.netcommon.cli_command)
+          ansible.netcommon.cli_command:
+            command: copy run start
+            check_all: true
+            prompt:
+              - Destination
+            answer:
+              - "\r"
       ### End block ###
 
     - name: Test ability to use ios_config
