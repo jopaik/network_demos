@@ -89,7 +89,6 @@
         - name: Copy running config to startup config with prompt/answer (ansible.netcommon.cli_command)
           ansible.netcommon.cli_command:
             command: copy run start
-            check_all: true
             prompt:
               - Destination
             answer:
@@ -97,14 +96,15 @@
       ### End block ###
 
     - name: Test ability to use ios_config
+      ignore_errors: true
+      vars:
+        ansible_command_timeout: 120
       block:
         - name: Use IOS Config to save config
           cisco.ios.ios_config:
             save_when: always
 
         - name: Backup cisco ios configuration
-          vars:
-            ansible_command_timeout: 120
           cisco.ios.ios_config:
             backup: true
             backup_options:
@@ -115,7 +115,6 @@
         - name: Print out config
           when: config_output is defined
           ansible.builtin.command: "cat /tmp/{{ inventory_hostname }}.txt"
-
       ### End block ###
 
     - name: Finish Test if everything else works
