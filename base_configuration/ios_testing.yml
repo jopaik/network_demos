@@ -16,6 +16,7 @@
       run_once: true
       ansible.builtin.ping:
 
+
     - name: Test to see if we can write to the EE (important for ios_config backup)
       delegate_to: localhost
       run_once: true
@@ -65,8 +66,6 @@
 
     - name: Test ability to use ios_command
       ignore_errors: true
-      become: true
-      become_method: enable
       vars:
         ansible_command_timeout: 120
       block:
@@ -106,6 +105,8 @@
             save_when: always
 
         - name: Backup cisco ios configuration
+          vars:
+            ansible_command_timeout: 120
           cisco.ios.ios_config:
             backup: true
             backup_options:
@@ -116,10 +117,22 @@
         - name: Print out config
           when: config_output is defined
           ansible.builtin.command: "cat /tmp/{{ inventory_hostname }}.txt"
+      ### End block ###
+
+    - name: Finish Test if everything else works
+      block:
+        - name: Backup cisco ios configuration
+          vars:
+            ansible_command_timeout: 120
+          cisco.ios.ios_config:
+            backup: true
+            backup_options:
+              dir_path: /tmp/
+              filename: "{{ inventory_hostname }}.txt"
+          register: config_output
 
         # This task removes the Current configuration... from the top of IOS routers show run
         - name: Remove non config lines - regexp
-          when: config_output is defined
           ansible.builtin.lineinfile:
             path: "{{ config_output.backup_path }}"
             line: "Building configuration..."
@@ -128,7 +141,6 @@
 
         - name: Create time stamp for play
           delegate_to: "{{ backup_server }}"
-          when: config_output is defined
           delegate_facts: true
           run_once: true
           ansible.builtin.set_fact:
@@ -137,7 +149,7 @@
 
         - name: Create a directory if it does not exist
           delegate_to: "{{ backup_server }}"
-          when: config_output is defined
+          become: true
           run_once: true
           ansible.builtin.file:
             path: /backup/
