@@ -162,7 +162,7 @@
           delegate_to: "{{ backup_server }}"
           ansible.builtin.copy:
             src: "{{ config_output.backup_path }}"
-            dest: "/backup/{{ hostvars['backup-server'].datetime }}/"
+            dest: "/backup/{{ hostvars[backup_server].datetime }}/"
             mode: "644"
 
 
