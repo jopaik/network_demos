@@ -65,6 +65,8 @@
 
     - name: Test ability to use ios_command
       ignore_errors: true
+      become: true
+      become_method: enable
       vars:
         ansible_command_timeout: 120
       block:
