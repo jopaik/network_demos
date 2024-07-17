@@ -164,7 +164,6 @@
             src: "{{ config_output.backup_path }}"
             # dest: "/backup/{{ hostvars['backup-server'].datetime }}/"
             dest: "/backup/"
-
             mode: "644"
 
 
