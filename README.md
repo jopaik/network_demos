@@ -59,8 +59,9 @@ For the below demos insure you are always using files from /home/student/network
    * Stage ios images to Cisco router
    * Upgrade or Downgrade the Cisco router as code
 - [Cisco ACI](cisco_aci)
-   * Deploy ACI fabrics as Code
+   * Deploy ACI fabrics as Code with csv files
    * Make Health Checks from Ansible to Validate ACI State
+   * Brownfield ACI fabric to YAML 
 - [Cisco DNAC](cisco_dnac)
    * Dynamic Ansible Inventory
    * Backup DNAC configs to Git Repo
