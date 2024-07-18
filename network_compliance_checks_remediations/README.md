@@ -26,7 +26,7 @@ In this demo you will utilize roles, playbooks, job-templates, surveys, and crea
 ![Network-Check-Compliance](../images/check.png)
 Check mode will run the playbook to list the before state and the necessary remediation commands but not actually replace the configuration on the targetted devices.
 
-![Network-Run-Compliance](../images/run.png)
+[Network-Run-Compliance](../images/run.png)
 Run mode will replace the needed configurations.
 
 ### Step 1 - Run the Workflow
