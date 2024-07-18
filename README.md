@@ -9,6 +9,7 @@ Upon receiving a POD environment, please scroll down directly to the `Getting St
 ## Menu of Demos
 For the below demos insure you are always using files from /home/student/network-demos-repo/
 - [Network Basic Workflow ](network_basic_workflow/README.md)
+   * DEMO NAME: network_basic_workflow
    * [Demo Video](https://www.youtube.com/watch?v=XYv9OkHwO8s)
    * Is similar to Network Workshop 101 AAP Exercises
    * Network Backups and Restore to a server
@@ -17,15 +18,18 @@ For the below demos insure you are always using files from /home/student/network
    * Workflow
    * Self Service Survey
 - [Network Backups GIT](network_backups_git/README.md)
+   * DEMO NAME: network_backups_git
    * Validated Content: network.backup 
    * Self Service Survey
    * Intended config "configuration drift"
    * Restore Configs
 - [Network Compliance Dashboard](network_compliance_dashboard/README.md)
+   * DEMO NAME: network_compliance_dashboard
    * [Demo Video](https://youtu.be/QQeu1Gki0sI?si=n5CvWdYrbH3sBO-P)
    * Network Facts
    * JINJA2 HTML template
 - [Network Compliance Checks Remediations](network_compliance_checks_remediations/README.md)
+   * DEMO NAME: network_compliance_checks_remediations
    * [Demo Video](https://youtu.be/S1k41RMfieo?feature=shared)
    * Network Resource Modules
    * Workflows
@@ -34,16 +38,19 @@ For the below demos insure you are always using files from /home/student/network
    * Handlers
    * Cisco STIG
 - [Scoped Configuration Management](scoped_configuration_management/README.md)
+   * DEMO NAME: scoped_configuration_management
    * [Demo Video](https://youtu.be/1z7NuObWhPE?si=vqB1QCBrMmY2cpor)
    * Validated Content: `network.base` 
    * Operations: Persist, Deploy, Detect, Remediate
    * network.bgp
 - [Network Access List](network_access_list/README.md)
+   * DEMO NAME: network_access_list
    * Deploy ACLS with Validated Content
    * Detect incorrect ACL Entries
    * Remdiate ACL entries
    * Make changes to existing ACLs and Entries
 - [Network SNOW](network_snow/README.md)
+   * DEMO NAME: network_snow
    * Compliance Checks 
    * Automatically Open SNOW Inicidents (tickets)
    * Resolve Issues
@@ -51,22 +58,27 @@ For the below demos insure you are always using files from /home/student/network
    * Dynamic Inventory from CMDB
    * Get Facts
 - [Network Brownfield Resource Modules](network-brownfield-resource-modules)
+   * DEMO NAME: network_brownfield_resource_modules
    * Ingest the device configurations
    * Make changed to the SSOT (host_vars)
    * Detect differences (drift) between the SSOT and Running Confurations
    * Deploy changes using netcommon + resource modules 
 - [Network Upgrade as Code](network_upgrade_as_code)
+   * DEMO NAME: network_upgrade_as_code
    * Stage ios images to Cisco router
    * Upgrade or Downgrade the Cisco router as code
 - [Cisco ACI](cisco_aci)
+   * DEMO NAME: cisco_aci
    * Deploy ACI fabrics as Code with csv files
    * Make Health Checks from Ansible to Validate ACI State
    * Brownfield ACI fabric to YAML 
 - [Cisco DNAC](cisco_dnac)
+   * DEMO NAME: cisco_dnac
    * Dynamic Ansible Inventory
    * Backup DNAC configs to Git Repo
    * Use Ansible collection to make compliance checks against DNAC device configs
 - [Cisco ISE](cisco_ise)
+   * DEMO NAME: cisco_ise
    * Get Config Info
    * Get Device Info
    * Get Endpoint Info
@@ -78,18 +90,19 @@ For the below demos insure you are always using files from /home/student/network
    * tdub wip
 - [Arista AVD](arista_avd)
    * tdub wip
-   
 - [NetBox](netbox)
+   * DEMO NAME: netbox
    * Ansible + Netbox SSOT 
    * Dynamic Inventory
    * Config Drift Checks
+- [Network Netcommon Playground](network_netcommon_playground)
+   * DEMO NAME: network_netcommon_playground
+   * tdub wip
 - [Network Troubleshooting](network_troubleshooting)
    * tdub wip
 - [NetDevOps](netdevops)
    * tdub wip
 - [Network Routing Protocol Migration](routing_protocol_migration)
-   * tdub wip
-- [Network Netcommon Playground](network_netcommon_playground)
    * tdub wip
 - [Network Config Push](network_config_push)
    * tdub wip
