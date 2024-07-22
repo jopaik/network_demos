@@ -1584,6 +1584,22 @@
           name: ""
           description: ""
           spec:
+            - question_name: Please select the IP Address for rtr1 tu0
+              type: multiplechoice
+              variable: rtr1_tu0
+              required: true
+              default: "10.100.100.1"
+              choices:
+                - "10.100.100.1"
+                - "10.99.99.1"
+            - question_name: Please provide description for rtr1 tu0
+              type: text
+              variable: rtr1_tu0_desc
+              required: true
+              default: "rtr1 tu0"
+              choices: ''
+              max: 1024
+              min: 0
             - question_name: Please select the IP Address for rtr1 tu1
               type: multiplechoice
               variable: rtr1_tu1
@@ -1594,9 +1610,24 @@
                 - "10.199.199.1"
             - question_name: Please provide description for rtr1 tu1
               type: text
-              variable: rtr1_desc
+              variable: rtr1_tu1_desc
               required: true
               default: "rtr1 tu1"
+              choices: ''
+              max: 1024
+              min: 0
+            - question_name: Please select the IP Address for rtr2 tu0
+              type: multiplechoice
+              variable: rtr2_tu0
+              required: true
+              default: "10.102.102.2"
+              choices:
+                - "10.102.102.2"
+            - question_name: Please provide description for rtr2 tu0
+              type: text
+              variable: rtr2_tu0_desc
+              required: true
+              default: "rtr2 tu0"
               choices: ''
               max: 1024
               min: 0
@@ -1604,51 +1635,18 @@
               type: multiplechoice
               variable: rtr2_tu1
               required: true
-              default: "10.100.100.2"
+              default: "10.200.200.2"
               choices:
-                - "10.100.100.2"
+                - "10.200.200.2"
                 - "10.199.199.2"
             - question_name: Please provide description for rtr2 tu1
               type: text
-              variable: rtr2_desc
+              variable: rtr2_tu1_desc
               required: true
               default: "rtr2 tu1"
               choices: ''
               max: 1024
               min: 0
-            - question_name: Please select the IP Address for rtr3 tu1
-              type: multiplechoice
-              variable: rtr3_tu1
-              required: true
-              default: "10.102.102.3"
-              choices:
-                - "10.102.102.3"
-                - "10.199.199.3"
-            - question_name: Please provide description for rtr3 tu1
-              type: text
-              variable: rtr3_desc
-              required: true
-              default: "rtr3"
-              choices: ''
-              max: 1024
-              min: 0
-            - question_name: Please select the IP Address for rtr4 tu1
-              type: multiplechoice
-              variable: rtr4_tu1
-              required: true
-              default: "10.102.102.4"
-              choices:
-                - "10.102.102.4"
-                - "10.199.199.4"
-            - question_name: Please provide description for rtr4 tu1
-              type: text
-              variable: rtr4_desc
-              required: true
-              default: "rtr4 tu1"
-              choices: ''
-              max: 1024
-              min: 0
-
     # This section includes Network-Brownfield-Resource-Modules
     - name: Create a job-template - Network-Brownfield-Resource-Modules
       ansible.controller.job_template:
