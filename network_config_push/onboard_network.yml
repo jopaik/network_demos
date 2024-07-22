@@ -1,5 +1,146 @@
 ---
-- name: prepare network topology for network onboard
+- name: Push Cisco Router Configuration with Resource Modules 
+  hosts: rtr1
+  gather_facts: false
+
+  tasks:
+
+  - name: Configure acl_interfaces
+    cisco.ios.ios_acl_interfaces:
+      config: "{{ acl_interfaces | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure acls
+    cisco.ios.ios_acls:
+      config: "{{ acls | default (omit, True) }}"
+      state: merged
+
+  - name: Configure bgp_address_family
+    cisco.ios.ios_bgp_address_family:
+      config: "{{ bgp_address_family | default (omit, True) }}"
+      state: merged
+
+  - name: Configure bgp_global
+    cisco.ios.ios_bgp_global:
+      config: "{{ bgp_global | default (omit, True) }}"
+      state: merged
+
+  - name: Configure evpn_evi
+    cisco.ios.ios_evpn_evi:
+      config: "{{ evpn_evi | default (omit, True) }}"
+      state: gathered
+    
+  - name: Configure evpn_global
+    cisco.ios.ios_evpn_global:
+      config: "{{ evpn_global | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure hostname
+    cisco.ios.ios_hostname:
+      config: "{{ hostname | default (omit, True) }}"
+      state: merged
+ 
+  - name: Configure interfaces
+    cisco.ios.ios_interfaces:
+      config: "{{ interfaces | default (omit, True) }}"
+      state: merged
+
+  - name: Configure l2_interfaces
+    cisco.ios.ios_l2_interfaces:
+      config: "{{ l2_interfaces | default (omit, True) }}"
+      state: merged
+
+  - name: Configure l3_interfaces
+    cisco.ios.ios_l3_interfaces:
+      config: "{{ l3_interfaces | default (omit, True) }}"
+      state: merged
+
+  - name: Configure lacp
+    cisco.ios.ios_lacp:
+      config: "{{ lacp | default (omit, True) }}"
+      state: merged
+
+  - name: Configure lacp_interfaces
+    cisco.ios.ios_lacp_interfaces:
+      config: "{{ lacp_interfaces | default (omit, True) }}"
+      state: merged
+
+  - name: Configure lag_interfaces
+    cisco.ios.ios_lag_interfaces:
+      config: "{{ lag_interfaces | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure lldp_global
+    cisco.ios.ios_lldp_global:
+      config: "{{ lldp_global | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure lldp_interfaces
+    cisco.ios.ios_lldp_interfaces:
+      config: "{{ lldp_interfaces | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure logging_global
+    cisco.ios.ios_logging_global:
+      config: "{{ logging_global | default (omit, True) }}"
+      state: merged
+
+  - name: Configure ntp_global
+    cisco.ios.ios_ntp_global:
+      config: "{{ ntp_global | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure ospf_interfaces
+    cisco.ios.ios_ospf_interfaces:
+      config: "{{ ospf_interfaces | default (omit, True) }}"
+      state: merged
+
+  - name: Configure ospfv2
+    cisco.ios.ios_ospfv2:
+      config: "{{ ospfv2 | default (omit, True) }}"
+      state: merged
+
+  - name: Configure ospfv3
+    cisco.ios.ios_ospfv3:
+      config: "{{ bgp_ospfv3 | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure prefix_lists
+    cisco.ios.ios_prefix_lists:
+      config: "{{ prefix_lists | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure route_maps
+    cisco.ios.ios_route_maps:
+      config: "{{ route_maps | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure service
+    cisco.ios.ios_service:
+      config: "{{ service | default (omit, True) }}"
+      state: merged
+
+  - name: Configure snmp_server
+    cisco.ios.ios_snmp_server:
+      config: "{{ snmp_server | default (omit, True) }}"
+      state: gathered
+
+  - name: Configure static_routes
+    cisco.ios.ios_static_routes:
+      config: "{{ static_routes | default (omit, True) }}"
+      state: merged
+
+  - name: Configure vlans
+    cisco.ios.ios_vlans:
+      config: "{{ vlans | default (omit, True) }}"
+      state: merged
+
+  - name: Configure vxlan_vtep
+    cisco.ios.ios_vxlan_vtep:
+      config: "{{ vxlan_vtep | default (omit, True) }}"
+      state: gathered
+
+- name: Prepare network topology with GRE tunnel/template for network onboard
   hosts: routers
   gather_facts: false
 
@@ -13,13 +154,3 @@
       arista.eos.eos_config:
         src: templates/rtr2.j2
       when: inventory_hostname == 'rtr2'
-
-    - name: prepare arista
-      arista.eos.eos_config:
-        src: templates/rtr4.j2
-      when: inventory_hostname == 'rtr4'
-
-    - name: prepare juniper
-      junipernetworks.junos.junos_config:
-        src: templates/rtr3.j2
-      when: inventory_hostname == 'rtr3'

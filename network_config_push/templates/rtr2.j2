@@ -2,18 +2,10 @@
 interface Tunnel1
    mtu 1476
    ip address {{ rtr2_tu1 }}/24
-   description {{ rtr2_desc }}
-   ip ospf network point-to-point
+   description {{ rtr2_tu1_desc }}
    tunnel mode gre
-   ip ospf area 0.0.0.0
    tunnel source interface Ethernet1
    tunnel destination {{ hostvars['rtr1'].ansible_host }}
    tunnel path-mtu-discovery
    tunnel ttl 10
 !
-no router bgp 65001 
-!
-router ospf 1
-   no redistribute bgp
-   network 0.0.0.0/0 area 0.0.0.0
-   tunnel routes
