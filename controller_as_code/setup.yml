@@ -1574,7 +1574,7 @@
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
-        playbook: "network_topology/onboard_network.yml"
+        playbook: "network_config_push/onboard_network.yml"
         credentials:
           - "Workshop Credential"
         execution_environment: "Validated Network"
