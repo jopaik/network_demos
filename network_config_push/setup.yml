@@ -71,81 +71,80 @@ controller_credentials:
     organization: "Red Hat network organization"
 
 controller_templates:
-  - name: "Network-Topology"
+  - name: "Network-Config-Push"
     organization: "Red Hat network organization"
     inventory: "Workshop Inventory"
     project: "Student Project"
-    playbook: "network_topology/onboard_network.yml"
+    playbook: "network_config_push/onboard_network.yml"
     credentials:
       - "Workshop Credential"
     execution_environment: "Validated Network"
     state: "present"
     survey_enabled: true
-    survey_spec:
-      name: ""
-      description: ""
-      spec:
-        - question_name: Please select the IP Address for rtr1 tu1
-          type: multiplechoice
-          variable: rtr1_tu1
-          required: true
-          default: "10.200.200.1"
-          choices:
-            - "10.200.200.1"
-            - "10.199.199.1"
-        - question_name: Please provide description for rtr1 tu1
-          type: text
-          variable: rtr1_desc
-          required: true
-          default: "rtr1 tu1"
-          choices: ''
-          max: 1024
-          min: 0
-        - question_name: Please select the IP Address for rtr2 tu1
-          type: multiplechoice
-          variable: rtr2_tu1
-          required: true
-          default: "10.100.100.2"
-          choices:
-            - "10.100.100.2"
-            - "10.199.199.2"
-        - question_name: Please provide description for rtr2 tu1
-          type: text
-          variable: rtr2_desc
-          required: true
-          default: "rtr2 tu1"
-          choices: ''
-          max: 1024
-          min: 0
-        - question_name: Please select the IP Address for rtr3 tu1
-          type: multiplechoice
-          variable: rtr3_tu1
-          required: true
-          default: "10.102.102.3"
-          choices:
-            - "10.102.102.3"
-            - "10.199.199.3"
-        - question_name: Please provide description for rtr3 tu1
-          type: text
-          variable: rtr3_desc
-          required: true
-          default: "rtr3"
-          choices: ''
-          max: 1024
-          min: 0
-        - question_name: Please select the IP Address for rtr4 tu1
-          type: multiplechoice
-          variable: rtr4_tu1
-          required: true
-          default: "10.102.102.4"
-          choices:
-            - "10.102.102.4"
-            - "10.199.199.4"
-        - question_name: Please provide description for rtr4 tu1
-          type: text
-          variable: rtr4_desc
-          required: true
-          default: "rtr4 tu1"
-          choices: ''
-          max: 1024
-          min: 0
+        survey_spec:
+          name: ""
+          description: ""
+          spec:
+            - question_name: Please select the IP Address for rtr1 tu0
+              type: multiplechoice
+              variable: rtr1_tu0
+              required: true
+              default: "10.100.100.1"
+              choices:
+                - "10.100.100.1"
+                - "10.99.99.1"
+            - question_name: Please provide description for rtr1 tu0
+              type: text
+              variable: rtr1_tu0_desc
+              required: true
+              default: "rtr1 tu0"
+              choices: ''
+              max: 1024
+              min: 0
+            - question_name: Please select the IP Address for rtr1 tu1
+              type: multiplechoice
+              variable: rtr1_tu1
+              required: true
+              default: "10.200.200.1"
+              choices:
+                - "10.200.200.1"
+                - "10.199.199.1"
+            - question_name: Please provide description for rtr1 tu1
+              type: text
+              variable: rtr1_tu1_desc
+              required: true
+              default: "rtr1 tu1"
+              choices: ''
+              max: 1024
+              min: 0
+            - question_name: Please select the IP Address for rtr2 tu0
+              type: multiplechoice
+              variable: rtr2_tu0
+              required: true
+              default: "10.102.102.2"
+              choices:
+                - "10.102.102.2"
+            - question_name: Please provide description for rtr2 tu0
+              type: text
+              variable: rtr2_tu0_desc
+              required: true
+              default: "rtr2 tu0"
+              choices: ''
+              max: 1024
+              min: 0
+            - question_name: Please select the IP Address for rtr2 tu1
+              type: multiplechoice
+              variable: rtr2_tu1
+              required: true
+              default: "10.200.200.2"
+              choices:
+                - "10.200.200.2"
+                - "10.199.199.2"
+            - question_name: Please provide description for rtr2 tu1
+              type: text
+              variable: rtr2_tu1_desc
+              required: true
+              default: "rtr2 tu1"
+              choices: ''
+              max: 1024
+              min: 0
