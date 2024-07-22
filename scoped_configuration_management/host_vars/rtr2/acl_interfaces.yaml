@@ -1,6 +1,0 @@
-acl_interfaces:
--   name: Ethernet1
--   name: Ethernet100
--   name: Loopback0
--   name: Tunnel0
--   name: Tunnel1
