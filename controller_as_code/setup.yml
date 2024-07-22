@@ -1570,7 +1570,7 @@
     # This section includes Network-Config-Push Demo
     - name: Create a job-template - Network-Config-Push
       ansible.controller.job_template:
-        name: "Network-Topology"
+        name: "Network-Config-Push"
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
