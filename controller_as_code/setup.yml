@@ -274,7 +274,7 @@
 
     - name: Create a job-template - Network-Validated-List
       ansible.controller.job_template:
-        name: "Network-Validated-Persist"
+        name: "Network-Validated-List"
         organization: "Red Hat network organization"
         inventory: "Workshop Inventory"
         project: "Student Project"
