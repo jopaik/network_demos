@@ -128,6 +128,7 @@ Create a schedule in the AAP controller to run the Network-Compliance-Dashboard 
 ## Key Takeaways
 * Network Facts are an easy method to discover and collect the network device configurations
 * Dashboards and Reports are easy to populate with Network Facts
+* THe html template is easy to modify
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
