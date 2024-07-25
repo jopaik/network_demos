@@ -16,8 +16,6 @@
         description: "{{ tenant_item.description | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list }}"
       loop_control:
         loop_var: tenant_item
@@ -29,8 +27,6 @@
         ap: "{{ ap_item.ap | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list }}"
       loop_control:
         loop_var: ap_item
@@ -42,8 +38,6 @@
         vrf_name: "{{ vrf_item.vrf | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list }}"
       loop_control:
         loop_var: vrf_item
@@ -57,8 +51,6 @@
         enable_routing: yes
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list }}"
       loop_control:
         loop_var: bd_item
@@ -73,14 +65,11 @@
         scope: "{{ subnet_item.scope | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list }}"
       loop_control:
         loop_var: subnet_item
         label: "{{ subnet_item.subnet }}"
         
-
     - name: Create EPGs
       cisco.aci.aci_epg:
         tenant: "{{ epg_item.tenant | default(omit, True)  }}"
@@ -89,8 +78,6 @@
         bd: "{{ epg_item.bd | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list | default(omit, True) }}"
       loop_control:
         loop_var: epg_item
@@ -110,8 +97,6 @@
         leafs: "{{ binding_item.leafs | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_static_binding_to_epg.list }}"
       loop_control:
         loop_var: binding_item

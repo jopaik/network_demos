@@ -18,8 +18,6 @@
         l3protocol: static
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_l3out.list }}"
       loop_control:
         loop_var: l3out_item
@@ -32,8 +30,6 @@
         name: "{{ ext_item.extepg_name | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_l3out.list }}"
       loop_control:
         loop_var: ext_item
@@ -48,8 +44,6 @@
         contract_type: "{{ map_item.contract_type | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_l3out.list }}"
       loop_control:
         loop_var: map_item

@@ -1,9 +1,7 @@
 ---
 - name: CONFIGURE TENANT CONTRACT CONFIGURATIONS
 
-  delegate_to: localhost
   #ignore_errors: true
-
   block:
     - name: Read Contract Info csv_files/day1/aci_contracts.csv
       read_csv:
@@ -18,8 +16,6 @@
         description: "{{ filter_item.description | default(omit, True) }} for {{ filter_item.filter | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_contracts.list }}"
       loop_control:
         loop_var: filter_item
@@ -36,8 +32,6 @@
         dst_port_end: "{{ entry_item.port | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_contracts.list }}"
       loop_control:
         loop_var: entry_item
@@ -51,8 +45,6 @@
         description: "{{ contract_item.contract_description | default(omit, True) }} for {{ contract_item.contract | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_contracts.list }}"
       loop_control:
         loop_var: contract_item
@@ -65,8 +57,6 @@
         subject: "{{ subj_item.subject | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_contracts.list }}"
       loop_control:
         loop_var: subj_item
@@ -80,8 +70,6 @@
         filter: "{{ filt_item.filter | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_contracts.list }}"
       loop_control:
         loop_var: filt_item
@@ -96,8 +84,6 @@
         contract_type: "{{ contact_bind_item.contract_type | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_contracts.list }}"
       loop_control:
         loop_var: contact_bind_item

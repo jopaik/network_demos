@@ -1,7 +1,7 @@
 ---
 - name: FABRIC ACCESS PORT TO PROFILE
 
-  #ignore_errors: true
+  ignore_errors: true
 
   block:
     - name: Read CSV File csv_files/day0/aci_fabric_access_port_to_profile.csv
@@ -17,8 +17,6 @@
         type: "{{ profile_item.type | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: profile_item
@@ -39,8 +37,6 @@
         port_blk: "{{ access_item.port_blk  | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_access_port_to_interface_policy_leaf_profile.list }}"
       loop_control:
         loop_var: access_item

@@ -15,8 +15,6 @@
         leaf_profile: "{{sw_pol_item.sw_policy_profile | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ sw_profile_selector.list }}"
       loop_control:
         loop_var: sw_pol_item
@@ -28,8 +26,6 @@
         interface_selector: "{{ sw_pol_selector_item.interface_selector_profile | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ sw_profile_selector.list }}"
       loop_control:
         loop_var: sw_pol_selector_item
@@ -47,8 +43,6 @@
         admin_state: "{{ cdp_item.cdp_enabled | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: cdp_item
@@ -60,8 +54,6 @@
         admin_state: "{{ mcp_item.mcp_enabled | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: mcp_item
@@ -72,8 +64,6 @@
         name: "{{  lldp_item.lldp_policy | default(omit, True) }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: lldp_item
@@ -89,8 +79,6 @@
         forwarding_error_correction: cl91-rs-fec
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: level_item
@@ -119,8 +107,6 @@
         aep: "{{  add_ifselector_item.aep | default(omit, True)  }}"
       retries: 2
       delay: 5
-      async: 60
-      poll: 0
       loop: "{{ aci_fabric_access.list }}"
       loop_control:
         loop_var: add_ifselector_item
