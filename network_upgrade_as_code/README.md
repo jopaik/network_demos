@@ -22,6 +22,8 @@
 To stage firmware images and upgrade network devices with Ansible. Please note it takes several minutes to both stage files and upgrade.   
 
 ## Overview
+Software Image Management (SWIM) is a repeatable framework where engineers can produce repeatable, safe outcomes for efficient device software upgrades. This results in a faster response to vulnerability management, more predictable maintenance schedules, and hours of an engineer’s life saved in the middle of the night.
+
 Ansible can scp firmware images to network devices. The workflow includes an approval node to control when an upgrade will be activated based on change control.  
 
 ### Step 1 - Install gdown
@@ -119,6 +121,8 @@ Cisco IOS XE Software, Version 17.07.01a
 # Key Takeaways
 * Ansible can scp firmware images to network devices. `netcommon.net_put` 
 * Approval nodes can control when an upgrade will be activated based on change control. 
+* Assertions to validate a functioning post upgrade device
+
 
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)
