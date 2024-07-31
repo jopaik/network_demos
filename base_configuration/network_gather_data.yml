@@ -50,10 +50,28 @@
             state: directory
             mode: '0755'
 
+        - name: Create a backup directory if it does not exist
+          ansible.builtin.file:
+            path: "{{ repository['path'] }}/base_configuration/config_backups"
+            state: directory
+            mode: '0755'
+
         - name: Add network facts to the repository
           ansible.builtin.copy:
             content: "{{ ansible_network_resources | to_nice_yaml }}"
             dest: "{{ repository['path'] }}/base_configuration/host_vars/{{ inventory_hostname }}"
+          register: result
+
+        - name: Create a backup directory if it does not exist
+          ansible.builtin.file:
+            path: "{{ repository['path'] }}/base_configuration/config_backups"
+            state: directory
+            mode: '0755'
+
+        - name: Add config_backup to the repository
+          ansible.builtin.copy:
+            content: "/tmp/{{ inventory_hostname }}.txt"
+            dest: "{{ repository['path'] }}/base_configuration/config_backups/{{ inventory_hostname }}.txt"
           register: result
 
         - name: Set date_time variable
