@@ -18,6 +18,11 @@
           filename: "{{ inventory_hostname }}.txt"
       register: config_output
 
+    - name: Gather network information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources:
+          - 'all'
+
     - name: Print out
       ansible.builtin.debug:
         msg: "{{ ansible_network_resources }}"
