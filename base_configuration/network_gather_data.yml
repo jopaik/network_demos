@@ -70,7 +70,7 @@
 
         - name: Add config_backup to the repository
           ansible.builtin.copy:
-            content: "/tmp/{{ inventory_hostname }}.txt"
+            src: "/tmp/{{ inventory_hostname }}.txt"
             dest: "{{ repository['path'] }}/base_configuration/config_backups/{{ inventory_hostname }}.txt"
           register: result
 
