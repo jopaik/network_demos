@@ -1,6 +1,6 @@
 ---
 - name: Gather configuration information from network devices
-  hosts: cisco,juniper
+  hosts: cisco
   gather_facts: false
 
   tasks:
