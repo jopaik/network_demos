@@ -13,8 +13,8 @@ transport:
   netconf: "netconf"
   httpapi: "httpapi"
 # compliance variables
-desired_ios_version: "17.06.06a"
-desired_eos_version: "4.27.3F-cloud"
+desired_ios_version: "17.14.01a"
+desired_eos_version: "4.29.0F-cloud"
 desired_junos_version: "22.3R2.12"
 desired_snmp: "student1"
 desired_logging_host: "192.168.0.1"
