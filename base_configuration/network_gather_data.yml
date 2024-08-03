@@ -1,6 +1,6 @@
 ---
 - name: Gather configuration information from network devices
-  hosts: cisco,juniper
+  hosts: cisco
   gather_facts: false
 
   tasks:
@@ -17,6 +17,19 @@
           dir_path: /tmp/
           filename: "{{ inventory_hostname }}.txt"
       register: config_output
+
+    # This task removes the Current configuration... from the top of IOS routers show run
+    - name: Remove non config lines - regexp
+      ansible.builtin.lineinfile:
+        path: "{{ config_output.backup_path }}"
+        line: "Building configuration..."
+        state: absent
+      delegate_to: localhost
+
+    - name: Gather network information as structured data
+      cisco.ios.ios_facts:
+        gather_network_resources:
+          - 'all'
 
     - name: Print out
       ansible.builtin.debug:
@@ -45,10 +58,28 @@
             state: directory
             mode: '0755'
 
+        - name: Create a backup directory if it does not exist
+          ansible.builtin.file:
+            path: "{{ repository['path'] }}/base_configuration/config_backups"
+            state: directory
+            mode: '0755'
+
         - name: Add network facts to the repository
           ansible.builtin.copy:
             content: "{{ ansible_network_resources | to_nice_yaml }}"
             dest: "{{ repository['path'] }}/base_configuration/host_vars/{{ inventory_hostname }}"
+          register: result
+
+        - name: Create a backup directory if it does not exist
+          ansible.builtin.file:
+            path: "{{ repository['path'] }}/base_configuration/config_backups"
+            state: directory
+            mode: '0755'
+
+        - name: Add config_backup to the repository
+          ansible.builtin.copy:
+            src: "/tmp/{{ inventory_hostname }}.txt"
+            dest: "{{ repository['path'] }}/base_configuration/config_backups/{{ inventory_hostname }}.txt"
           register: result
 
         - name: Set date_time variable
