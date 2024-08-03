@@ -13,7 +13,7 @@
     <tbody>
 {% for log in hostvars[network_switch]['ansible_network_resources']['logging_global']['hosts'] %}
         <tr>
-            <td>{% if hostvars[network_switch]['ansible_network_os'] == 'cisco.ios.ios' and log['host'] != desired_logging_host %}<mark>{{log['host']}}</mark>{% elif hostvars[network_switch]['ansible_network_os'] != 'cisco.ios.ios'and log['name'] != desired_logging_host %}<mark>{{log['name']}}</mark>{% else %}{{log['host'] | default('none')}}{{log['name'] | default('none')}}{% endif %}</td>    
+            <td>{% if hostvars[network_switch]['ansible_network_os'] == 'cisco.ios.ios' and log['host'] != desired_logging_host %}<mark>{{log['host']}}</mark>{% elif hostvars[network_switch]['ansible_network_os'] != 'cisco.ios.ios'and log['name'] != desired_logging_host %}<mark>{{log['name']}}</mark>{% else %}{{log['host'] | default('')}}{{log['name'] | default('')}}{% endif %}</td>    
         </tr>
 {% endfor %}
     </tbody>
