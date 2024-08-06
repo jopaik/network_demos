@@ -3,94 +3,113 @@
 
 This needs to be completed
 # Summary of steps
-1. 
+1. Review `host_vars/rtr1/bgp_address_family.yaml` and  `host_vars/rtr1/bgp_address_family.yaml` and `host_vars/rtr1/interfaces.yaml`
+2. Uncomment the appropriate configurations to make a change.
+3. Run the Network-Config-Push-Workflow
+4. Review outputs
+5. Optional run [text](../scoped_configuration_management) persist to discover YAML configs
 
 # Network Push
 
 [Table of Contents](#table-of-contents)
-- [Step 1 - Netbox Demo Server](#step-1-netbox-demo-server)
-- [Step 2 - Network-Netbox-Setup Job Template](#step-2-network-netbox-setup-job-template)
-- [Step 3 - Review the Netbox GUI](#step-3-review-the-netbox-gui)
-- [Step 4 - Add the API Token](#step-4-add-the-api-token)
-- [Step 5 - Review the Netbox Inventory on AAP](#step-5-review-the-netbox-inventory-on-aap)
-- [Step 6 - Launch the Network-Netbox-Facts job-template](#step-6-launch-the-network-netbox-facts-job-template)
-- [Step 7 - Launch the Network-Netbox-Compare-Configs job-template](#step-7-)
-- [Step 8 - Verify Config drift checks by changing the config on rtr1](#step-8-)
+- [Step 1 - Review Host_vars](#step-1-review-host_vars)
+- [Step 2 - Uncomment Configs](#step-3-uncomment-configs)
+- [Step 3 - Netbox-Config-Push-Workflow](#step-1-network-config-push-workflow)
+- [Step 4 - Review Outputs](#step-4-review-outputs)
+- [Step 5 - Optional Persist](#step-5-optional-persist)
+
 
 ## Objective
-To integrate 
+To demonstrate how to push a configuration to a Cisco router that is joining an existing tunnel based topology. The YAML host_var configuration files are provide for you. See step 5 to learn how to collect the configurations from a brownfield device.
 
 ## Overview
-The netbox.netbox 
+In this demo we will use resource modules , jinja2 templates and YAML configuration files to automate introducing a Cisco router into an existing multi-vendor topology. The playbook orchestration is managed with self service surveys and an Ansible AAP workflow.
 
-### Step 1 - Netbox Demo Server
-Connect to Netbox Demo server to create and copy an API token
-https://netbox-demo.netboxlabs.com/ user=admin pass=admin
-
-* Don't foget to save the api token to a notepad. You will need it throughout this demo.
-
-### Step 2 - Network-Netbox-Setup Job Template
-Launch the Network-Netbox-Setup Job Template to configure a device and settings on Netbox.
-
-#### jinja2 template:
-One of the configs we are pushing into Netbox is a jinja2 template. Optionally you can create jinja2 templates in Netbox directly. In this demo we are using the netbox collection to configure Netbox from Ansible. 
-In either case, jinja2 templates will have many variables that map to the Netbox device configurations in the database. For this demo, we are simply looking for the Netbox device-name to define the hostname for rtr1. These templates are used in Netbox to render configs on devices. When using Ansible to deploy/render device changes, it's important to first check for configuration drift between the running device and the Netbox config/template.
-
-jinja2 snipit:
+### Step 1 - Review Host_vars
 ~~~
- version 17.6
-            service timestamps debug datetime msec
-            service timestamps log datetime msec
-            service password-encryption
-            ! Call-home is enabled by Smart-Licensing.
-            service call-home
-            platform qfp utilization monitor load 80
-            platform punt-keepalive disable-kernel-core
-            platform console virtual
-            !
-            hostname {{ device.name | default ('{{ device.name }}') }}
-            !         
-            boot-start-marker
-            boot-end-marker
-            !
-            !
-            vrf definition GS
-             rd 100:100
+/network_demos/network_config_push/host_vars/rtr1
+/network_demos/network_config_push/host_vars/rtr2
 ~~~
 
-### Step 3 - Review the Netbox GUI 
-Review the Netbox GUI (devices, templates etc)
-- Look at the c8000v device type created by the Network-Netbox-Setup job template in the Netbox GUI
+### Step 2 - Uncomment Configs
+~~~
+/network_demos/network_config_push/host_vars/rtr1/bgp_address_family.yaml
+/network_demos/network_config_push/host_vars/rtr1/interfaces.yaml
+/network_demos/network_config_push/host_vars/rtr2/bgp_address_family.yaml
+~~~
+For example:
+~~~
+bgp_address_family:
+    address_family:
+    -   afi: ipv4
+        neighbors:
+        -   activate: true
+            neighbor_address: 10.200.200.2
+        networks:
+        -   address: 10.100.100.0
+            mask: 255.255.255.0
+        -   address: 10.200.200.0
+            mask: 255.255.255.0
+        -   address: 172.16.0.0
+        -   address: 192.168.1.1
+            mask: 255.255.255.255
+        #-   address: 192.168.3.3   #change
+        #    mask: 255.255.255.255  #change
+~~~
 
-### Step 4 - Add the API Token
-Add the API Token to Netbox inventory source to sync with Netbox as a dynamic inventory
-Update the source-nbox "NETBOX_TOKEN" source variable and save.
+#### Save and Commit in GIT
+Complete the git steps for your change. You must save, commit the file in the VSCode IDE and "sync" push to gitea after fixing the file.
+![Save](../images/save_commit.png)
 
-### Step 5 - Review the Netbox Inventory on AAP
-You will notice several devices from the Netbox Sandbox. Search for the host rtr1 from RHDP. rtr1 is also in group sites_rtp.
+or update from the terminal
+~~~
+git add --all
+git commit -m "deploy"
+git push
+~~~
 
-### Step 6 - Launch the Network-Netbox-Facts job-template 
-Launch the Network-Netbox-Facts job-template to demonstrate using the Inventory for rtr1.  Click on the "Gather all facts" task to look at the JSON and see what was gathered.
+### Step 3 - Network-Config-Push-Workflow
+Launch the following workflow:
+![workflow](../images/pushworkflow.png)
 
-### Step 7 - Launch the Network-Netbox-Compare-Configs job-template 
-Launch the Network-Netbox-Compare-Configs job-template to compare the running config to the netbox rendered config template.
+### Step 4 - Review Outputs
+Review outputs for network-config-push job-template and network-config-validate job-template
 
-* Note, that every router from RHDP will have different IP addresses, certs etc. These nuances will show as Diffs.
+#### Push - Truncated
+Here we validate ospf, bgp, and connectivity with pings.
+~~~
+Identity added: /runner/artifacts/79/ssh_key_data (/runner/artifacts/79/ssh_key_data)
+PLAY [Push Cisco Router Configuration with Resource Modules] *******************
+TASK [Configure acl_interfaces] ************************************************
+ok: [rtr1]
+TASK [Configure acls] **********************************************************
+ok: [rtr1]
 
-Access the jinja2 template from Netbox
- ![netbox](../images/netboxdevice.png)
+~~~
 
+#### Validated - Truncated
+~~~
 
+TASK [Assert that BGP neighbor exists] *****************************************
+ok: [rtr1] => {
+    "changed": false,
+    "msg": "BGP Neighbor to rtr1 tu1-172.18.70.26 is Established"
+}
+~~~
+### Step 5 - Optional Persist
+Explore the persist operation from the following demo to learn how to gather an native confgiuration from a brownfield device and convert it to YAML host_var files.
 
-### Step 8 - Verify Config drift checks 
-Verify Config drift checks by changing the config on rtr1 and relaunching the Network-Netbox-Compare-Configs job-template
-
-* For example, add a new loopback 100 or something simular to simulate an out-of-band (OOB) change. 
+- [Scoped Configuration Management](scoped_configuration_management/README.md)
+   * DEMO NAME: scoped_configuration_management
+   * [Demo Video](https://youtu.be/1z7NuObWhPE?si=vqB1QCBrMmY2cpor)
+   * Validated Content: `network.base` 
+   * Operations: Persist, Deploy, Detect, Remediate
+   * network.bgp
 
 # Key Takeaways
-* Configure Netbox with AAP as an alternative to the GUI
-* Use Netbox as a dynamic inventory source for Ansible
-* Comapare Netbox device configs as a source of truth for config drift.
-*
+* Self service and Workflow make it easy to orchestrate multipl playbooks in a simple approach
+* Resource modules provide declaritive intent, state, and builtin diffs. 
+* Jinja2 templates are useful for configurations not yet covered by resource modules.
+* Validated content makes it easy to gather configs from existing decvices to automate subsequent changes.
 ## Return to Demo Menu
  - [Menu of Demos](../README.md)

@@ -154,3 +154,4 @@
       arista.eos.eos_config:
         src: templates/rtr2.j2
       when: inventory_hostname == 'rtr2'
+
