@@ -9,7 +9,7 @@ This needs to be completed
 4. Review outputs
 5. Optional run [text](../scoped_configuration_management) persist to discover YAML configs
 
-# Network Push
+# Network Config Push
 
 [Table of Contents](#table-of-contents)
 - [Step 1 - Review Host_vars](#step-1-review-host_vars)
