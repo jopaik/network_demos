@@ -14,7 +14,7 @@ This needs to be completed
 [Table of Contents](#table-of-contents)
 - [Step 1 - Review Host_vars](#step-1-review-host_vars)
 - [Step 2 - Uncomment Configs](#step-3-uncomment-configs)
-- [Step 3 - Netbox-Config-Push-Workflow](#step-1-network-config-push-workflow)
+- [Step 3 - Network-Config-Push-Workflow](#step-1-network-config-push-workflow)
 - [Step 4 - Review Outputs](#step-4-review-outputs)
 - [Step 5 - Optional Persist](#step-5-optional-persist)
 
