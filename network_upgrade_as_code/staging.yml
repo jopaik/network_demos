@@ -16,6 +16,7 @@
       lines: 
       - ip scp server enable
       - ip ssh window-size 131072 
+      - ip tcp window-size 131072
      
   - name: check if image already exist in bootflash
     ios_command:
