@@ -41,8 +41,12 @@ https://sandboxapicdc.cisco.com
 
 # Demo2: Brownfield ACI-as-Code with YAML files
 1. Launch the 0-ACI-as-Brownfield-Workflow to injest the current ACI fabric configurstions as code.
+#### Sync your local VSCode repo 
+~~~
+git pull
+~~~
 2.  Review the defaults variables `(learned configs)` in each brownfield role
-3.  Review the vars variables that are pre-loaded to provide an example of adding a new configuration to the ACI fabric
+3.  Review the vars/main variables that are pre-loaded to provide an example of adding a new configuration to the ACI fabric
 4. In VSCode modify an existing tenant configuration in the brownfield_tenant_deploy/defaults/tenants.yml vars. Adding descriptions to existing tenants is a recommended here.
 
 #### Save and Push changes from vscode to gitea
@@ -75,11 +79,50 @@ The way to see the comments is:
 ~~~
 git log --pretty=full
 ~~~
+~~~
+[student@ansible-1 network-demos-repo]$ git log --pretty=full
+commit c3b8faa20f8d5dc889b10c30a421324862519ef7 (HEAD -> master, origin/master)
+Author: gitea <admin@example.com>
+Commit: gitea <admin@example.com>
+
+    Updates made by ansible with play: ACI Brownfield to YAML Collection
+
+commit dfcbeba03ca4390a1caf7375bf9f10f28ab0df9c
+Author: gitea <admin@example.com>
+Commit: gitea <admin@example.com>
+
+    Updates made by ansible with play: Validate ACI Health for New Tenants
+
+commit a0b967f3df435534e1b66ed1b50b1aacb5cf4d87
+Author: gitea <admin@example.com>
+Commit: gitea <admin@example.com>
+
+    Updates made by ansible with play: Brownfield Deployment (new configs)
+
+commit 4820d4677b5916d2b2bb6e5871c5ef51f7cc8dae
+Author: gitea <admin@example.com>
+Commit: gitea <admin@example.com>
+
+    changed
+
+commit 1b6f83e6d489e7e3ec064e89865d7ed29d6adb5d
+Author: gitea <admin@example.com>
+Commit: gitea <admin@example.com>
+
+    Updates made by ansible with play: ACI Brownfield to YAML Collection
 #### step 4 - Run the git Diff from VSCode terminal
 ~~~
-$ git diff 70bf1cd109cb8effe60d1b7b2741cbc0af87f7cd  1468ceb725eabbe60f3207aa107ba27e7b433ec2 defaults/main/tenants.yml 
+Diff Example:
+change directory to cisco_aci/roles/brownfield_tenant_deploy/defaults/main/
+~~~
+cd cisco_aci/roles/brownfield_tenant_deploy/defaults/main/
+~~~
+Diff command:
+In the following example you will observe the two tenants with modified descriptions (StuPedazzo, EQUI_UNTRUSTED_PROD_TNT ). Secondly, the new tenant `ansible` is appended to th bottom of the config. 
+~~~
+$ git diff c3b8faa20f8d5dc889b10c30a421324862519ef7 1b6f83e6d489e7e3ec064e89865d7ed29d6adb5d tenants.yml
 diff --git a/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/tenants.yml b/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/tenants.yml
-index ace4a08..861a07e 100644
+index 068d06e..1eee9ce 100644
 --- a/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/tenants.yml
 +++ b/cisco_aci/roles/brownfield_tenant_deploy/defaults/main/tenants.yml
 @@ -2,13 +2,13 @@ changed: false
@@ -93,8 +136,8 @@ index ace4a08..861a07e 100644
              dn: uni/tn-infra
              extMngdBy: ''
              lcOwn: local
--            modTs: '2024-07-26T21:29:16.090+00:00'
-+            modTs: '2024-07-26T18:45:33.331+00:00'
+-            modTs: '2024-08-10T17:34:58.833+00:00'
++            modTs: '2024-08-10T10:08:02.959+00:00'
              monPolDn: uni/tn-common/monepg-default
              name: infra
              nameAlias: ''
@@ -106,13 +149,13 @@ index ace4a08..861a07e 100644
 +            annotation: ''
              childAction: ''
              descr: ''
-             dn: uni/tn-mgmt
+             dn: uni/tn-common
              extMngdBy: ''
              lcOwn: local
--            modTs: '2024-07-26T21:29:17.620+00:00'
-+            modTs: '2024-07-26T18:45:32.766+00:00'
+-            modTs: '2024-08-10T17:35:00.425+00:00'
++            modTs: '2024-08-10T10:07:57.898+00:00'
              monPolDn: uni/tn-common/monepg-default
-             name: mgmt
+             name: common
              nameAlias: ''
 @@ -36,13 +36,13 @@ tenants:
              userdom: all
@@ -122,13 +165,13 @@ index ace4a08..861a07e 100644
 +            annotation: ''
              childAction: ''
              descr: ''
-             dn: uni/tn-common
+             dn: uni/tn-mgmt
              extMngdBy: ''
              lcOwn: local
--            modTs: '2024-07-26T21:29:19.190+00:00'
-+            modTs: '2024-07-26T18:45:30.682+00:00'
+-            modTs: '2024-08-10T17:35:02.405+00:00'
++            modTs: '2024-08-10T10:08:05.056+00:00'
              monPolDn: uni/tn-common/monepg-default
-             name: common
+             name: mgmt
              nameAlias: ''
 @@ -53,13 +53,13 @@ tenants:
              userdom: all
@@ -137,15 +180,15 @@ index ace4a08..861a07e 100644
 -            annotation: orchestrator:ansible
 +            annotation: ''
              childAction: ''
--            descr: Aug 6 demo
+-            descr: changed by ansible 2.4
 +            descr: ''
-             dn: uni/tn-Heroes
+             dn: uni/tn-StuPedazzo
              extMngdBy: ''
              lcOwn: local
--            modTs: '2024-07-26T21:29:20.679+00:00'
-+            modTs: '2024-07-26T18:48:12.549+00:00'
+-            modTs: '2024-08-10T17:35:03.773+00:00'
++            modTs: '2024-08-10T15:33:05.812+00:00'
              monPolDn: uni/tn-common/monepg-default
-             name: Heroes
+             name: StuPedazzo
              nameAlias: ''
 @@ -70,13 +70,13 @@ tenants:
              userdom: ':all:'
@@ -154,17 +197,49 @@ index ace4a08..861a07e 100644
 -            annotation: orchestrator:ansible
 +            annotation: ''
              childAction: ''
--            descr: Aug 6 modified by Ansible
+-            descr: changed by ansible2.4
 +            descr: ''
-             dn: uni/tn-SnV
+             dn: uni/tn-EQUI_UNTRUSTED_PROD_TNT
              extMngdBy: ''
              lcOwn: local
--            modTs: '2024-07-26T21:29:22.188+00:00'
-+            modTs: '2024-07-26T18:48:23.552+00:00'
+-            modTs: '2024-08-10T17:35:05.540+00:00'
++            modTs: '2024-08-10T16:52:56.195+00:00'
              monPolDn: uni/tn-common/monepg-default
-             name: SnV
+             name: EQUI_UNTRUSTED_PROD_TNT
              nameAlias: ''
-@@ -85,21 +85,4 @@ tenants:
+@@ -87,13 +87,13 @@ tenants:
+             userdom: ':all:'
+ -   fvTenant:
+         attributes:
+-            annotation: orchestrator:ansible
++            annotation: ''
+             childAction: ''
+             descr: Try ACI tool demo at https://oneaciapp.talapupa.com
+             dn: uni/tn-oneaciapp
+             extMngdBy: ''
+             lcOwn: local
+-            modTs: '2024-08-10T17:35:07.217+00:00'
++            modTs: '2024-08-10T16:58:56.507+00:00'
+             monPolDn: uni/tn-common/monepg-default
+             name: oneaciapp
+             nameAlias: ''
+@@ -104,13 +104,13 @@ tenants:
+             userdom: ':all:'
+ -   fvTenant:
+         attributes:
+-            annotation: orchestrator:ansible
++            annotation: ''
+             childAction: ''
+             descr: ''
+             dn: uni/tn-TELE_UNTRUSTED_PROD_TNT
+             extMngdBy: ''
+             lcOwn: local
+-            modTs: '2024-08-10T17:35:08.859+00:00'
++            modTs: '2024-08-10T17:27:57.997+00:00'
+             monPolDn: uni/tn-common/monepg-default
+             name: TELE_UNTRUSTED_PROD_TNT
+             nameAlias: ''
+@@ -119,21 +119,4 @@ tenants:
              status: ''
              uid: '15374'
              userdom: ':all:'
@@ -176,7 +251,7 @@ index ace4a08..861a07e 100644
 -            dn: uni/tn-Ansible
 -            extMngdBy: ''
 -            lcOwn: local
--            modTs: '2024-07-26T21:26:29.391+00:00'
+-            modTs: '2024-08-10T17:33:22.566+00:00'
 -            monPolDn: uni/tn-common/monepg-default
 -            name: Ansible
 -            nameAlias: ''
@@ -186,6 +261,7 @@ index ace4a08..861a07e 100644
 -            uid: '15374'
 -            userdom: ':all:'
  failed: false
+(END)
 ~~~
 
 # Key Takeaways
