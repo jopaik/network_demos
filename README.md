@@ -37,7 +37,7 @@ For the below demos insure you are always using files from /home/student/network
    * Check Mode/Run Mode (ntp,snmp,logging,and acls)
    * Handlers
    * Cisco STIG
-- [Scoped Configuration Management](scoped_configuration_management/README.md)
+- [Scoped Configuration Management (Validated)](scoped_configuration_management/README.md)
    * DEMO NAME: scoped_configuration_management
    * [Demo Video](https://youtu.be/1z7NuObWhPE?si=vqB1QCBrMmY2cpor)
    * Validated Content: `network.base` 
@@ -72,6 +72,8 @@ For the below demos insure you are always using files from /home/student/network
    * Deploy ACI fabrics as Code with csv files
    * Make Health Checks from Ansible to Validate ACI State
    * Brownfield ACI fabric to YAML 
+   * Deploy new configs and change existing configs 
+   * Perform Diff (Config Drift Checks)
 - [Cisco DNAC](cisco_dnac)
    * DEMO NAME: cisco_dnac
    * Dynamic Ansible Inventory
