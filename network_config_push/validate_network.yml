@@ -34,7 +34,7 @@
     retries: 3
     delay: 10
 
-  - name: Ping default route
+  - name: Ping the neighbors
     cisco.ios.ios_ping:
       dest: "{{ ping_item }}" 
     register: ping_output
